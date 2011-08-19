@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mva Package &mdash; Hyperspy v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy v0.3.0 documentation" href="../index.html" />
+    <link rel="up" title="hyperspy Package" href="hyperspy.html" />
+    <link rel="next" title="signals Package" href="hyperspy.signals.html" />
+    <link rel="prev" title="models Package" href="hyperspy.models.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyperspy.signals.html" title="signals Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="hyperspy.models.html" title="models Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >Project Modules</a> &raquo;</li>
+          <li><a href="hyperspy.html" accesskey="U">hyperspy Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mva-package">
+<h1>mva Package<a class="headerlink" href="#mva-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-hyperspy.mva.mlpca">
+<span id="mlpca-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mlpca</span></tt> Module<a class="headerlink" href="#module-hyperspy.mva.mlpca" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.mva.mlpca.mlpca">
+<tt class="descclassname">hyperspy.mva.mlpca.</tt><tt class="descname">mlpca</tt><big>(</big><em>X</em>, <em>varX</em>, <em>p</em>, <em>convlim=1e-10</em>, <em>maxiter=50000</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mlpca.mlpca" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function performs MLPCA with missing
+data.</p>
+<p>Arguments:
+X       is the mxn matrix of observations.
+stdX    is the mxn matrix of standard deviations</p>
+<blockquote>
+<div>associated with X (zeros for missing
+measurements).</div></blockquote>
+<p>p       is the model dimensionality.</p>
+<p>Returns:
+U,S,V   are the pseudo-svd parameters.
+Sobj    is the value of the objective function.
+ErrFlag indicates exit conditions:</p>
+<blockquote>
+<div>0 = nkmal termination
+1 = max iterations exceeded.</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.mva.mva">
+<span id="mva-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mva</span></tt> Module<a class="headerlink" href="#module-hyperspy.mva.mva" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyperspy.mva.mva.MVA">
+<em class="property">class </em><tt class="descclassname">hyperspy.mva.mva.</tt><tt class="descname">MVA</tt><a class="headerlink" href="#hyperspy.mva.mva.MVA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multivariate analysis capabilities for the Spectrum class.</p>
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.als">
+<tt class="descname">als</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.als" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternate Least Squares imposing positivity constraints 
+to the result of a previous ICA</p>
+<p>Stores in result in self.als_out</p>
+<dl class="docutils">
+<dt>thresh <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>default=.001</dd>
+<dt>nonnegS <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Impose non-negative constraint of the components. Default: True</dd>
+<dt>nonnegC <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Impose non-negative constraint of the maps. Default: True</dd>
+</dl>
+<p>plot_als_ic_maps, plot_als_ic</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.energy_center">
+<tt class="descname">energy_center</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.energy_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract the mean energy pixel by pixel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.ica_build_SI">
+<tt class="descname">ica_build_SI</tt><big>(</big><em>components=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.ica_build_SI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the spectrum generated with the selected number of 
+independent components</p>
+<dl class="docutils">
+<dt>components <span class="classifier-delimiter">:</span> <span class="classifier">None, int, or list of ints</span></dt>
+<dd>if None, rebuilds SI from all components
+if int, rebuilds SI from components in range 0-given int
+if list of ints, rebuilds SI from only components in given list</dd>
+</dl>
+<p>Signal instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.independent_components_analysis">
+<tt class="descname">independent_components_analysis</tt><big>(</big><em>number_of_components=None</em>, <em>algorithm='CuBICA'</em>, <em>diff_order=1</em>, <em>pc=None</em>, <em>comp_list=None</em>, <em>mask=None</em>, <em>on_peaks=False</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.independent_components_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Independent components analysis.</p>
+<p>Available algorithms: FastICA, JADE, CuBICA, and TDSEP</p>
+<dl class="docutils">
+<dt>number_of_components <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>number of principal components to pass to the ICA algorithm</dd>
+</dl>
+<p>algorithm : {FastICA, JADE, CuBICA, TDSEP}
+diff : bool
+diff_order : int
+pc : numpy array</p>
+<blockquote>
+<div>externally provided components</div></blockquote>
+<dl class="docutils">
+<dt>comp_list <span class="classifier-delimiter">:</span> <span class="classifier">boolen numpy array</span></dt>
+<dd>choose the components to use by the boolen list. It permits to 
+choose non contiguous components.</dd>
+<dt>mask <span class="classifier-delimiter">:</span> <span class="classifier">numpy boolean array with the same dimension as the PC</span></dt>
+<dd>If not None, only the selected channels will be used by the 
+algorithm.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.normalize_poissonian_noise">
+<tt class="descname">normalize_poissonian_noise</tt><big>(</big><em>spatial_mask=None</em>, <em>energy_mask=None</em>, <em>return_masks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.normalize_poissonian_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales the SI following Surf. Interface Anal. 2004; 36: 203–212 to
+&#8220;normalize&#8221; the poissonian data for PCA analysis</p>
+<p>spatial_mask : boolen numpy array
+energy_mask  : boolen numpy array</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.pca_build_SI">
+<tt class="descname">pca_build_SI</tt><big>(</big><em>components=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.pca_build_SI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the spectrum generated with the selected number of principal 
+components</p>
+<dl class="docutils">
+<dt>components <span class="classifier-delimiter">:</span> <span class="classifier">None, int, or list of ints</span></dt>
+<dd>if None, rebuilds SI from all components
+if int, rebuilds SI from components in range 0-given int
+if list of ints, rebuilds SI from only components in given list</dd>
+</dl>
+<p>Signal instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.peak_ica">
+<tt class="descname">peak_ica</tt><big>(</big><em>number_of_components</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.peak_ica" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.peak_pca">
+<tt class="descname">peak_pca</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.peak_pca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_als_ic">
+<tt class="descname">plot_als_ic</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_als_ic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as plot_independent_componets for the ALS results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_als_ic_maps">
+<tt class="descname">plot_als_ic_maps</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_als_ic_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as plot_ic_maps for the ALS results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_explained_variance">
+<tt class="descname">plot_explained_variance</tt><big>(</big><em>n=50</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_explained_variance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the principal components explained variance up to the given 
+number</p>
+<p>n : int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_independent_components">
+<tt class="descname">plot_independent_components</tt><big>(</big><em>ic=None</em>, <em>same_window=False</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_independent_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the independent components.</p>
+<dl class="docutils">
+<dt>ic <span class="classifier-delimiter">:</span> <span class="classifier">numpy array (optional)</span></dt>
+<dd>externally provided independent components array
+The shape of &#8216;ic&#8217; must be (channels, n_components),
+so that e.g. ic[:, 0] is the first independent component.</dd>
+<dt>same_window <span class="classifier-delimiter">:</span> <span class="classifier">bool (optional)</span></dt>
+<dd>if &#8216;True&#8217;, the components will be plotted in the
+same window. Default is &#8216;False&#8217;.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_independent_components_maps">
+<tt class="descname">plot_independent_components_maps</tt><big>(</big><em>comp_ids=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0xad37e0c&gt;</em>, <em>recmatrix=None</em>, <em>with_ic=True</em>, <em>plot=True</em>, <em>ic=None</em>, <em>no_nans=False</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_independent_components_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the map associated to each independent component</p>
+<p>cmap : plt.cm object
+recmatrix : numpy array</p>
+<blockquote>
+<div>externally suplied recmatrix</div></blockquote>
+<dl class="docutils">
+<dt>comp_ids <span class="classifier-delimiter">:</span> <span class="classifier">int or list of ints</span></dt>
+<dd>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</dd>
+<dt>with_ic <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If True, plots also the corresponding independent component in the 
+same figure</dd>
+<dt>plot <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If True it will plot the figures. Otherwise it will only return the 
+images.</dd>
+<dt>ic <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
+<dd>externally supplied independent components</dd>
+<dt>no_nans <span class="classifier-delimiter">:</span> <span class="classifier">bool (optional)</span></dt>
+<dd>whether substituting NaNs with zeros for a visually prettier plot
+(default is False)</dd>
+</dl>
+<p>List with the maps as MVA instances</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_lev">
+<tt class="descname">plot_lev</tt><big>(</big><em>n=50</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the principal components LEV up to the given number</p>
+<p>n : int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_maps">
+<tt class="descname">plot_maps</tt><big>(</big><em>components</em>, <em>mva_type=None</em>, <em>scores=None</em>, <em>factors=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0xad37e0c&gt;</em>, <em>no_nans=False</em>, <em>with_components=True</em>, <em>plot=True</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot component maps for the different MSA types</p>
+<dl class="docutils">
+<dt>components <span class="classifier-delimiter">:</span> <span class="classifier">None, int, or list of ints</span></dt>
+<dd>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</dd>
+</dl>
+<p>mva_type: string, currently either &#8216;pca&#8217; or &#8216;ica&#8217;
+scores: numpy array, the array of score maps
+factors: numpy array, the array of components, with each column as a component.
+cmap: matplotlib colormap instance
+no_nans: bool, 
+with_components: bool,
+plot: bool,</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_principal_components">
+<tt class="descname">plot_principal_components</tt><big>(</big><em>n=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_principal_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the principal components up to the given number</p>
+<dl class="docutils">
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>number of principal components to plot.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.plot_principal_components_maps">
+<tt class="descname">plot_principal_components_maps</tt><big>(</big><em>comp_ids=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0xad37e0c&gt;</em>, <em>recmatrix=None</em>, <em>with_pc=True</em>, <em>plot=True</em>, <em>pc=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.plot_principal_components_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the map associated to each independent component</p>
+<dl class="docutils">
+<dt>comp_ids <span class="classifier-delimiter">:</span> <span class="classifier">None, int, or list of ints</span></dt>
+<dd>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</dd>
+</dl>
+<p>cmap : plt.cm object
+recmatrix : numpy array</p>
+<blockquote>
+<div>externally suplied recmatrix</div></blockquote>
+<dl class="docutils">
+<dt>with_ic <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If True, plots also the corresponding independent component in the 
+same figure</dd>
+<dt>plot <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If True it will plot the figures. Otherwise it will only return the 
+images.</dd>
+<dt>ic <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
+<dd>externally supplied independent components</dd>
+<dt>no_nans <span class="classifier-delimiter">:</span> <span class="classifier">bool (optional)</span></dt>
+<dd>whether substituting NaNs with zeros for a visually prettier plot
+(default is False)</dd>
+</dl>
+<p>List with the maps as MVA instances</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.principal_components_analysis">
+<tt class="descname">principal_components_analysis</tt><big>(</big><em>normalize_poissonian_noise=False</em>, <em>algorithm='svd'</em>, <em>output_dim=None</em>, <em>spatial_mask=None</em>, <em>energy_mask=None</em>, <em>center=False</em>, <em>variance2one=False</em>, <em>var_array=None</em>, <em>var_func=None</em>, <em>polyfit=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.principal_components_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Principal components analysis.</p>
+<p>The results are stored in self.mva_results</p>
+<dl class="docutils">
+<dt>normalize_poissonian_noise <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If True, scale the SI to normalize Poissonian noise</dd>
+</dl>
+<p>algorithm : {&#8216;svd&#8217;, &#8216;mlpca&#8217;, &#8216;mdp&#8217;, &#8216;NIPALS&#8217;}
+output_dim : None or int</p>
+<blockquote>
+<div>number of PCA to keep</div></blockquote>
+<p>spatial_mask : boolean numpy array
+energy_mask : boolean numpy array
+center : bool</p>
+<blockquote>
+<div>Perform energy centering before PCA</div></blockquote>
+<dl class="docutils">
+<dt>variance2one <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Perform whitening before PCA</dd>
+<dt>var_array <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
+<dd>Array of variance for the maximum likelihood PCA algorithm</dd>
+<dt>var_func <span class="classifier-delimiter">:</span> <span class="classifier">function or numpy array</span></dt>
+<dd>If function, it will apply it to the dataset to obtain the 
+var_array. Alternatively, it can a an array with the coefficients 
+of a polynomy.</dd>
+</dl>
+<p>polyfit :</p>
+<p>plot_principal_components, plot_principal_components_maps, plot_lev</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.reverse_ic">
+<tt class="descname">reverse_ic</tt><big>(</big><em>*ic_n</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.reverse_ic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverse the independent component</p>
+<dl class="docutils">
+<dt>ic_n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>component indexes</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;some_file&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="c"># perform PCA</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">independent_components_analysis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c"># perform ICA on 3 PCs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">reverse_ic</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c"># reverse IC 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">reverse_ic</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># reverse ICs 0 and 2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.save_als_ica_results">
+<tt class="descname">save_als_ica_results</tt><big>(</big><em>elements=None</em>, <em>format='nc'</em>, <em>image_format='tif'</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.save_als_ica_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as save_ica_results for the ALS results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.save_independent_components">
+<tt class="descname">save_independent_components</tt><big>(</big><em>elements=None</em>, <em>spectrum_format='msa'</em>, <em>image_format='tif'</em>, <em>recmatrix=None</em>, <em>ic=None</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.save_independent_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the result of the ICA in image and spectrum format.
+Note that to save the image, the NaNs in the map will be converted
+to zeros.</p>
+<dl class="docutils">
+<dt>elements <span class="classifier-delimiter">:</span> <span class="classifier">None or tuple of strings</span></dt>
+<dd>a list of names (normally an element) to be assigned to IC. If not 
+the will be name ic-0, ic-1 ...</dd>
+</dl>
+<p>image_format : string
+spectrum_format : string
+recmatrix : None or numpy array</p>
+<blockquote>
+<div>externally supplied recmatrix</div></blockquote>
+<dl class="docutils">
+<dt>ic <span class="classifier-delimiter">:</span> <span class="classifier">None or numpy array </span></dt>
+<dd>externally supplied IC</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.save_principal_components">
+<tt class="descname">save_principal_components</tt><big>(</big><em>n</em>, <em>spectrum_prefix='pc'</em>, <em>image_prefix='im'</em>, <em>spectrum_format='msa'</em>, <em>image_format='tif'</em>, <em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.save_principal_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the <cite>n</cite> first principal components  and score maps 
+in the specified format</p>
+<dl class="docutils">
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of principal components to save_als_ica_results</dd>
+<dt>image_prefix <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Prefix for the image file names</dd>
+<dt>spectrum_prefix <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Prefix for the spectrum file names</dd>
+</dl>
+<p>spectrum_format : string
+image_format : string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.undo_energy_center">
+<tt class="descname">undo_energy_center</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.undo_energy_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.undo_treatments">
+<tt class="descname">undo_treatments</tt><big>(</big><em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.undo_treatments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undo normalize_poissonian_noise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.undo_variance2one">
+<tt class="descname">undo_variance2one</tt><big>(</big><em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.undo_variance2one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA.variance2one">
+<tt class="descname">variance2one</tt><big>(</big><em>on_peaks=False</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA.variance2one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.mva.mva.MVA_Results">
+<em class="property">class </em><tt class="descclassname">hyperspy.mva.mva.</tt><tt class="descname">MVA_Results</tt><a class="headerlink" href="#hyperspy.mva.mva.MVA_Results" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="hyperspy.mva.mva.MVA_Results.crop_v">
+<tt class="descname">crop_v</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA_Results.crop_v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crop the score matrix up to the given number.</p>
+<p>It is mainly useful to save memory and redude the storage size</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA_Results.load">
+<tt class="descname">load</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA_Results.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the result of the PCA analysis</p>
+<p>filename : string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA_Results.save">
+<tt class="descname">save</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA_Results.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the result of the PCA analysis</p>
+<p>filename : string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.mva.mva.MVA_Results.summary">
+<tt class="descname">summary</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.mva.mva.MVA_Results.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a summary of the PCA parameters to the stdout</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.mva.svd_pca">
+<span id="svd-pca-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">svd_pca</span></tt> Module<a class="headerlink" href="#module-hyperspy.mva.svd_pca" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.mva.svd_pca.pca">
+<tt class="descclassname">hyperspy.mva.svd_pca.</tt><tt class="descname">pca</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#hyperspy.mva.svd_pca.pca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform PCA using SVD.
+data - MxN matrix of input data
+(M dimensions, N trials)
+signals - MxN matrix of projected data
+PC - each column is a PC
+V - Mx1 matrix of variances</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mva Package</a><ul>
+<li><a class="reference internal" href="#module-hyperspy.mva.mlpca"><tt class="docutils literal"><span class="pre">mlpca</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.mva.mva"><tt class="docutils literal"><span class="pre">mva</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.mva.svd_pca"><tt class="docutils literal"><span class="pre">svd_pca</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hyperspy.models.html"
+                        title="previous chapter">models Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hyperspy.signals.html"
+                        title="next chapter">signals Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/hyperspy.mva.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyperspy.signals.html" title="signals Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="hyperspy.models.html" title="models Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >Project Modules</a> &raquo;</li>
+          <li><a href="hyperspy.html" >hyperspy Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, The hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
