@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
     <link rel="top" title="Hyperspy v0.3.0 documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Loading and saving data" href="aggregate.html" />
+    <link rel="next" title="Loading and saving data" href="io.html" />
     <link rel="prev" title="Installing Hyperspy" href="install.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="aggregate.html" title="Loading and saving data"
+          <a href="io.html" title="Loading and saving data"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="install.html" title="Installing Hyperspy"
@@ -61,7 +61,7 @@
 <div class="section" id="starting-hyperspy">
 <h3>Starting hyperspy<a class="headerlink" href="#starting-hyperspy" title="Permalink to this headline">¶</a></h3>
 <p>To start hyperspy type in a console:</p>
-<div class="highlight-bash"><div class="highlight"><pre>hyperspy
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>hyperspy
 </pre></div>
 </div>
 <p>If everythig goes well Hyperspy should welcome you with a message similar to:</p>
@@ -93,30 +93,19 @@ that folder.</p>
 </div>
 <div class="section" id="loading-data">
 <h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h3>
-<p>To load from a supported file format (see <em class="xref std std-ref">supported-file-formats</em>) simply type:</p>
+<p>To load from a supported file format (see <a class="reference internal" href="io.html#supported-formats"><em>Supported formats</em></a>) simply type:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
 <p class="last">We use the variable <em class="guilabel">s</em> but you can choose any (valid) variable name</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The filename <em>must</em> include the extension</p>
-</div>
-<p>If the loading was successful, the variable <em class="guilabel">s</em> now contains a python object
-that can be an <tt class="docutils literal"><span class="pre">Image</span></tt> or <tt class="docutils literal"><span class="pre">Spectrum</span></tt> instance. Hyperspy will try to guess the
-most convenient data type. However, you can force it to read the data as
-a particular data type by providing the keyword <tt class="docutils literal"><span class="pre">data_type</span></tt> that can take the
-values <em class="guilabel">SI</em> or <em class="guilabel">Image</em>, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="n">data_type</span> <span class="o">=</span> <span class="s">&#39;SI&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>For more details read <a class="reference internal" href="io.html#loading-files"><em>Loading files: the load function</em></a></p>
 </div>
 <div class="section" id="saving-files">
-<span id="configuring-hyperspy-label"></span><h3>Saving Files<a class="headerlink" href="#saving-files" title="Permalink to this headline">¶</a></h3>
-<p>Data can be saved to several file formats.  The format is specified by
+<h3>Saving Files<a class="headerlink" href="#saving-files" title="Permalink to this headline">¶</a></h3>
+<p>The data can be saved to several file formats.  The format is specified by
 the extension of the filename.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># load the data</span>
 <span class="n">d</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;example.tif&#39;</span><span class="p">)</span>
@@ -131,23 +120,16 @@ the extension of the filename.</p>
 <p>Some file formats are much better at maintaining the information about
 how you processed your data.  The preferred format in EELSlab is hdf5,
 the hierarchical data format.  This format keeps the most information
-possible.  However, viewing HDF5 files outside of EELSlab is less easy
-than say, working with well-known image formats.</p>
-<p>There are optional flags that may be passed to the save function.</p>
-<p>For the MSA format (commonly used for saving single spectra), the
-msa_format argument is used to specify whether the energy axis should
-also be saved with the data.  The default, &#8216;Y&#8217; omits the energy axis
-in the file.  The alternative, &#8216;XY&#8217;, saves a second column with the
-calibrated energy data.</p>
+possible.</p>
+<p>There are optional flags that may be passed to the save function. See <a class="reference internal" href="io.html#saving-files"><em>Saving data to files</em></a> for more details.</p>
 </div>
 <div class="section" id="configuring-hyperspy">
-<h3>Configuring hyperspy<a class="headerlink" href="#configuring-hyperspy" title="Permalink to this headline">¶</a></h3>
+<span id="configuring-hyperspy-label"></span><h3>Configuring hyperspy<a class="headerlink" href="#configuring-hyperspy" title="Permalink to this headline">¶</a></h3>
 <p>You can configure some parameters of hyperspy by editing the <tt class="file docutils literal"><span class="pre">hyperspyrc</span></tt>
 file. The location of the configuration file depends on the system.
 You can find its path by calling the <tt class="docutils literal"><span class="pre">`get_configuration_directory_path`</span></tt>
 function in the hyperspy prompt:</p>
-<div class="highlight-bash"><div class="highlight"><pre>get_configuration_directory_path<span class="o">()</span>
-</pre></div>
+<div class="highlight-pythons"><pre>get_configuration_directory_path()</pre>
 </div>
 <p>Alternatively it is possible to change the same parameters at runtime by changing
 the attributes of the defaults class. For example, to plot automatically the
@@ -169,19 +151,19 @@ defaults.plot_on_load <span class="o">=</span> True
 <p>The documentation can be accessed by adding a question mark to the name of a function. e.g.:</p>
 <div class="highlight-python"><pre>load?</pre>
 </div>
-<p>This syntax is one of the many features of <a class="reference external" href="http://ipython.scipy.org/moin/">IPython</a></p>
+<p>This syntax is one of the many features of <a class="reference external" href="http://ipython.scipy.org/moin/">IPython</a> that is the interactive python shell that Hyperspy uses under the hood.</p>
 <p>Please note that the documentation of the code is a work in progress, so not all the objects are documented yet.</p>
 </div>
 <div class="section" id="autocompletion">
 <h3>Autocompletion<a class="headerlink" href="#autocompletion" title="Permalink to this headline">¶</a></h3>
 <p>Another useful <a class="reference external" href="http://ipython.scipy.org/moin/">IPython</a> feature is the
 autocompletion of commands and filenames. It is highly recommended to read the
-<a class="reference external" href="http://ipython.scipy.org/moin/Documentation">Ipython documentation</a>.</p>
+<a class="reference external" href="http://ipython.scipy.org/moin/Documentation">Ipython documentation</a> for many more useful features that will boost efficiency when working with Hyperspy/Python.</p>
 </div>
 </div>
 <div class="section" id="data-visualisation">
 <h2>Data visualisation<a class="headerlink" href="#data-visualisation" title="Permalink to this headline">¶</a></h2>
-<p>The Spectrum and Image objects have a <tt class="docutils literal"><span class="pre">plot</span></tt> method.</p>
+<p><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> has a <tt class="docutils literal"><span class="pre">plot</span></tt> method.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;YourDataFilenameHere&#39;</span><span class="p">)</span>
 <span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
@@ -190,15 +172,13 @@ autocompletion of commands and filenames. It is highly recommended to read the
 the plot method. If the object is a 2D or 3D SI two figures will appear,
 one containing a plot of a spectrum of the dataset and the other a 2D
 representation of the data.</p>
-<p>To explore an SI drag the cursor present in the 2D data representation
-(it can be a line for 2D SIs or a square for 3D SIs).
+<p>To explore a hyperspectrum drag the cursor present in the 2D data representation
+(it can be a line for 1D data exploration or a square for 2D data exploration).
 An extra cursor can be added by pressing the <tt class="docutils literal"><span class="pre">e</span></tt> key. Pressing <tt class="docutils literal"><span class="pre">e</span></tt> once more will
 disable the extra cursor.</p>
-<p>When exploring a 2D SI of high spatial resolution the default size of the
-rectangular cursors can be too small to be dragged or even seen. It is possible to change
-the size of the cursors by pressing the <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">-</span></tt> keys  <strong>when the navigator
+<p>When exploring a 2D hyperspectral object of high spatial resolution the default size of the rectangular cursors can be too small to be dragged or even seen. It is possible to change the size of the cursors by pressing the <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">-</span></tt> keys  <strong>when the navigator
 windows is on focus</strong>.</p>
-<p>It is also possible to explore an SI by using the numpad arrows
+<p>It is also possible to move the pointer by using the numpad arrows
 <strong>when numlock is on and the spectrum or navigator figure is on focus</strong>.
 When using the numpad arrows the PageUp and PageDown keys change the size of the step.</p>
 <p>The same keys can be used to explore an image stack.</p>
@@ -234,13 +214,13 @@ When using the numpad arrows the PageUp and PageDown keys change the size of the
 </tbody>
 </table>
 <p>To close all the figures type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">close</span><span class="p">(</span><span class="s">&#39;all&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s">&#39;all&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This is a <a class="reference external" href="http://matplotlib.sourceforge.net/">matplotlib</a> command.
-Matplotlib is the library that hyperspy uses to produce the plots. To learn how
-to pan/zoom and more a matplotlib plot
-<a class="reference external" href="http://matplotlib.sourceforge.net/users/navigation_toolbar.html">check here</a></p>
+Matplotlib is the library that hyperspy uses to produce the plots. You can learn how
+to pan/zoom and more
+<a class="reference external" href="http://matplotlib.sourceforge.net/users/navigation_toolbar.html">in the matplotlib documentation</a></p>
 </div>
 </div>
 
@@ -274,7 +254,7 @@ to pan/zoom and more a matplotlib plot
   <p class="topless"><a href="install.html"
                         title="previous chapter">Installing Hyperspy</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="aggregate.html"
+  <p class="topless"><a href="io.html"
                         title="next chapter">Loading and saving data</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
@@ -308,7 +288,7 @@ to pan/zoom and more a matplotlib plot
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="aggregate.html" title="Loading and saving data"
+          <a href="io.html" title="Loading and saving data"
              >next</a> |</li>
         <li class="right" >
           <a href="install.html" title="Installing Hyperspy"
