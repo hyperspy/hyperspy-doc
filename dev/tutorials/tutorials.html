@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorials &mdash; Hyperspy v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy v0.3.0 documentation" href="../index.html" />
+    <link rel="next" title="Project Modules" href="../api/modules.html" />
+    <link rel="prev" title="Bibliography" href="../user_guide/bibliography.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api/modules.html" title="Project Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../user_guide/bibliography.html" title="Bibliography"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
+<p>The tutorial files are in the tutorial folder of your home directory that will be generated the first time that you start Hyperspy.</p>
+<p>In GNOME you can directly start the terminal in the mva folder or, alternatively, navigate to that folder by typing the following in the terminal prompt</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>tutorial/mva
+</pre></div>
+</div>
+<div class="section" id="multivariate-analysis">
+<h2>Multivariate analysis<a class="headerlink" href="#multivariate-analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tutorial-1-basic-pca-ica-workflow">
+<span id="example1-label"></span><h3>Tutorial 1: Basic PCA/ICA workflow<a class="headerlink" href="#tutorial-1-basic-pca-ica-workflow" title="Permalink to this headline">¶</a></h3>
+<p>For this example we will use the file <cite>CL1_hyperspy.nc</cite> that contains a simulated EELS SI.</p>
+<p>We start by loading and plotting the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;CL1_hyperspy.nc&#39;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A trained EELS analyst well easily note that the spectra contains the Sr, Ti, O and C ionisation edges in the 100-600 eV energy range.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you don&#8217;t remember the position of the ionisation edges of a particular element you can simply type the following to get the list:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">edges_dict</span><span class="p">[</span><span class="s">&#39;element_symbol&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>We will use principal components analysis (PCA) to improve the SNR. For that we type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to know why we give the <cite>True</cite> value to the <cite>principal_components_analysis</cite> method you can take a look at the method documentation, see <a class="reference internal" href="../user_guide/getting_started.html#getting-help-label"><em>Getting help</em></a></p>
+</div>
+<p>To check the scree plot simply type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_lev</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As you can observe, there are just four principal components.</p>
+<p>To plot the principal components:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_principal_components</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and to plot the score maps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_principal_components_maps</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To save the PCA matrix decomposition:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">mva_results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If later on you want to load the PCA file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">mva_results</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;filename.npz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The saving and loading examples above create files that are only
+useful to EELSlab, or to people interested in learning Python/Numpy.
+MVA results can be saved to a format that can be loaded into Digital
+Micrograph or several other programs using the
+save_principal_components and save_independent_components functions.</p>
+<p>To obtain a model of the SI using only the first four principal components:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span> <span class="o">=</span>  <span class="n">s</span><span class="o">.</span><span class="n">pca_build_SI</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can plot the new Spectrum object sc too see how your PCA model looks like.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you did not close the <cite>s</cite> plots you may have noticed that their cursors are synchronised</p>
+</div>
+<p>To save the new Spectrum file in Hyperspy&#8217;s netCDF file format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="independent-component-analysis">
+<h3>Independent Component Analysis<a class="headerlink" href="#independent-component-analysis" title="Permalink to this headline">¶</a></h3>
+<p>You must have performed PCA before trying to perform ICA.</p>
+<p>To perform independent components analysis on the principal components</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">independent_components_analysis</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And to see the result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_independent_components_maps</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tutorial-2-better-snr-better-ica">
+<h3>Tutorial 2: Better SNR -&gt; Better ICA<a class="headerlink" href="#tutorial-2-better-snr-better-ica" title="Permalink to this headline">¶</a></h3>
+<p>For this example we will use the file <cite>CL2_hyperspy.nc</cite> that contains a simulated EELS SI.</p>
+<p>The SI is identical to the former one, but with higher SNR. Do the full treatment as in <a class="reference internal" href="#example1-label"><em>Tutorial 1: Basic PCA/ICA workflow</em></a>. Is the ICA result any better?</p>
+<p>Now you can try to use second order differentation to perform the ICA by
+looking at the <cite>independent_components_analysis</cite> method documentation.</p>
+</div>
+<div class="section" id="tutorial-3-correcting-energy-instabilities">
+<span id="tutorial3-label"></span><h3>Tutorial 3: Correcting energy instabilities<a class="headerlink" href="#tutorial-3-correcting-energy-instabilities" title="Permalink to this headline">¶</a></h3>
+<p>Real data (unlike simulated ones) use to suffer from energy instabilities. In this tutorial we will see how to partially correct its effect by aligning the SI using an spectral feature that is known to be fixed in energy, ideally the zero loss peak (ZLP).</p>
+<p>For this example we will use the files <cite>CL3_hyperspy.nc</cite> and <cite>LL3_hyperspy.nc</cite> that contais a simulated EELS SIs.</p>
+<p>The SI is identical to <cite>CL1_hyperspy.nc</cite>, but it suffers from poor energy stability.</p>
+<p>If we perform the PCA analysis as in <a class="reference internal" href="#example1-label"><em>Tutorial 1: Basic PCA/ICA workflow</em></a> we can observe in the scree plot that the number of principal components has increased. Fortunatelly, we had acquired a low loss SI simultaneously ( LL3_hyperspy.nc ) that we will use to correct the energy instability.</p>
+<p>First load the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Load the CL</span>
+<span class="n">cl</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;CL3_hyperspy.nc&#39;</span><span class="p">)</span>
+
+<span class="c"># Load the LL</span>
+<span class="n">ll</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;LL3_hyperspy.nc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To easily spot the energy instability you can convert the LL SI in a line spectrum using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ll</span><span class="o">.</span><span class="n">unfold</span><span class="p">()</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To get back your 3D SI:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">ll</span><span class="o">.</span><span class="n">fold</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>To align the low loss using the -5eV, 5eV energy interval, and apply the same correction to the CL:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># To align</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">align</span><span class="p">((</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sync_SI</span> <span class="o">=</span> <span class="n">cl</span><span class="p">)</span>
+
+<span class="c"># To correct the energy origin</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">find_low_loss_origin</span><span class="p">(</span><span class="n">sync_SI</span> <span class="o">=</span> <span class="n">cl</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once aligned you can perform again the PCA and check that the scree plot gets closer to the one in <a class="reference internal" href="#example1-label"><em>Tutorial 1: Basic PCA/ICA workflow</em></a></p>
+</div>
+<div class="section" id="tutorial-4-removing-spikes">
+<h3>Tutorial 4: Removing spikes<a class="headerlink" href="#tutorial-4-removing-spikes" title="Permalink to this headline">¶</a></h3>
+<p>For this example we will use the file <cite>CL4_hyperspy.nc</cite> and  <cite>LL3_hyperspy.nc</cite> that contain a simulated EELS SIs.</p>
+<p>The SI is identical to <cite>CL1_hyperspy.nc</cite>, but it suffers from X-rays spikes and
+the same energy instabilities found in  <a class="reference internal" href="#tutorial3-label"><em>Tutorial 3: Correcting energy instabilities</em></a>.</p>
+<p>If we perform the PCA analysis as in <a class="reference internal" href="#example1-label"><em>Tutorial 1: Basic PCA/ICA workflow</em></a> we can observe in the scree plot that the number of principal components has increased.</p>
+<p>Hyperspy has three Spectrum methods to deal with spikes: <cite>spikes_diagnosis</cite>, <cite>plot_spikes</cite> and <cite>remove_spikes</cite>.</p>
+<p>The workflow for spikes removal is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Plot the energy derivative histogram and</span>
+<span class="c"># find a threshold for the outliers using spikes_diagnosis</span>
+<span class="n">s</span><span class="o">.</span><span class="n">spikes_diagnosis</span><span class="p">()</span>
+
+<span class="c"># By visual inspection we find that the threshold approx. 2000</span>
+<span class="c"># We can check if all the outliers in that region are indeed spikes</span>
+<span class="c"># using the `plot_spikes` method</span>
+<span class="n">s</span><span class="o">.</span><span class="n">plot_spikes</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+
+<span class="c"># If we confirm that all the spectra correspond to spikes</span>
+<span class="c"># we can remove them with the `remove_spikes` function</span>
+<span class="n">s</span><span class="o">.</span><span class="n">remove_spikes</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+
+<span class="c"># Otherwise we can increase the threshold value of use the</span>
+<span class="c"># `coordinates` parameter to provide a list of the SI</span>
+<span class="c"># coordinates where there are spikes. See the documentation.</span>
+</pre></div>
+</div>
+<p>After cleaning the spikes the SI can be processed as in <a class="reference internal" href="#tutorial3-label"><em>Tutorial 3: Correcting energy instabilities</em></a>.</p>
+</div>
+</div>
+<div class="section" id="curve-fitting">
+<h2>Curve fitting<a class="headerlink" href="#curve-fitting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setting-the-microscope-parameters">
+<h3>Setting the microscope parameters<a class="headerlink" href="#setting-the-microscope-parameters" title="Permalink to this headline">¶</a></h3>
+<p>To quantify EEL spectra it is important to accurately define certain
+experimental parameters. The microscope parameters are stored in the
+<tt class="docutils literal"><span class="pre">silib.microscope.microscope</span></tt> class.
+The parameters by default are defined in the <tt class="file docutils literal"><span class="pre">microscopes.csv</span></tt> file that is
+placed in the configuration directory (see <a class="reference internal" href="../user_guide/getting_started.html#configuring-hyperspy-label"><em>Saving Files</em></a> to
+find out where is your configuration directory). Each microscope has a name
+associated to it and you can define the default microscope in the <tt class="file docutils literal"><span class="pre">hyperspyrc</span></tt>
+file (see <a class="reference internal" href="../user_guide/getting_started.html#configuring-hyperspy-label"><em>Saving Files</em></a>).
+To modify the parameters from an hyperspy interactive session simply change the
+attributes of the microscope class, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">microscope</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">15</span> <span class="c"># convergence semi-angle in mrad</span>
+<span class="n">microscope</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="mi">20</span> <span class="c">#  collection semi-angle in mrad</span>
+<span class="n">microscope</span><span class="o">.</span><span class="n">E0</span> <span class="o">=</span> <span class="mf">100E3</span> <span class="c"># Beam energy in eV</span>
+<span class="n">microscope</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Pepe&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This settings will be lost once you close your session unless you save a
+file in a format that supports saving the microscope parameters (at the
+moment only netCDF and msa). In that case, the settings will be loaded when
+you load the file.</p>
+</div>
+<p>In the interactive session you can load the parameters of a microscope defined
+in file:<cite>microscope.csv</cite> as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># To print the list of the microscopes defined in the microscope.csv file</span>
+<span class="n">microscope</span><span class="o">.</span><span class="n">get_available_microscope_names</span><span class="p">()</span>
+<span class="c"># To load the parameters of a particular microscope</span>
+<span class="n">microscope</span><span class="o">.</span><span class="n">set_microscope</span><span class="p">(</span><span class="s">&#39;the_name_of_your_microscope&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tutorial-1">
+<h3>Tutorial 1:<a class="headerlink" href="#tutorial-1" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="tutorial-2">
+<h3>Tutorial 2:<a class="headerlink" href="#tutorial-2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="tutorial-3">
+<h3>Tutorial 3:<a class="headerlink" href="#tutorial-3" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorials</a><ul>
+<li><a class="reference internal" href="#multivariate-analysis">Multivariate analysis</a><ul>
+<li><a class="reference internal" href="#tutorial-1-basic-pca-ica-workflow">Tutorial 1: Basic PCA/ICA workflow</a></li>
+<li><a class="reference internal" href="#independent-component-analysis">Independent Component Analysis</a></li>
+<li><a class="reference internal" href="#tutorial-2-better-snr-better-ica">Tutorial 2: Better SNR -&gt; Better ICA</a></li>
+<li><a class="reference internal" href="#tutorial-3-correcting-energy-instabilities">Tutorial 3: Correcting energy instabilities</a></li>
+<li><a class="reference internal" href="#tutorial-4-removing-spikes">Tutorial 4: Removing spikes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#curve-fitting">Curve fitting</a><ul>
+<li><a class="reference internal" href="#setting-the-microscope-parameters">Setting the microscope parameters</a></li>
+<li><a class="reference internal" href="#tutorial-1">Tutorial 1:</a></li>
+<li><a class="reference internal" href="#tutorial-2">Tutorial 2:</a></li>
+<li><a class="reference internal" href="#tutorial-3">Tutorial 3:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../user_guide/bibliography.html"
+                        title="previous chapter">Bibliography</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api/modules.html"
+                        title="next chapter">Project Modules</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/tutorials.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api/modules.html" title="Project Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../user_guide/bibliography.html" title="Bibliography"
+             >previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, The hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistical analysis &mdash; Hyperspy v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy v0.3.0 documentation" href="../index.html" />
+    <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
+    <link rel="next" title="Curve fitting" href="model.html" />
+    <link rel="prev" title="Loading and saving data" href="aggregate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="model.html" title="Curve fitting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="aggregate.html" title="Loading and saving data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="statistical-analysis">
+<h1>Statistical analysis<a class="headerlink" href="#statistical-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-concepts">
+<h2>Introduction/Concepts<a class="headerlink" href="#introduction-concepts" title="Permalink to this headline">¶</a></h2>
+<p>The amount of data collected often greatly exceeds the true
+dimensionality of the system being measured.  For instance, a typical
+spectrum image has a number of dimensions equal to the number of
+channels in the spectrum at each beam position.  With present
+technology, that is on the order of 1000 dimensions.  For stacks of
+images of a repetitive structure, the number of dimensions is the
+number of pixels in each image, and can easily reach the order of
+10,000 or higher.  However, it is not each individual channel in a
+spectrum, nor each pixel in an image that is of interest.  Rather, it
+is a partcular range and shape of a spectrum that identifies the
+chemical constituents of the sample, or a set of pixels that
+represents a change in column population or position.  There are
+likely far fewer of these &#8220;dimensions,&#8221; which are really the physical
+phenomena of interest.  Multivariate analysis provides a means of
+simplifying the representation of data as channels, transforrming the
+data into a representation of components.  Ideally, these components
+would match pure physical components, allowing direct identification
+of the species present in the sample.  In practice, the components
+obtained by the most common multivariate analysis method, principal
+component analysis (PCA), are not directly interpretable.  Other
+methods that derive components using different mathematical methods
+and with different criteria for separation can provide much more
+meaningful components, making interpretation easier.  The method
+demonstrated here, independent component anlaysis (ICA), derives
+components with minimally Gaussian statistics.  Both EEL spectra and
+structural variations captured in images are expected to be
+non-Gaussian, thus ICA is well suited to studying these systems.</p>
+</div>
+<div class="section" id="what-can-msa-be-applied-to">
+<h2>What can MSA be applied to?<a class="headerlink" href="#what-can-msa-be-applied-to" title="Permalink to this headline">¶</a></h2>
+<p>MVA can be applied to any data in which dimensions are directly
+comparable within a data set.  These dimensions can be channels of an
+energy resolved spectrum, pixels across several images of a repeat
+structure, or pixels from several images in a time-resolved series.
+The interpretation of any MVA results of course depends on the data
+being fed into it, but the principles are quite similar - what is the
+simplest way to examine how the sample is varying over time or space?</p>
+</div>
+<div class="section" id="pca-workflow">
+<h2>PCA workflow<a class="headerlink" href="#pca-workflow" title="Permalink to this headline">¶</a></h2>
+<p>PCA is most commonly applied as a means of noise reduction and data
+simplification.  To perform PCA on your data set, run the following
+command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>There are several options for PCA, including data pre-treatment and
+the algorithm used to compute the analysis.  If you&#8217;re curious, please
+review these options using the ? syntax of ipython:</p>
+<div class="highlight-python"><pre>s.principal_components_analysis?</pre>
+</div>
+<p>The primary purpose of PCA is to estimate the dimensionality of your
+system.  To do this visually, you must examine the scree plot for you
+data, which is a plot of the eigenvalue vs eigenvalue index (in other
+words, the amount of variance that each component accounts for.)
+This plot drops quickly, eventually becoming a slowly descending
+line.  The point at which it becomes linear (often referred to as an
+elbow) is generally judged to be the dimensionality of your system.</p>
+<p>To obtain a scree plot, run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_lev</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reconstructing-data-from-a-partial-set-of-components">
+<h2>Reconstructing data from a partial set of components<a class="headerlink" href="#reconstructing-data-from-a-partial-set-of-components" title="Permalink to this headline">¶</a></h2>
+<p>As we mentioned before, the primary purpose of PCA is often to filter
+noise.  To reconstruct your data using a limited set of components,
+omitting the later components that ideally contain only noise, do the
+following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s2</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">pca_build_SI</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The components argument can be one of several things (None, int,
+or list of ints):</p>
+<ul class="last simple">
+<li>if None, rebuilds SI from all components</li>
+<li>if int, rebuilds SI from components in range 0-given int</li>
+<li>if list of ints, rebuilds SI from only components in given list</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Unlike most of the analysis functions, this function returns a new
+object.  The new object is something that you have to give a
+handle to, so that you can perform analysis on that object later.
+That is why we use the <strong>s2=s.pca_build_SI()</strong> syntax.</p>
+</div>
+<p>It is very important to examine the residuals between your original
+data and your reconstructed data before you go any further.  If you
+have any recognizable structure in either the image space or the
+spectral space, that means you did not include enough components in
+your reconstruction, and you have lost important experimental
+information.  To examine residuals, use the plot_residual method on
+the reconstructed object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s2</span><span class="o">.</span><span class="n">plot_residual</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ica-workflow">
+<h2>ICA workflow<a class="headerlink" href="#ica-workflow" title="Permalink to this headline">¶</a></h2>
+<p>ICA is advantageous over PCA for its ability to return components that
+are often more physically meaningful.  The reasons behind this are
+that ICA relaxes the orthogonality requirement among components, and
+that ICA seeks non-Gaussian components.  These work out to better
+results because in reality, data are often correlated in observation
+space (non-orthogonal), and the distributions of real data are not
+Gaussian.</p>
+<p>To perform ICA on your data, run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">independent_components_analysis</span><span class="p">(</span><span class="n">number_of_components</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must have run PCA before you attempt to run ICA.  ICA uses the
+components from PCA, but analyzes them to come up with a different
+set of components.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you reconstructed an SI from principal components, you need to
+run PCA again before you can run ICA.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must pass an integer number of components to ICA.  The best
+way to estimate this number is by looking at the Scree plot, as
+described above in the PCA workflow.</p>
+</div>
+</div>
+<div class="section" id="visualising-results">
+<h2>Visualising results<a class="headerlink" href="#visualising-results" title="Permalink to this headline">¶</a></h2>
+<p>Plot methods exist for both components and score maps.  Most of these
+methods begin with plot.  Most of these methods take at least one
+argument - the number of components or score maps to plot.</p>
+<p>To explore the plot methods available for an object (we&#8217;ll use s for
+this example), type the following, and hit the tab key.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot</span>
+</pre></div>
+</div>
+<p>You can then start typing whichever plot method you want, then hit the
+tab key again.  It will auto-complete up to the point where there is
+more than one match.</p>
+<div class="highlight-python"><pre>s.plot_pr (hit tab)
+s.plot_principal_components_ (hit tab)
+s.plot_principal_components_maps(number_of_components)</pre>
+</div>
+</div>
+<div class="section" id="saving-and-loading-results">
+<h2>Saving and loading results<a class="headerlink" href="#saving-and-loading-results" title="Permalink to this headline">¶</a></h2>
+<p>You can save the entire object on which you&#8217;ve done MVA (this saves
+the data along with the MVA results).  For this, just use the base
+<strong>save</strong> method.  Alternatively, to save just the MVA results, you can use
+the specialized <strong>save_independent_components</strong> and
+<strong>save_principal_components</strong> methods.  This has the advantage of being
+easier to import into other data analysis programs, such as Digital
+Micrograph.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># save the entire object</span>
+<span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c"># save the principal components and maps to files themselves</span>
+<span class="n">s</span><span class="o">.</span><span class="n">save_principal_components</span><span class="p">()</span>
+<span class="c"># save the independent components to the rpl format, which is</span>
+<span class="c">#   easily importable into Digital Micrograph</span>
+<span class="n">s</span><span class="o">.</span><span class="n">save_independent_components</span><span class="p">(</span><span class="n">spectrum_format</span><span class="o">=</span><span class="s">&#39;rpl&#39;</span><span class="p">,</span> <span class="n">image_format</span><span class="o">=</span><span class="s">&#39;rpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Statistical analysis</a><ul>
+<li><a class="reference internal" href="#introduction-concepts">Introduction/Concepts</a></li>
+<li><a class="reference internal" href="#what-can-msa-be-applied-to">What can MSA be applied to?</a></li>
+<li><a class="reference internal" href="#pca-workflow">PCA workflow</a></li>
+<li><a class="reference internal" href="#reconstructing-data-from-a-partial-set-of-components">Reconstructing data from a partial set of components</a></li>
+<li><a class="reference internal" href="#ica-workflow">ICA workflow</a></li>
+<li><a class="reference internal" href="#visualising-results">Visualising results</a></li>
+<li><a class="reference internal" href="#saving-and-loading-results">Saving and loading results</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aggregate.html"
+                        title="previous chapter">Loading and saving data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="model.html"
+                        title="next chapter">Curve fitting</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user_guide/mva.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="model.html" title="Curve fitting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="aggregate.html" title="Loading and saving data"
+             >previous</a> |</li>
+        <li><a href="../index.html">Hyperspy v0.3.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, The hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
