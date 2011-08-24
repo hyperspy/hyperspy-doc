@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>data_navigation example code: line_spectrum.py &mdash; Hyperspy v0.3.dev documentation</title>
+    <title>file_IO example code: aggregate_load.py &mdash; Hyperspy v0.3.dev documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -48,10 +48,10 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="data-navigation-example-code-line-spectrum-py">
-<span id="data-navigation-line-spectrum"></span><h1>data_navigation example code: line_spectrum.py<a class="headerlink" href="#data-navigation-example-code-line-spectrum-py" title="Permalink to this headline">¶</a></h1>
-<p>[<a class="reference external" href="line_spectrum.py">source code</a>]</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Creates a line spectrum and plots it</span>
+  <div class="section" id="file-io-example-code-aggregate-load-py">
+<span id="file-io-aggregate-load"></span><h1>file_IO example code: aggregate_load.py<a class="headerlink" href="#file-io-example-code-aggregate-load-py" title="Permalink to this headline">¶</a></h1>
+<p>[<a class="reference external" href="aggregate_load.py">source code</a>]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Creates several random spectrum images, then aggregates them.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c"># If running from hyperspy&#39;s interactive the next two imports can be omitted</span>
@@ -60,8 +60,40 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="kn">from</span> <span class="nn">hyperspy.signals.spectrum</span> <span class="kn">import</span> <span class="n">Spectrum</span>
+<span class="kn">from</span> <span class="nn">hyperspy.signals.aggregate</span> <span class="kn">import</span> <span class="n">AggregateSpectrum</span>
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">1024</span><span class="p">))})</span>
+<span class="c"># create the spectrum objects</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;file1&#39;</span><span class="p">}})</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;file2&#39;</span><span class="p">}})</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;file3&#39;</span><span class="p">}})</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Perhaps a better example (but one that can&#39;t be self contained without</span>
+<span class="sd">including too many data files for you to download):</span>
+
+<span class="sd">s1=load(&#39;your_file1.dm3&#39;)</span>
+<span class="sd">s2=load(&#39;your_file2.dm3&#39;)</span>
+<span class="sd">s3=load(&#39;your_file3.dm3&#39;)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">s</span><span class="o">=</span><span class="n">AggregateSpectrum</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s3</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An even better way: load the files and create the aggregate in one command:</span>
+
+<span class="sd">from glob import glob</span>
+<span class="sd">s=load(&#39;*.dm3&#39;)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
 <span class="c"># If running from hyperspy&#39;s interactive console the next line can be</span>
@@ -83,7 +115,7 @@
             </a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/examples/data_navigation/line_spectrum.txt"
+    <li><a href="../../_sources/examples/file_IO/aggregate_load.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
