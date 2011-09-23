@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Image Processing &mdash; Hyperspy 0.3.dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.3.dev documentation" href="../index.html" />
+    <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
+    <link rel="next" title="Bibliography" href="bibliography.html" />
+    <link rel="prev" title="Electron Energy Loss Spectroscopy extra features" href="eels.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bibliography.html" title="Bibliography"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.3.dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="image-processing">
+<h1>Image Processing<a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="types-of-data">
+<h2>Types of data<a class="headerlink" href="#types-of-data" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;data&#8221; we&#8217;ll be addressing here will consist of several images of
+some highly repetitive structure with some slight variations in the
+structure from image to image.  For example, faces.  Or, more along
+the lines of the author&#8217;s research, images of a repetitive (though
+slightly varying) atomic structure.</p>
+<p>All images must be the same shape, same scale, and must be registered
+with one another.  The idea is that any pixel in one image should be
+directly comparable to the corresponding pixel in any other image.</p>
+</div>
+<div class="section" id="goals-of-analysis">
+<h2>Goals of analysis<a class="headerlink" href="#goals-of-analysis" title="Permalink to this headline">¶</a></h2>
+<p>What this analysis can provide you is one of several things:</p>
+<ul class="simple">
+<li>Factor images, which give you visual insight into correlated regions
+of change in your data</li>
+<li>Peak locations and other characteristics (height, shape,
+orientation)</li>
+<li>Factors of peak characteristics, showing correlated changes in
+heights, positions, shapes, and orientations.</li>
+<li>Classifications of several distinct structural variations into
+categories</li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>The best way to start is to pick out several images you&#8217;ve taken under
+identical experimental conditions.  For microscopes, make sure the
+focus on all your images is roughly similar, and that you haven&#8217;t
+changed any apertures or anything else that would change what the
+image contrast means.</p>
+<p>Load your image(s) into a hyperspy object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;filename.dm3&#39;</span><span class="p">)</span>
+<span class="c"># or, for many files:</span>
+<span class="n">d</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;*.dm3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cropping-cells">
+<h2>Cropping cells<a class="headerlink" href="#cropping-cells" title="Permalink to this headline">¶</a></h2>
+<p>To obtain the similar images that go into the analysis, we crop small
+sub-images from your original images.  Thanks to Mike getting sick of
+the tedium of doing this by hand, there&#8217;s an interactive tool for
+cropping cells from one or more images.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">cell_cropper</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This dialog serves two primary functions:</p>
+<ul class="simple">
+<li>Picking your template<ul>
+<li>Drag the cursor indicated by the intersection of the white lines
+overlaid on your image.</li>
+<li>You can also adjust the top or left coordinates from the dialog in
+the upper right.</li>
+<li>Adjust the size of the template by entering a value in the
+corresponding box.</li>
+</ul>
+</li>
+<li>Locating cells that match the template on the image<ul>
+<li>Cross-correlation is automatically calculated on your image
+whenever the template changes.  You can view the cross-correlation
+map by checking the box below the image.</li>
+<li>Matches to the template are located by finding peaks on the cross
+correlation map.  This is slow, so click the &#8220;Find Peaks&#8221; button
+and be patient.</li>
+<li>Once peaks have been found, you can adjust the threshold to
+specify exactly which peaks should be cropped.  Right-click on the
+colorbar, and drag to select a threshold area.  Note that the
+transparency of the overlaid spots on the image changes as you
+change the threshold.  Opaque spots will be cropped, while
+transparent spots will not.</li>
+</ul>
+</li>
+</ul>
+<p>When you have found spots to your satisfaction, click OK (you won&#8217;t be
+able to click OK until you have at least some spots).  After clicking
+OK, the agg object now contains all of your cropped cells.</p>
+</div>
+<div class="section" id="analysis-in-image-space">
+<h2>Analysis in Image space<a class="headerlink" href="#analysis-in-image-space" title="Permalink to this headline">¶</a></h2>
+<p>The aggregate object we&#8217;ve created functions just like any other
+normal data object.  To run multivariate analysis on the stack of
+cropped images,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="why-ica-works-for-images">
+<h2>Why ICA works for images<a class="headerlink" href="#why-ica-works-for-images" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="characterizing-image-peaks">
+<h2>Characterizing image peaks<a class="headerlink" href="#characterizing-image-peaks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="analysis-in-peak-space">
+<h2>Analysis in Peak space<a class="headerlink" href="#analysis-in-peak-space" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Image Processing</a><ul>
+<li><a class="reference internal" href="#types-of-data">Types of data</a></li>
+<li><a class="reference internal" href="#goals-of-analysis">Goals of analysis</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#cropping-cells">Cropping cells</a></li>
+<li><a class="reference internal" href="#analysis-in-image-space">Analysis in Image space</a></li>
+<li><a class="reference internal" href="#why-ica-works-for-images">Why ICA works for images</a></li>
+<li><a class="reference internal" href="#characterizing-image-peaks">Characterizing image peaks</a></li>
+<li><a class="reference internal" href="#analysis-in-peak-space">Analysis in Peak space</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="eels.html"
+                        title="previous chapter">Electron Energy Loss Spectroscopy extra features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bibliography.html"
+                        title="next chapter">Bibliography</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user_guide/image.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bibliography.html" title="Bibliography"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
+             >previous</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.3.dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, The hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre.
+    </div>
+  </body>
+</html>

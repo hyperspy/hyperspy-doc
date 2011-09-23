@@ -888,8 +888,9 @@ a component that can be added to a model.</p>
 <span id="gaussian-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">gaussian</span></tt> Module<a class="headerlink" href="#module-hyperspy.components.gaussian" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hyperspy.components.gaussian.Gaussian">
-<em class="property">class </em><tt class="descclassname">hyperspy.components.gaussian.</tt><tt class="descname">Gaussian</tt><big>(</big><em>A=1.0</em>, <em>sigma=1.0</em>, <em>origin=0.0</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.components.gaussian.</tt><tt class="descname">Gaussian</tt><big>(</big><em>A=1.0</em>, <em>sigma=1.0</em>, <em>centre=0.0</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.component.Component</span></tt></a></p>
+<p>A Gaussian component defined by its area, center and sigma</p>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -909,38 +910,75 @@ a component that can be added to a model.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">create_arrays</span></tt>(shape)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.function" title="hyperspy.components.gaussian.Gaussian.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.estimate_parameters" title="hyperspy.components.gaussian.Gaussian.estimate_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_parameters</span></tt></a>(signal,&nbsp;E1,&nbsp;E2[,&nbsp;...])</td>
+<td>Estimate the gaussian by calculating the momenta.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.function" title="hyperspy.components.gaussian.Gaussian.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_A" title="hyperspy.components.gaussian.Gaussian.grad_A"><tt class="xref py py-obj docutils literal"><span class="pre">grad_A</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_A" title="hyperspy.components.gaussian.Gaussian.grad_A"><tt class="xref py py-obj docutils literal"><span class="pre">grad_A</span></tt></a>(x)</td>
 <td>Given an one dimensional array x containing the energies at which</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_origin" title="hyperspy.components.gaussian.Gaussian.grad_origin"><tt class="xref py py-obj docutils literal"><span class="pre">grad_origin</span></tt></a>(x)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_centre" title="hyperspy.components.gaussian.Gaussian.grad_centre"><tt class="xref py py-obj docutils literal"><span class="pre">grad_centre</span></tt></a>(x)</td>
 <td>Given an one dimensional array x containing the energies at which</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_sigma" title="hyperspy.components.gaussian.Gaussian.grad_sigma"><tt class="xref py py-obj docutils literal"><span class="pre">grad_sigma</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.gaussian.Gaussian.grad_sigma" title="hyperspy.components.gaussian.Gaussian.grad_sigma"><tt class="xref py py-obj docutils literal"><span class="pre">grad_sigma</span></tt></a>(x)</td>
 <td>Given an one dimensional array x containing the energies at which</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.components.gaussian.Gaussian.estimate_parameters">
+<tt class="descname">estimate_parameters</tt><big>(</big><em>signal</em>, <em>E1</em>, <em>E2</em>, <em>only_current=False</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian.estimate_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the gaussian by calculating the momenta.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>signal</strong> : Signal instance</p>
+<p><strong>x1</strong> : float</p>
+<blockquote>
+<div><p>Defines the left limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>x2</strong> : float</p>
+<blockquote>
+<div><p>Defines the right limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>only_current</strong> : bool</p>
+<blockquote>
+<div><p>If False estimates the parameters for the full dataset.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>bool</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Adapted from <a class="reference external" href="http://www.scipy.org/Cookbook/FittingData">http://www.scipy.org/Cookbook/FittingData</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.components.gaussian.Gaussian.function">
 <tt class="descname">function</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian.function" title="Permalink to this definition">¶</a></dt>
@@ -956,11 +994,11 @@ parameters.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.components.gaussian.Gaussian.grad_origin">
-<tt class="descname">grad_origin</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian.grad_origin" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.components.gaussian.Gaussian.grad_centre">
+<tt class="descname">grad_centre</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#hyperspy.components.gaussian.Gaussian.grad_centre" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an one dimensional array x containing the energies at which
 you want to evaluate the gradient of the background model,
-returns the gradient of parameter origin for the current value of
+returns the gradient of parameter centre for the current value of
 the parameters.</p>
 </dd></dl>
 
@@ -982,8 +1020,7 @@ the parameters.</p>
 <dt id="hyperspy.components.line.Line">
 <em class="property">class </em><tt class="descclassname">hyperspy.components.line.</tt><tt class="descname">Line</tt><big>(</big><em>a=0</em>, <em>b=1</em><big>)</big><a class="headerlink" href="#hyperspy.components.line.Line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.component.Component</span></tt></a></p>
-<p>Given an array of the same shape as Spectrum energy_axis, returns it as
-a component that can be added to a model.</p>
+<p>Line component defined by the a and b parameters: f(x) = a + b*x</p>
 <p class="rubric">Methods</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1265,32 +1302,67 @@ a component that can be added to a model.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">create_arrays</span></tt>(shape)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.offset.Offset.function" title="hyperspy.components.offset.Offset.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.offset.Offset.estimate_parameters" title="hyperspy.components.offset.Offset.estimate_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_parameters</span></tt></a>(signal,&nbsp;x1,&nbsp;x2[,&nbsp;...])</td>
+<td>Estimate the parameters by the two area method</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.offset.Offset.function" title="hyperspy.components.offset.Offset.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.offset.Offset.grad_offset" title="hyperspy.components.offset.Offset.grad_offset"><tt class="xref py py-obj docutils literal"><span class="pre">grad_offset</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.offset.Offset.grad_offset" title="hyperspy.components.offset.Offset.grad_offset"><tt class="xref py py-obj docutils literal"><span class="pre">grad_offset</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.components.offset.Offset.estimate_parameters">
+<tt class="descname">estimate_parameters</tt><big>(</big><em>signal</em>, <em>x1</em>, <em>x2</em>, <em>only_current=False</em><big>)</big><a class="headerlink" href="#hyperspy.components.offset.Offset.estimate_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the parameters by the two area method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>signal</strong> : Signal instance</p>
+<p><strong>x1</strong> : float</p>
+<blockquote>
+<div><p>Defines the left limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>x2</strong> : float</p>
+<blockquote>
+<div><p>Defines the right limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>only_current</strong> : bool</p>
+<blockquote>
+<div><p>If False estimates the parameters for the full dataset.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>bool</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.components.offset.Offset.function">
 <tt class="descname">function</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#hyperspy.components.offset.Offset.function" title="Permalink to this definition">¶</a></dt>
@@ -1614,38 +1686,73 @@ the parameters.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">create_arrays</span></tt>(shape)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.function" title="hyperspy.components.power_law.PowerLaw.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.estimate_parameters" title="hyperspy.components.power_law.PowerLaw.estimate_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_parameters</span></tt></a>(signal,&nbsp;x1,&nbsp;x2[,&nbsp;...])</td>
+<td>Estimate the parameters by the two area method</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.function" title="hyperspy.components.power_law.PowerLaw.function"><tt class="xref py py-obj docutils literal"><span class="pre">function</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_A" title="hyperspy.components.power_law.PowerLaw.grad_A"><tt class="xref py py-obj docutils literal"><span class="pre">grad_A</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_A" title="hyperspy.components.power_law.PowerLaw.grad_A"><tt class="xref py py-obj docutils literal"><span class="pre">grad_A</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_origin" title="hyperspy.components.power_law.PowerLaw.grad_origin"><tt class="xref py py-obj docutils literal"><span class="pre">grad_origin</span></tt></a>(x)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_origin" title="hyperspy.components.power_law.PowerLaw.grad_origin"><tt class="xref py py-obj docutils literal"><span class="pre">grad_origin</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_r" title="hyperspy.components.power_law.PowerLaw.grad_r"><tt class="xref py py-obj docutils literal"><span class="pre">grad_r</span></tt></a>(x)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.components.power_law.PowerLaw.grad_r" title="hyperspy.components.power_law.PowerLaw.grad_r"><tt class="xref py py-obj docutils literal"><span class="pre">grad_r</span></tt></a>(x)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_parameters</span></tt>(parameter_name_list)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">refresh_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">store_current_parameters_in_map</span></tt>(indexes)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">summary</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_free_parameters</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_number_parameters</span></tt>()</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.components.power_law.PowerLaw.estimate_parameters">
+<tt class="descname">estimate_parameters</tt><big>(</big><em>signal</em>, <em>x1</em>, <em>x2</em>, <em>only_current=False</em><big>)</big><a class="headerlink" href="#hyperspy.components.power_law.PowerLaw.estimate_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the parameters by the two area method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>signal</strong> : Signal instance</p>
+<p><strong>x1</strong> : float</p>
+<blockquote>
+<div><p>Defines the left limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>x2</strong> : float</p>
+<blockquote>
+<div><p>Defines the right limit of the spectral range to use for the 
+estimation.</p>
+</div></blockquote>
+<p><strong>only_current</strong> : bool</p>
+<blockquote>
+<div><p>If False estimates the parameters for the full dataset.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>bool</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.components.power_law.PowerLaw.function">
 <tt class="descname">function</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#hyperspy.components.power_law.PowerLaw.function" title="Permalink to this definition">¶</a></dt>
