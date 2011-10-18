@@ -168,6 +168,393 @@
 
 </dd></dl>
 
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_cell_overlay">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_cell_overlay</tt><big>(</big><em>cell_data</em>, <em>f_pc</em>, <em>locations</em>, <em>ax=None</em>, <em>plot_shifts=True</em>, <em>plot_char=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4ada5a8&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_cell_overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overlays peak characteristics on an image plot of the average image.</p>
+<p>Only appropriate for Image objects that consist of 3D stacks of cropped
+data.</p>
+<p>Parameters:</p>
+<dl class="docutils">
+<dt>cell_data - numpy array</dt>
+<dd>The data array containing a cell image on which to overlay peak characteristics.
+Generally the average cell from a stack of images.</dd>
+<dt>f_pc - numpy array (short for factors/peak characteristics)</dt>
+<dd>The data array containing either peak characteristics (positions, height, etc.)
+or the factors derived from such peak characteristics using PCA or ICA.
+Supplied by the peak_char.peak_char_stack function.</dd>
+<dt>locations - numpy array</dt>
+<dd>The data array containing the locations of peaks that have been characterized.</dd>
+<dt>plot_shifts - bool, default is True</dt>
+<dd>If true, plots a quiver (arrow) plot showing the shifts for each
+peak present in the component being plotted.</dd>
+<dt>plot_char - None or int</dt>
+<dd><p class="first">If int, the id of the characteristic to plot as the colored 
+scatter plot.
+Possible components are:</p>
+<blockquote class="last">
+<div>4: peak height
+5: peak orientation
+6: peak eccentricity</div></blockquote>
+</dd>
+<dt>cmap <span class="classifier-delimiter">:</span> <span class="classifier">a matplotlib colormap</span></dt>
+<dd>The colormap used for any peak characteristic scatter map
+overlay.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_image_overlay">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_image_overlay</tt><big>(</big><em>plot_component=None</em>, <em>mva_type='PCA'</em>, <em>peak_mva=True</em>, <em>peak_id=None</em>, <em>plot_char=None</em>, <em>plot_shift=False</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_image_overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overlays scores, or some peak characteristic on top of an image
+plot of the original experimental image.  Useful for obtaining a 
+bird&#8217;s-eye view of some image characteristic.</p>
+<p>plot_component - None or int 
+(optional, but required to plot score overlays)</p>
+<blockquote>
+<div>The integer index of the component to plot scores for.
+Creates a scatter plot that is colormapped according to 
+score values.</div></blockquote>
+<p>mva_type - string, either &#8216;PCA&#8217; or &#8216;ICA&#8217; (case insensitive)
+(optional, but required to plot score overlays)</p>
+<blockquote>
+<div>Choose between the components that will be used for plotting
+component maps.  Note that whichever analysis you choose
+here has to actually have already been performed.</div></blockquote>
+<p>peak_mva - bool (default is False)
+(optional, if True, the peak characteristics, shifts, and components</p>
+<blockquote>
+<div>are drawn from the mva_results done on the peak characteristics.
+Namely, these are the self.peak_mva_results attribute.</div></blockquote>
+<p>peak_id - None or int
+(optional, but required to plot peak characteristic and shift overlays)</p>
+<blockquote>
+<div>If int, the peak id for plotting characteristics of.
+To identify peak id&#8217;s, use the plot_peak_ids function, which will
+overlay the average image with the identified peaks used
+throughout the image series.</div></blockquote>
+<p>plot_char - None or int
+(optional, but required to plot peak characteristic overlays)</p>
+<blockquote>
+<div><p>If int, the id of the characteristic to plot as the colored 
+scatter plot.
+Possible components are:</p>
+<blockquote>
+<div>4: peak height
+5: peak orientation
+6: peak eccentricity</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>plot_shift - bool, optional</dt>
+<dd>If True, plots shift overlays for given peak_id onto the parent image(s)</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_image_peaks">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_image_peaks</tt><big>(</big><em>cell_data</em>, <em>peaks=None</em>, <em>index=0</em>, <em>peak_width=10</em>, <em>subpixel=False</em>, <em>medfilt_radius=5</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_image_peaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_independent_components">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_independent_components</tt><big>(</big><em>ic</em>, <em>same_window=True</em>, <em>per_row=3</em>, <em>cell_data=None</em>, <em>on_peaks=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4aebcf8&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_independent_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the independent components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>ic</strong> : numpy array</p>
+<blockquote>
+<div><p>externally provided independent components array
+The shape of &#8216;ic&#8217; must be (channels, n_components),
+so that e.g. ic[:, 0] is the first independent component.</p>
+</div></blockquote>
+<p><strong>same_window</strong> : bool (optional)</p>
+<blockquote>
+<div><p>if &#8216;True&#8217;, the components will be plotted in the
+same window. Default is &#8216;False&#8217;.</p>
+</div></blockquote>
+<p><strong>per_row</strong> : int (optional)</p>
+<blockquote class="last">
+<div><p>When same_window is True, this is the number of plots
+per row in the single window.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_independent_components_maps">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_independent_components_maps</tt><big>(</big><em>scores</em>, <em>ic</em>, <em>locations=None</em>, <em>original_files=None</em>, <em>comp_ids=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4aebcf8&gt;</em>, <em>no_nans=False</em>, <em>scoremap=True</em>, <em>per_row=3</em>, <em>save_figs=False</em>, <em>directory=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_independent_components_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the map associated to each independent component</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>scores</strong> : numpy array</p>
+<blockquote>
+<div><p>externally suplied scores matrix</p>
+</div></blockquote>
+<p><strong>ic</strong> : numpy array</p>
+<blockquote>
+<div><p>externally supplied independent components</p>
+</div></blockquote>
+<p><strong>locations</strong> : numpy recarray</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;filename&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">string, the filename from which a cropped cell came from.</span></dt>
+<dd><p class="first last">Corresponds with the keys in original_files parameter.</p>
+</dd>
+</dl>
+<p>&#8216;id&#8217; : integer, the integer id of the cropped cell
+&#8216;position&#8217; : 1x2 numpy array, the location of the cropped cell on its</p>
+<blockquote>
+<div><p>original image.  For cells cropped using the cell_cropper function,
+this is the upper-left corner of the cropped cell.</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>original_files</strong> : dictionary</p>
+<blockquote>
+<div><p>A dictionary of the files that data is mapped to.  Keys are
+the file names, and the values are the Signal (or subclass) 
+instances.</p>
+</div></blockquote>
+<p><strong>comp_ids</strong> : int or list of ints</p>
+<blockquote>
+<div><p>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</p>
+</div></blockquote>
+<p><strong>cmap</strong> : plt.cm object</p>
+<p><strong>no_nans</strong> : bool (optional)</p>
+<blockquote>
+<div><p>whether substituting NaNs with zeros for a visually prettier plot
+(default is False)</p>
+</div></blockquote>
+<p><strong>per_row</strong> : int (optional)</p>
+<blockquote>
+<div><p>The number of plots per row in the multi-pane window.</p>
+</div></blockquote>
+<p><strong>on_peaks</strong> : bool (optional)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>If True, plots factors/score maps based on peak characteristics.</dt>
+<dd><p class="first last">You must have first run peak_char_stack to obtain peak characteristics,
+then run your MVA technique(s) with the on_peaks flag set to True in
+order to obtain this information.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>scoremap</strong> : bool (optional)</p>
+<blockquote>
+<div><p>If True, plots scores of subimages overlaid as a scatter plot
+on the original images.  Not possible unless the cell cropper
+has been used to obtain your stack of subimages.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>List with the maps as MVA instances</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_maps">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_maps</tt><big>(</big><em>scores</em>, <em>factors=None</em>, <em>comp_ids=None</em>, <em>locations=None</em>, <em>original_files=None</em>, <em>mva_type=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4aebcf8&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em>, <em>scoremap=True</em>, <em>save_figs=False</em>, <em>directory=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot component maps for the different MSA types</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>scores</strong> : numpy array, the array of scores</p>
+<p><strong>factors</strong> : numpy array, the array of components, with each column as a component.</p>
+<p><strong>mva_type</strong> : string, currently either &#8216;pca&#8217; or &#8216;ica&#8217;</p>
+<p><strong>comp_ids</strong> : None, int, or list of ints</p>
+<blockquote>
+<div><p>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</p>
+</div></blockquote>
+<p><strong>locations</strong> : numpy recarray</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;filename&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">string, the filename from which a cropped cell came from.</span></dt>
+<dd><p class="first last">Corresponds with the keys in original_files parameter.</p>
+</dd>
+</dl>
+<p>&#8216;id&#8217; : integer, the integer id of the cropped cell
+&#8216;position&#8217; : 1x2 numpy array, the location of the cropped cell on its</p>
+<blockquote>
+<div><p>original image.  For cells cropped using the cell_cropper function,
+this is the upper-left corner of the cropped cell.</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>original_files</strong> : dictionary</p>
+<blockquote>
+<div><p>A dictionary of the files that data is mapped to.  Keys are
+the file names, and the values are the Signal (or subclass) 
+instances.</p>
+</div></blockquote>
+<p><strong>cmap: matplotlib colormap instance</strong> :</p>
+<p><strong>no_nans: bool,</strong> :</p>
+<p><strong>per_row</strong> : int (optional)</p>
+<blockquote>
+<div><p>The number of plots per row in the multi-pane window.</p>
+</div></blockquote>
+<p><strong>on_peaks</strong> : bool (optional)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>If True, plots factors/score maps based on peak characteristics.</dt>
+<dd><p class="first last">You must have first run peak_char_stack to obtain peak characteristics,
+then run your MVA technique(s) with the on_peaks flag set to True in
+order to obtain this information.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>scoremap</strong> : bool (optional)</p>
+<blockquote>
+<div><p>If True, plots scores of subimages overlaid as a scatter plot
+on the original images.  Not possible unless the cell cropper
+has been used to obtain your stack of subimages.</p>
+</div></blockquote>
+<p><strong>save_figs</strong> : bool (optional)</p>
+<blockquote>
+<div><p>If true, saves figures at 600 dpi to directory.  If directory is None,
+saves to current working directory.</p>
+</div></blockquote>
+<p><strong>directory</strong> : string or None</p>
+<blockquote class="last">
+<div><p>The folder to save images to, if save_figs is True.  If None, saves
+to current working directory.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_peak_ids">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_peak_ids</tt><big>(</big><em>self</em>, <em>cell_data</em>, <em>target_locations=None</em>, <em>peak_width=10</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_peak_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overlays id numbers for identified peaks on an average image of the
+stack.  Identified peaks are either those you specified as 
+target_locations, or if not specified, those automatically 
+identified from the average image.</p>
+<p>Use this function to identify a peak to overlay a characteristic of
+onto the original experimental image using the plot_image_overlay
+function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_principal_components">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_principal_components</tt><big>(</big><em>n=None</em>, <em>same_window=True</em>, <em>per_row=3</em>, <em>on_peaks=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4aebcf8&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_principal_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the principal components up to the given number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>n</strong> : int</p>
+<blockquote>
+<div><p>number of principal components to plot.</p>
+</div></blockquote>
+<p><strong>same_window</strong> : bool (optional)</p>
+<blockquote>
+<div><p>if &#8216;True&#8217;, the components will be plotted in the
+same window. Default is &#8216;False&#8217;.</p>
+</div></blockquote>
+<p><strong>per_row</strong> : int (optional)</p>
+<blockquote>
+<div><p>When same_window is True, this is the number of plots
+per row in the single window.</p>
+</div></blockquote>
+<p class="last"><strong>on_peaks</strong> : bool (optional)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.drawing.image.plot_principal_components_maps">
+<tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">plot_principal_components_maps</tt><big>(</big><em>scores</em>, <em>pc</em>, <em>comp_ids=None</em>, <em>locations=None</em>, <em>original_files=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap instance at 0x4aebcf8&gt;</em>, <em>per_row=3</em>, <em>scoremap=True</em>, <em>save_figs=False</em>, <em>directory=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.plot_principal_components_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the map associated to each independent component</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>scores</strong> : numpy array</p>
+<blockquote>
+<div><p>externally supplied scores matrix</p>
+</div></blockquote>
+<p><strong>pc</strong> : numpy array</p>
+<blockquote>
+<div><p>externally supplied principal components</p>
+</div></blockquote>
+<p><strong>locations</strong> : numpy recarray</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;filename&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">string, the filename from which a cropped cell came from.</span></dt>
+<dd><p class="first last">Corresponds with the keys in original_files parameter.</p>
+</dd>
+</dl>
+<p>&#8216;id&#8217; : integer, the integer id of the cropped cell
+&#8216;position&#8217; : 1x2 numpy array, the location of the cropped cell on its</p>
+<blockquote>
+<div><p>original image.  For cells cropped using the cell_cropper function,
+this is the upper-left corner of the cropped cell.</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>original_files</strong> : dictionary</p>
+<blockquote>
+<div><p>A dictionary of the files that data is mapped to.  Keys are
+the file names, and the values are the Signal (or subclass) 
+instances.</p>
+</div></blockquote>
+<p><strong>comp_ids</strong> : None, int, or list of ints</p>
+<blockquote>
+<div><p>if None, returns maps of all components.
+if int, returns maps of components with ids from 0 to given int.
+if list of ints, returns maps of components with ids in given list.</p>
+</div></blockquote>
+<p><strong>cmap</strong> : plt.cm object, the colormap of the factor image</p>
+<p><strong>no_nans</strong> : bool (optional)</p>
+<blockquote>
+<div><p>whether substituting NaNs with zeros for a visually prettier plot
+(default is False)</p>
+</div></blockquote>
+<p><strong>per_row</strong> : int (optional)</p>
+<blockquote>
+<div><p>The number of plots per row in the multi-pane window.</p>
+</div></blockquote>
+<p><strong>scoremap</strong> : bool (optional)</p>
+<blockquote>
+<div><p>If True, plots scores of subimages overlaid as a scatter plot
+on the original images.  Not possible unless the cell cropper
+has been used to obtain your stack of subimages.</p>
+</div></blockquote>
+<p><strong>save_figs</strong> : bool (optional)</p>
+<blockquote>
+<div><p>If true, saves figures at 600 dpi to directory.  If directory is None,
+saves to current working directory.</p>
+</div></blockquote>
+<p><strong>directory</strong> : string or None</p>
+<blockquote>
+<div><p>The folder to save images to, if save_figs is True.  If None, saves
+to current working directory.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>List with the maps as MVA instances</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-hyperspy.drawing.mpl_hie">
 <span id="mpl-hie-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mpl_hie</span></tt> Module<a class="headerlink" href="#module-hyperspy.drawing.mpl_hie" title="Permalink to this headline">¶</a></h2>
@@ -187,16 +574,19 @@
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot"><tt class="xref py py-obj docutils literal"><span class="pre">close_navigator_plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_image" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_image"><tt class="xref py py-obj docutils literal"><span class="pre">plot_image</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_image" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_image"><tt class="xref py py-obj docutils literal"><span class="pre">plot_image</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -209,6 +599,11 @@
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close">
 <tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot">
+<tt class="descname">close_navigator_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -258,22 +653,25 @@ explore the SI.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot"><tt class="xref py py-obj docutils literal"><span class="pre">close_navigator_plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">key2switch_right_pointer</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">key2switch_right_pointer</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_spectrum" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">plot_spectrum</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">remove_right_pointer</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_spectrum" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">plot_spectrum</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">remove_right_pointer</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -291,6 +689,11 @@ explore the SI.</p>
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close">
 <tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot">
+<tt class="descname">close_navigator_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -350,10 +753,10 @@ explore the SI.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.close" title="hyperspy.drawing.spectrum.SpectrumFigure.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="hyperspy.drawing.spectrum.SpectrumFigure.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_axis</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_left_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_left_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_left_axis</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="hyperspy.drawing.spectrum.SpectrumFigure.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>()</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_right_axis</span></tt></a>()</td>
@@ -375,13 +778,13 @@ explore the SI.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.spectrum.SpectrumFigure.create_figure">
-<tt class="descname">create_figure</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.spectrum.SpectrumFigure.create_axis">
+<tt class="descname">create_axis</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_axis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.spectrum.SpectrumFigure.create_left_axis">
-<tt class="descname">create_left_axis</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_left_axis" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.spectrum.SpectrumFigure.create_figure">
+<tt class="descname">create_figure</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -466,14 +869,537 @@ attribute</p>
 </dd></dl>
 
 </div>
-<div class="section" id="ucc-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">ucc</span></tt> Module<a class="headerlink" href="#ucc-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-hyperspy.drawing.ucc">
+<span id="ucc-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ucc</span></tt> Module<a class="headerlink" href="#module-hyperspy.drawing.ucc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyperspy.drawing.ucc.OK_custom_handler">
+<em class="property">class </em><tt class="descclassname">hyperspy.drawing.ucc.</tt><tt class="descname">OK_custom_handler</tt><a class="headerlink" href="#hyperspy.drawing.ucc.OK_custom_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traitsui.handler.Handler</span></tt></p>
+<p class="rubric">Methods</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_class_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a named trait attribute to this class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a trait attribute to this object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_category</span></tt>(category)</td>
+<td>Adds a trait category to a class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">all_trait_names</span></tt>()</td>
+<td>Returns the list of all trait names, including implicitly defined</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">apply</span></tt>(info)</td>
+<td>Handles the <strong>Apply</strong> button being clicked.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">base_trait</span></tt>(name)</td>
+<td>Returns the base trait definition for a trait attribute.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">can_drop</span></tt>(info,&nbsp;object)</td>
+<td>Can the specified object be inserted into the view?</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">can_import</span></tt>(info,&nbsp;category)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of the class that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">clone_traits</span></tt>([traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Clones a new object from this one, optionally copying only a specified set of traits.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.OK_custom_handler.close" title="hyperspy.drawing.ucc.OK_custom_handler.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>(info,&nbsp;is_ok)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">closed</span></tt>(info,&nbsp;is_ok)</td>
+<td>Handles a dialog-based user interface being closed by the user.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">configure_traits</span></tt>([filename,&nbsp;view,&nbsp;kind,&nbsp;...])</td>
+<td>Configures the object&#8217;s traits.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">copy_traits</span></tt>(other[,&nbsp;traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Copies another object&#8217;s trait attributes into this one.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">copyable_trait_names</span></tt>(**metadata)</td>
+<td>Returns the list of trait names to copy or clone by default.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the object&#8217;s class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">dock_control_for</span></tt>(info,&nbsp;parent,&nbsp;object)</td>
+<td>Returns the DockControl object for a specified object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">dock_window_empty</span></tt>(dock_window)</td>
+<td>Handles a DockWindow becoming empty.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">edit_traits</span></tt>([view,&nbsp;parent,&nbsp;kind,&nbsp;context,&nbsp;...])</td>
+<td>Edits the object&#8217;s traits.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">has_traits_interface</span></tt>(*interfaces)</td>
+<td>Returns whether the object implements a specified traits interface.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">init</span></tt>(info)</td>
+<td>Initializes the controls of a user interface.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_info</span></tt>(info)</td>
+<td>Informs the handler what the UIInfo object for a View will be.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_change</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_event</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">open_view_for</span></tt>(control[,&nbsp;use_mouse])</td>
+<td>Creates a new view of a specified control.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">position</span></tt>(info)</td>
+<td>Positions a dialog-based user interface on the display.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">print_traits</span></tt>([show_help])</td>
+<td>Prints the values of all explicitly-defined, non-event trait attributes on the current object, in an easily readable format.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait</span></tt>(name)</td>
+<td>Removes a trait attribute from this object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">reset_traits</span></tt>([traits])</td>
+<td>Resets some or all of an object&#8217;s trait attributes to their default values.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">revert</span></tt>(info)</td>
+<td>Handles the <strong>Revert</strong> button being clicked.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_trait_dispatch_handler</span></tt>(name,&nbsp;klass[,&nbsp;...])</td>
+<td>Sets a trait notification dispatch handler.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">setattr</span></tt>(info,&nbsp;object,&nbsp;name,&nbsp;value)</td>
+<td>Handles the user setting a specified object trait&#8217;s value.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">show_help</span></tt>(info[,&nbsp;control])</td>
+<td>Shows the help associated with the view.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sync_trait</span></tt>(trait_name,&nbsp;object[,&nbsp;alias,&nbsp;...])</td>
+<td>Synchronizes the value of a trait attribute on this object with a trait attribute on another object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait</span></tt>(name[,&nbsp;force,&nbsp;copy])</td>
+<td>Returns the trait definition for the <em>name</em> trait attribute.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_context</span></tt>()</td>
+<td>Returns the default context to use for editing or configuring</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_items_event</span></tt>(event_trait,name,items_event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_monitor</span></tt>(handler[,&nbsp;remove])</td>
+<td>Adds or removes the specified <em>handler</em> from the list of active monitors.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_property_changed</span></tt>(...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_setq</span></tt>(**traits)</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_subclasses</span></tt>([all])</td>
+<td>Returns a list of the immediate (or all) subclasses of this class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td>Gets or sets a ViewElement associated with an object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the object&#8217;s</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_for</span></tt>(info,&nbsp;view,&nbsp;object,&nbsp;...)</td>
+<td>Gets a specified View object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_views</span></tt>([klass])</td>
+<td>Returns a list of the names of all view elements associated with the current object&#8217;s class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of this object that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_init</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_inited</span></tt>([True])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_trait</span></tt>(name,&nbsp;value)</td>
+<td>Validates whether a value is legal for a trait.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.OK_custom_handler.close">
+<tt class="descname">close</tt><big>(</big><em>info</em>, <em>is_ok</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.OK_custom_handler.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.drawing.ucc.TemplatePicker">
+<em class="property">class </em><tt class="descclassname">hyperspy.drawing.ucc.</tt><tt class="descname">TemplatePicker</tt><big>(</big><em>signal_instance</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p class="rubric">Methods</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.OK_custom" title="hyperspy.drawing.ucc.TemplatePicker.OK_custom"><tt class="xref py py-obj docutils literal"><span class="pre">OK_custom</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_class_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a named trait attribute to this class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a trait attribute to this object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_category</span></tt>(category)</td>
+<td>Adds a trait category to a class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">all_trait_names</span></tt>()</td>
+<td>Returns the list of all trait names, including implicitly defined</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">base_trait</span></tt>(name)</td>
+<td>Returns the base trait definition for a trait attribute.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.calc_numpeaks" title="hyperspy.drawing.ucc.TemplatePicker.calc_numpeaks"><tt class="xref py py-obj docutils literal"><span class="pre">calc_numpeaks</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of the class that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">clone_traits</span></tt>([traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Clones a new object from this one, optionally copying only a specified set of traits.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">configure_traits</span></tt>([filename,&nbsp;view,&nbsp;kind,&nbsp;...])</td>
+<td>Creates and displays a dialog box for editing values of trait</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">copy_traits</span></tt>(other[,&nbsp;traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Copies another object&#8217;s trait attributes into this one.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">copyable_trait_names</span></tt>(**metadata)</td>
+<td>Returns the list of trait names to copy or clone by default.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.crop_cells" title="hyperspy.drawing.ucc.TemplatePicker.crop_cells"><tt class="xref py py-obj docutils literal"><span class="pre">crop_cells</span></tt></a>([idx])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.crop_cells_stack" title="hyperspy.drawing.ucc.TemplatePicker.crop_cells_stack"><tt class="xref py py-obj docutils literal"><span class="pre">crop_cells_stack</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.decrease_img_idx" title="hyperspy.drawing.ucc.TemplatePicker.decrease_img_idx"><tt class="xref py py-obj docutils literal"><span class="pre">decrease_img_idx</span></tt></a>(info)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the object&#8217;s class.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.draw_colorbar" title="hyperspy.drawing.ucc.TemplatePicker.draw_colorbar"><tt class="xref py py-obj docutils literal"><span class="pre">draw_colorbar</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">edit_traits</span></tt>([view,&nbsp;parent,&nbsp;kind,&nbsp;context,&nbsp;...])</td>
+<td>Displays a user interface window for editing trait attribute values.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">has_traits_interface</span></tt>(*interfaces)</td>
+<td>Returns whether the object implements a specified traits interface.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.increase_img_idx" title="hyperspy.drawing.ucc.TemplatePicker.increase_img_idx"><tt class="xref py py-obj docutils literal"><span class="pre">increase_img_idx</span></tt></a>(info)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.locate_peaks" title="hyperspy.drawing.ucc.TemplatePicker.locate_peaks"><tt class="xref py py-obj docutils literal"><span class="pre">locate_peaks</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.manual_thresh_update" title="hyperspy.drawing.ucc.TemplatePicker.manual_thresh_update"><tt class="xref py py-obj docutils literal"><span class="pre">manual_thresh_update</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.mask_peaks" title="hyperspy.drawing.ucc.TemplatePicker.mask_peaks"><tt class="xref py py-obj docutils literal"><span class="pre">mask_peaks</span></tt></a>(idx)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_change</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_event</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">print_traits</span></tt>([show_help])</td>
+<td>Prints the values of all explicitly-defined, non-event trait attributes on the current object, in an easily readable format.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.redraw_plots" title="hyperspy.drawing.ucc.TemplatePicker.redraw_plots"><tt class="xref py py-obj docutils literal"><span class="pre">redraw_plots</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait</span></tt>(name)</td>
+<td>Removes a trait attribute from this object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.render_image" title="hyperspy.drawing.ucc.TemplatePicker.render_image"><tt class="xref py py-obj docutils literal"><span class="pre">render_image</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.render_scatplot" title="hyperspy.drawing.ucc.TemplatePicker.render_scatplot"><tt class="xref py py-obj docutils literal"><span class="pre">render_scatplot</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">reset_traits</span></tt>([traits])</td>
+<td>Resets some or all of an object&#8217;s trait attributes to their default values.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_trait_dispatch_handler</span></tt>(name,&nbsp;klass[,&nbsp;...])</td>
+<td>Sets a trait notification dispatch handler.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">sync_trait</span></tt>(trait_name,&nbsp;object[,&nbsp;alias,&nbsp;...])</td>
+<td>Synchronizes the value of a trait attribute on this object with a trait attribute on another object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.toggle_cc_view" title="hyperspy.drawing.ucc.TemplatePicker.toggle_cc_view"><tt class="xref py py-obj docutils literal"><span class="pre">toggle_cc_view</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait</span></tt>(name[,&nbsp;force,&nbsp;copy])</td>
+<td>Returns the trait definition for the <em>name</em> trait attribute.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_context</span></tt>()</td>
+<td>Returns the default context to use for editing or configuring</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_items_event</span></tt>(event_trait,name,items_event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_monitor</span></tt>(handler[,&nbsp;remove])</td>
+<td>Adds or removes the specified <em>handler</em> from the list of active monitors.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_property_changed</span></tt>(...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_setq</span></tt>(**traits)</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_subclasses</span></tt>([all])</td>
+<td>Returns a list of the immediate (or all) subclasses of this class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td>Gets or sets a ViewElement associated with an object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the object&#8217;s</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_views</span></tt>([klass])</td>
+<td>Returns a list of the names of all view elements associated with the current object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of this object that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_init</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_inited</span></tt>([True])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_CC" title="hyperspy.drawing.ucc.TemplatePicker.update_CC"><tt class="xref py py-obj docutils literal"><span class="pre">update_CC</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_csr_position" title="hyperspy.drawing.ucc.TemplatePicker.update_csr_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_csr_position</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_img_depth" title="hyperspy.drawing.ucc.TemplatePicker.update_img_depth"><tt class="xref py py-obj docutils literal"><span class="pre">update_img_depth</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_thresh" title="hyperspy.drawing.ucc.TemplatePicker.update_thresh"><tt class="xref py py-obj docutils literal"><span class="pre">update_thresh</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_tmp_plot" title="hyperspy.drawing.ucc.TemplatePicker.update_tmp_plot"><tt class="xref py py-obj docutils literal"><span class="pre">update_tmp_plot</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.ucc.TemplatePicker.update_top_left" title="hyperspy.drawing.ucc.TemplatePicker.update_top_left"><tt class="xref py py-obj docutils literal"><span class="pre">update_top_left</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_trait</span></tt>(name,&nbsp;value)</td>
+<td>Validates whether a value is legal for a trait.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.OK_custom">
+<tt class="descname">OK_custom</tt><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.OK_custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#hyperspy.drawing.ucc.OK_custom_handler" title="hyperspy.drawing.ucc.OK_custom_handler"><tt class="xref py py-class docutils literal"><span class="pre">OK_custom_handler</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.calc_numpeaks">
+<tt class="descname">calc_numpeaks</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.calc_numpeaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.crop_cells">
+<tt class="descname">crop_cells</tt><big>(</big><em>idx=0</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.crop_cells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.crop_cells_stack">
+<tt class="descname">crop_cells_stack</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.crop_cells_stack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.decrease_img_idx">
+<tt class="descname">decrease_img_idx</tt><big>(</big><em>info</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.decrease_img_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.draw_colorbar">
+<tt class="descname">draw_colorbar</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.draw_colorbar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.increase_img_idx">
+<tt class="descname">increase_img_idx</tt><big>(</big><em>info</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.increase_img_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.locate_peaks">
+<tt class="descname">locate_peaks</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.locate_peaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.manual_thresh_update">
+<tt class="descname">manual_thresh_update</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.manual_thresh_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.mask_peaks">
+<tt class="descname">mask_peaks</tt><big>(</big><em>idx</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.mask_peaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.redraw_plots">
+<tt class="descname">redraw_plots</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.redraw_plots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.render_image">
+<tt class="descname">render_image</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.render_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.render_scatplot">
+<tt class="descname">render_scatplot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.render_scatplot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.toggle_cc_view">
+<tt class="descname">toggle_cc_view</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.toggle_cc_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_CC">
+<tt class="descname">update_CC</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_CC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_csr_position">
+<tt class="descname">update_csr_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_csr_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_img_depth">
+<tt class="descname">update_img_depth</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_img_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_thresh">
+<tt class="descname">update_thresh</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_thresh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_tmp_plot">
+<tt class="descname">update_tmp_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_tmp_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.ucc.TemplatePicker.update_top_left">
+<tt class="descname">update_top_left</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.ucc.TemplatePicker.update_top_left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-hyperspy.drawing.utils">
 <span id="utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> Module<a class="headerlink" href="#module-hyperspy.drawing.utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="hyperspy.drawing.utils.create_figure">
-<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">create_figure</tt><big>(</big><em>window_title=None</em>, <em>_on_window_close=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.create_figure" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">create_figure</tt><big>(</big><em>window_title=None</em>, <em>_on_figure_window_close=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.create_figure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -483,8 +1409,8 @@ attribute</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hyperspy.drawing.utils.on_window_close">
-<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">on_window_close</tt><big>(</big><em>figure</em>, <em>function</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.on_window_close" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.utils.on_figure_window_close">
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">on_figure_window_close</tt><big>(</big><em>figure</em>, <em>function</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.on_figure_window_close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connects a close figure signal to a given function</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1240,7 +2166,9 @@ iteractivity machinery passes to modify mode</p>
 <li><a class="reference internal" href="#module-hyperspy.drawing.spectrum"><tt class="docutils literal"><span class="pre">spectrum</span></tt> Module</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#ucc-module"><tt class="docutils literal"><span class="pre">ucc</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.drawing.ucc"><tt class="docutils literal"><span class="pre">ucc</span></tt> Module</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-hyperspy.drawing.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.drawing.widgets"><tt class="docutils literal"><span class="pre">widgets</span></tt> Module</a><ul>
 </ul>
