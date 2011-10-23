@@ -3,16 +3,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Image Processing &mdash; Hyperspy 0.3.dev documentation</title>
-    
+    <title>Image Processing &mdash; Hyperspy v0.3.dev documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -27,9 +24,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.3.dev documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy v0.3.dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Bibliography" href="bibliography.html" />
+    <link rel="next" title="Mapped parameters structure" href="mapped_parameters_structure.html" />
     <link rel="prev" title="Electron Energy Loss Spectroscopy extra features" href="eels.html" /> 
   </head>
   <body>
@@ -46,12 +43,12 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="bibliography.html" title="Bibliography"
+          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy v0.3.dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -150,15 +147,80 @@ cropped images,</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>To view your factor images, use the <strong>plotPca_factors</strong> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="why-ica-works-for-images">
 <h2>Why ICA works for images<a class="headerlink" href="#why-ica-works-for-images" title="Permalink to this headline">¶</a></h2>
+<p>For several real-world situations, the distributions of components
+that make up the system are not Gaussian.  This means that PCA will
+never work well for finding the original components - it can only
+derive Gaussian components.  Independent component analysis, on the
+other hand, derives components by intentionally maximizing the
+non-Gaussianity of components.  The idea is encapsulated by the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Central_limit_theorem">Central Limit Theorem</a>,
+which states that the sum of any number of independent components
+will converge towards the Gaussian distribution.</p>
 </div>
 <div class="section" id="characterizing-image-peaks">
 <h2>Characterizing image peaks<a class="headerlink" href="#characterizing-image-peaks" title="Permalink to this headline">¶</a></h2>
+<p>To make the interpretation of factors more straightforward, you can
+derive characteristics for image peaks, and run multivariate analysis
+on the characteristics, rather than the image data.  Assuming that
+your characteristics properly parameterize your peaks (i.e. the
+parameterized peak does not lose important information), this
+description of your data is equivalent to the image.</p>
+<p>In hyperspy, you can quickly and easily characterize all the peaks in
+a stack of images with the <strong>peak_char_stack</strong> function.  Its one
+required parameter is the peak_width, which you should estimate
+visually from your images.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">peak_char_stack</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="meaning-of-peak-characteristics">
+<h2>Meaning of peak characteristics<a class="headerlink" href="#meaning-of-peak-characteristics" title="Permalink to this headline">¶</a></h2>
+<p>Peak characteristics currently come in sets of 7:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>0 and 1: the peak position</li>
+<li>2 and 3: the difference between peak position and target position</li>
+<li>4: the peak height (or change in peak height for a component)</li>
+<li>5: the peak orientation (or change in peak orientation for a</li>
+</ol>
+<blockquote>
+<div>component).  Orientation ranges from -pi/2 to pi/2 radians.</div></blockquote>
+<ol class="arabic simple">
+<li>6: the peak eccentricity (or change in peak eccentricity for a</li>
+</ol>
+<blockquote>
+<div>component).  Eccentricity ranges from 0 to 1, with 0 being a
+perfectly round object, and 1 being a line.</div></blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="analysis-in-peak-space">
 <h2>Analysis in Peak space<a class="headerlink" href="#analysis-in-peak-space" title="Permalink to this headline">¶</a></h2>
+<p>Running multivariate analysis on peak characteristics is similar to
+analysis on image data, with the exception that you pass the on_peaks
+parameter as True.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">principal_component_analysis</span><span class="p">(</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Similarly, plotting functions also take the on_peaks parameter.  They
+also offer a few more options to control exactly which of the peak
+parameters are plotted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># default view for peak plotting is to plot shifts,</span>
+<span class="c"># magnified by a factor of 100, along with a scatter map</span>
+<span class="c"># of peak heights.</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c"># disable the vector plot of peak shifts</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">plot_shifts</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="c"># plot peak orientation instead of peak height</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">plot_char</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -181,6 +243,7 @@ cropped images,</p>
 <li><a class="reference internal" href="#analysis-in-image-space">Analysis in Image space</a></li>
 <li><a class="reference internal" href="#why-ica-works-for-images">Why ICA works for images</a></li>
 <li><a class="reference internal" href="#characterizing-image-peaks">Characterizing image peaks</a></li>
+<li><a class="reference internal" href="#meaning-of-peak-characteristics">Meaning of peak characteristics</a></li>
 <li><a class="reference internal" href="#analysis-in-peak-space">Analysis in Peak space</a></li>
 </ul>
 </li>
@@ -190,8 +253,8 @@ cropped images,</p>
   <p class="topless"><a href="eels.html"
                         title="previous chapter">Electron Energy Loss Spectroscopy extra features</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="bibliography.html"
-                        title="next chapter">Bibliography</a></p>
+  <p class="topless"><a href="mapped_parameters_structure.html"
+                        title="next chapter">Mapped parameters structure</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/user_guide/image.txt"
@@ -227,18 +290,18 @@ cropped images,</p>
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="bibliography.html" title="Bibliography"
+          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
              >next</a> |</li>
         <li class="right" >
           <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy v0.3.dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, The hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>
