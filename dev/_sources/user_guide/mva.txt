@@ -15,11 +15,11 @@ the methods described in this section.
    In version 0.3.0beta3 the syntax for most of the machine-learning functions
    have changed. It follows a summary of the changes:
    
-   * `Spectrum.principal_components_analysis` was renamed to `Spectrum.decomposition`
-   * `Spectrum.independent_components_analysis` was renamed to `Spectrum.blind_source_separation`
-   * `Spectrum.pca_build_SI` was renamed to `get_decomposition_model`
-   * `Spectrum.ica_build_SI` was renamed to `get_bss_model`
-   * `Spectrum.plot_lev` was rename to `Spectrum.plot_explained_variance_ratio`
+   * `principal_components_analysis` was renamed to `Spectrum.decomposition`
+   * `independent_components_analysis` was renamed to `Spectrum.blind_source_separation`
+   * `pca_build_SI` was renamed to `get_decomposition_model`
+   * `ica_build_SI` was renamed to `get_bss_model`
+   * `plot_lev` was rename to `Spectrum.plot_explained_variance_ratio`
    
    
 .. _decomposition:
@@ -48,14 +48,36 @@ review these options using the ? syntax of ipython:
 The default algorithm used when running `decomposition` is `SVD`, which performs
 PCA using singular value decomposition.
 
+
+Poissonian noise
+----------------
+
+Most decomposition algorithms assume that the noise of the data follows a
+Gaussian distribution. In the case that the data that you are analysing follow
+a Poissonian distribution instead Hyperspy can "normalise" the data by
+performing a scaling operation which can greatly enhance the result.
+
+To perform Poissonian noise normalisation:
+
+.. code-block:: python
+
+    # The long way:
+    s.decomposition(normalize_poissonian_noise = True)
+    
+    # Because it is the first argument we cold have simple written:
+    s.decomposition(True)
+    
+For more details about the scaling procedure you can consult the 
+:ref:`following research article <http://onlinelibrary.wiley.com/doi/10.1002/sia.1657/abstract>`
+
 .. _decomposition-nomenclature:
 
 Nomenclature
 ------------
-Hyperspy only performs decomposition into two datasets: one with the dimension 
-of the signal space called `factors` and the other with the dimension of the
-navigation space called `scores`. The same nomenclature applies to the result
-of BSS.
+Hyperspy performs the decomposition of a dataset into two datasets:
+one with the dimension of the signal space called `factors` and the other with 
+the dimension of the navigation space called `scores`.
+The same nomenclature applies to the result of BSS.
 
 
 Principal component analysis
@@ -99,8 +121,7 @@ your algorithm of choice is PCA.
     or list of ints):
 
     * if None, all the components are used to construct the model.
-    * if int, only the given number of components (starting from index 0)
-    are used to construct the model.
+    * if int, only the given number of components (starting from index 0) are used to construct the model.
     * if list of ints, only the components in the given list are used to
     construct the model.
 

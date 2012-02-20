@@ -75,11 +75,11 @@ the methods described in this section.</p>
 <p>In version 0.3.0beta3 the syntax for most of the machine-learning functions
 have changed. It follows a summary of the changes:</p>
 <ul class="last simple">
-<li><cite>Spectrum.principal_components_analysis</cite> was renamed to <cite>Spectrum.decomposition</cite></li>
-<li><cite>Spectrum.independent_components_analysis</cite> was renamed to <cite>Spectrum.blind_source_separation</cite></li>
-<li><cite>Spectrum.pca_build_SI</cite> was renamed to <cite>get_decomposition_model</cite></li>
-<li><cite>Spectrum.ica_build_SI</cite> was renamed to <cite>get_bss_model</cite></li>
-<li><cite>Spectrum.plot_lev</cite> was rename to <cite>Spectrum.plot_explained_variance_ratio</cite></li>
+<li><cite>principal_components_analysis</cite> was renamed to <cite>Spectrum.decomposition</cite></li>
+<li><cite>independent_components_analysis</cite> was renamed to <cite>Spectrum.blind_source_separation</cite></li>
+<li><cite>pca_build_SI</cite> was renamed to <cite>get_decomposition_model</cite></li>
+<li><cite>ica_build_SI</cite> was renamed to <cite>get_bss_model</cite></li>
+<li><cite>plot_lev</cite> was rename to <cite>Spectrum.plot_explained_variance_ratio</cite></li>
 </ul>
 </div>
 </div>
@@ -100,12 +100,29 @@ review these options using the ? syntax of ipython:</p>
 </div>
 <p>The default algorithm used when running <cite>decomposition</cite> is <cite>SVD</cite>, which performs
 PCA using singular value decomposition.</p>
+<div class="section" id="poissonian-noise">
+<h3>Poissonian noise<a class="headerlink" href="#poissonian-noise" title="Permalink to this headline">¶</a></h3>
+<p>Most decomposition algorithms assume that the noise of the data follows a
+Gaussian distribution. In the case that the data that you are analysing follow
+a Poissonian distribution instead Hyperspy can &#8220;normalise&#8221; the data by
+performing a scaling operation which can greatly enhance the result.</p>
+<p>To perform Poissonian noise normalisation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># The long way:</span>
+<span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">normalize_poissonian_noise</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Because it is the first argument we cold have simple written:</span>
+<span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more details about the scaling procedure you can consult the
+<em class="xref std std-ref">following research article</em></p>
+</div>
 <div class="section" id="nomenclature">
 <span id="decomposition-nomenclature"></span><h3>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h3>
-<p>Hyperspy only performs decomposition into two datasets: one with the dimension
-of the signal space called <cite>factors</cite> and the other with the dimension of the
-navigation space called <cite>scores</cite>. The same nomenclature applies to the result
-of BSS.</p>
+<p>Hyperspy performs the decomposition of a dataset into two datasets:
+one with the dimension of the signal space called <cite>factors</cite> and the other with
+the dimension of the navigation space called <cite>scores</cite>.
+The same nomenclature applies to the result of BSS.</p>
 </div>
 <div class="section" id="principal-component-analysis">
 <h3>Principal component analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">¶</a></h3>
@@ -140,11 +157,10 @@ your algorithm of choice is PCA.</p>
 or list of ints):</p>
 <ul class="simple">
 <li>if None, all the components are used to construct the model.</li>
-<li>if int, only the given number of components (starting from index 0)</li>
+<li>if int, only the given number of components (starting from index 0) are used to construct the model.</li>
+<li>if list of ints, only the components in the given list are used to</li>
 </ul>
-<p class="last">are used to construct the model.
-* if list of ints, only the components in the given list are used to
-construct the model.</p>
+<p class="last">construct the model.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -258,6 +274,7 @@ Micrograph.</p>
 <li><a class="reference internal" href="#">Machine learning</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#decomposition">Decomposition</a><ul>
+<li><a class="reference internal" href="#poissonian-noise">Poissonian noise</a></li>
 <li><a class="reference internal" href="#nomenclature">Nomenclature</a></li>
 <li><a class="reference internal" href="#principal-component-analysis">Principal component analysis</a><ul>
 <li><a class="reference internal" href="#scree-plot">Scree plot</a></li>
