@@ -2,141 +2,139 @@ Getting started
 ***************
 
 First steps with hyperspy
-========================
+=========================
 
 Starting hyperspy
-----------------
+-----------------
 
-To start hyperspy type in a console:
+
+Windows
+^^^^^^^
+
+In Windows it is possible to start Hyperspy from :menuselection:`Start Menu --> Programs --> Hyperspy` .
+
+Alternatively, one can start Hyperspy in any folder by pressing the :kbd:`right mouse button` on the empty area of a folder or on a folder and choosing menuselection:`Hyperspy here` from the context menu. see :ref:`windows_hyperspy_here_image`
+
+.. _windows_hyperspy_here_image:
+
+.. figure::  images/windows_hyperspy_here.png
+   :align:   center
+   :width:   500    
+
+   Starting hyperspy using the Windows context menu.
+   
+
+Hyperspy can also be started from a console:
 
 .. code-block:: bash
 
-    hyperspy
+    $ hyperspy
 
-If everythig goes well Hyperspy should welcome you with a message similar to:
+In any case Hyperspy should welcome you with a message similar to:
 
 .. code-block:: ipython
     
     H y p e r s p y
-    Version 0.3.0
+    Version 0.4.0
     
     Copyright (C) 2007-2010 Francisco de la Peña
-    Copyright (C) 2010-2011 F. de la Peña, S. Mazzucco, M. Sarahan
+    Copyright (C) 2011-2012 The Hyperspy development team
     
     http://www.hyperspy.org
 
 
-.. NOTE::
+Linux and MacOS
+^^^^^^^^^^^^^^^
 
-   If you are using GNOME in Linux, you can open a terminal in a folder by 
-   choosing :menuselection:`open terminal` in the file menu if 
-   :program:`nautilus-open-terminal` is 
-   installed in your system.
-   A similar feature is available in :program:`Windows Vista` or newer when pressing :kbd:`Shift Right-Mouse-Button`.
+In Linux and MacOS Hyperspy can be started from a console:
 
-   Alternatively, if you are using :program:`Windows Vista` or newer, you can navigate to the
-   folder with your data files, and then click in the address bar.
-   Enter cmd, then press enter.  A command prompt will be opened in
-   that folder.
-   
-.. NOTE::
-       For more comfort in Windows it is recommended to use 
-       `Console2 <http://sourceforge.net/projects/console/>`_ instead of the default terminal of that platform.    
+.. code-block:: bash
 
+    $ hyperspy
+
+After that, Hyperspy should welcome you with a message similar to:
+
+.. code-block:: ipython
+    
+    H y p e r s p y
+    Version 0.4.0
+    
+    Copyright (C) 2007-2010 Francisco de la Peña
+    Copyright (C) 2011-2012 The Hyperspy development team
+    
+    http://www.hyperspy.org
+
+
+.. HINT::
+    If you are using GNOME in Linux, you can open a terminal in a folder by 
+    choosing :menuselection:`open terminal` in the file menu if 
+    :program:`nautilus-open-terminal` is 
+    installed in your system.
+    
 
 Loading data
------------------------
+------------
 
 
-To load from a supported file format (see :ref:`supported-file-formats`) simply type:
-
-.. code-block:: python
-
-    s = load('filename')
-
-.. NOTE::
-
-   We use the variable :guilabel:`s` but you can choose any (valid) variable name
-
-.. NOTE::
-
-   The filename *must* include the extension
-
-If the loading was successful, the variable :guilabel:`s` now contains a python object 
-that can be an ``Image`` or ``Spectrum`` instance. Hyperspy will try to guess the 
-most convenient data type. However, you can force it to read the data as 
-a particular data type by providing the keyword ``data_type`` that can take the 
-values :guilabel:`SI` or :guilabel:`Image`, e.g.:
+To load from a supported file format (see :ref:`supported-formats`) simply type in a Hyperspy session:
 
 .. code-block:: python
 
-    s = load('filename', data_type = 'SI')
+    s = load("filename")
 
-.. _configuring-hyperspy-label:
+.. HINT::
 
+   The load function returns an object that contains data read from the file. We assign this object to the variable ``s`` but you can choose any (valid) variable name you like. 
+
+For more details read :ref:`loading_files`
+
+
+.. _saving:
 
 Saving Files
 ------------
 
-Data can be saved to several file formats.  The format is specified by
+The data can be saved to several file formats.  The format is specified by
 the extension of the filename.
 
 .. code-block:: python
 
     # load the data
-    d=load('example.tif')
+    d = load("example.tif")
     # save the data as a tiff
-    d.save('example_processed.tif')
+    d.save("example_processed.tif")
     # save the data as a png
-    d.save('example_processed.png')
+    d.save("example_processed.png")
     # save the data as an hdf5 file
-    d.save('example_processed.hdf5')
+    d.save("example_processed.hdf5")
 
 Some file formats are much better at maintaining the information about
-how you processed your data.  The preferred format in EELSlab is hdf5,
+how you processed your data.  The preferred format in Hyperspy is hdf5,
 the hierarchical data format.  This format keeps the most information
-possible.  However, viewing HDF5 files outside of EELSlab is less easy
-than say, working with well-known image formats.
+possible.
 
-There are optional flags that may be passed to the save function.
+There are optional flags that may be passed to the save function. See :ref:`saving_files` for more details.
 
-For the MSA format (commonly used for saving single spectra), the
-msa_format argument is used to specify whether the energy axis should
-also be saved with the data.  The default, 'Y' omits the energy axis
-in the file.  The alternative, 'XY', saves a second column with the
-calibrated energy data.
 
+.. _configuring-hyperspy-label:
 
 Configuring hyperspy
--------------------
+--------------------
 
-You can configure some parameters of hyperspy by editing the :file:`hyperspyrc` 
-file. The location of the configuration file depends on the system. 
-You can find its path by calling the ```get_configuration_directory_path``` 
-function in the hyperspy prompt:
+The behaviour of Hyperspy can be customised using the :py:class:`~.defaults_parser.Preferences` class. The easiest way to do it is by calling the :meth:`gui` method:
 
-.. code-block:: bash
+.. code-block:: python
 
-    get_configuration_directory_path()
+    preferences.gui()
+    
+This command should raise the Preferences window:
 
+.. _preferences_image:
 
-Alternatively it is possible to change the same parameters at runtime by changing 
-the attributes of the defaults class. For example, to plot automatically the 
-data when loading it:
+.. figure::  images/preferences.png
+   :align:   center
 
-.. code-block:: bash
-
-    # First we load some data
-    s = load('YourDataFilenameHere')
-    # (in the defaults setting nothing is plotted, unless you can changed the 
-    # defaults in the hyperspyrc file)
-    #
-    # Now we will change the setting at runtime
-    defaults.plot_on_load = True
-    s = load('YourDataFilenameHere')
-    # The data should have been automatically plotted.
-
-
+   Preferences user interface
 
 .. _getting-help-label:
 
@@ -149,22 +147,23 @@ The documentation can be accessed by adding a question mark to the name of a fun
     
     load?
 
-This syntax is one of the many features of `IPython <http://ipython.scipy.org/moin/>`_
+This syntax is one of the many features of `IPython <http://ipython.scipy.org/moin/>`_ that is the interactive python shell that Hyperspy uses under the hood.
 
 Please note that the documentation of the code is a work in progress, so not all the objects are documented yet.
+
+Up-to-date documentation is always available in `the Hyperspy website. <http://hyperspy.org/documentation.html>`_
 
 Autocompletion
 --------------
 
-
 Another useful `IPython <http://ipython.scipy.org/moin/>`_ feature is the 
 autocompletion of commands and filenames. It is highly recommended to read the 
-`Ipython documentation <http://ipython.scipy.org/moin/Documentation>`_.
+`Ipython documentation <http://ipython.scipy.org/moin/Documentation>`_ for many more useful features that will boost efficiency when working with Hyperspy/Python.
 
 Data visualisation
 ==================
 
-The Spectrum and Image objects have a ``plot`` method.
+The object returned by :py:func:`~.io.load` is a :py:class:`~.signal.Signal` and has a :py:meth:`~.signal.Signal.plot` method which plots the data and allows navigation.
 
 .. code-block:: python
     
@@ -172,21 +171,66 @@ The Spectrum and Image objects have a ``plot`` method.
     s.plot()
 
 if the object is single spectrum or an image one window will appear when calling 
-the plot method. If the object is a 2D or 3D SI two figures will appear, 
-one containing a plot of a spectrum of the dataset and the other a 2D 
-representation of the data. 
+the plot method.
 
-To explore an SI drag the cursor present in the 2D data representation 
-(it can be a line for 2D SIs or a square for 3D SIs). 
+If the object is a 2D or 3D spectrum image two figures will appear, 
+one containing a plot of the spectrum at the current coordinates and the other
+an image of the spectrum image summed over its spectral dimension if 2D or an 
+image with the spectral dimension in the x-axis e.g. 
+
+.. _2d_SI:
+
+.. figure::  images/2D_SI.png
+   :align:   center
+   :width:   500
+
+   Visualisation of a 2D spectrum image
+   
+.. _1d_SI:
+
+.. figure::  images/1D_SI.png
+   :align:   center
+   :width:   500
+
+   Visualisation of a 1D spectrum image
+   
+Equivalently, if the object is a 1D or 2D image stack two figures will appear, 
+one containing a plot of the image at the current coordinates and the other
+a spectrum or an image obtained by summing over the image dimensions, e.g.:
+   
+.. _1D_image_stack.png:
+
+.. figure::  images/1D_image_stack.png
+   :align:   center
+   :width:   500    
+
+   Visualisation of a 1D image stack
+   
+.. _2D_image_stack.png:
+
+.. figure::  images/2D_image_stack.png
+   :align:   center
+   :width:   500
+   
+   Visualisation of a 2D image stack
+
+To change the current coordinates, click on the pointer (which will be a line or a square depending on the dimensions of the data) and drag it around. It is also possible to move the pointer by using the numpad arrows **when numlock is on and the spectrum or navigator figure is on focus**.When using the numpad arrows the PageUp and PageDown keys change the size of the step.
+
 An extra cursor can be added by pressing the ``e`` key. Pressing ``e`` once more will 
-disable the extra cursor.
+disable the extra cursor, e.g.
 
-When exploring a 2D SI of high spatial resolution the default size of the
-rectangular cursors can be too small to be dragged or even seen. It is possible to change
-the size of the cursors by pressing the ``+`` and ``-`` keys  **when the navigator
+.. _second_pointer.png:
+
+.. figure::  images/second_pointer.png
+   :align:   center
+   :width:   500
+
+   Visualisation of a 2D spectrum image using two pointers.
+
+When exploring a 2D hyperspectral object of high spatial resolution the default size of the rectangular cursors can be too small to be dragged or even seen. It is possible to change the size of the cursors by pressing the ``+`` and ``-`` keys  **when the navigator
 windows is on focus**.
 
-It is also possible to explore an SI by using the numpad arrows 
+It is also possible to move the pointer by using the numpad arrows 
 **when numlock is on and the spectrum or navigator figure is on focus**. 
 When using the numpad arrows the PageUp and PageDown keys change the size of the step.
 
@@ -203,19 +247,19 @@ PageUp      Increase step size
 PageDown    Decrease step size
 ``+``           Increase pointer size
 ``-``           Decrease pointer size
+``h``       Launch the contrast adjustment tool (only for Image)
 =========   =============================
 
-
-To close all the figures type:
+To close all the figures run the following command:
 
 .. code-block:: python
 
-    close('all')
+    plt.close('all')
 
 
 This is a `matplotlib <http://matplotlib.sourceforge.net/>`_ command. 
-Matplotlib is the library that hyperspy uses to produce the plots. To learn how 
-to pan/zoom and more a matplotlib plot 
-`check here <http://matplotlib.sourceforge.net/users/navigation_toolbar.html>`_
+Matplotlib is the library that hyperspy uses to produce the plots. You can learn how 
+to pan/zoom and more  
+`in the matplotlib documentation <http://matplotlib.sourceforge.net/users/navigation_toolbar.html>`_
 
 

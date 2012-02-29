@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>file_IO example code: aggregate_load.py &mdash; Hyperspy 0.4 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.4 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hyperspy 0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="file-io-example-code-aggregate-load-py">
+<span id="file-io-aggregate-load"></span><h1>file_IO example code: aggregate_load.py<a class="headerlink" href="#file-io-example-code-aggregate-load-py" title="Permalink to this headline">¶</a></h1>
+<p>[<a class="reference external" href="aggregate_load.py">source code</a>]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Creates several random spectrum images, then aggregates them.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># If running from hyperspy&#39;s interactive the next two imports can be omitted</span>
+<span class="c"># omitted (i.e. the next 2 lines)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">hyperspy.signals.spectrum</span> <span class="kn">import</span> <span class="n">Spectrum</span>
+<span class="kn">from</span> <span class="nn">hyperspy.signals.aggregate</span> <span class="kn">import</span> <span class="n">AggregateSpectrum</span>
+
+<span class="c"># create the spectrum objects</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&#39;file1&#39;</span><span class="p">}})</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&#39;file2&#39;</span><span class="p">}})</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+               <span class="s">&#39;mapped_parameters&#39;</span> <span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&#39;file3&#39;</span><span class="p">}})</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Perhaps a better example (but one that can&#39;t be self contained without</span>
+<span class="sd">including too many data files for you to download):</span>
+
+<span class="sd">s1=load(&#39;your_file1.dm3&#39;)</span>
+<span class="sd">s2=load(&#39;your_file2.dm3&#39;)</span>
+<span class="sd">s3=load(&#39;your_file3.dm3&#39;)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">s</span><span class="o">=</span><span class="n">AggregateSpectrum</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s3</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An even better way: load the files and create the aggregate in one command:</span>
+
+<span class="sd">from glob import glob</span>
+<span class="sd">s=load(&#39;*.dm3&#39;)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c"># If running from hyperspy&#39;s interactive console the next line can be</span>
+<span class="c"># omitted</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Keywords: hyperspy, example, codex (see <em class="xref std std-ref">how-to-search-examples</em>)</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/examples/file_IO/aggregate_load.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hyperspy 0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The Hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

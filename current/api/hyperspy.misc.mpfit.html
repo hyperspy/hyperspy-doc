@@ -1,0 +1,725 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mpfit Package &mdash; Hyperspy 0.4 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.4 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mpfit-package">
+<h1>mpfit Package<a class="headerlink" href="#mpfit-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">mpfit</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-hyperspy.misc.mpfit"></span></div>
+<div class="section" id="module-hyperspy.misc.mpfit.mpfit">
+<span id="mpfit-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mpfit</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.mpfit.mpfit" title="Permalink to this headline">¶</a></h2>
+<p>Perform Levenberg-Marquardt least-squares minimization, based on MINPACK-1.</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div>AUTHORS</div></blockquote>
+<p>The original version of this software, called LMFIT, was written in FORTRAN
+as part of the MINPACK-1 package by XXX.</p>
+<p>Craig Markwardt converted the FORTRAN code to IDL.  The information for the
+IDL version is:</p>
+<blockquote>
+<div><p>Craig B. Markwardt, NASA/GSFC Code 662, Greenbelt, MD 20770
+<a class="reference external" href="mailto:craigm&#37;&#52;&#48;lheamail&#46;gsfc&#46;nasa&#46;gov">craigm<span>&#64;</span>lheamail<span>&#46;</span>gsfc<span>&#46;</span>nasa<span>&#46;</span>gov</a>
+UPDATED VERSIONs can be found on my WEB PAGE:</p>
+<blockquote>
+<div><a class="reference external" href="http://cow.physics.wisc.edu/~craigm/idl/idl.html">http://cow.physics.wisc.edu/~craigm/idl/idl.html</a></div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>Mark Rivers created this Python version from Craig&#8217;s IDL version.</dt>
+<dd>Mark Rivers, University of Chicago
+Building 434A, Argonne National Laboratory
+9700 South Cass Avenue, Argonne, IL 60439
+<a class="reference external" href="mailto:rivers&#37;&#52;&#48;cars&#46;uchicago&#46;edu">rivers<span>&#64;</span>cars<span>&#46;</span>uchicago<span>&#46;</span>edu</a>
+Updated versions can be found at <a class="reference external" href="http://cars.uchicago.edu/software">http://cars.uchicago.edu/software</a></dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>Sergey Koposov converted the Mark&#8217;s Python version from Numeric to numpy</dt>
+<dd><p class="first">Sergey Koposov, University of Cambridge, Institute of Astronomy,
+Madingley road, CB3 0HA, Cambridge, UK
+<a class="reference external" href="mailto:koposov&#37;&#52;&#48;ast&#46;cam&#46;ac&#46;uk">koposov<span>&#64;</span>ast<span>&#46;</span>cam<span>&#46;</span>ac<span>&#46;</span>uk</a>
+Updated versions can be found at <a class="reference external" href="http://code.google.com/p/astrolibpy/source/browse/trunk/">http://code.google.com/p/astrolibpy/source/browse/trunk/</a></p>
+<blockquote class="last">
+<div>DESCRIPTION</div></blockquote>
+</dd>
+</dl>
+<p>MPFIT uses the Levenberg-Marquardt technique to solve the
+least-squares problem.  In its typical use, MPFIT will be used to
+fit a user-supplied function (the &#8220;model&#8221;) to user-supplied data
+points (the &#8220;data&#8221;) by adjusting a set of parameters.  MPFIT is
+based upon MINPACK-1 (LMDIF.F) by More&#8217; and collaborators.</p>
+<p>For example, a researcher may think that a set of observed data
+points is best modelled with a Gaussian curve.  A Gaussian curve is
+parameterized by its mean, standard deviation and normalization.
+MPFIT will, within certain constraints, find the set of parameters
+which best fits the data.  The fit is &#8220;best&#8221; in the least-squares
+sense; that is, the sum of the weighted squared differences between
+the model and data is minimized.</p>
+<p>The Levenberg-Marquardt technique is a particular strategy for
+iteratively searching for the best fit.  This particular
+implementation is drawn from MINPACK-1 (see NETLIB), and is much faster
+and more accurate than the version provided in the Scientific Python package
+in Scientific.Functions.LeastSquares.
+This version allows upper and lower bounding constraints to be placed on each
+parameter, or the parameter can be held fixed.</p>
+<p>The user-supplied Python function should return an array of weighted
+deviations between model and data.  In a typical scientific problem
+the residuals should be weighted so that each deviate has a
+gaussian sigma of 1.0.  If X represents values of the independent
+variable, Y represents a measurement for each value of X, and ERR
+represents the error in the measurements, then the deviates could
+be calculated as follows:</p>
+<blockquote>
+<div>DEVIATES = (Y - F(X)) / ERR</div></blockquote>
+<p>where F is the analytical function representing the model.  You are
+recommended to use the convenience functions MPFITFUN and
+MPFITEXPR, which are driver functions that calculate the deviates
+for you.  If ERR are the 1-sigma uncertainties in Y, then</p>
+<blockquote>
+<div>TOTAL( DEVIATES^2 )</div></blockquote>
+<p>will be the total chi-squared value.  MPFIT will minimize the
+chi-square value.  The values of X, Y and ERR are passed through
+MPFIT to the user-supplied function via the FUNCTKW keyword.</p>
+<p>Simple constraints can be placed on parameter values by using the
+PARINFO keyword to MPFIT.  See below for a description of this
+keyword.</p>
+<p>MPFIT does not perform more general optimization tasks.  See TNMIN
+instead.  MPFIT is customized, based on MINPACK-1, to the
+least-squares minimization problem.</p>
+<blockquote>
+<div>USER FUNCTION</div></blockquote>
+<p>The user must define a function which returns the appropriate
+values as specified above.  The function should return the weighted
+deviations between the model and the data.  It should also return a status
+flag and an optional partial derivative array.  For applications which
+use finite-difference derivatives &#8211; the default &#8211; the user
+function should be declared in the following way:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def myfunct(p, fjac=None, x=None, y=None, err=None)</dt>
+<dd># Parameter values are passed in &#8220;p&#8221;
+# If fjac==None then partial derivatives should not be
+# computed.  It will always be None if MPFIT is called with default
+# flag.
+model = F(x, p)
+# Non-negative status value means MPFIT should continue, negative means
+# stop the calculation.
+status = 0
+return([status, (y-model)/err]</dd>
+</dl>
+</div></blockquote>
+<p>See below for applications with analytical derivatives.</p>
+<p>The keyword parameters X, Y, and ERR in the example above are
+suggestive but not required.  Any parameters can be passed to
+MYFUNCT by using the functkw keyword to MPFIT.  Use MPFITFUN and
+MPFITEXPR if you need ideas on how to do that.  The function <em>must</em>
+accept a parameter list, P.</p>
+<p>In general there are no restrictions on the number of dimensions in
+X, Y or ERR.  However the deviates <em>must</em> be returned in a
+one-dimensional Numeric array of type Float.</p>
+<p>User functions may also indicate a fatal error condition using the
+status return described above. If status is set to a number between
+-15 and -1 then MPFIT will stop the calculation and return to the caller.</p>
+<blockquote>
+<div>ANALYTIC DERIVATIVES</div></blockquote>
+<p>In the search for the best-fit solution, MPFIT by default
+calculates derivatives numerically via a finite difference
+approximation.  The user-supplied function need not calculate the
+derivatives explicitly.  However, if you desire to compute them
+analytically, then the AUTODERIVATIVE=0 keyword must be passed to MPFIT.
+As a practical matter, it is often sufficient and even faster to allow
+MPFIT to calculate the derivatives numerically, and so
+AUTODERIVATIVE=0 is not necessary.</p>
+<p>If AUTODERIVATIVE=0 is used then the user function must check the parameter
+FJAC, and if FJAC!=None then return the partial derivative array in the
+return list.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def myfunct(p, fjac=None, x=None, y=None, err=None)</dt>
+<dd><p class="first"># Parameter values are passed in &#8220;p&#8221;
+# If FJAC!=None then partial derivatives must be comptuer.
+# FJAC contains an array of len(p), where each entry
+# is 1 if that parameter is free and 0 if it is fixed.
+model = F(x, p)
+Non-negative status value means MPFIT should continue, negative means
+# stop the calculation.
+status = 0
+if (dojac):</p>
+<blockquote>
+<div><p>pderiv = zeros([len(x), len(p)], Float)
+for j in range(len(p)):</p>
+<blockquote>
+<div>pderiv[:,j] = FGRAD(x, p, j)</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>else:</dt>
+<dd>pderiv = None</dd>
+</dl>
+<p class="last">return([status, (y-model)/err, pderiv]</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>where FGRAD(x, p, i) is a user function which must compute the
+derivative of the model with respect to parameter P[i] at X.  When
+finite differencing is used for computing derivatives (ie, when
+AUTODERIVATIVE=1), or when MPFIT needs only the errors but not the
+derivatives the parameter FJAC=None.</p>
+<p>Derivatives should be returned in the PDERIV array. PDERIV should be an m x
+n array, where m is the number of data points and n is the number
+of parameters.  dp[i,j] is the derivative at the ith point with
+respect to the jth parameter.</p>
+<p>The derivatives with respect to fixed parameters are ignored; zero
+is an appropriate value to insert for those derivatives.  Upon
+input to the user function, FJAC is set to a vector with the same
+length as P, with a value of 1 for a parameter which is free, and a
+value of zero for a parameter which is fixed (and hence no
+derivative needs to be calculated).</p>
+<p>If the data is higher than one dimensional, then the <em>last</em>
+dimension should be the parameter dimension.  Example: fitting a
+50x50 image, &#8220;dp&#8221; should be 50x50xNPAR.</p>
+<blockquote>
+<div>CONSTRAINING PARAMETER VALUES WITH THE PARINFO KEYWORD</div></blockquote>
+<p>The behavior of MPFIT can be modified with respect to each
+parameter to be fitted.  A parameter value can be fixed; simple
+boundary constraints can be imposed; limitations on the parameter
+changes can be imposed; properties of the automatic derivative can
+be modified; and parameters can be tied to one another.</p>
+<p>These properties are governed by the PARINFO structure, which is
+passed as a keyword parameter to MPFIT.</p>
+<p>PARINFO should be a list of dictionaries, one list entry for each parameter.
+Each parameter is associated with one element of the array, in
+numerical order.  The dictionary can have the following keys
+(none are required, keys are case insensitive):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;value&#8217; - the starting parameter value (but see the START_PARAMS</dt>
+<dd>parameter for more information).</dd>
+<dt>&#8216;fixed&#8217; - a boolean value, whether the parameter is to be held</dt>
+<dd>fixed or not.  Fixed parameters are not varied by
+MPFIT, but are passed on to MYFUNCT for evaluation.</dd>
+<dt>&#8216;limited&#8217; - a two-element boolean array.  If the first/second</dt>
+<dd>element is set, then the parameter is bounded on the
+lower/upper side.  A parameter can be bounded on both
+sides.  Both LIMITED and LIMITS must be given
+together.</dd>
+<dt>&#8216;limits&#8217; - a two-element float array.  Gives the</dt>
+<dd>parameter limits on the lower and upper sides,
+respectively.  Zero, one or two of these values can be
+set, depending on the values of LIMITED.  Both LIMITED
+and LIMITS must be given together.</dd>
+<dt>&#8216;parname&#8217; - a string, giving the name of the parameter.  The</dt>
+<dd>fitting code of MPFIT does not use this tag in any
+way.  However, the default iterfunct will print the
+parameter name if available.</dd>
+<dt>&#8216;step&#8217; - the step size to be used in calculating the numerical</dt>
+<dd>derivatives.  If set to zero, then the step size is
+computed automatically.  Ignored when AUTODERIVATIVE=0.</dd>
+<dt>&#8216;mpside&#8217; - the sidedness of the finite difference when computing</dt>
+<dd><blockquote class="first">
+<div><p>numerical derivatives.  This field can take four
+values:</p>
+<blockquote>
+<div><blockquote>
+<div>0 - one-sided derivative computed automatically
+1 - one-sided derivative (f(x+h) - f(x)  )/h</div></blockquote>
+<dl class="docutils">
+<dt>-1 - one-sided derivative (f(x)   - f(x-h))/h</dt>
+<dd>2 - two-sided derivative (f(x+h) - f(x-h))/(2*h)</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p class="last">Where H is the STEP parameter described above.  The
+&#8220;automatic&#8221; one-sided derivative method will chose a
+direction for the finite difference which does not
+violate any constraints.  The other methods do not
+perform this check.  The two-sided method is in
+principle more precise, but requires twice as many
+function evaluations.  Default: 0.</p>
+</dd>
+<dt>&#8216;mpmaxstep&#8217; - the maximum change to be made in the parameter</dt>
+<dd><p class="first">value.  During the fitting process, the parameter
+will never be changed by more than this value in
+one iteration.</p>
+<p class="last">A value of 0 indicates no maximum.  Default: 0.</p>
+</dd>
+<dt>&#8216;tied&#8217; - a string expression which &#8220;ties&#8221; the parameter to other</dt>
+<dd>free or fixed parameters.  Any expression involving
+constants and the parameter array P are permitted.
+Example: if parameter 2 is always to be twice parameter
+1 then use the following: parinfo(2).tied = &#8216;2 * p(1)&#8217;.
+Since they are totally constrained, tied parameters are
+considered to be fixed; no errors are computed for them.
+[ NOTE: the PARNAME can&#8217;t be used in expressions. ]</dd>
+<dt>&#8216;mpprint&#8217; - if set to 1, then the default iterfunct will print the</dt>
+<dd>parameter value.  If set to 0, the parameter value
+will not be printed.  This tag can be used to
+selectively print only a few parameter values out of
+many.  Default: 1 (all parameters printed)</dd>
+</dl>
+</div></blockquote>
+<p>Future modifications to the PARINFO structure, if any, will involve
+adding dictionary tags beginning with the two letters &#8220;MP&#8221;.
+Therefore programmers are urged to avoid using tags starting with
+the same letters; otherwise they are free to include their own
+fields within the PARINFO structure, and they will be ignored.</p>
+<p>PARINFO Example:
+parinfo = [{&#8216;value&#8217;:0., &#8216;fixed&#8217;:0, &#8216;limited&#8217;:[0,0], &#8216;limits&#8217;:[0.,0.]}</p>
+<blockquote>
+<div>for i in range(5)]</div></blockquote>
+<p>parinfo[0][&#8216;fixed&#8217;] = 1
+parinfo[4][&#8216;limited&#8217;][0] = 1
+parinfo[4][&#8216;limits&#8217;][0]  = 50.
+values = [5.7, 2.2, 500., 1.5, 2000.]
+for i in range(5): parinfo[i][&#8216;value&#8217;]=values[i]</p>
+<p>A total of 5 parameters, with starting values of 5.7,
+2.2, 500, 1.5, and 2000 are given.  The first parameter
+is fixed at a value of 5.7, and the last parameter is
+constrained to be above 50.</p>
+<blockquote>
+<div><blockquote>
+<div>EXAMPLE</div></blockquote>
+<p>import mpfit
+import numpy.oldnumeric as Numeric
+x = arange(100, float)
+p0 = [5.7, 2.2, 500., 1.5, 2000.]
+y = ( p[0] + p[1]*[x] + p[2]*[x**2] + p[3]*sqrt(x) +</p>
+<blockquote>
+<div>p[4]*log(x))</div></blockquote>
+<p>fa = {&#8216;x&#8217;:x, &#8216;y&#8217;:y, &#8216;err&#8217;:err}
+m = mpfit(&#8216;myfunct&#8217;, p0, functkw=fa)
+print &#8216;status = &#8216;, m.status
+if (m.status &lt;= 0): print &#8216;error message = &#8216;, m.errmsg
+print &#8216;parameters = &#8216;, m.params</p>
+<p>Minimizes sum of squares of MYFUNCT.  MYFUNCT is called with the X,
+Y, and ERR keyword parameters that are given by FUNCTKW.  The
+results can be obtained from the returned object m.</p>
+<blockquote>
+<div>THEORY OF OPERATION</div></blockquote>
+<p>There are many specific strategies for function minimization.  One
+very popular technique is to use function gradient information to
+realize the local structure of the function.  Near a local minimum
+the function value can be taylor expanded about x0 as follows:</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt>f(x) = f(x0) + f&#8217;(x0) . (x-x0) + (1/2) (x-x0) . f&#8217;&#8216;(x0) . (x-x0)</dt>
+<dd>&#8212;&#8211;   &#8212;&#8212;&#8212;&#8212;&#8212;   &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-  (1)</dd>
+</dl>
+</div></blockquote>
+<p>Order  0th               1st                                     2nd</p>
+</div></blockquote>
+<p>Here f&#8217;(x) is the gradient vector of f at x, and f&#8217;&#8216;(x) is the
+Hessian matrix of second derivatives of f at x.  The vector x is
+the set of function parameters, not the measured data vector.  One
+can find the minimum of f, f(xm) using Newton&#8217;s method, and
+arrives at the following linear equation:</p>
+<blockquote>
+<div>f&#8217;&#8216;(x0) . (xm-x0) = - f&#8217;(x0)                                                  (2)</div></blockquote>
+<p>If an inverse can be found for f&#8217;&#8216;(x0) then one can solve for
+(xm-x0), the step vector from the current position x0 to the new
+projected minimum.  Here the problem has been linearized (ie, the
+gradient information is known to first order).  f&#8217;&#8216;(x0) is
+symmetric n x n matrix, and should be positive definite.</p>
+<p>The Levenberg - Marquardt technique is a variation on this theme.
+It adds an additional diagonal term to the equation which may aid the
+convergence properties:</p>
+<blockquote>
+<div>(f&#8217;&#8216;(x0) + nu I) . (xm-x0) = -f&#8217;(x0)                            (2a)</div></blockquote>
+<p>where I is the identity matrix.  When nu is large, the overall
+matrix is diagonally dominant, and the iterations follow steepest
+descent.  When nu is small, the iterations are quadratically
+convergent.</p>
+<p>In principle, if f&#8217;&#8216;(x0) and f&#8217;(x0) are known then xm-x0 can be
+determined.  However the Hessian matrix is often difficult or
+impossible to compute.  The gradient f&#8217;(x0) may be easier to
+compute, if even by finite difference techniques.  So-called
+quasi-Newton techniques attempt to successively estimate f&#8217;&#8216;(x0)
+by building up gradient information as the iterations proceed.</p>
+<p>In the least squares problem there are further simplifications
+which assist in solving eqn (2).  The function to be minimized is
+a sum of squares:</p>
+<blockquote>
+<div>f = Sum(hi^2)                                                                                 (3)</div></blockquote>
+<p>where hi is the ith residual out of m residuals as described
+above.  This can be substituted back into eqn (2) after computing
+the derivatives:</p>
+<blockquote>
+<div>f&#8217;  = 2 Sum(hi  hi&#8217;)
+f&#8217;&#8217; = 2 Sum(hi&#8217; hj&#8217;) + 2 Sum(hi hi&#8217;&#8216;)                                (4)</div></blockquote>
+<p>If one assumes that the parameters are already close enough to a
+minimum, then one typically finds that the second term in f&#8217;&#8217; is
+negligible [or, in any case, is too difficult to compute].  Thus,
+equation (2) can be solved, at least approximately, using only
+gradient information.</p>
+<p>In matrix notation, the combination of eqns (2) and (4) becomes:</p>
+<blockquote>
+<div>hT&#8217; . h&#8217; . dx = - hT&#8217; . h                                                 (5)</div></blockquote>
+<p>Where h is the residual vector (length m), hT is its transpose, h&#8217;
+is the Jacobian matrix (dimensions n x m), and dx is (xm-x0).  The
+user function supplies the residual vector h, and in some cases h&#8217;
+when it is not found by finite differences (see MPFIT_FDJAC2,
+which finds h and hT&#8217;).  Even if dx is not the best absolute step
+to take, it does provide a good estimate of the best <em>direction</em>,
+so often a line minimization will occur along the dx vector
+direction.</p>
+<p>The method of solution employed by MINPACK is to form the Q . R
+factorization of h&#8217;, where Q is an orthogonal matrix such that QT .
+Q = I, and R is upper right triangular.  Using h&#8217; = Q . R and the
+ortogonality of Q, eqn (5) becomes</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>(RT . QT) . (Q . R) . dx = - (RT . QT) . h</dt>
+<dd><dl class="first last docutils">
+<dt>RT . R . dx = - RT . QT . h             (6)</dt>
+<dd>R . dx = - QT . h</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>where the last statement follows because R is upper triangular.
+Here, R, QT and h are known so this is a matter of solving for dx.
+The routine MPFIT_QRFAC provides the QR factorization of h, with
+pivoting, and MPFIT_QRSOLV provides the solution for dx.</p>
+<blockquote>
+<div>REFERENCES</div></blockquote>
+<p>MINPACK-1, Jorge More&#8217;, available from netlib (www.netlib.org).
+&#8220;Optimization Software Guide,&#8221; Jorge More&#8217; and Stephen Wright,</p>
+<blockquote>
+<div>SIAM, <em>Frontiers in Applied Mathematics</em>, Number 14.</div></blockquote>
+<dl class="docutils">
+<dt>More&#8217;, Jorge J., &#8220;The Levenberg-Marquardt Algorithm:</dt>
+<dd><p class="first">Implementation and Theory,&#8221; in <em>Numerical Analysis</em>, ed. Watson,
+G. A., Lecture Notes in Mathematics 630, Springer-Verlag, 1977.</p>
+<blockquote class="last">
+<div>MODIFICATION HISTORY</div></blockquote>
+</dd>
+</dl>
+<p>Translated from MINPACK-1 in FORTRAN, Apr-Jul 1998, CM</p>
+</div></blockquote>
+<p>Copyright (C) 1997-2002, Craig Markwardt
+This software is provided as is without any warranty whatsoever.
+Permission to use, copy, modify, and distribute modified or
+unmodified copies is granted, provided this copyright and disclaimer
+are included unchanged.</p>
+<blockquote>
+<div>Translated from MPFIT (Craig Markwardt&#8217;s IDL package) to Python,
+August, 2002.  Mark Rivers
+Converted from Numeric to numpy (Sergey Koposov, July 2008)
+Fixed the analytic derivatives features (The Hyperspy Developers, 2011)</div></blockquote>
+</div></blockquote>
+<dl class="class">
+<dt id="hyperspy.misc.mpfit.mpfit.machar">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.mpfit.mpfit.</tt><tt class="descname">machar</tt><big>(</big><em>double=1</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.machar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.mpfit.mpfit.</tt><tt class="descname">mpfit</tt><big>(</big><em>fcn</em>, <em>xall=None</em>, <em>functkw={}</em>, <em>parinfo=None</em>, <em>ftol=1e-10</em>, <em>xtol=1e-10</em>, <em>gtol=1e-10</em>, <em>damp=0.0</em>, <em>maxiter=200</em>, <em>factor=100.0</em>, <em>nprint=1</em>, <em>iterfunct='default'</em>, <em>iterkw={}</em>, <em>nocovar=0</em>, <em>rescale=0</em>, <em>autoderivative=1</em>, <em>quiet=0</em>, <em>diag=None</em>, <em>epsfcn=None</em>, <em>debug=0</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm32" title="hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm32"><tt class="xref py py-obj docutils literal"><span class="pre">blas_enorm32</span></tt></a></td>
+<td>snrm2 - Function signature:</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm64" title="hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm64"><tt class="xref py py-obj docutils literal"><span class="pre">blas_enorm64</span></tt></a></td>
+<td>dnrm2 - Function signature:</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.calc_covar" title="hyperspy.misc.mpfit.mpfit.mpfit.calc_covar"><tt class="xref py py-obj docutils literal"><span class="pre">calc_covar</span></tt></a>(rr[,&nbsp;ipvt,&nbsp;tol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.call" title="hyperspy.misc.mpfit.mpfit.mpfit.call"><tt class="xref py py-obj docutils literal"><span class="pre">call</span></tt></a>(fcn,&nbsp;x,&nbsp;functkw[,&nbsp;fjac])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.defiter" title="hyperspy.misc.mpfit.mpfit.mpfit.defiter"><tt class="xref py py-obj docutils literal"><span class="pre">defiter</span></tt></a>(fcn,&nbsp;x,&nbsp;iter[,&nbsp;fnorm,&nbsp;functkw,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.enorm" title="hyperspy.misc.mpfit.mpfit.mpfit.enorm"><tt class="xref py py-obj docutils literal"><span class="pre">enorm</span></tt></a>(vec)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.fdjac2" title="hyperspy.misc.mpfit.mpfit.mpfit.fdjac2"><tt class="xref py py-obj docutils literal"><span class="pre">fdjac2</span></tt></a>(fcn,&nbsp;x,&nbsp;fvec[,&nbsp;step,&nbsp;ulimited,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.lmpar" title="hyperspy.misc.mpfit.mpfit.mpfit.lmpar"><tt class="xref py py-obj docutils literal"><span class="pre">lmpar</span></tt></a>(r,&nbsp;ipvt,&nbsp;diag,&nbsp;qtb,&nbsp;delta,&nbsp;x,&nbsp;sdiag[,&nbsp;par])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.parinfo" title="hyperspy.misc.mpfit.mpfit.mpfit.parinfo"><tt class="xref py py-obj docutils literal"><span class="pre">parinfo</span></tt></a>([parinfo,&nbsp;key,&nbsp;default,&nbsp;n])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.qrfac" title="hyperspy.misc.mpfit.mpfit.mpfit.qrfac"><tt class="xref py py-obj docutils literal"><span class="pre">qrfac</span></tt></a>(a[,&nbsp;pivot])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.qrsolv" title="hyperspy.misc.mpfit.mpfit.mpfit.qrsolv"><tt class="xref py py-obj docutils literal"><span class="pre">qrsolv</span></tt></a>(r,&nbsp;ipvt,&nbsp;diag,&nbsp;qtb,&nbsp;sdiag)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.mpfit.mpfit.mpfit.tie" title="hyperspy.misc.mpfit.mpfit.mpfit.tie"><tt class="xref py py-obj docutils literal"><span class="pre">tie</span></tt></a>(p[,&nbsp;ptied])</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm32">
+<tt class="descname">blas_enorm32</tt><em class="property"> = &lt;fortran snrm2&gt;</em><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm32" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm64">
+<tt class="descname">blas_enorm64</tt><em class="property"> = &lt;fortran dnrm2&gt;</em><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.blas_enorm64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.calc_covar">
+<tt class="descname">calc_covar</tt><big>(</big><em>rr</em>, <em>ipvt=None</em>, <em>tol=1e-14</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.calc_covar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.call">
+<tt class="descname">call</tt><big>(</big><em>fcn</em>, <em>x</em>, <em>functkw</em>, <em>fjac=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.defiter">
+<tt class="descname">defiter</tt><big>(</big><em>fcn</em>, <em>x</em>, <em>iter</em>, <em>fnorm=None</em>, <em>functkw=None</em>, <em>quiet=0</em>, <em>iterstop=None</em>, <em>parinfo=None</em>, <em>format=None</em>, <em>pformat='%.10g'</em>, <em>dof=1</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.defiter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.enorm">
+<tt class="descname">enorm</tt><big>(</big><em>vec</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.enorm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.fdjac2">
+<tt class="descname">fdjac2</tt><big>(</big><em>fcn</em>, <em>x</em>, <em>fvec</em>, <em>step=None</em>, <em>ulimited=None</em>, <em>ulimit=None</em>, <em>dside=None</em>, <em>epsfcn=None</em>, <em>autoderivative=1</em>, <em>functkw=None</em>, <em>xall=None</em>, <em>ifree=None</em>, <em>dstep=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.fdjac2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.lmpar">
+<tt class="descname">lmpar</tt><big>(</big><em>r</em>, <em>ipvt</em>, <em>diag</em>, <em>qtb</em>, <em>delta</em>, <em>x</em>, <em>sdiag</em>, <em>par=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.lmpar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.parinfo">
+<tt class="descname">parinfo</tt><big>(</big><em>parinfo=None</em>, <em>key='a'</em>, <em>default=None</em>, <em>n=0</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.parinfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.qrfac">
+<tt class="descname">qrfac</tt><big>(</big><em>a</em>, <em>pivot=0</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.qrfac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.qrsolv">
+<tt class="descname">qrsolv</tt><big>(</big><em>r</em>, <em>ipvt</em>, <em>diag</em>, <em>qtb</em>, <em>sdiag</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.qrsolv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.mpfit.mpfit.mpfit.tie">
+<tt class="descname">tie</tt><big>(</big><em>p</em>, <em>ptied=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfit.mpfit.tie" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mpfitexpr-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">mpfitexpr</span></tt> Module<a class="headerlink" href="#mpfitexpr-module" title="Permalink to this headline">¶</a></h2>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.mpfitexpr.mpfitexpr">
+<tt class="descclassname">hyperspy.misc.mpfit.mpfitexpr.</tt><tt class="descname">mpfitexpr</tt><big>(</big><em>func</em>, <em>x</em>, <em>y</em>, <em>err</em>, <em>start_params</em>, <em>check=True</em>, <em>full_output=False</em>, <em>imports=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.mpfitexpr.mpfitexpr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the used defined expression to the data
+Input:
+- func: string with the function definition 
+- x: x vector
+- y: y vector
+- err: vector with the errors of y
+- start_params: the starting parameters for the fit
+Output:
+- The tuple (params, yfit) with best-fit params and the values of func evaluated at x
+Keywords:
+- check: boolean parameter. If true(default) the function will be checked for sanity
+- full_output: boolean parameter. If True(default is False) then instead of best-fit parameters the mpfit object is returned
+- imports: list of strings, of optional modules to be imported, required to evaluate the function
+Example:
+params,yfit=mpfitexpr(&#8216;p[0]+p[2]*(x-p[1])&#8217;,x,y,err,[0,10,1])</p>
+<dl class="docutils">
+<dt>If you need to use numpy and scipy functions in your function, then</dt>
+<dd>you must to use the full names of these functions, e.g.:
+numpy.sin, numpy.cos etc.</dd>
+<dt>This function is motivated by mpfitexpr() from wonderful MPFIT IDL package</dt>
+<dd>written by Craig Markwardt</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.mpfit.test_mpfit">
+<span id="test-mpfit-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_mpfit</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.mpfit.test_mpfit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.test_mpfit.Flin">
+<tt class="descclassname">hyperspy.misc.mpfit.test_mpfit.</tt><tt class="descname">Flin</tt><big>(</big><em>x</em>, <em>p</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.test_mpfit.Flin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.test_mpfit.myfunctlin">
+<tt class="descclassname">hyperspy.misc.mpfit.test_mpfit.</tt><tt class="descname">myfunctlin</tt><big>(</big><em>p</em>, <em>fjac=None</em>, <em>x=None</em>, <em>y=None</em>, <em>err=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.test_mpfit.myfunctlin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.test_mpfit.myfunctrosenbrock">
+<tt class="descclassname">hyperspy.misc.mpfit.test_mpfit.</tt><tt class="descname">myfunctrosenbrock</tt><big>(</big><em>p</em>, <em>fjac=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.test_mpfit.myfunctrosenbrock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.test_mpfit.test_linfit">
+<tt class="descclassname">hyperspy.misc.mpfit.test_mpfit.</tt><tt class="descname">test_linfit</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.test_mpfit.test_linfit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.mpfit.test_mpfit.test_rosenbrock">
+<tt class="descclassname">hyperspy.misc.mpfit.test_mpfit.</tt><tt class="descname">test_rosenbrock</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.misc.mpfit.test_mpfit.test_rosenbrock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.mpfit.tests.html">tests Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.mpfit.tests.html#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.mpfit.tests.html#module-hyperspy.misc.mpfit.tests.test_mpfit"><tt class="docutils literal"><span class="pre">test_mpfit</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpfit Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.mpfit.mpfit"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Module</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#mpfitexpr-module"><tt class="docutils literal"><span class="pre">mpfitexpr</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.mpfit.test_mpfit"><tt class="docutils literal"><span class="pre">test_mpfit</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/hyperspy.misc.mpfit.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The Hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
