@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Curve fitting &mdash; Hyperspy 0.3.0beta2.1 documentation</title>
+    <title>Curve fitting &mdash; Hyperspy 0.3.beta3-dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.0beta2.1',
+        VERSION:     '0.3.beta3-dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.3.0beta2.1 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.3.beta3-dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Electron Energy Loss Spectroscopy extra features" href="eels.html" />
     <link rel="prev" title="Machine learning" href="mva.html" /> 
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.0beta2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,6 +63,78 @@
             
   <div class="section" id="curve-fitting">
 <h1>Curve fitting<a class="headerlink" href="#curve-fitting" title="Permalink to this headline">¶</a></h1>
+<p>Hyperspy can perform curve fitting in n-dimensional data sets. It can create a model from a linear combinantion of predefined components and can use multiple optimisation algorithms to fit the model to experimental data. It supports bounds and weights.</p>
+<div class="section" id="creating-a-model">
+<h2>Creating a model<a class="headerlink" href="#creating-a-model" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> can be created using the <a class="reference internal" href="../api/hyperspy.html#hyperspy.hspy.create_model" title="hyperspy.hspy.create_model"><tt class="xref py py-func docutils literal"><span class="pre">create_model()</span></tt></a> function, which first argument is a <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> of any of its subclasses (often it is simply the object returned by the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><tt class="xref py py-func docutils literal"><span class="pre">load()</span></tt></a> function. e.g.,</p>
+<div class="highlight-ipython"><pre>In [1]: # Load the data from a file
+In [2]: s = load('YourDataFilenameHere')
+In [3]: #Create the model and asign it to the variable m
+In [4]: m = create_model()</pre>
+</div>
+</div>
+<div class="section" id="adding-components-to-the-model">
+<h2>Adding components to the model<a class="headerlink" href="#adding-components-to-the-model" title="Permalink to this headline">¶</a></h2>
+<p>In Hyperspy a model consists of a linear combination of <a class="reference internal" href="../api/hyperspy.components.html#module-hyperspy.components" title="hyperspy.components"><tt class="xref py py-mod docutils literal"><span class="pre">components</span></tt></a>. These are some of the components which are currently available:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.eels_cl_edge.EELSCLEdge" title="hyperspy.components.eels_cl_edge.EELSCLEdge"><tt class="xref py py-class docutils literal"><span class="pre">EELSCLEdge</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.power_law.PowerLaw" title="hyperspy.components.power_law.PowerLaw"><tt class="xref py py-class docutils literal"><span class="pre">PowerLaw</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.offset.Offset" title="hyperspy.components.offset.Offset"><tt class="xref py py-class docutils literal"><span class="pre">Offset</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.exponential.Exponential" title="hyperspy.components.exponential.Exponential"><tt class="xref py py-class docutils literal"><span class="pre">Exponential</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.scalable_fixed_pattern.ScalableFixedPattern" title="hyperspy.components.scalable_fixed_pattern.ScalableFixedPattern"><tt class="xref py py-class docutils literal"><span class="pre">ScalableFixedPattern</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.gaussian.Gaussian" title="hyperspy.components.gaussian.Gaussian"><tt class="xref py py-class docutils literal"><span class="pre">Gaussian</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.lorentzian.Lorentzian" title="hyperspy.components.lorentzian.Lorentzian"><tt class="xref py py-class docutils literal"><span class="pre">Lorentzian</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.voigt.Voigt" title="hyperspy.components.voigt.Voigt"><tt class="xref py py-class docutils literal"><span class="pre">Voigt</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.polynomial.Polynomial" title="hyperspy.components.polynomial.Polynomial"><tt class="xref py py-class docutils literal"><span class="pre">Polynomial</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.logistic.Logistic" title="hyperspy.components.logistic.Logistic"><tt class="xref py py-class docutils literal"><span class="pre">Logistic</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.bleasdale.Bleasdale" title="hyperspy.components.bleasdale.Bleasdale"><tt class="xref py py-class docutils literal"><span class="pre">Bleasdale</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.error_function.Erf" title="hyperspy.components.error_function.Erf"><tt class="xref py py-class docutils literal"><span class="pre">Erf</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.pes_see.SEE" title="hyperspy.components.pes_see.SEE"><tt class="xref py py-class docutils literal"><span class="pre">SEE</span></tt></a></li>
+</ul>
+<p>Writing a new component is very easy, so, if the function that you need to fit is not in the list above, by inspecting the code of, for example, the Gaussian component, it should be easy to write your own component. If you need help for the task please submit your question to the <em class="xref std std-ref">users mailing list</em>.</p>
+<p>To print the current components in a model simply write the name of the variable a press <tt class="docutils literal"><span class="pre">Enter</span></tt>, e.g.:</p>
+<div class="highlight-ipython"><pre>In [5]: # m is the variable in which we have previously stored the model
+In [6]: m
+Out[1]: []
+In [7]: # [] means that the model is empty</pre>
+</div>
+<p>To add a component first we have to create an instance of the component. Once the instance has been created we can add the component to the model using the <tt class="xref py py-meth docutils literal"><span class="pre">append()</span></tt> method, e.g.:</p>
+<div class="highlight-ipython"><pre>In [8]: # Create a Gaussian function component
+In [9]: gaussian = components.Gaussian()
+In [10]: # Add it to the model_cube
+In [11]: m.append(gaussian)
+In [12]: # Let's print the components
+In [13]: m
+Out[2]: [Normalized Gaussian]
+In [14]: # Create two Lorentzian function components
+In [15]:  lorentzian1 = components.Lorentzian()
+In [16]: lorentzian2 = components.Lorentzian()
+In [17]: # We could use the append method two times to add the
+In [18]: # two lorentzians, but when adding multiple components it is handier to used
+In [19]: # the extend method
+In [20]: m.extend((lorentzian1, lorentzian2))
+In [21]: # Let's print the components
+Out[2]: [Normalized Gaussian, Lorentzian, Lorentzian]</pre>
+</div>
+</div>
+<div class="section" id="fitting-the-model-to-the-data">
+<h2>Fitting the model to the data<a class="headerlink" href="#fitting-the-model-to-the-data" title="Permalink to this headline">¶</a></h2>
+<p>To fit the model to the data at the current coordinates use <a class="reference internal" href="../api/hyperspy.html#hyperspy.optimizers.Optimizers.fit" title="hyperspy.optimizers.Optimizers.fit"><tt class="xref py py-meth docutils literal"><span class="pre">fit()</span></tt></a>. To fit the model to the data in all the coordinates use <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-meth docutils literal"><span class="pre">multifit()</span></tt></a> and to visualise the result <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.plot" title="hyperspy.model.Model.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a>, e.g.:</p>
+<div class="highlight-ipython"><pre>In [22]: # Let's fit the data at the current coordinates
+In [23]: m.fit()
+In [24]: # And now let's visualise the results
+In [25]: m.plot()
+In [26]: # Because we like what we see, we will fit the model to the
+In [28]: # data in all the coordinates
+In [29]: m.multifit()</pre>
+</div>
+</div>
+<div class="section" id="getting-and-setting-the-component-parameters">
+<h2>Getting and setting the component parameters<a class="headerlink" href="#getting-and-setting-the-component-parameters" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="exclude-data-from-the-fitting-process">
+<h2>Exclude data from the fitting process<a class="headerlink" href="#exclude-data-from-the-fitting-process" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -74,6 +146,18 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
             </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Curve fitting</a><ul>
+<li><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
+<li><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
+<li><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a></li>
+<li><a class="reference internal" href="#getting-and-setting-the-component-parameters">Getting and setting the component parameters</a></li>
+<li><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="mva.html"
                         title="previous chapter">Machine learning</a></p>
@@ -120,12 +204,12 @@
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.0beta2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, The hyperspy development team.
+        &copy; Copyright 2012, The Hyperspy development team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
