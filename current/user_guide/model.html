@@ -107,14 +107,14 @@ In [12]: # Let's print the components
 In [13]: m
 Out[2]: [Normalized Gaussian]
 In [14]: # Create two Lorentzian function components
-In [15]:  lorentzian1 = components.Lorentzian()
-In [16]: lorentzian2 = components.Lorentzian()
+In [15]: gaussian2 = components.Gaussian()
+In [16]: gaussian3 = components.Gaussian()
 In [17]: # We could use the append method two times to add the
 In [18]: # two lorentzians, but when adding multiple components it is handier to used
 In [19]: # the extend method
-In [20]: m.extend((lorentzian1, lorentzian2))
+In [20]: m.extend((gaussian2, gaussian3))
 In [21]: # Let's print the components
-Out[2]: [Normalized Gaussian, Lorentzian, Lorentzian]</pre>
+Out[2]: [Normalized Gaussian, Normalized Gaussian, Normalized Gaussian]</pre>
 </div>
 </div>
 <div class="section" id="fitting-the-model-to-the-data">
@@ -129,11 +129,91 @@ In [28]: # data in all the coordinates
 In [29]: m.multifit()</pre>
 </div>
 </div>
-<div class="section" id="getting-and-setting-the-component-parameters">
-<h2>Getting and setting the component parameters<a class="headerlink" href="#getting-and-setting-the-component-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-and-setting-parameters-value-and-attributes">
+<h2>Getting and setting parameters value and attributes<a class="headerlink" href="#getting-and-setting-parameters-value-and-attributes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.print_current_values" title="hyperspy.model.Model.print_current_values"><tt class="xref py py-meth docutils literal"><span class="pre">print_current_values()</span></tt></a> prints the value of the parameters of the components in the current coordinates.</p>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">parameters</span></tt> contains a list of the parameters of a component and <tt class="xref py py-attr docutils literal"><span class="pre">free_parameters</span></tt> lists only the free parameters.</p>
+<p>The value of a particular parameter can be accessed in the <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.value" title="hyperspy.component.Parameter.value"><tt class="xref py py-attr docutils literal"><span class="pre">value</span></tt></a>.</p>
+<p>To set the the <cite>free</cite> state of a parameter change the <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.free" title="hyperspy.component.Parameter.free"><tt class="xref py py-attr docutils literal"><span class="pre">free</span></tt></a> attribute.</p>
+<p>The value of a parameter can be coupled to the value of another by setting the <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.twin" title="hyperspy.component.Parameter.twin"><tt class="xref py py-attr docutils literal"><span class="pre">twin</span></tt></a> attribute.</p>
+<p>The following example clarifies these concepts:</p>
+<div class="highlight-ipython"><pre>In [30]: # Print the parameters of the gaussian components
+In [31]: gaussian.parameters
+Out[3]: (A, sigma, centre)
+In [30]: # Fix the centre
+In [31]: gaussian.centre.free = False
+In [30]: # Print the free parameters
+In [31]: gaussian.parameters
+Out[3]: set([A, sigma])
+In [31]: gaussian.parameters
+Out[3]: set([A, sigma])
+In [32]: # Print the current value of all the free parameters
+In [33]: m.print_current_values()
+Components  Parameter       Value
+Normalized Gaussian
+                A   1.000000
+                sigma       1.000000
+Normalized Gaussian
+                centre      0.000000
+                A   1.000000
+                sigma       1.000000
+Normalized Gaussian
+                A   1.000000
+                sigma       1.000000
+                centre      0.000000
+In [34]: # Couple the A parameter of gaussian2 to the A parameter of gaussian 3
+In [35]: gaussian2.A.twin = gaussian3.A
+In [36]: # Set the gaussian2 centre value to 10
+In [37]: gaussian2.centre.value = 10
+In [38]: # Print the current value of all the free parameters
+In [39]: m.print_current_values()
+Components  Parameter       Value
+Normalized Gaussian
+                A   1.000000
+                sigma       1.000000
+Normalized Gaussian
+                centre      10.000000
+                A   1.000000
+                sigma       1.000000
+Normalized Gaussian
+                A   1.000000
+                sigma       1.000000
+                centre      0.000000</pre>
+</div>
 </div>
 <div class="section" id="exclude-data-from-the-fitting-process">
 <h2>Exclude data from the fitting process<a class="headerlink" href="#exclude-data-from-the-fitting-process" title="Permalink to this headline">¶</a></h2>
+<p>The following <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> methods can be used to exclude undesired spectral channels from the fitting process:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.set_data_range_in_units" title="hyperspy.model.Model.set_data_range_in_units"><tt class="xref py py-meth docutils literal"><span class="pre">set_data_range_in_units()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.set_data_range_in_pixels" title="hyperspy.model.Model.set_data_range_in_pixels"><tt class="xref py py-meth docutils literal"><span class="pre">set_data_range_in_pixels()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.remove_data_range_in_units" title="hyperspy.model.Model.remove_data_range_in_units"><tt class="xref py py-meth docutils literal"><span class="pre">remove_data_range_in_units()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.remove_data_range_in_pixels" title="hyperspy.model.Model.remove_data_range_in_pixels"><tt class="xref py py-meth docutils literal"><span class="pre">remove_data_range_in_pixels()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.reset_data_range" title="hyperspy.model.Model.reset_data_range"><tt class="xref py py-meth docutils literal"><span class="pre">reset_data_range()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="visualising-the-result-of-the-fit">
+<h2>Visualising the result of the fit<a class="headerlink" href="#visualising-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a>, <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">Component</span></tt></a> and <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> classes have plot methods to visualise
+the result of the fit <strong>when fitting multidimensional datasets</strong>.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.plot_results" title="hyperspy.model.Model.plot_results"><tt class="xref py py-meth docutils literal"><span class="pre">plot_results()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component.plot" title="hyperspy.component.Component.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.plot" title="hyperspy.component.Parameter.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="saving-and-loading-the-result-of-the-fit">
+<h2>Saving and loading the result of the fit<a class="headerlink" href="#saving-and-loading-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
+<p>To save the result of the fit to a single file use <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-meth docutils literal"><span class="pre">save_parameters2file()</span></tt></a> and <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-meth docutils literal"><span class="pre">load_parameters_from_file()</span></tt></a> to load back the results into the same model structure.</p>
+</div>
+<div class="section" id="exporting-the-result-of-the-fit">
+<h2>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a>, <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">Component</span></tt></a> and <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> classes have export methods:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.export_results" title="hyperspy.model.Model.export_results"><tt class="xref py py-meth docutils literal"><span class="pre">export_results()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component.export" title="hyperspy.component.Component.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.export" title="hyperspy.component.Parameter.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a></li>
+</ul>
 </div>
 </div>
 
@@ -152,8 +232,11 @@ In [29]: m.multifit()</pre>
 <li><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
 <li><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
 <li><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a></li>
-<li><a class="reference internal" href="#getting-and-setting-the-component-parameters">Getting and setting the component parameters</a></li>
+<li><a class="reference internal" href="#getting-and-setting-parameters-value-and-attributes">Getting and setting parameters value and attributes</a></li>
 <li><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
+<li><a class="reference internal" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
+<li><a class="reference internal" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
+<li><a class="reference internal" href="#exporting-the-result-of-the-fit">Exporting the result of the fit</a></li>
 </ul>
 </li>
 </ul>
