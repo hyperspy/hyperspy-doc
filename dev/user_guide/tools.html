@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools &mdash; Hyperspy 0.4.1dev documentation</title>
+    <title>Tools &mdash; Hyperspy 0.4.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.1dev',
+        VERSION:     '0.4.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4.1dev documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.4.1 documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Machine learning" href="mva.html" />
     <link rel="prev" title="Loading and saving data" href="io.html" /> 
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="io.html" title="Loading and saving data"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,18 +62,195 @@
           <div class="body">
             
   <div class="section" id="tools">
-<span id="decomposition"></span><h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
+<h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-signal-class-and-its-subclasses">
+<h2>The Signal class and its subclasses<a class="headerlink" href="#the-signal-class-and-its-subclasses" title="Permalink to this headline">¶</a></h2>
+<p>In Hyperspy the data and most of the data analysis functions are contained in a <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> class or subclass. The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> class contains general functionality that is available to all the subclasses. The subclasses provide functionality that is normally specific to a particular type of data, e.g. the <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> class provides common functionality to deal with spectral data and <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum" title="hyperspy.signals.eels.EELSSpectrum"><tt class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></tt></a> (that is a subclass of <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a>) adds extra functionality to the <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> class for electron energy-loss spectroscopy data analysis.</p>
+<p>Currently the following signal subclasses are available:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.image.Image" title="hyperspy.signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum" title="hyperspy.signals.eels.EELSSpectrum"><tt class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum_simulation.SpectrumSimulation" title="hyperspy.signals.spectrum_simulation.SpectrumSimulation"><tt class="xref py py-class docutils literal"><span class="pre">SpectrumSimulation</span></tt></a></li>
+</ul>
+<p>The data is stores in the <tt class="xref py py-attr docutils literal"><span class="pre">data</span></tt> attribute, the original parameters in the <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> attribute, the mapped parameters in the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute and the axes information (incluiding calibration) can be accessed (and modified) in the <tt class="xref py py-attr docutils literal"><span class="pre">axes_manager</span></tt> attribute. All the methods of the class provides functionality.</p>
+<div class="section" id="transforming-between-signal-subclasses">
+<h3>Transforming between signal subclasses<a class="headerlink" href="#transforming-between-signal-subclasses" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to transform between signal subclasses, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;EELS Spectrum Image (high-loss).dm3&#39;</span><span class="p">)</span>
+
+<span class="go">    Title: EELS Spectrum Image (high-loss).dm3</span>
+<span class="go">    Signal type: EELS</span>
+<span class="go">    Data dimensions: (21, 42, 2048)</span>
+<span class="go">    Data representation: spectrum</span>
+
+
+<span class="go"># We check the type of object that loading the file has created:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;EELSSpectrum, title: EELS Spectrum Image (high-loss).dm3, dimensions: (21, 42, 2048)&gt;</span>
+
+<span class="go"># We convert it in an Image object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span>
+<span class="go">&lt;Image, title: EELS Spectrum Image (high-loss).dm3, dimensions: (2048, 21, 42)&gt;</span>
+<span class="go"># And now we turn it into a Spectrum</span>
+<span class="go">s2 = im.to_spectrum()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Spectrum, title: EELS Spectrum Image (high-loss).dm3, dimensions: (21, 42, 2048)&gt;</span>
+<span class="go"># And now back to EELSSpectrum</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s3</span> <span class="o">=</span> <span class="n">s2</span><span class="o">.</span><span class="n">to_EELS</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s3</span>
+<span class="go">&lt;EELSSpectrum, title: EELS Spectrum Image (high-loss).dm3, dimensions: (21, 42, 2048)&gt;</span>
+</pre></div>
+</div>
+<p>When transforming between spectrum and image classes the order in which the data array is stored in memory is modified and several functions, e.g. plotting or decomposing, will behave differently.</p>
+</div>
+</div>
 <div class="section" id="generic-tools">
 <h2>Generic tools<a class="headerlink" href="#generic-tools" title="Permalink to this headline">¶</a></h2>
+<p>These are the tools (methods) which are available to all the signals. In this section only a small data set is discussed, for a detailed list of all the methods available see the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> documentation.</p>
+<div class="section" id="cropping">
+<h3>Cropping<a class="headerlink" href="#cropping" title="Permalink to this headline">¶</a></h3>
+<p>The following methods are available to crop a given axis:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.crop_in_pixels" title="hyperspy.signal.Signal.crop_in_pixels"><tt class="xref py py-meth docutils literal"><span class="pre">crop_in_pixels()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.crop_in_units" title="hyperspy.signal.Signal.crop_in_units"><tt class="xref py py-meth docutils literal"><span class="pre">crop_in_units()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="rebinning">
+<h3>Rebinning<a class="headerlink" href="#rebinning" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.rebin" title="hyperspy.signal.Signal.rebin"><tt class="xref py py-meth docutils literal"><span class="pre">rebin()</span></tt></a> method rebins that data in place.</p>
+</div>
+<div class="section" id="folding-and-unfolding">
+<h3>Folding and unfolding<a class="headerlink" href="#folding-and-unfolding" title="Permalink to this headline">¶</a></h3>
+<p>When dealing with multidimensional datasets it is sometimes useful to transform the data in a two dimensional dataset. This feature is provided by the following two method:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.fold" title="hyperspy.signal.Signal.fold"><tt class="xref py py-meth docutils literal"><span class="pre">fold()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.unfold" title="hyperspy.signal.Signal.unfold"><tt class="xref py py-meth docutils literal"><span class="pre">unfold()</span></tt></a></li>
+</ul>
+<p>It is also possible to unfold only the navigation or signal space:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.unfold_navigation_space" title="hyperspy.signal.Signal.unfold_navigation_space"><tt class="xref py py-meth docutils literal"><span class="pre">unfold_navigation_space()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.unfold_signal_space" title="hyperspy.signal.Signal.unfold_signal_space"><tt class="xref py py-meth docutils literal"><span class="pre">unfold_signal_space()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="sum-or-average-over-one-axis">
+<h3>Sum or average over one axis<a class="headerlink" href="#sum-or-average-over-one-axis" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.sum" title="hyperspy.signal.Signal.sum"><tt class="xref py py-meth docutils literal"><span class="pre">sum()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.mean" title="hyperspy.signal.Signal.mean"><tt class="xref py py-meth docutils literal"><span class="pre">mean()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="changing-the-data-type">
+<h3>Changing the data type<a class="headerlink" href="#changing-the-data-type" title="Permalink to this headline">¶</a></h3>
+<p>Even if the original data is recorded with a limited dynamic range, it is often desirable to perform the analysis operations with a higher precision. Conversely, storing in a shorter data type can decrease the file size. The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.change_dtype" title="hyperspy.signal.Signal.change_dtype"><tt class="xref py py-meth docutils literal"><span class="pre">change_dtype()</span></tt></a> changes the data type in place, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;EELS Spectrum Image (high-loss).dm3&#39;</span><span class="p">)</span>
+<span class="go">    Title: EELS Spectrum Image (high-loss).dm3</span>
+<span class="go">    Signal type: EELS</span>
+<span class="go">    Data dimensions: (21, 42, 2048)</span>
+<span class="go">    Data representation: spectrum</span>
+<span class="go">    Data type: float32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">    Title: EELS Spectrum Image (high-loss).dm3</span>
+<span class="go">    Signal type: EELS</span>
+<span class="go">    Data dimensions: (21, 42, 2048)</span>
+<span class="go">    Data representation: spectrum</span>
+<span class="go">    Data type: float64</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="spectrum-tools">
 <h2>Spectrum tools<a class="headerlink" href="#spectrum-tools" title="Permalink to this headline">¶</a></h2>
+<p>These methods are only available in the following signals:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.image.Image" title="hyperspy.signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum" title="hyperspy.signals.eels.EELSSpectrum"><tt class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum_simulation.SpectrumSimulation" title="hyperspy.signals.spectrum_simulation.SpectrumSimulation"><tt class="xref py py-class docutils literal"><span class="pre">SpectrumSimulation</span></tt></a></li>
+</ul>
+<div class="section" id="id1">
+<h3>Cropping<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.crop_spectrum" title="hyperspy.signals.spectrum.Spectrum.crop_spectrum"><tt class="xref py py-meth docutils literal"><span class="pre">crop_spectrum()</span></tt></a>, if not parameter is passed, provides a user interface to crop the spectrum.</p>
+</div>
+<div class="section" id="background-removal">
+<h3>Background removal<a class="headerlink" href="#background-removal" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.remove_background" title="hyperspy.signals.spectrum.Spectrum.remove_background"><tt class="xref py py-meth docutils literal"><span class="pre">remove_background()</span></tt></a> provides a user interface to remove some background funtions.</p>
+</div>
+<div class="section" id="calibration">
+<h3>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.calibrate" title="hyperspy.signals.spectrum.Spectrum.calibrate"><tt class="xref py py-meth docutils literal"><span class="pre">calibrate()</span></tt></a> provides a user interface to calibrate the spectral axis.</p>
+</div>
+<div class="section" id="aligning">
+<h3>Aligning<a class="headerlink" href="#aligning" title="Permalink to this headline">¶</a></h3>
+<p>The following methods use sub-pixel cross-correlation or user-provided shifts to align spectra. They support applying the same transformation to multiple files.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.align_1D" title="hyperspy.signals.spectrum.Spectrum.align_1D"><tt class="xref py py-meth docutils literal"><span class="pre">align_1D()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.align_with_array_1D" title="hyperspy.signals.spectrum.Spectrum.align_with_array_1D"><tt class="xref py py-meth docutils literal"><span class="pre">align_with_array_1D()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="data-smoothing">
+<h3>Data smoothing<a class="headerlink" href="#data-smoothing" title="Permalink to this headline">¶</a></h3>
+<p>The following methods (that include user interfaces when no arguments are passed) can perform data smoothing with different algorithms:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.smooth_lowess" title="hyperspy.signals.spectrum.Spectrum.smooth_lowess"><tt class="xref py py-meth docutils literal"><span class="pre">smooth_lowess()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.smooth_tv" title="hyperspy.signals.spectrum.Spectrum.smooth_tv"><tt class="xref py py-meth docutils literal"><span class="pre">smooth_tv()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum.smooth_savitzky_golay" title="hyperspy.signals.spectrum.Spectrum.smooth_savitzky_golay"><tt class="xref py py-meth docutils literal"><span class="pre">smooth_savitzky_golay()</span></tt></a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="image-tools">
 <h2>Image tools<a class="headerlink" href="#image-tools" title="Permalink to this headline">¶</a></h2>
+<p>Currently there are not methods unique to the image class.</p>
 </div>
 <div class="section" id="eels-tools">
 <h2>EELS tools<a class="headerlink" href="#eels-tools" title="Permalink to this headline">¶</a></h2>
+<p>These methods are only available in the following signals:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum" title="hyperspy.signals.eels.EELSSpectrum"><tt class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></tt></a></li>
+</ul>
+<div class="section" id="spikes-removal">
+<h3>Spikes removal<a class="headerlink" href="#spikes-removal" title="Permalink to this headline">¶</a></h3>
+<p>The following methods can assist in removing spikes by interpolation:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.spikes_diagnosis" title="hyperspy.signals.eels.EELSSpectrum.spikes_diagnosis"><tt class="xref py py-meth docutils literal"><span class="pre">spikes_diagnosis()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.plot_spikes" title="hyperspy.signals.eels.EELSSpectrum.plot_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">plot_spikes()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.remove_spikes" title="hyperspy.signals.eels.EELSSpectrum.remove_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">remove_spikes()</span></tt></a></li>
+</ul>
+<p>The workflow is as follows:</p>
+<ul class="simple">
+<li>Use <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.spikes_diagnosis" title="hyperspy.signals.eels.EELSSpectrum.spikes_diagnosis"><tt class="xref py py-meth docutils literal"><span class="pre">spikes_diagnosis()</span></tt></a> to select a threshold in the histogram. All the points above the threshold will be indentified as spikes.</li>
+<li>Use <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.plot_spikes" title="hyperspy.signals.eels.EELSSpectrum.plot_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">plot_spikes()</span></tt></a> to plot the spikes detected using the given threshold. This method returns a list of spikes that can be edited and passes to <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.remove_spikes" title="hyperspy.signals.eels.EELSSpectrum.remove_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">remove_spikes()</span></tt></a> if the automatic detection is too coarse.</li>
+<li>When the optimal threshold have been found, use <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.remove_spikes" title="hyperspy.signals.eels.EELSSpectrum.remove_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">remove_spikes()</span></tt></a> to remove the spikes by interpolation. This method also accepts a list of coordinates and other parameters.</li>
+</ul>
+</div>
+<div class="section" id="define-the-elemental-composition-of-the-sample">
+<h3>Define the elemental composition of the sample<a class="headerlink" href="#define-the-elemental-composition-of-the-sample" title="Permalink to this headline">¶</a></h3>
+<p>It can be useful to define the composition of the sample for archiving purposes or for some features (e.g. curve fitting) that may use this information. The elemental composition of the sample can be defined using <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.remove_spikes" title="hyperspy.signals.eels.EELSSpectrum.remove_spikes"><tt class="xref py py-meth docutils literal"><span class="pre">remove_spikes()</span></tt></a>. The information is stored in the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute (see <a class="reference internal" href="mapped_parameters_structure.html#mapped-parameters-structure"><em>Mapped parameters structure</em></a>)</p>
+</div>
+<div class="section" id="estimate-the-fwhm-of-a-peak">
+<h3>Estimate the FWHM of a peak<a class="headerlink" href="#estimate-the-fwhm-of-a-peak" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.calculate_FWHM" title="hyperspy.signals.eels.EELSSpectrum.calculate_FWHM"><tt class="xref py py-meth docutils literal"><span class="pre">calculate_FWHM()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="estimate-the-thickness">
+<h3>Estimate the thickness<a class="headerlink" href="#estimate-the-thickness" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.calculate_thickness" title="hyperspy.signals.eels.EELSSpectrum.calculate_thickness"><tt class="xref py py-meth docutils literal"><span class="pre">calculate_thickness()</span></tt></a> can estimate the thickness from a low loss EELS spectrum.</p>
+</div>
+<div class="section" id="estimate-zero-loss-peak-centre">
+<h3>Estimate zero loss peak centre<a class="headerlink" href="#estimate-zero-loss-peak-centre" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.find_low_loss_centre" title="hyperspy.signals.eels.EELSSpectrum.find_low_loss_centre"><tt class="xref py py-meth docutils literal"><span class="pre">find_low_loss_centre()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="fourier-log-deconvolution">
+<h3>Fourier-log deconvolution<a class="headerlink" href="#fourier-log-deconvolution" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.eels.EELSSpectrum.fourier_log_deconvolution" title="hyperspy.signals.eels.EELSSpectrum.fourier_log_deconvolution"><tt class="xref py py-meth docutils literal"><span class="pre">fourier_log_deconvolution()</span></tt></a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -89,10 +266,36 @@
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Tools</a><ul>
-<li><a class="reference internal" href="#generic-tools">Generic tools</a></li>
-<li><a class="reference internal" href="#spectrum-tools">Spectrum tools</a></li>
+<li><a class="reference internal" href="#the-signal-class-and-its-subclasses">The Signal class and its subclasses</a><ul>
+<li><a class="reference internal" href="#transforming-between-signal-subclasses">Transforming between signal subclasses</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generic-tools">Generic tools</a><ul>
+<li><a class="reference internal" href="#cropping">Cropping</a></li>
+<li><a class="reference internal" href="#rebinning">Rebinning</a></li>
+<li><a class="reference internal" href="#folding-and-unfolding">Folding and unfolding</a></li>
+<li><a class="reference internal" href="#sum-or-average-over-one-axis">Sum or average over one axis</a></li>
+<li><a class="reference internal" href="#changing-the-data-type">Changing the data type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spectrum-tools">Spectrum tools</a><ul>
+<li><a class="reference internal" href="#id1">Cropping</a></li>
+<li><a class="reference internal" href="#background-removal">Background removal</a></li>
+<li><a class="reference internal" href="#calibration">Calibration</a></li>
+<li><a class="reference internal" href="#aligning">Aligning</a></li>
+<li><a class="reference internal" href="#data-smoothing">Data smoothing</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#image-tools">Image tools</a></li>
-<li><a class="reference internal" href="#eels-tools">EELS tools</a></li>
+<li><a class="reference internal" href="#eels-tools">EELS tools</a><ul>
+<li><a class="reference internal" href="#spikes-removal">Spikes removal</a></li>
+<li><a class="reference internal" href="#define-the-elemental-composition-of-the-sample">Define the elemental composition of the sample</a></li>
+<li><a class="reference internal" href="#estimate-the-fwhm-of-a-peak">Estimate the FWHM of a peak</a></li>
+<li><a class="reference internal" href="#estimate-the-thickness">Estimate the thickness</a></li>
+<li><a class="reference internal" href="#estimate-zero-loss-peak-centre">Estimate zero loss peak centre</a></li>
+<li><a class="reference internal" href="#fourier-log-deconvolution">Fourier-log deconvolution</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -143,7 +346,7 @@
         <li class="right" >
           <a href="io.html" title="Loading and saving data"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
