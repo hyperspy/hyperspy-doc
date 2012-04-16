@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Machine learning &mdash; Hyperspy 0.4 documentation</title>
+    <title>Machine learning &mdash; Hyperspy 0.4.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4',
+        VERSION:     '0.4.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.4.1 documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Curve fitting" href="model.html" />
     <link rel="prev" title="Tools" href="tools.html" /> 
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="tools.html" title="Tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -86,6 +86,13 @@ algorithms such as independent component analysis (ICA) are available through
 the methods described in this section.</p>
 <p>The behaviour of some Machine Learning functionality can be customised <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><em>customised</em></a> in the Machine Learning section Preferences.</p>
 </div>
+<div class="section" id="nomenclature">
+<span id="decomposition-nomenclature"></span><h2>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h2>
+<p>Hyperspy performs the decomposition of a dataset into two datasets:
+one with the dimension of the signal space which we will call <cite>factors</cite> and the other with
+the dimension of the navigation space which we will call <cite>loadings</cite>.
+The same nomenclature applies to the result of BSS.</p>
+</div>
 <div class="section" id="decomposition">
 <span id="id1"></span><h2>Decomposition<a class="headerlink" href="#decomposition" title="Permalink to this headline">¶</a></h2>
 <p>There are several methods to decompose a matrix or tensor into several factors.
@@ -94,13 +101,6 @@ dimensionality reduction. One of the most popular decomposition methods is
 principal component analysis (PCA). To perform PCA on your data set,
 run the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.decomposition" title="hyperspy.learn.mva.MVA.decomposition"><tt class="xref py py-meth docutils literal"><span class="pre">decomposition()</span></tt></a> method:</p>
 <p>The default algorithm is <tt class="xref py py-const docutils literal"><span class="pre">SVD</span></tt>, which performs PCA using singular value decomposition. This method has many options. For more details read method documentation.</p>
-<div class="section" id="nomenclature">
-<span id="decomposition-nomenclature"></span><h3>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h3>
-<p>Hyperspy performs the decomposition of a dataset into two datasets:
-one with the dimension of the signal space which we will call <cite>factors</cite> and the other with
-the dimension of the navigation space which we will call <cite>loadings</cite>.
-The same nomenclature applies to the result of BSS.</p>
-</div>
 <div class="section" id="poissonian-noise">
 <h3>Poissonian noise<a class="headerlink" href="#poissonian-noise" title="Permalink to this headline">¶</a></h3>
 <p>Most decomposition algorithms assume that the noise of the data follows a
@@ -108,11 +108,10 @@ Gaussian distribution. In the case that the data that you are analysing follow
 a Poissonian distribution instead Hyperspy can &#8220;normalise&#8221; the data by
 performing a scaling operation which can greatly enhance the result.</p>
 <p>To perform Poissonian noise normalisation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># The long way:</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">normalize_poissonian_noise</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-
-<span class="c"># Because it is the first argument we cold have simple written:</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># The long way:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">normalize_poissonian_noise</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Because it is the first argument we cold have simple written:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For more details about the scaling procedure you can read the
@@ -124,12 +123,12 @@ performing a scaling operation which can greatly enhance the result.</p>
 <span id="id2"></span><h4>Scree plot<a class="headerlink" href="#scree-plot" title="Permalink to this headline">¶</a></h4>
 <p>When using PCA it is often useful to estimate the dimensionality of the data
 by plotting the explained variance against the component index in a
-logarithmic y-scale. This plot is sometimes called scree-plot and it drops
+logarithmic y-scale. This plot is sometimes called scree-plot and it should drop
 quickly, eventually becoming a slowly descending line. The point at which it
 becomes linear (often referred to as an elbow) is generally judged to be a good
 estimation of the dimensionality of the data.</p>
 <p>To obtain a scree plot, run the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><tt class="xref py py-meth docutils literal"><span class="pre">plot_explained_variance_ratio()</span></tt></a> method e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -140,7 +139,7 @@ estimation of the dimensionality of the data.</p>
 is achieved by using a limited set of components to make a model of the
 original, omitting the later components that ideally contain only noise.</p>
 <p>To perform this operation with Hyperspy running the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.get_decomposition_model" title="hyperspy.learn.mva.MVA.get_decomposition_model"><tt class="xref py py-meth docutils literal"><span class="pre">get_decomposition_model()</span></tt></a> method, usually after estimating the dimension of your data e.g. by using the <a class="reference internal" href="#scree-plot"><em>Scree plot</em></a> if your algorithm of choice is PCA. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_decomposition_model</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_decomposition_model</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -169,7 +168,7 @@ model constructed using the chosen components.</p>
 <p>Sometimes it is useful to examine the residuals between your original
 data and the decomposition model. To examine residuals, use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.plot_residual" title="hyperspy.signal.Signal.plot_residual"><tt class="xref py py-meth docutils literal"><span class="pre">plot_residual()</span></tt></a> method on
 the reconstructed object, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span><span class="o">.</span><span class="n">plot_residual</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">plot_residual</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -185,7 +184,7 @@ decomposition by Blind Source Separation (BSS).</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You must have performed a <a class="reference internal" href="tools.html#decomposition"><em>Tools</em></a> before you attempt to
+<p class="last">You must have performed a <a class="reference internal" href="#decomposition"><em>Decomposition</em></a> before you attempt to
 perform BSS.</p>
 </div>
 <div class="admonition note">
@@ -229,11 +228,11 @@ decomposition and one BSS result, what may not be enough for your purposes.</p>
 <h3>Saving to an external files<a class="headerlink" href="#saving-to-an-external-files" title="Permalink to this headline">¶</a></h3>
 <p>Alternatively, to save the results of the current machine learning analysis
 to a file you can use the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.LearningResults.save" title="hyperspy.learn.mva.LearningResults.save"><tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt></a> method, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># To save the result of the analysis</span>
-<span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;my_results&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># To save the result of the analysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;my_results&#39;</span><span class="p">)</span>
 
-<span class="c"># To load back the results</span>
-<span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;my_results.npz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># To load back the results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;my_results.npz&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -268,8 +267,8 @@ machine learning structure.</p>
   <ul>
 <li><a class="reference internal" href="#">Machine learning</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#decomposition">Decomposition</a><ul>
 <li><a class="reference internal" href="#nomenclature">Nomenclature</a></li>
+<li><a class="reference internal" href="#decomposition">Decomposition</a><ul>
 <li><a class="reference internal" href="#poissonian-noise">Poissonian noise</a></li>
 <li><a class="reference internal" href="#principal-component-analysis">Principal component analysis</a><ul>
 <li><a class="reference internal" href="#scree-plot">Scree plot</a></li>
@@ -336,7 +335,7 @@ machine learning structure.</p>
         <li class="right" >
           <a href="tools.html" title="Tools"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
