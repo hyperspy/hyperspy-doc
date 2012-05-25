@@ -27,6 +27,10 @@
 // Spelling fixes, added conversion to SI if eV is in units
 // Made 2D images nicer to look at (no longer requires slice tool)
 
+// Last modified 24/06/2012, Luiz Fernando Zagonel
+// Datatype issue with spectrum picker solved. 
+
+
 Object file_stream
 Image img
 Image img2
@@ -274,6 +278,37 @@ ImageReadImageDataFromStream(img, file_stream, 0)
 
 //data reading if finished
 CloseFile(file_RAW)
+
+
+
+if(ImageGetDataElementBitSize(img)!=32)
+{
+
+
+if(ImageGetDataElementBitSize(img)<32)
+{
+img3 := RealImage(imagename, 4, size_x, size_y, size_z)  
+img3 = img
+Closeimage(img)
+img := img3
+result("Warning: Data-type value changed to float (32 bit)."+"\n")
+}
+else
+
+if(TwoButtonDialog("Data format is float 64. In order to use the Spectrum Picker, it should be clipped to float 32. Do you what to clip this data to float 32?", "Yes", "No"))
+{
+img3 := RealImage(imagename, 4, size_x, size_y, size_z)  
+img3 = img
+Closeimage(img)
+img := img3
+result("Warning: Data-type value changed to float (32 bit)."+"\n")
+}
+
+
+}
+
+
+
 
 //Add scale calibration and format to the image
 if(size_x>1)
