@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>io_plugins Package &mdash; Hyperspy 0.4.1 documentation</title>
+    <title>io_plugins Package &mdash; Hyperspy 0.4.1+git122-g14fd548 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.1',
+        VERSION:     '0.4.1+git122-g14fd548',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4.1 documentation" href="../index.html" /> 
+    <link rel="top" title="Hyperspy 0.4.1+git122-g14fd548 documentation" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -517,12 +517,7 @@ required format</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename: str</strong> :</p>
-<blockquote class="last">
-<div><p>By using &#8216;*&#8217; it is possible to load a collection of images of the same 
-size into a three dimensional dataset.</p>
-</div></blockquote>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>filename: str</strong> :</td>
 </tr>
 </tbody>
 </table>
@@ -593,7 +588,7 @@ PIL.</p>
 <span id="ripple-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ripple</span></tt> Module<a class="headerlink" href="#module-hyperspy.io_plugins.ripple" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="hyperspy.io_plugins.ripple.file_reader">
-<tt class="descclassname">hyperspy.io_plugins.ripple.</tt><tt class="descname">file_reader</tt><big>(</big><em>filename</em>, <em>rpl_info=None</em>, <em>encoding='latin-1'</em>, <em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io_plugins.ripple.file_reader" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.io_plugins.ripple.</tt><tt class="descname">file_reader</tt><big>(</big><em>filename</em>, <em>rpl_info=None</em>, <em>encoding='latin-1'</em>, <em>mmap_mode='c'</em>, <em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io_plugins.ripple.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses a Lispix (<a class="reference external" href="http://www.nist.gov/lispix/">http://www.nist.gov/lispix/</a>) ripple (.rpl) file
 and reads the data from the corresponding raw (.raw) file;
 or, read a raw file if the dictionary rpl_info is provided.</p>
@@ -683,9 +678,31 @@ Accepts file object &#8216;fp. Returns dictionary rpl_info.</p>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.ripple.read_raw">
-<tt class="descclassname">hyperspy.io_plugins.ripple.</tt><tt class="descname">read_raw</tt><big>(</big><em>rpl_info</em>, <em>fp</em><big>)</big><a class="headerlink" href="#hyperspy.io_plugins.ripple.read_raw" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.io_plugins.ripple.</tt><tt class="descname">read_raw</tt><big>(</big><em>rpl_info</em>, <em>fp</em>, <em>mmap_mode='c'</em><big>)</big><a class="headerlink" href="#hyperspy.io_plugins.ripple.read_raw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the raw file object &#8216;fp&#8217; based on the information given in the
 &#8216;rpl_info&#8217; dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>rpl_info: dict</strong> :</p>
+<blockquote>
+<div><p>A dictionary containing the keywords as parsed by read_rpl</p>
+</div></blockquote>
+<p><strong>fp:</strong> :</p>
+<p><strong>mmap_mode: {None, &#8216;r+&#8217;, &#8216;r&#8217;, &#8216;w+&#8217;, &#8216;c&#8217;}, optional</strong> :</p>
+<p><strong>If not None, then memory-map the file, using the given mode</strong> :</p>
+<p><strong>(see `numpy.memmap`).  The mode has no effect for pickled or</strong> :</p>
+<p><strong>zipped files.</strong> :</p>
+<p><strong>A memory-mapped array is stored on disk, and not directly loaded</strong> :</p>
+<p><strong>into memory.  However, it can be accessed and sliced like any</strong> :</p>
+<p><strong>ndarray.  Memory mapping is especially useful for accessing</strong> :</p>
+<p><strong>small fragments of large files without reading the entire file</strong> :</p>
+<p class="last"><strong>into memory.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -808,7 +825,7 @@ image.</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Loading and saving data &mdash; Hyperspy 0.4.1 documentation</title>
+    <title>Loading and saving data &mdash; Hyperspy 0.4.1+git122-g14fd548 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.1',
+        VERSION:     '0.4.1+git122-g14fd548',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4.1 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.4.1+git122-g14fd548 documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Tools" href="tools.html" />
     <link rel="prev" title="Getting started" href="getting_started.html" /> 
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="getting_started.html" title="Getting started"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,7 +84,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#ripple" id="id16">Ripple</a></li>
-<li><a class="reference internal" href="#image" id="id17">Image</a></li>
+<li><a class="reference internal" href="#images" id="id17">Images</a></li>
 <li><a class="reference internal" href="#tiff" id="id18">TIFF</a></li>
 <li><a class="reference internal" href="#gatan-digital-micrograph" id="id19">Gatan Digital Micrograph</a></li>
 <li><a class="reference internal" href="#fei-tia-ser-and-emi" id="id20">FEI TIA ser and emi</a></li>
@@ -96,21 +96,22 @@
 </div>
 <div class="section" id="loading-files-the-load-function">
 <span id="loading-files"></span><h2><a class="toc-backref" href="#id6">Loading files: the load function</a><a class="headerlink" href="#loading-files-the-load-function" title="Permalink to this headline">¶</a></h2>
-<p>Hyperspy can read and write to multiple formats (see <a class="reference internal" href="#supported-formats"><em>Supported formats</em></a>). To load data use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><tt class="xref py py-func docutils literal"><span class="pre">load()</span></tt></a> that it is available by default in the main namespace. For example, to load a <tt class="docutils literal"><span class="pre">jpg</span></tt> image from <tt class="file docutils literal"><span class="pre">lena</span></tt> you can type:</p>
+<p>Hyperspy can read and write to multiple formats (see <a class="reference internal" href="#supported-formats"><em>Supported formats</em></a>). To load data use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><tt class="xref py py-func docutils literal"><span class="pre">load()</span></tt></a> command. For example, to load the image lena.jpg you can type:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;lena.jpg&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the loading was successful, the variable <em class="guilabel">s</em> contains a generic <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a>, a <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> or a <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.image.Image" title="hyperspy.signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>. In any case, the data is stored in a numpy array in the <tt class="xref py py-attr docutils literal"><span class="pre">data</span></tt> attribute, but you will not normally need to access it there.</p>
-<p>Hyperspy will try to guess the most convenient object for the corresponding file. However, you can force it to read the data as a particular data type by providing the <tt class="docutils literal"><span class="pre">signal</span></tt> keyword that has to be one of: <tt class="docutils literal"><span class="pre">spectrum</span></tt>, <tt class="docutils literal"><span class="pre">image</span></tt> or <tt class="docutils literal"><span class="pre">EELS</span></tt>, e.g.:</p>
+<p>If the loading was successful, the variable <em class="guilabel">s</em> contains a generic <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a>, a <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.spectrum.Spectrum" title="hyperspy.signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> or an <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy.signals.image.Image" title="hyperspy.signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>.
+(Note for python programmers: the data is stored in a numpy array in the <tt class="xref py py-attr docutils literal"><span class="pre">data</span></tt> attribute, but you will not normally need to access it there.)</p>
+<p>Hyperspy will try to guess the most likely data type for the corresponding file. However, you can force it to read the data as a particular data type by providing the <tt class="docutils literal"><span class="pre">signal</span></tt> keyword, which has to be one of: <tt class="docutils literal"><span class="pre">spectrum</span></tt>, <tt class="docutils literal"><span class="pre">image</span></tt> or <tt class="docutils literal"><span class="pre">EELS</span></tt>, e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;filename&quot;</span><span class="p">,</span> <span class="n">signal</span> <span class="o">=</span> <span class="s">&quot;EELS&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Some file formats store some extra information about the data. If Hyperspy was able to read some extra information it stores it in <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> attribute. Also, it is possible that some information was mapped by Hyperspy to a standard location where it can be used by some standard routines, the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute.</p>
+<p>Some file formats store some extra information about the data, which can be stroed in &#8220;attributes&#8221;. If Hyperspy manages to read some extra information about the data it stores it in <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> attribute. Also, it is possible that other information will be mapped by Hyperspy to a standard location where it can be used by some standard routines, the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute.</p>
 <p>To print the content of the parameters simply:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">mapped_parameters</span>
 </pre></div>
 </div>
-<p>The <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> can be exported to a text files using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryBrowser.export" title="hyperspy.misc.utils.DictionaryBrowser.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> method, e.g.:</p>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> can be exported to  text files using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryBrowser.export" title="hyperspy.misc.utils.DictionaryBrowser.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> method, e.g.:</p>
 <div class="highlight-python"><pre># The following command stores the original parameters in the parameters.txt file
 &gt;&gt;&gt; s.original_parameters.export('parameters')</pre>
 </div>
@@ -134,7 +135,7 @@ can be loaded with a single command. This can be done by passing a list of filen
 </div>
 <div class="section" id="saving-data-to-files">
 <span id="saving-files"></span><h2><a class="toc-backref" href="#id8">Saving data to files</a><a class="headerlink" href="#saving-data-to-files" title="Permalink to this headline">¶</a></h2>
-<p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.save" title="hyperspy.signal.Signal.save"><tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt></a> method of the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> class or its subclasses. The first argument is the filename and the format is defined by the filename extension. If the filename does not contain the extension the default format (<a class="reference internal" href="#hdf5-format"><em>HDF5</em></a>) is used. For example, if the <tt class="xref py py-const docutils literal"><span class="pre">s</span></tt> variable contains the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> that you want to write to a file, the following will write the data to a file called <tt class="file docutils literal"><span class="pre">spectrum.hdf5</span></tt> in the default <a class="reference internal" href="#hdf5-format"><em>HDF5</em></a> format:</p>
+<p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.save" title="hyperspy.signal.Signal.save"><tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt></a> method. The first argument is the filename and the format is defined by the filename extension. If the filename does not contain the extension the default format (<a class="reference internal" href="#hdf5-format"><em>HDF5</em></a>) is used. For example, if the <tt class="xref py py-const docutils literal"><span class="pre">s</span></tt> variable contains the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> that you want to write to a file, the following will write the data to a file called <tt class="file docutils literal"><span class="pre">spectrum.hdf5</span></tt> in the default <a class="reference internal" href="#hdf5-format"><em>HDF5</em></a> format:</p>
 <div class="highlight-python"><pre>.. code-block:: python</pre>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;spectrum&#39;</span><span class="p">)</span>
@@ -148,8 +149,8 @@ can be loaded with a single command. This can be done by passing a list of filen
 </div>
 <div class="section" id="supported-formats">
 <span id="id1"></span><h2><a class="toc-backref" href="#id9">Supported formats</a><a class="headerlink" href="#supported-formats" title="Permalink to this headline">¶</a></h2>
-<p>In <a class="reference internal" href="#supported-file-formats-table"><em>Supported file formats</em></a> we summarise the different formats that are currently supported by Hyperspy.</p>
-<table border="1" class="docutils" id="supported-file-formats-table">
+<p>here is a summary of the different formats that are currently supported by Hyperspy.</p>
+<table border="1" class="docutils">
 <caption>Supported file formats</caption>
 <colgroup>
 <col width="49%" />
@@ -215,7 +216,7 @@ can be loaded with a single command. This can be done by passing a list of filen
 </table>
 <div class="section" id="hdf5">
 <span id="hdf5-format"></span><h3><a class="toc-backref" href="#id10">HDF5</a><a class="headerlink" href="#hdf5" title="Permalink to this headline">¶</a></h3>
-<p>It is the default format and it is the only one that guarantees that no information will be lost in the writing process and that support saving data of arbitrary dimensions. It is based in the <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 open standard</a>. The HDF5 file format is supported by <a class="reference external" href="http://www.hdfgroup.org/products/hdf5_tools/SWSummarybyName.htm">many applications</a>.</p>
+<p>This is the default format and it is the only one that guarantees that no information will be lost in the writing process and that supports saving data of arbitrary dimensions. It is based on the <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 open standard</a>. The HDF5 file format is supported by <a class="reference external" href="http://www.hdfgroup.org/products/hdf5_tools/SWSummarybyName.htm">many applications</a>.</p>
 <p>Note that only HDF5 files written by Hyperspy are supported.</p>
 <div class="section" id="extra-saving-arguments">
 <h4><a class="toc-backref" href="#id11">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
@@ -225,18 +226,18 @@ can be loaded with a single command. This can be done by passing a list of filen
 </div>
 <div class="section" id="netcdf">
 <span id="netcdf-format"></span><h3><a class="toc-backref" href="#id12">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
-<p>It was the default format in EELSLab but it has been superseeded by <em class="xref std std-ref">HDF5</em> in Hyperspy. We provide only reading capabilities but we do not support writing to this format.</p>
+<p>This was the default format in Hyperspy&#8217;s predecessor, EELSLab, but it has been superseeded by <em class="xref std std-ref">HDF5</em> in Hyperspy. We provide only reading capabilities but we do not support writing to this format.</p>
 <p>Note that only NetCDF files written by EELSLab are supported.</p>
 <p>To use this format a python netcdf interface must be installed manually because it is not installed by default when using the automatic installers.</p>
 </div>
 <div class="section" id="mrc">
 <span id="mrc-format"></span><h3><a class="toc-backref" href="#id13">MRC</a><a class="headerlink" href="#mrc" title="Permalink to this headline">¶</a></h3>
-<p>It is a format widely used for tomographic data. Our implementation is based on
-<a class="reference external" href="http://ami.scripps.edu/software/mrctools/mrc_specification.php">this specification</a>. We also partly support FEI&#8217;s custom header. We do not provide writing features for this format, but, being an open format, we may implement this feature in the future on demand.</p>
+<p>This is a format widely used for tomographic data. Our implementation is based on
+<a class="reference external" href="http://ami.scripps.edu/software/mrctools/mrc_specification.php">this specification</a>. We also partly support FEI&#8217;s custom header. We do not provide writing features for this format, but, as it is an an open format, we may implement this feature in the future on demand.</p>
 </div>
 <div class="section" id="emsa-msa">
 <span id="msa-format"></span><h3><a class="toc-backref" href="#id14">EMSA/MSA</a><a class="headerlink" href="#emsa-msa" title="Permalink to this headline">¶</a></h3>
-<p>This <a class="reference external" href="http://www.amc.anl.gov/ANLSoftwareLibrary/02-MMSLib/XEDS/EMMFF/EMMFF.IBM/Emmff.Total">open standard format</a> is widely used to exchange single spectrum data, but it does not support multidimensional data. It can be used to exchange single spectrum with Gatan Digital Micrograph.</p>
+<p>This <a class="reference external" href="http://www.amc.anl.gov/ANLSoftwareLibrary/02-MMSLib/XEDS/EMMFF/EMMFF.IBM/Emmff.Total">open standard format</a> is widely used to exchange single spectrum data, but it does not support multidimensional data. It can be used to exchange single spectra with Gatan&#8217;s Digital Micrograph.</p>
 <div class="section" id="id2">
 <h4><a class="toc-backref" href="#id15">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>For the MSA format the msa_format argument is used to specify whether the energy axis should also be saved with the data.  The default, &#8216;Y&#8217; omits the energy axis in the file.  The alternative, &#8216;XY&#8217;, saves a second column with the calibrated energy data. It  is possible to personalise the separator with the <cite>separator</cite> keyword.</p>
@@ -252,33 +253,33 @@ can be loaded with a single command. This can be done by passing a list of filen
 </div>
 <div class="section" id="ripple">
 <span id="ripple-format"></span><h3><a class="toc-backref" href="#id16">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
-<p>This <a class="reference external" href="http://www.nist.gov/lispix/doc/image-file-formats/raw-file-format.htm">open standard format</a> is widely used to exchange hyperspectra data. However, it only support data of up to three dimensions. It can be used to exchange data with Bruker and <cite>Lispix &lt;http://www.nist.gov/lispix/&gt;</cite>. Installing the <a class="reference external" href="http://hyperspy.org/download.html#import-rpl" title="(in Hyperspy v)"><em>ImportRPL Digital Micrograph plugin</em></a> it is very useful to export data to Gatan Digital Micrograph.</p>
+<p>This <a class="reference external" href="http://www.nist.gov/lispix/doc/image-file-formats/raw-file-format.htm">open standard format</a> is widely used to exchange hyperspectral data. However, it only supports data of up to three dimensions. It can be used to exchange data with Bruker and <a class="reference external" href="http://www.nist.gov/lispix/">Lispix</a>. Used in combination with the <a class="reference external" href="http://hyperspy.org/download.html#import-rpl" title="(in Hyperspy v)"><em>ImportRPL Digital Micrograph plugin</em></a> it is very useful for exporting data to Gatan&#8217;s Digital Micrograph.</p>
 <p>The default encoding is latin-1. It is possible to set a different encoding using the encoding argument, e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;file.rpl&#39;</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s">&#39;utf8&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="image">
-<span id="image-format"></span><h3><a class="toc-backref" href="#id17">Image</a><a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="images">
+<span id="image-format"></span><h3><a class="toc-backref" href="#id17">Images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
 <p>Hyperspy is able to read and write data too all the image formats supported by <a class="reference external" href="http://www.pythonware.com/products/pil/">the Python Image Library</a> (PIL). This includes png, pdf, gif etc.</p>
-<p>It is important to note these image formats only support 8-bit files, what may incur in dynamic range loss in most cases. It is therefore highly discouraged to use any image format (with the exception of <a class="reference internal" href="#tiff-format"><em>TIFF</em></a> that uses another library) to store data for analysis purposes.</p>
+<p>It is important to note that these image formats only support 8-bit files, and therefore have an insufficient dynamic range for most scientific applications. It is therefore highly discouraged to use any general image format (with the exception of <a class="reference internal" href="#tiff-format"><em>TIFF</em></a> which uses another library) to store data for analysis purposes.</p>
 </div>
 <div class="section" id="tiff">
 <span id="tiff-format"></span><h3><a class="toc-backref" href="#id18">TIFF</a><a class="headerlink" href="#tiff" title="Permalink to this headline">¶</a></h3>
-<p>Since version 4.1 Hyperspy can read and write 2D and 3D TIFF files using using Christoph Gohlke&#8217;s tifffile library. In particular it supports can be reading and writing TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH,
-and FluoView files,mainly uncompressed and losslessly compressed 2**(0 to 6) bit integer,16, 32 and 64-bit float, grayscale and RGB(A) images, which are commonly
+<p>Since version 4.1 Hyperspy can read and write 2D and 3D TIFF files using using Christoph Gohlke&#8217;s tifffile library. In particular it supports reading and writing of TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH,
+and FluoView files. Most of these are uncompressed or losslessly compressed 2**(0 to 6) bit integer,16, 32 and 64-bit float, grayscale and RGB(A) images, which are commonly
 used in bio-scientific imaging. See <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html">the library webpage</a> for more details.</p>
 <p>Currently Hyperspy cannot read the TIFF tags.</p>
 </div>
 <div class="section" id="gatan-digital-micrograph">
 <span id="dm3-format"></span><h3><a class="toc-backref" href="#id19">Gatan Digital Micrograph</a><a class="headerlink" href="#gatan-digital-micrograph" title="Permalink to this headline">¶</a></h3>
-<p>Hyperspy supports reading dm3 files but the reading features are not complete (and probably they will never be because it is not an open standard format). That said we know that this is an important feature and if loading a particular dm3 file fails for you, please report an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy/issues">issues tracker</a> to make us aware of the problem.</p>
+<p>Hyperspy can read dm3 files but the reading features are not complete (and probably they will never be because it is not an open standard format). That said, we know that this is an important feature and if loading a particular dm3 file fails for you, please report it as an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy/issues">issues tracker</a> to make us aware of the problem.</p>
 </div>
 <div class="section" id="fei-tia-ser-and-emi">
 <span id="fei-format"></span><h3><a class="toc-backref" href="#id20">FEI TIA ser and emi</a><a class="headerlink" href="#fei-tia-ser-and-emi" title="Permalink to this headline">¶</a></h3>
-<p>Hyperspy supports reading <tt class="docutils literal"><span class="pre">ser</span></tt> and <tt class="docutils literal"><span class="pre">emi</span></tt> files but the reading features are not complete (and probably they will never be because it is not an open standard format). That said we know that this is an important feature and if loading a particular ser or emi file fails for you, please report an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy/issues">issues tracker</a> to make us aware of the problem.</p>
-<p>Hyperspy (unlike in TIA) can read data directly from the <tt class="docutils literal"><span class="pre">.ser</span></tt> files. However, by doing so, the experiment information that is stored in the emi file is lost. Therefore it is reccommend to load using the <tt class="docutils literal"><span class="pre">.emi</span></tt> file.</p>
-<p>When reading an <tt class="docutils literal"><span class="pre">.emi</span></tt> file if there are several <tt class="docutils literal"><span class="pre">.ser</span></tt> files associated to it, all of them will be read and returned as a list.</p>
+<p>Hyperspy can read <tt class="docutils literal"><span class="pre">ser</span></tt> and <tt class="docutils literal"><span class="pre">emi</span></tt> files but again the reading features are not complete (and probably they will never be because it is not an open standard format). That said we know that this is an important feature and if loading a particular ser or emi file fails for you, please report it as an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy/issues">issues tracker</a> to make us aware of the problem.</p>
+<p>Hyperspy (unlike TIA) can read data directly from the <tt class="docutils literal"><span class="pre">.ser</span></tt> files. However, by doing so, the experiment information that is stored in the emi file is lost. Therefore it is reccommend to load using the <tt class="docutils literal"><span class="pre">.emi</span></tt> file.</p>
+<p>When reading an <tt class="docutils literal"><span class="pre">.emi</span></tt> file if there are several <tt class="docutils literal"><span class="pre">.ser</span></tt> files associated with it, all of them will be read and returned as a list.</p>
 </div>
 </div>
 </div>
@@ -312,7 +313,7 @@ used in bio-scientific imaging. See <a class="reference external" href="http://w
 </ul>
 </li>
 <li><a class="reference internal" href="#ripple">Ripple</a></li>
-<li><a class="reference internal" href="#image">Image</a></li>
+<li><a class="reference internal" href="#images">Images</a></li>
 <li><a class="reference internal" href="#tiff">TIFF</a></li>
 <li><a class="reference internal" href="#gatan-digital-micrograph">Gatan Digital Micrograph</a></li>
 <li><a class="reference internal" href="#fei-tia-ser-and-emi">FEI TIA ser and emi</a></li>
@@ -368,7 +369,7 @@ used in bio-scientific imaging. See <a class="reference external" href="http://w
         <li class="right" >
           <a href="getting_started.html" title="Getting started"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
