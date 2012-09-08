@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>misc Package &mdash; Hyperspy 0.4.1 documentation</title>
+    <title>misc Package &mdash; Hyperspy 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.1',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,22 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4.1 documentation" href="../index.html" /> 
+    <link rel="top" title="Hyperspy 0.5 documentation" href="../index.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
   </head>
   <body>
     <div class="related">
@@ -42,7 +57,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -212,6 +227,134 @@ Dumps Tags in a txt file if &#8216;dump&#8217; set to &#8216;True&#8217;.</p>
 <dd></dd></dl>
 
 </div>
+<div class="section" id="module-hyperspy.misc.image_utils">
+<span id="image-utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image_utils</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.image_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.estimate_image_shift">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">estimate_image_shift</tt><big>(</big><em>ref</em>, <em>image</em>, <em>roi=None</em>, <em>sobel=True</em>, <em>medfilter=True</em>, <em>hanning=True</em>, <em>plot=False</em>, <em>dtype='float'</em>, <em>normalize_corr=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.estimate_image_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the shift in a image using phase correlation</p>
+<p>This method can only estimate the shift by comparing 
+bidimensional features that should not change the position 
+in the given axis. To decrease the memory usage, the time of 
+computation and the accuracy of the results it is convenient 
+to select a region of interest by setting the roi keyword.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>roi</strong> : tuple of ints (top, bottom, left, right)</p>
+<blockquote>
+<div><p>Define the region of interest</p>
+</div></blockquote>
+<p><strong>sobel</strong> : bool</p>
+<blockquote>
+<div><p>apply a sobel filter for edge enhancement</p>
+</div></blockquote>
+<p><strong>medfilter</strong> :  bool</p>
+<blockquote>
+<div><p>apply a median filter for noise reduction</p>
+</div></blockquote>
+<p><strong>hanning</strong> : bool</p>
+<blockquote>
+<div><p>Apply a 2d hanning filter</p>
+</div></blockquote>
+<p><strong>plot</strong> : bool</p>
+<blockquote>
+<div><p>If True plots the images after applying the filters and
+the phase correlation</p>
+</div></blockquote>
+<p><strong>reference</strong> : &#8216;current&#8217; | &#8216;cascade&#8217;</p>
+<blockquote>
+<div><p>If &#8216;current&#8217; (default) the image at the current 
+coordinates is taken as reference. If &#8216;cascade&#8217; each image
+is aligned with the previous one.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : str or dtype</p>
+<blockquote>
+<div><p>Typecode or data-type in which the calculations must be
+performed.</p>
+</div></blockquote>
+<p><strong>normalize_corr</strong> : bool</p>
+<blockquote>
+<div><p>If True use phase correlation instead of standard correlation</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>shifts: np.array</strong> :</p>
+<blockquote>
+<div><p>containing the estimate shifts</p>
+</div></blockquote>
+<p><strong>max_value</strong> : float</p>
+<blockquote class="last">
+<div><p>The maximum value of the correlation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.fft_correlation">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">fft_correlation</tt><big>(</big><em>in1</em>, <em>in2</em>, <em>normalize=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.fft_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correlation of two N-dimensional arrays using FFT.</p>
+<p>Adapted from scipy&#8217;s fftconvolve.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>in1, in2</strong> : array</p>
+<p><strong>normalize: bool</strong> :</p>
+<blockquote class="last">
+<div><p>If True performs phase correlation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.hanning2d">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">hanning2d</tt><big>(</big><em>M</em>, <em>N</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.hanning2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 2D hanning window created by outer product.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.shift_image">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">shift_image</tt><big>(</big><em>im</em>, <em>shift</em>, <em>fill_value=nan</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.shift_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.sobel_filter">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">sobel_filter</tt><big>(</big><em>im</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.sobel_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_utils.triu_indices_minus_diag">
+<tt class="descclassname">hyperspy.misc.image_utils.</tt><tt class="descname">triu_indices_minus_diag</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_utils.triu_indices_minus_diag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the indices for the upper-triangle of an (n, n) array 
+excluding its diagonal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>n</strong> : int</p>
+<blockquote class="last">
+<div><p>The length of the square array</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.import_sklearn">
+<span id="import-sklearn-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">import_sklearn</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.import_sklearn" title="Permalink to this headline">¶</a></h2>
+<p>Import sklearn, fast_svd and randomized_svd from scikits-learn
+with support for multiple versions</p>
+</div>
 <div class="section" id="module-hyperspy.misc.interactive_ns">
 <span id="interactive-ns-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">interactive_ns</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.interactive_ns" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -223,6 +366,45 @@ Dumps Tags in a txt file if &#8216;dump&#8217; set to &#8216;True&#8217;.</p>
 <dt id="hyperspy.misc.interactive_ns.turn_logging_on">
 <tt class="descclassname">hyperspy.misc.interactive_ns.</tt><tt class="descname">turn_logging_on</tt><big>(</big><em>verbose=1</em><big>)</big><a class="headerlink" href="#hyperspy.misc.interactive_ns.turn_logging_on" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.natsort">
+<span id="natsort-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">natsort</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.natsort" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.natsort.natcasecmp">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natcasecmp</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natcasecmp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Natural string comparison, ignores case.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.natsort.natcmp">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natcmp</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natcmp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Natural string comparison, case sensitive.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.natsort.natsort">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x706d050&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort" title="Permalink to this definition">¶</a></dt>
+<dd><p>In-place natural string sort.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.natsort.natsort_key">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort_key</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used internally to get a tuple by which s is sorted.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.natsort.natsorted">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsorted</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x706d050&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsorted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a copy of seq, sorted by natural string sort.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.natsort.try_int">
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">try_int</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.try_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to integer if possible.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-hyperspy.misc.progressbar">
@@ -379,7 +561,7 @@ automatically supports features like auto-resizing when available.</p>
 
 <dl class="class">
 <dt id="hyperspy.misc.progressbar.ProgressBar">
-<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x56c6e50&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x56c6e90&gt;], term_width=None, fd=&lt;open file '&lt;stderr&gt;', mode 'w' at 0x2ba0575f1270&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x6f7f850&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x6f7f890&gt;], term_width=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>This is the ProgressBar class, it updates and prints the bar.</p>
 <p>The term_width parameter may be an integer. Or None, in which case
@@ -424,7 +606,10 @@ like to access are:
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.progressbar.ProgressBar.start" title="hyperspy.misc.progressbar.ProgressBar.start"><tt class="xref py py-obj docutils literal"><span class="pre">start</span></tt></a>()</td>
 <td>Start measuring time, and prints the bar at 0%.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.progressbar.ProgressBar.update" title="hyperspy.misc.progressbar.ProgressBar.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>(value)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.progressbar.ProgressBar.update_ipython" title="hyperspy.misc.progressbar.ProgressBar.update_ipython"><tt class="xref py py-obj docutils literal"><span class="pre">update_ipython</span></tt></a>(value)</td>
+<td>Updates the progress bar to a new value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.progressbar.ProgressBar.update_noipython" title="hyperspy.misc.progressbar.ProgressBar.update_noipython"><tt class="xref py py-obj docutils literal"><span class="pre">update_noipython</span></tt></a>(value)</td>
 <td>Updates the progress bar to a new value.</td>
 </tr>
 </tbody>
@@ -460,8 +645,14 @@ like to access are:
 </dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.misc.progressbar.ProgressBar.update">
-<tt class="descname">update</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar.update" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.misc.progressbar.ProgressBar.update_ipython">
+<tt class="descname">update_ipython</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar.update_ipython" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the progress bar to a new value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.progressbar.ProgressBar.update_noipython">
+<tt class="descname">update_noipython</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar.update_noipython" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the progress bar to a new value.</p>
 </dd></dl>
 
@@ -605,9 +796,9 @@ for i in xrange(10000):</p>
 and FluoView files. Only a subset of the TIFF specification is supported,
 mainly uncompressed and losslessly compressed 2**(0 to 6) bit integer,
 16, 32 and 64-bit float, grayscale and RGB(A) images, which are commonly
-used in bio-scientific imaging. Specifically, reading JPEG or CCITT
-compressed image data is not implemented. Only primary info records are
-read for STK, FluoView, and NIH image formats.</p>
+used in bio-scientific imaging. Specifically, reading JPEG/CCITT
+compressed image data or EXIF/IPTC/GPS/XMP meta-data is not implemented.
+Only primary info records are read for STK, FluoView, and NIH image formats.</p>
 <p>TIFF, the Tagged Image File Format, is under the control of Adobe Systems.
 BigTIFF allows for files greater than 4 GB. STK, LSM, FluoView, and OME-TIFF
 are custom extensions defined by MetaMorph, Carl Zeiss MicroImaging,
@@ -622,14 +813,14 @@ Tested on little-endian platforms only.</p>
 <tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/">Christoph Gohlke</a>,
 Laboratory for Fluorescence Dynamics, University of California, Irvine</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">2012.03.08</td>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">2012.07.05</td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="http://www.python.org">Python 2.7 or 3.2</a></li>
+<li><a class="reference external" href="http://www.python.org">CPython 2.7 or 3.2</a></li>
 <li><a class="reference external" href="http://numpy.scipy.org">Numpy 1.6</a></li>
 <li><a class="reference external" href="http://matplotlib.sourceforge.net">Matplotlib 1.1</a>
 (optional for plotting)</li>
@@ -691,6 +882,63 @@ Laboratory for Fluorescence Dynamics, University of California, Irvine</td>
 <p>Image data are written uncompressed in one stripe per plane.
 Dimensions larger than 2 or 3 (depending on photometric mode and
 planar configuration) are flattened and saved as separate pages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>Name of file to write.</p>
+</div></blockquote>
+<p><strong>data</strong> : array_like</p>
+<blockquote>
+<div><p>Input image. The last dimensions are assumed to be image height,
+width, and samples.</p>
+</div></blockquote>
+<p><strong>photometric</strong> : {&#8216;minisblack&#8217;, &#8216;miniswhite&#8217;, &#8216;rgb&#8217;}</p>
+<blockquote>
+<div><p>The color space of the image data.
+By default this setting is inferred from the data shape.</p>
+</div></blockquote>
+<p><strong>planarconfig</strong> : {&#8216;contig&#8217;, &#8216;planar&#8217;}</p>
+<blockquote>
+<div><p>Specifies if samples are stored contiguous or in separate planes.
+By default this setting is inferred from the data shape.
+&#8216;contig&#8217;: last dimension contains samples.
+&#8216;planar&#8217;: third last dimension contains samples.</p>
+</div></blockquote>
+<p><strong>resolution</strong> : ((int, int), (int, int))</p>
+<blockquote>
+<div><p>X and Y resolution in dots per inch as rational numbers.</p>
+</div></blockquote>
+<p><strong>description</strong> : str</p>
+<blockquote>
+<div><p>The subject of the image. Saved with the first page only.</p>
+</div></blockquote>
+<p><strong>software</strong> : str</p>
+<blockquote>
+<div><p>Name of the software used to create the image.
+Saved with the first page only.</p>
+</div></blockquote>
+<p><strong>byteorder</strong> : {&#8216;&lt;&#8217;, &#8216;&gt;&#8217;}</p>
+<blockquote>
+<div><p>The endianness of the data in the file.
+By default this is the system&#8217;s native byte order.</p>
+</div></blockquote>
+<p><strong>bigtiff</strong> : bool</p>
+<blockquote class="last">
+<div><p>If True the BigTIFF format is used.
+By default the standard TIFF format is used for data less than 2040 MB.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -698,6 +946,26 @@ planar configuration) are flattened and saved as separate pages.</p>
 <tt class="descclassname">hyperspy.misc.tifffile.</tt><tt class="descname">imread</tt><big>(</big><em>filename</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.misc.tifffile.imread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return image data from TIFF file as numpy array.</p>
 <p>The first image series is returned if no arguments are provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>key</strong> : int, slice, or sequence of page indices</p>
+<blockquote>
+<div><p>Defines which pages to return as array.</p>
+</div></blockquote>
+<p><strong>series</strong> : int</p>
+<blockquote class="last">
+<div><p>Defines which series of pages to return as array.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s">&#39;test.tif&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -706,12 +974,42 @@ planar configuration) are flattened and saved as separate pages.</p>
 <dd><p>Plot n-dimensional images using matplotlib.pyplot.</p>
 <p>Return figure, subplot and plot axis.
 Requires pyplot already imported <tt class="docutils literal"><span class="pre">from</span> <span class="pre">matplotlib</span> <span class="pre">import</span> <span class="pre">pyplot</span></tt>.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="hyperspy.misc.tifffile.tifffile">
-<tt class="descclassname">hyperspy.misc.tifffile.</tt><tt class="descname">tifffile</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.misc.tifffile.tifffile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return TIFFfile instance. Support for <cite>with</cite> statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>bitspersample</strong> : int or None</p>
+<blockquote>
+<div><p>Number of bits per channel in integer RGB images.</p>
+</div></blockquote>
+<p><strong>photometric</strong> : {&#8216;miniswhite&#8217;, &#8216;minisblack&#8217;, &#8216;rgb&#8217;, or &#8216;palette&#8217;}</p>
+<blockquote>
+<div><p>The color space of the image data.</p>
+</div></blockquote>
+<p><strong>title</strong> : str</p>
+<blockquote>
+<div><p>Window and subplot title.</p>
+</div></blockquote>
+<p><strong>figure</strong> : matplotlib.figure.Figure (optional).</p>
+<blockquote>
+<div><p>Matplotlib to use for plotting.</p>
+</div></blockquote>
+<p><strong>subplot</strong> : int</p>
+<blockquote>
+<div><p>A matplotlib.pyplot.subplot axis.</p>
+</div></blockquote>
+<p><strong>maxdim</strong> : int</p>
+<blockquote>
+<div><p>maximum image size in any dimension.</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : optional</p>
+<blockquote class="last">
+<div><p>Arguments for matplotlib.pyplot.imshow.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
@@ -720,6 +1018,16 @@ Requires pyplot already imported <tt class="docutils literal"><span class="pre">
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Read image and meta-data from TIFF, STK, LSM, and FluoView files.</p>
 <p>TIFFfile instances must be closed using the close method.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tif</span> <span class="o">=</span> <span class="n">TIFFfile</span><span class="p">(</span><span class="s">&#39;test.tif&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">images</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">finally</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">tif</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 <p class="rubric">Attributes</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -866,7 +1174,7 @@ Springer, 2004, 20, 89-97.</td></tr>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.utils.DictionaryBrowser.add_node" title="hyperspy.misc.utils.DictionaryBrowser.add_node"><tt class="xref py py-obj docutils literal"><span class="pre">add_node</span></tt></a>(node_path)</td>
-<td></td>
+<td>Adds all the nodes in the given path if they don&#8217;t exist.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.utils.DictionaryBrowser.as_dictionary" title="hyperspy.misc.utils.DictionaryBrowser.as_dictionary"><tt class="xref py py-obj docutils literal"><span class="pre">as_dictionary</span></tt></a>()</td>
 <td></td>
@@ -883,12 +1191,37 @@ Springer, 2004, 20, 89-97.</td></tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.utils.DictionaryBrowser.len" title="hyperspy.misc.utils.DictionaryBrowser.len"><tt class="xref py py-obj docutils literal"><span class="pre">len</span></tt></a>()</td>
 <td></td>
 </tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.utils.DictionaryBrowser.set_item" title="hyperspy.misc.utils.DictionaryBrowser.set_item"><tt class="xref py py-obj docutils literal"><span class="pre">set_item</span></tt></a>(item_path,&nbsp;value)</td>
+<td>Given the path and value, create the missing nodes in</td>
+</tr>
 </tbody>
 </table>
 <dl class="method">
 <dt id="hyperspy.misc.utils.DictionaryBrowser.add_node">
 <tt class="descname">add_node</tt><big>(</big><em>node_path</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.DictionaryBrowser.add_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Adds all the nodes in the given path if they don&#8217;t exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>node_path: str</strong> :</p>
+<blockquote class="last">
+<div><p>The nodes must be separated by full stops (periods).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryBrowser</span><span class="p">({})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">&#39;First.Second&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">First</span><span class="o">.</span><span class="n">Second</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span>
+<span class="go">└── First</span>
+<span class="go">    └── Second = 3</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.misc.utils.DictionaryBrowser.as_dictionary">
@@ -925,12 +1258,24 @@ txt by default</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>item_path</strong> : Str</p>
 <blockquote class="last">
-<div><p>A string describing the path with each item separated by a point</p>
+<div><p>A string describing the path with each item separated by 
+full stops (periods)</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;To&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;be&#39;</span> <span class="p">:</span> <span class="bp">True</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryBrowser</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s">&#39;To&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s">&#39;To.be&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s">&#39;To.be.or&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -942,6 +1287,35 @@ txt by default</p>
 <dt id="hyperspy.misc.utils.DictionaryBrowser.len">
 <tt class="descname">len</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.DictionaryBrowser.len" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.utils.DictionaryBrowser.set_item">
+<tt class="descname">set_item</tt><big>(</big><em>item_path</em>, <em>value</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.DictionaryBrowser.set_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the path and value, create the missing nodes in
+the path and assign to the last one the value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>item_path</strong> : Str</p>
+<blockquote class="last">
+<div><p>A string describing the path with each item separated by a 
+full stops (periods)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryBrowser</span><span class="p">({})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s">&#39;First.Second.Third&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span>
+<span class="go">└── First</span>
+<span class="go">   └── Second</span>
+<span class="go">        └── Third = 3</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -983,6 +1357,11 @@ Adapted from the MILCA package <a class="reference external" href="http://www.kl
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.utils.antisymmetrize">
+<tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">antisymmetrize</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.antisymmetrize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="hyperspy.misc.utils.append2pathname">
@@ -1193,7 +1572,7 @@ polynomy to the result.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>noisy_SI, clean_SI</strong> : Spectrum instances</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>noisy_SI, clean_SI</strong> : spectrum.Spectrum instances</p>
 <p><strong>mask</strong> : numpy bool array</p>
 <blockquote>
 <div><p>To define the channels that will be used in the calculation.</p>
@@ -1237,6 +1616,45 @@ polynomy to the result.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>Numpy array</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.utils.get_array_memory_size_in_GiB">
+<tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">get_array_memory_size_in_GiB</tt><big>(</big><em>shape</em>, <em>dtype</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.get_array_memory_size_in_GiB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the size and dtype returns the amount of memory that such
+an array needs to allocate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>shape: tuple</strong> :</p>
+<p><strong>dtype</strong> : data-type</p>
+<blockquote class="last">
+<div><p>The desired data-type for the array.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.utils.get_linear_interpolation">
+<tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">get_linear_interpolation</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>x</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.get_linear_interpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given two points in 2D returns y for a given x for y = ax + b</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>p1,p2</strong> : (x, y)</p>
+<p><strong>x</strong> : float</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>y</strong> : float</p>
 </td>
 </tr>
 </tbody>
@@ -1575,6 +1993,11 @@ and converts spaces to hyphens.</p>
 <dl class="function">
 <dt id="hyperspy.misc.utils.strlist2enumeration">
 <tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">strlist2enumeration</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.strlist2enumeration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.utils.symmetrize">
+<tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">symmetrize</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.symmetrize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -2121,7 +2544,10 @@ the dictionary).</p>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">misc</span></tt> Package</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.config_dir"><tt class="docutils literal"><span class="pre">config_dir</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.dm3reader"><tt class="docutils literal"><span class="pre">dm3reader</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.image_utils"><tt class="docutils literal"><span class="pre">image_utils</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.import_sklearn"><tt class="docutils literal"><span class="pre">import_sklearn</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.interactive_ns"><tt class="docutils literal"><span class="pre">interactive_ns</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.natsort"><tt class="docutils literal"><span class="pre">natsort</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.progressbar"><tt class="docutils literal"><span class="pre">progressbar</span></tt> Module</a><ul>
 </ul>
 </li>
@@ -2184,12 +2610,12 @@ the dictionary).</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -1,17 +1,30 @@
 """Creates a spectrum image and plots it
 """
 
-# If running from hyperspy's interactive the next two imports can be omitted 
-# omitted (i.e. the next 2 lines)
-import numpy as np
-import matplotlib.pyplot as plt
+# Create a spectrum image with random data
+s = signals.Spectrum({'data' : np.random.random((64, 64, 1024))})
 
-from hyperspy.signals.spectrum import Spectrum
+# Define the axis properties
+s.axes_manager.signal_axes[0].name = 'Energy'
+s.axes_manager.signal_axes[0].units = 'eV'
+s.axes_manager.signal_axes[0].scale = 0.3
+s.axes_manager.signal_axes[0].offset = 100
 
+s.axes_manager.navigation_axes[0].name = 'Y'
+s.axes_manager.navigation_axes[0].units = 'nm'
+s.axes_manager.navigation_axes[0].scale = 0.1
+s.axes_manager.navigation_axes[0].offset = 100
 
-s = Spectrum({'data' : np.random.random((64, 64, 1024))})
+s.axes_manager.navigation_axes[1].name = 'X'
+s.axes_manager.navigation_axes[1].units = 'nm'
+s.axes_manager.navigation_axes[1].scale = 0.1
+s.axes_manager.navigation_axes[1].offset = 100
+
+# Give a title
+s.mapped_parameters.title = 'Random spectrum image'
+
+# Plot it
 s.plot()
 
-# If running from hyperspy's interactive console the next line can be 
-# omitted
-plt.show()
+show() # No necessary when running in the HyperSpy's IPython profile
+
