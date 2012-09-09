@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Machine learning &mdash; Hyperspy 0.4.1+git122-g14fd548 documentation</title>
+    <title>Machine learning &mdash; Hyperspy 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.1+git122-g14fd548',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,10 +27,25 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.4.1+git122-g14fd548 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.5 documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Curve fitting" href="model.html" />
-    <link rel="prev" title="Tools" href="tools.html" /> 
+    <link rel="prev" title="Tools" href="tools.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
   </head>
   <body>
     <div class="related">
@@ -51,7 +66,7 @@
         <li class="right" >
           <a href="tools.html" title="Tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,20 +78,6 @@
             
   <div class="section" id="machine-learning">
 <h1>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h1>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>In version 0.4 the syntax of many of the machine-learning functions
-has changed. Below is a summary of the changes:</p>
-<ul class="last simple">
-<li><cite>principal_components_analysis</cite> was renamed to <cite>decomposition</cite></li>
-<li><cite>independent_components_analysis</cite> was renamed to <cite>blind_source_separation</cite></li>
-<li><cite>pca_build_SI</cite> was renamed to <cite>get_decomposition_model</cite></li>
-<li><cite>ica_build_SI</cite> was renamed to <cite>get_bss_model</cite></li>
-<li><cite>plot_lev</cite> was renamed to <cite>plot_explained_variance_ratio</cite></li>
-<li><cite>scores</cite> was renamed to <cite>loadings</cite></li>
-<li><cite>mva_result</cite> was renamed to <cite>learning_results</cite></li>
-</ul>
-</div>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Hyperspy provides easy access to several &#8220;machine learning&#8221; algorithms which can
@@ -200,7 +201,7 @@ All the methods begin with plot:</p>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.plot_bss_factors" title="hyperspy.signal.Signal.plot_bss_factors"><tt class="xref py py-meth docutils literal"><span class="pre">plot_bss_factors()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.plot_bss_loadings" title="hyperspy.signal.Signal.plot_bss_loadings"><tt class="xref py py-meth docutils literal"><span class="pre">plot_bss_loadings()</span></tt></a></li>
 </ul>
-<p>In the case of decomposition plots, you should include as a parameter the number of factors or loadings you wish to visualise (since the default is 0). For BSS the default is the number you included when running the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.blind_source_separation" title="hyperspy.learn.mva.MVA.blind_source_separation"><tt class="xref py py-meth docutils literal"><span class="pre">blind_source_separation()</span></tt></a> method.</p>
+<p>In the case of decomposition plots, you should include as a parameter the number of factors or loadings you wish to visualise, since the default is all. For BSS the default is the number you included when running the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.blind_source_separation" title="hyperspy.learn.mva.MVA.blind_source_separation"><tt class="xref py py-meth docutils literal"><span class="pre">blind_source_separation()</span></tt></a> method.</p>
 </div>
 <div class="section" id="saving-and-loading-results">
 <h2>Saving and loading results<a class="headerlink" href="#saving-and-loading-results" title="Permalink to this headline">¶</a></h2>
@@ -214,7 +215,7 @@ analysis in the <a class="reference internal" href="io.html#hdf5-format"><em>HDF
 the file and it is loaded with the rest of the data when you load the file.</p>
 <p>This option is the simplest because everything is stored in the same file and
 it does not require any extra command to recover the result of machine learning
-analysis when loading a file. However, it only supports storing one
+analysis when loading a file. However, currently it only supports storing one
 decomposition and one BSS result, which may not be enough for your purposes.</p>
 </div>
 <div class="section" id="saving-to-an-external-files">
@@ -241,7 +242,7 @@ by Hyperspy using:</p>
 so please consult the method documentation. The options include the choice of
 file format, the prefixes for loadings and factors, saving figures instead of
 data and more.</p>
-<p>Please note that the exported data cannot be easily be loaded into Hyperspy&#8217;s
+<p>Please note that the exported data cannot easily be loaded into Hyperspy&#8217;s
 machine learning structure.</p>
 </div>
 </div>
@@ -328,13 +329,13 @@ machine learning structure.</p>
         <li class="right" >
           <a href="tools.html" title="Tools"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.4.1+git122-g14fd548 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
