@@ -143,20 +143,19 @@ can be loaded with a single command. This can be done by passing a list of filen
 <p>or by using <a class="reference external" href="http://docs.python.org/library/glob.html">shell-style wildcards</a></p>
 <p>By default Hyperspy will return a list of all the files loaded. Alternatively, Hyperspy can stack the data of the files contain data with exactly the same dimensions. If this is not the case an error is raised.</p>
 <p>It is also possible to load multiple files with a single command without stacking them by passing the <cite>stack=False</cite> argument to the load function, in which case the function will return a list of objects, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre> <span class="o">&gt;&gt;&gt;</span> <span class="n">ls</span>
- <span class="n">CL1</span><span class="o">.</span><span class="n">raw</span>  <span class="n">CL1</span><span class="o">.</span><span class="n">rpl</span><span class="o">~</span>  <span class="n">CL2</span><span class="o">.</span><span class="n">rpl</span>  <span class="n">CL3</span><span class="o">.</span><span class="n">rpl</span>  <span class="n">CL4</span><span class="o">.</span><span class="n">rpl</span>  <span class="n">LL3</span><span class="o">.</span><span class="n">raw</span>  <span class="n">shift_map</span><span class="o">-</span>          <span class="n">SI3</span><span class="o">.</span><span class="n">npy</span>
- <span class="n">CL1</span><span class="o">.</span><span class="n">rpl</span>  <span class="n">CL2</span><span class="o">.</span><span class="n">raw</span>   <span class="n">CL3</span><span class="o">.</span><span class="n">raw</span>  <span class="n">CL4</span><span class="o">.</span><span class="n">raw</span>  <span class="n">hdf5</span><span class="o">/</span>    <span class="n">LL3</span><span class="o">.</span><span class="n">rpl</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;*.rpl&#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
-<span class="p">[</span><span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">CL1</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">CL2</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">CL3</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">CL4</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">LL3</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
-
- <span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
- <span class="o">&lt;</span><span class="n">EELSSpectrum</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">mva</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight-python"><pre> &gt;&gt;&gt; ls
+ CL1.raw  CL1.rpl~  CL2.rpl  CL3.rpl  CL4.rpl  LL3.raw  shift_map-          SI3.npy
+ CL1.rpl  CL2.raw   CL3.raw  CL4.raw  hdf5/    LL3.rpl
+ &gt;&gt;&gt; s = load('*.rpl')
+ &gt;&gt;&gt; s
+[&lt;EELSSpectrum, title: CL1, dimensions: (64, 64, 1024)&gt;,
+&lt;EELSSpectrum, title: CL2, dimensions: (64, 64, 1024)&gt;,
+&lt;EELSSpectrum, title: CL3, dimensions: (64, 64, 1024)&gt;,
+&lt;EELSSpectrum, title: CL4, dimensions: (64, 64, 1024)&gt;,
+&lt;EELSSpectrum, title: LL3, dimensions: (64, 64, 1024)&gt;]
+ &gt;&gt;&gt; s = load('*.rpl', stack=True)
+ &gt;&gt;&gt; s
+ &lt;EELSSpectrum, title: mva, dimensions: (5, 64, 64, 1024)&gt;</pre>
 </div>
 </div>
 </div>
@@ -390,7 +389,7 @@ used in bio-scientific imaging. See <a class="reference external" href="http://w
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>
