@@ -6,15 +6,9 @@ simulated hyperspectrum.
 """
 
 
-# If running from hyperspy's interactive the next two imports can be omitted 
-# omitted (i.e. the next 4 lines)
-import numpy as np
-import matplotlib.pyplot as plt
-
-from hyperspy.signals.spectrum import Spectrum
 
 # Create an empty spectrum
-s = Spectrum({'data' : np.zeros((32,32,1024))})
+s = signals.Spectrum({'data' : np.zeros((32,32,1024))})
 
 # Generate some simple data: two Gaussians with random centers and area
 
@@ -62,8 +56,5 @@ s.data = np.random.poisson(m.model_cube)
 
 s.plot()
 
-# If running from hyperspy's interactive console the next line can be 
-# omitted
-plt.show()
 
 
