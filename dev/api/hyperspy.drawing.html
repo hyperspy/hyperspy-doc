@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>drawing Package &mdash; Hyperspy 0.5 documentation</title>
+    <title>drawing Package &mdash; Hyperspy 0.5.1+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.5.1+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.5 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.5.1+dev documentation" href="../index.html" />
  
 <script type="text/javascript">
 
@@ -57,7 +57,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.5.1+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -76,7 +76,54 @@
 <dl class="class">
 <dt id="hyperspy.drawing.image.ImagePlot">
 <em class="property">class </em><tt class="descclassname">hyperspy.drawing.image.</tt><tt class="descname">ImagePlot</tt><a class="headerlink" href="#hyperspy.drawing.image.ImagePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p class="rubric">Methods</p>
+<dd><p>Class to plot an image with the necessary machinery to update
+the image when the coordinates of an AxesManager change.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="14%" />
+<col width="45%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>data_fuction</td>
+<td>function or method</td>
+<td>A function that returns a 2D array when called without any
+arguments.</td>
+</tr>
+<tr class="row-even"><td>pixel_units</td>
+<td>{None, string}</td>
+<td>The pixel units for the scale bar. Normally</td>
+</tr>
+<tr class="row-odd"><td>plot_scalebar, plot_ticks, plot_colorbar, plot_indices</td>
+<td>bool</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>title</td>
+<td>str</td>
+<td>The title is printed at the top of the image.</td>
+</tr>
+<tr class="row-odd"><td>window_title</td>
+<td>str</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>vmin, vmax</td>
+<td>float</td>
+<td>Limit the range of the color map scale to the given values.</td>
+</tr>
+<tr class="row-odd"><td>auto_contrast</td>
+<td>bool</td>
+<td>If True, vmin and vmax are calculated automatically.</td>
+</tr>
+<tr class="row-even"><td>min_aspect</td>
+<td>float</td>
+<td>Set the minimum aspect ratio of the image and the figure. To
+keep the image in the aspect limit the pixels are made
+rectangular.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -89,31 +136,34 @@
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.close" title="hyperspy.drawing.image.ImagePlot.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.connect" title="hyperspy.drawing.image.ImagePlot.connect"><tt class="xref py py-obj docutils literal"><span class="pre">connect</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.configure" title="hyperspy.drawing.image.ImagePlot.configure"><tt class="xref py py-obj docutils literal"><span class="pre">configure</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.create_axis" title="hyperspy.drawing.image.ImagePlot.create_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_axis</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.connect" title="hyperspy.drawing.image.ImagePlot.connect"><tt class="xref py py-obj docutils literal"><span class="pre">connect</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.create_figure" title="hyperspy.drawing.image.ImagePlot.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.create_axis" title="hyperspy.drawing.image.ImagePlot.create_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_axis</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.on_key_press" title="hyperspy.drawing.image.ImagePlot.on_key_press"><tt class="xref py py-obj docutils literal"><span class="pre">on_key_press</span></tt></a>(event)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.create_figure" title="hyperspy.drawing.image.ImagePlot.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>([max_size,&nbsp;min_size])</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.optimize_colorbar" title="hyperspy.drawing.image.ImagePlot.optimize_colorbar"><tt class="xref py py-obj docutils literal"><span class="pre">optimize_colorbar</span></tt></a>([number_of_ticks,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.on_key_press" title="hyperspy.drawing.image.ImagePlot.on_key_press"><tt class="xref py py-obj docutils literal"><span class="pre">on_key_press</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.optimize_contrast" title="hyperspy.drawing.image.ImagePlot.optimize_contrast"><tt class="xref py py-obj docutils literal"><span class="pre">optimize_contrast</span></tt></a>(data[,&nbsp;perc])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.optimize_colorbar" title="hyperspy.drawing.image.ImagePlot.optimize_colorbar"><tt class="xref py py-obj docutils literal"><span class="pre">optimize_colorbar</span></tt></a>([number_of_ticks,&nbsp;...])</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.plot" title="hyperspy.drawing.image.ImagePlot.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.optimize_contrast" title="hyperspy.drawing.image.ImagePlot.optimize_contrast"><tt class="xref py py-obj docutils literal"><span class="pre">optimize_contrast</span></tt></a>(data[,&nbsp;perc])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.set_contrast" title="hyperspy.drawing.image.ImagePlot.set_contrast"><tt class="xref py py-obj docutils literal"><span class="pre">set_contrast</span></tt></a>(vmin,&nbsp;vmax)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.plot" title="hyperspy.drawing.image.ImagePlot.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.update_image" title="hyperspy.drawing.image.ImagePlot.update_image"><tt class="xref py py-obj docutils literal"><span class="pre">update_image</span></tt></a>([auto_contrast])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.set_contrast" title="hyperspy.drawing.image.ImagePlot.set_contrast"><tt class="xref py py-obj docutils literal"><span class="pre">set_contrast</span></tt></a>(vmin,&nbsp;vmax)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.image.ImagePlot.update_image" title="hyperspy.drawing.image.ImagePlot.update_image"><tt class="xref py py-obj docutils literal"><span class="pre">update_image</span></tt></a>([auto_contrast])</td>
 <td></td>
 </tr>
 </tbody>
@@ -129,6 +179,11 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.drawing.image.ImagePlot.configure">
+<tt class="descname">configure</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.ImagePlot.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.drawing.image.ImagePlot.connect">
 <tt class="descname">connect</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.ImagePlot.connect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -140,7 +195,7 @@
 
 <dl class="method">
 <dt id="hyperspy.drawing.image.ImagePlot.create_figure">
-<tt class="descname">create_figure</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.ImagePlot.create_figure" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">create_figure</tt><big>(</big><em>max_size=8</em>, <em>min_size=2</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.image.ImagePlot.create_figure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -197,19 +252,16 @@
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot"><tt class="xref py py-obj docutils literal"><span class="pre">close_navigator_plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.generate_labels" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.generate_labels"><tt class="xref py py-obj docutils literal"><span class="pre">generate_labels</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -227,11 +279,6 @@
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot">
 <tt class="descname">close_navigator_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.close_navigator_plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.generate_labels">
-<tt class="descname">generate_labels</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.generate_labels" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -284,25 +331,22 @@ to explore the SI.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot"><tt class="xref py py-obj docutils literal"><span class="pre">close_navigator_plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.generate_labels" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.generate_labels"><tt class="xref py py-obj docutils literal"><span class="pre">generate_labels</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">key2switch_right_pointer</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">key2switch_right_pointer</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_signal" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_signal" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">remove_right_pointer</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.remove_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">remove_right_pointer</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -330,11 +374,6 @@ to explore the SI.</p>
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot">
 <tt class="descname">close_navigator_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.close_navigator_plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.generate_labels">
-<tt class="descname">generate_labels</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.generate_labels" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -506,7 +545,7 @@ attribute</p>
 
 <dl class="method">
 <dt id="hyperspy.drawing.spectrum.SpectrumLine.update">
-<tt class="descname">update</tt><big>(</big><em>force_replot=True</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumLine.update" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update</tt><big>(</big><em>force_replot=False</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumLine.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the current spectrum figure</p>
 </dd></dl>
 
@@ -517,8 +556,25 @@ attribute</p>
 <span id="utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> Module<a class="headerlink" href="#module-hyperspy.drawing.utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="hyperspy.drawing.utils.create_figure">
-<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">create_figure</tt><big>(</big><em>window_title=None</em>, <em>_on_figure_window_close=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.create_figure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">create_figure</tt><big>(</big><em>window_title=None</em>, <em>_on_figure_window_close=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.utils.create_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a matplotlib figure.</p>
+<p>This function adds the possibility to execute another function 
+when the figure is closed and to easily set the window title. Any
+keyword argument is passed to the plt.figure function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>window_title</strong> : string</p>
+<p><strong>_on_figure_window_close</strong> : function</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>fig</strong> : plt.figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="hyperspy.drawing.utils.does_figure_object_exists">
@@ -628,10 +684,7 @@ attribute</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch" title="hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(*args)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -650,6 +703,70 @@ attribute</p>
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position">
 <tt class="descname">update_patch_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.drawing.widgets.DraggableLabel">
+<em class="property">class </em><tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">DraggableLabel</tt><big>(</big><em>axes_manager</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch" title="hyperspy.drawing.widgets.DraggablePatch"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.drawing.widgets.DraggablePatch</span></tt></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
+<td>whenever a mouse button is released</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt>([window])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">connect</span></tt>(ax)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">disconnect</span></tt>(ax)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">draw_patch</span></tt>(*args)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_on</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt>(event)</td>
+<td>This method must be provided by the subclass</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableLabel.set_patch" title="hyperspy.drawing.widgets.DraggableLabel.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableLabel.update_patch_position" title="hyperspy.drawing.widgets.DraggableLabel.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.DraggableLabel.set_patch">
+<tt class="descname">set_patch</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableLabel.set_patch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.DraggableLabel.update_patch_position">
+<tt class="descname">update_patch_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableLabel.update_patch_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -701,10 +818,7 @@ attribute</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.set_patch" title="hyperspy.drawing.widgets.DraggablePatch.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.update_background" title="hyperspy.drawing.widgets.DraggablePatch.update_background"><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt></a>(*args)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.update_patch_position" title="hyperspy.drawing.widgets.DraggablePatch.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.update_patch_position" title="hyperspy.drawing.widgets.DraggablePatch.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
 <td>This method must be provided by the subclass</td>
 </tr>
 </tbody>
@@ -772,11 +886,6 @@ attribute</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.update_background">
-<tt class="descname">update_background</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.update_background" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggablePatch.update_patch_position">
 <tt class="descname">update_patch_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.update_patch_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be provided by the subclass</p>
@@ -803,6 +912,12 @@ attribute</p>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.calculate_position" title="hyperspy.drawing.widgets.DraggableSquare.calculate_position"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_position</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.calculate_size" title="hyperspy.drawing.widgets.DraggableSquare.calculate_size"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_size</span></tt></a>()</td>
+<td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt>([window])</td>
 <td></td>
@@ -843,17 +958,24 @@ attribute</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt>(size)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(*args)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_position" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_position" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_size" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_size" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.DraggableSquare.calculate_position">
+<tt class="descname">calculate_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.calculate_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.DraggableSquare.calculate_size">
+<tt class="descname">calculate_size</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.calculate_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggableSquare.onmove">
 <tt class="descname">onmove</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.onmove" title="Permalink to this definition">¶</a></dt>
@@ -924,10 +1046,7 @@ attribute</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.set_patch" title="hyperspy.drawing.widgets.DraggableVerticalLine.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(*args)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -961,6 +1080,12 @@ attribute</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">connect_event</span></tt>(event,&nbsp;callback)</td>
+<td>Connect callback with an event.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">disconnect_events</span></tt>()</td>
+<td>Disconnect all events created by this widget.</td>
+</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ignore</span></tt>(event)</td>
 <td>return <em>True</em> if <em>event</em> should be ignored</td>
 </tr>
@@ -1108,13 +1233,10 @@ iteractivity machinery passes to modify mode</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size"><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt></a>(size)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(*args)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt>()</td>
 <td>This method must be provided by the subclass</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
 <td>This method must be provided by the subclass</td>
 </tr>
 </tbody>
@@ -1154,7 +1276,7 @@ iteractivity machinery passes to modify mode</p>
 
 <dl class="class">
 <dt id="hyperspy.drawing.widgets.Scale_Bar">
-<em class="property">class </em><tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">Scale_Bar</tt><big>(</big><em>ax</em>, <em>units</em>, <em>pixel_size</em>, <em>color='white'</em>, <em>position=None</em>, <em>ratio=0.25</em>, <em>lw=1</em>, <em>lenght_in_units=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">Scale_Bar</tt><big>(</big><em>ax</em>, <em>units</em>, <em>pixel_size=None</em>, <em>color='white'</em>, <em>position=None</em>, <em>max_size_ratio=0.25</em>, <em>lw=2</em>, <em>lenght=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -1162,28 +1284,28 @@ iteractivity machinery passes to modify mode</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_line_position" title="hyperspy.drawing.widgets.Scale_Bar.calculate_line_position"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_line_position</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_line_position" title="hyperspy.drawing.widgets.Scale_Bar.calculate_line_position"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_line_position</span></tt></a>([pad])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_scale_size" title="hyperspy.drawing.widgets.Scale_Bar.calculate_scale_size"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_scale_size</span></tt></a>([ratio])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_size" title="hyperspy.drawing.widgets.Scale_Bar.calculate_size"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_size</span></tt></a>([max_size_ratio])</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_text_position" title="hyperspy.drawing.widgets.Scale_Bar.calculate_text_position"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_text_position</span></tt></a>([pad])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.delete_scale_if_exists" title="hyperspy.drawing.widgets.Scale_Bar.delete_scale_if_exists"><tt class="xref py py-obj docutils literal"><span class="pre">delete_scale_if_exists</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.get_units_string" title="hyperspy.drawing.widgets.Scale_Bar.get_units_string"><tt class="xref py py-obj docutils literal"><span class="pre">get_units_string</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.get_units_string" title="hyperspy.drawing.widgets.Scale_Bar.get_units_string"><tt class="xref py py-obj docutils literal"><span class="pre">get_units_string</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.plot_scale" title="hyperspy.drawing.widgets.Scale_Bar.plot_scale"><tt class="xref py py-obj docutils literal"><span class="pre">plot_scale</span></tt></a>([line_width])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.plot_scale" title="hyperspy.drawing.widgets.Scale_Bar.plot_scale"><tt class="xref py py-obj docutils literal"><span class="pre">plot_scale</span></tt></a>([line_width])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.remove" title="hyperspy.drawing.widgets.Scale_Bar.remove"><tt class="xref py py-obj docutils literal"><span class="pre">remove</span></tt></a>()</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_color" title="hyperspy.drawing.widgets.Scale_Bar.set_color"><tt class="xref py py-obj docutils literal"><span class="pre">set_color</span></tt></a>(c)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght_in_units" title="hyperspy.drawing.widgets.Scale_Bar.set_lenght_in_units"><tt class="xref py py-obj docutils literal"><span class="pre">set_lenght_in_units</span></tt></a>(lenght)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght" title="hyperspy.drawing.widgets.Scale_Bar.set_lenght"><tt class="xref py py-obj docutils literal"><span class="pre">set_lenght</span></tt></a>(lenght)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_position" title="hyperspy.drawing.widgets.Scale_Bar.set_position"><tt class="xref py py-obj docutils literal"><span class="pre">set_position</span></tt></a>(x,&nbsp;y)</td>
@@ -1196,22 +1318,17 @@ iteractivity machinery passes to modify mode</p>
 </table>
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.Scale_Bar.calculate_line_position">
-<tt class="descname">calculate_line_position</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_line_position" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calculate_line_position</tt><big>(</big><em>pad=0.05</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_line_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.widgets.Scale_Bar.calculate_scale_size">
-<tt class="descname">calculate_scale_size</tt><big>(</big><em>ratio=0.25</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_scale_size" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.widgets.Scale_Bar.calculate_size">
+<tt class="descname">calculate_size</tt><big>(</big><em>max_size_ratio=0.25</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.Scale_Bar.calculate_text_position">
-<tt class="descname">calculate_text_position</tt><big>(</big><em>pad=0.005555555555555556</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_text_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.Scale_Bar.delete_scale_if_exists">
-<tt class="descname">delete_scale_if_exists</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.delete_scale_if_exists" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calculate_text_position</tt><big>(</big><em>pad=0.01</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.calculate_text_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1225,13 +1342,18 @@ iteractivity machinery passes to modify mode</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.drawing.widgets.Scale_Bar.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.drawing.widgets.Scale_Bar.set_color">
 <tt class="descname">set_color</tt><big>(</big><em>c</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.set_color" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.widgets.Scale_Bar.set_lenght_in_units">
-<tt class="descname">set_lenght_in_units</tt><big>(</big><em>lenght</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght_in_units" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.widgets.Scale_Bar.set_lenght">
+<tt class="descname">set_lenght</tt><big>(</big><em>lenght</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1249,11 +1371,6 @@ iteractivity machinery passes to modify mode</p>
 <dl class="function">
 <dt id="hyperspy.drawing.widgets.in_interval">
 <tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">in_interval</tt><big>(</big><em>number</em>, <em>interval</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.in_interval" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="hyperspy.drawing.widgets.scale_bar">
-<tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">scale_bar</tt><big>(</big><em>ax</em>, <em>units</em>, <em>pixel_size</em>, <em>color='white'</em>, <em>position=None</em>, <em>ratio=0.25</em>, <em>lw=1</em>, <em>lenght_in_units=None</em><big>)</big><a class="headerlink" href="#hyperspy.drawing.widgets.scale_bar" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1327,7 +1444,7 @@ iteractivity machinery passes to modify mode</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.5.1+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

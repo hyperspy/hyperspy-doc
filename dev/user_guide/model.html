@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Curve fitting &mdash; Hyperspy 0.5 documentation</title>
+    <title>Curve fitting &mdash; Hyperspy 0.5.1+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.5.1+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.5 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.5.1+dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Mapped parameters structure" href="mapped_parameters_structure.html" />
     <link rel="prev" title="Machine learning" href="mva.html" />
@@ -66,7 +66,7 @@
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.5.1+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -88,7 +88,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c"># Create the model and asign it to the variable m</span>
 </pre></div>
 </div>
-<p>At this point you may be prompted to provide any necessary information not already included in the datafile, e.g.if s is EELS data, you may be asked for the accellerating voltage, convergence and collection angles etc.</p>
+<p>At this point you may be prompted to provide any necessary information not already included in the datafile, e.g.if s is EELS data, you may be asked for the accelerating voltage, convergence and collection angles etc.</p>
 </div>
 <div class="section" id="adding-components-to-the-model">
 <h3>Adding components to the model<a class="headerlink" href="#adding-components-to-the-model" title="Permalink to this headline">¶</a></h3>
@@ -108,6 +108,7 @@
 <li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.bleasdale.Bleasdale" title="hyperspy.components.bleasdale.Bleasdale"><tt class="xref py py-class docutils literal"><span class="pre">Bleasdale</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.error_function.Erf" title="hyperspy.components.error_function.Erf"><tt class="xref py py-class docutils literal"><span class="pre">Erf</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.pes_see.SEE" title="hyperspy.components.pes_see.SEE"><tt class="xref py py-class docutils literal"><span class="pre">SEE</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy.components.arctan.Arctan" title="hyperspy.components.arctan.Arctan"><tt class="xref py py-class docutils literal"><span class="pre">Arctan</span></tt></a></li>
 </ul>
 <p>Writing a new component is very easy, so, if the function that you need to fit is not in the list above, by inspecting the code of, for example, the Gaussian component, it should be easy to write your own component. If you need help for the task please submit your question to the <em class="xref std std-ref">users mailing list</em>.</p>
 <p>To print the current components in a model simply enter the name of the variable, e.g.:</p>
@@ -183,21 +184,94 @@ the extend method that enables adding a list of components at once</p>
 <span class="go">                sigma       1.000000</span>
 <span class="go">                centre      0.000000</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin</span> <span class="o">=</span> <span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span> <span class="c"># Couple the A parameter of gaussian2 to the A parameter of gaussian 3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span> <span class="c"># Set the gaussian2 centre value to 10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span> <span class="c"># Set the gaussian2 centre value to 10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
 <span class="go">Components  Parameter       Value</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">                A   1.000000</span>
-<span class="go">                sigma       1.000000</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">                centre      10.000000</span>
-<span class="go">                A   1.000000</span>
-<span class="go">                sigma       1.000000</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">                A   1.000000</span>
-<span class="go">                sigma       1.000000</span>
-<span class="go">                centre      0.000000</span>
+<span class="go">Carbon</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   1.000000</span>
+<span class="go">        centre      0.000000</span>
+<span class="go">Hydrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   10.000000</span>
+<span class="go">        centre      10.000000</span>
+<span class="go">Nitrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   10.000000</span>
+<span class="go">        centre      0.000000</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">5</span> <span class="c"># Set the gaussian1 centre value to 5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
+<span class="go">Components  Parameter       Value</span>
+<span class="go">Carbon</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   1.000000</span>
+<span class="go">        centre      0.000000</span>
+<span class="go">Hydrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   5.000000</span>
+<span class="go">        centre      10.000000</span>
+<span class="go">Nitrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   5.000000</span>
+<span class="go">        centre      0.000000</span>
 </pre></div>
+</div>
+<dl class="docutils">
+<dt>By default the coupling function is the identity function. However it is</dt>
+<dd><p class="first">possible to set a different coupling function by setting the
+<tt class="xref py py-attr docutils literal"><span class="pre">twin_function</span></tt> and
+<tt class="xref py py-attr docutils literal"><span class="pre">twin_inverse_function</span></tt> attributes.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_inverse_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
+<span class="go">Components  Parameter       Value</span>
+<span class="go">Carbon</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   1.000000</span>
+<span class="go">        centre      0.000000</span>
+<span class="go">Hydrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   4.000000</span>
+<span class="go">        centre      10.000000</span>
+<span class="go">Nitrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   2.000000</span>
+<span class="go">        centre      0.000000</span>
+</pre></div>
+</div>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
+<span class="go">Components  Parameter       Value</span>
+<span class="go">Carbon</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   1.000000</span>
+<span class="go">        centre      0.000000</span>
+<span class="go">Hydrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   16.000000</span>
+<span class="go">        centre      10.000000</span>
+<span class="go">Nitrogen</span>
+<span class="go">        sigma       1.000000</span>
+<span class="go">        A   4.000000</span>
+<span class="go">        centre      0.000000</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="setting-the-position-of-parameter-interactively">
+<h3>Setting the position of parameter interactively<a class="headerlink" href="#setting-the-position-of-parameter-interactively" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.6: </span><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></tt></a> provides an
+interactive way of setting the position of the components with a
+well define position.</p>
+<div class="figure align-center">
+<img alt="user_guide/images/model_adjust_position.png" src="user_guide/images/model_adjust_position.png" style="width: 500px;" />
+<p class="caption">Adjust the position of the components interactively by dragging the
+vertical lines.</p>
 </div>
 </div>
 <div class="section" id="exclude-data-from-the-fitting-process">
@@ -300,8 +374,8 @@ is optimized to fit EELS core-loss spectra</p>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">disable_fine_structure()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">set_all_edges_intensities_positive()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">unset_all_edges_intensities_positive()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_free_energy_shift" title="hyperspy.models.eelsmodel.EELSModel.enable_free_energy_shift"><tt class="xref py py-meth docutils literal"><span class="pre">enable_free_energy_shift()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_free_energy_shift" title="hyperspy.models.eelsmodel.EELSModel.disable_free_energy_shift"><tt class="xref py py-meth docutils literal"><span class="pre">disable_free_energy_shift()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">enable_free_onset_energy()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">disable_free_onset_energy()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><tt class="xref py py-meth docutils literal"><span class="pre">fix_edges()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><tt class="xref py py-meth docutils literal"><span class="pre">free_edges()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">fix_fine_structure()</span></tt></a></li>
@@ -329,6 +403,7 @@ is optimized to fit EELS core-loss spectra</p>
 <li><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
 <li><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a></li>
 <li><a class="reference internal" href="#getting-and-setting-parameter-values-and-attributes">Getting and setting parameter values and attributes</a></li>
+<li><a class="reference internal" href="#setting-the-position-of-parameter-interactively">Setting the position of parameter interactively</a></li>
 <li><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
 <li><a class="reference internal" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
 <li><a class="reference internal" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
@@ -386,7 +461,7 @@ is optimized to fit EELS core-loss spectra</p>
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.5.1+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
