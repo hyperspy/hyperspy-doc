@@ -179,7 +179,7 @@ they are available, otherwise it will use the hydrogenic GOS.</p>
 <td>Fits the model to the experimental data</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fit_background" title="hyperspy.models.eelsmodel.EELSModel.fit_background"><tt class="xref py py-obj docutils literal"><span class="pre">fit_background</span></tt></a>([start_energy,&nbsp;kind])</td>
-<td>Fit an EELS spectrum ionization edge by ionization edge from left</td>
+<td>Fit the background to the first active ionization edge  in the energy range.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><tt class="xref py py-obj docutils literal"><span class="pre">fix_edges</span></tt></a>([edges_list])</td>
 <td>Fixes all the parameters of the edges given in edges_list.</td>
@@ -199,7 +199,7 @@ they are available, otherwise it will use the hydrogenic GOS.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">index</span></tt>((value,&nbsp;[start,&nbsp;...)</td>
 <td>Raises ValueError if the value is not present.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">insert</span></tt>(object)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">insert</span></tt>()</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">load_parameters_from_file</span></tt>(filename)</td>
@@ -265,22 +265,31 @@ they are available, otherwise it will use the hydrogenic GOS.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpfit_parameters_info</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_range</span></tt>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_free</span></tt>([component_list,&nbsp;...])</td>
+<td>Sets the parameters in a component in a model to free.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_not_free</span></tt>([component_list,&nbsp;...])</td>
+<td>Sets the parameters in a component in a model to not free.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_value</span></tt>(parameter_name,&nbsp;value)</td>
+<td>Sets the value of a parameter in components in a model to a specified value</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_range</span></tt>(*args,&nbsp;**kwargs)</td>
 <td>Use only the selected spectral range defined in its own units in the  fitting routine.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><tt class="xref py py-obj docutils literal"><span class="pre">smart_fit</span></tt></a>([start_energy])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><tt class="xref py py-obj docutils literal"><span class="pre">smart_fit</span></tt></a>([start_energy])</td>
 <td>Fits everything in a cascade style.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">sort</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sort</span></tt></td>
 <td>L.sort(cmp=None, key=None, reverse=False) &#8211; stable sort <em>IN PLACE</em>;</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation" title="hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation"><tt class="xref py py-obj docutils literal"><span class="pre">two_area_background_estimation</span></tt></a>([E1,&nbsp;E2,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation" title="hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation"><tt class="xref py py-obj docutils literal"><span class="pre">two_area_background_estimation</span></tt></a>([E1,&nbsp;E2,&nbsp;...])</td>
 <td>Estimates the parameters of a power law background with the two area method.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><tt class="xref py py-obj docutils literal"><span class="pre">unset_all_edges_intensities_positive</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><tt class="xref py py-obj docutils literal"><span class="pre">unset_all_edges_intensities_positive</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -496,7 +505,7 @@ speed up the estimation.</p>
 <blockquote>
 <div><p>If None, performs standard least squares. If True 
 performs weighted least squares where the weights are 
-calculated using spectrum.Spectrum.estimate_variance. 
+calculated using spectrum.Spectrum.estimate_poissonian_noise_variance. 
 Alternatively, external weights can be supplied by passing
 a weights array of the same dimensions as the signal.</p>
 </div></blockquote>
@@ -539,8 +548,8 @@ fitter</p>
 <dl class="method">
 <dt id="hyperspy.models.eelsmodel.EELSModel.fit_background">
 <tt class="descname">fit_background</tt><big>(</big><em>start_energy=None</em>, <em>kind='single'</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fit_background" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit an EELS spectrum ionization edge by ionization edge from left 
-to right to optimize convergence.</p>
+<dd><p>Fit the background to the first active ionization edge 
+in the energy range.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
