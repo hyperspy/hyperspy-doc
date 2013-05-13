@@ -79,7 +79,7 @@
 
 
 <span class="c"># Create an empty spectrum</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">({</span><span class="s">&#39;data&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1024</span><span class="p">))})</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
 
 <span class="c"># Generate some simple data: two Gaussians with random centers and area</span>
 
@@ -118,14 +118,16 @@
 <span class="n">gs2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;is_set&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="c"># Create the dataset</span>
-<span class="n">m</span><span class="o">.</span><span class="n">generate_data_from_model</span><span class="p">()</span>
+<span class="n">s_model</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
 
-<span class="c"># Assign the data generated to the Spectrum with some poissonian noise</span>
-<span class="n">s</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">model_cube</span><span class="p">)</span>
+<span class="c"># Add noise</span>
+<span class="n">s_model</span> <span class="o">=</span> <span class="n">s_model</span><span class="o">.</span><span class="n">to_simulation</span><span class="p">()</span>
+<span class="n">s_model</span><span class="o">.</span><span class="n">add_poissonian_noise</span><span class="p">()</span>
 
 <span class="c"># Plot the result</span>
+<span class="n">s_model</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Keywords: hyperspy, example, codex (see <em class="xref std std-ref">how-to-search-examples</em>)</p>
