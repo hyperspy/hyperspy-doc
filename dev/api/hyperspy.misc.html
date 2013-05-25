@@ -615,7 +615,7 @@ with support for multiple versions</p>
 
 <dl class="function">
 <dt id="hyperspy.misc.natsort.natsort">
-<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x6be3f50&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x6dbbc08&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort" title="Permalink to this definition">¶</a></dt>
 <dd><p>In-place natural string sort.</p>
 </dd></dl>
 
@@ -627,7 +627,7 @@ with support for multiple versions</p>
 
 <dl class="function">
 <dt id="hyperspy.misc.natsort.natsorted">
-<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsorted</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x6be3f50&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsorted" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsorted</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x6dbbc08&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsorted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a copy of seq, sorted by natural string sort.</p>
 </dd></dl>
 
@@ -795,7 +795,7 @@ automatically supports features like auto-resizing when available.</p>
 
 <dl class="class">
 <dt id="hyperspy.misc.progressbar.ProgressBar">
-<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x6b49a90&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x6b49ad0&gt;], term_width=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x6d16250&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x6d16290&gt;], term_width=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>This is the ProgressBar class, it updates and prints the bar.</p>
 <p>The term_width parameter may be an integer. Or None, in which case
@@ -2230,6 +2230,68 @@ and converts spaces to hyphens.</p>
 <tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">smooth</tt><big>(</big><em>data</em>, <em>coeff</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.smooth" title="Permalink to this definition">¶</a></dt>
 <dd><p>applies coefficients calculated by calc_coeff() to signal
 <a class="reference external" href="http://www.procoders.net">http://www.procoders.net</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.utils.stack">
+<tt class="descclassname">hyperspy.misc.utils.</tt><tt class="descname">stack</tt><big>(</big><em>signal_list</em>, <em>axis=None</em>, <em>new_axis_name='stack_element'</em>, <em>mmap=False</em>, <em>mmap_dir=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.utils.stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate the signals in the list over a given axis or a new axis.</p>
+<p>The title is set to that of the first signal in the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>signal_list</strong> : list of Signal instances</p>
+<p><strong>axis</strong> : {None, int, str}</p>
+<blockquote>
+<div><p>If None, the signals are stacked over a new axis. The data must 
+have the same dimensions. Otherwise the 
+signals are stacked over the axis given by its integer index or
+its name. The data must have the same shape, except in the dimension
+corresponding to <cite>axis</cite>.</p>
+</div></blockquote>
+<p><strong>new_axis_name</strong> : string</p>
+<blockquote>
+<div><p>The name of the new axis when <cite>axis</cite> is None.
+If an axis with this name already 
+exists it automatically append &#8216;-i&#8217;, where <cite>i</cite> are integers,
+until it finds a name that is not yet in use.</p>
+</div></blockquote>
+<p><strong>mmap: bool</strong> :</p>
+<blockquote>
+<div><p>If True and stack is True, then the data is stored
+in a memory-mapped temporary file.The memory-mapped data is 
+stored on disk, and not directly loaded into memory.  
+Memory mapping is especially useful for accessing small 
+fragments of large files without reading the entire file into 
+memory.</p>
+</div></blockquote>
+<p><strong>mmap_dir</strong> : string</p>
+<blockquote>
+<div><p>If mmap_dir is not None, and stack and mmap are True, the memory
+mapped file will be created in the given directory,
+otherwise the default directory is used.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>signal</strong> : Signal instance (or subclass, determined by the objects in</p>
+<blockquote class="last">
+<div><p>signal list)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">10</span><span class="p">:])])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Spectrum, title: Stack of , dimensions: (2, 10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9],</span>
+<span class="go">       [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">

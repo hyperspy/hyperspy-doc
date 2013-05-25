@@ -86,7 +86,78 @@
 <ul class="simple">
 <li>Signal now supports indexing and slicing. See <a class="reference internal" href="tools.html#signal-indexing"><em>Indexing</em></a>.</li>
 <li>Most arithmetic and rich arithmetic operators work with signal.
-See <a class="reference internal" href="tools.html#signal-operations"><em>Signal operations</em></a></li>
+See <a class="reference internal" href="tools.html#signal-operations"><em>Signal operations</em></a>.</li>
+<li>Much improved EELSSpectrum methods:
+<tt class="xref py py-meth docutils literal"><span class="pre">signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre()</span></tt>,
+estimate_elastic_scattering_intensity, estimate_elastic_scattering_threshold,
+estimate_thickness.</li>
+<li>The axes can now be given using their name e.g. <tt class="docutils literal"><span class="pre">s.crop(&quot;x&quot;,</span> <span class="pre">1,10)</span></tt></li>
+<li>New syntax to specify position over axes: an integer specifies the indexes
+over the axis and a floating number specifies the position in the axis units
+e.g. <tt class="docutils literal"><span class="pre">s.crop(&quot;x&quot;,</span> <span class="pre">1,</span> <span class="pre">10.)</span></tt> crops over the axis <cite>x</cite> (in meters) from index 1
+to value 10 meters.</li>
+<li>Most methods now use the natural order i.e. X,Y,Z.. to index the axes.</li>
+<li>Add padding to fourier-log and fourier-ratio deconvolution to fix the
+wrap-around problem and increase its performance.</li>
+<li>New get_fine_structure_as_spectrum EELSCLEdge method.</li>
+<li>New component.Arctan .</li>
+<li>New Model.enable_adjust_position method to easily change the position of
+components using the mouse on the plot.</li>
+<li>New Model methods set_parameter_value, set_parameter_free/not_free to easily
+set several important component attributes of a list of components at once.</li>
+<li>New utils.stack function to stack signals.</li>
+<li>New Signal methods: integrate_simpson, max, min, var, std.</li>
+<li>New sliders window to easily navigate signals with navigation_dimension &gt; 2</li>
+<li>The Ripple (rpl) reader can now read rpl files produced by INCA.</li>
+</ul>
+</div>
+<div class="section" id="api-changes">
+<h3>API changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">The following functions has been renamed or removed:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">components.EELSCLEdge</p>
+<blockquote>
+<div><ul class="simple">
+<li>knots_factor -&gt; fine_structure_smoothing</li>
+<li>edge_position -&gt; onset_energy</li>
+<li>energy_shift removed</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">components.Voigt.origin -&gt; centre</p>
+</li>
+<li><p class="first">signals.Spectrum</p>
+<blockquote>
+<div><ul class="simple">
+<li>find_peaks_1D -&gt; Signal.find_peaks1D_ohaver</li>
+<li>align_1D -&gt; Signal.align1D</li>
+<li>shift_1D -&gt; Signal.shift1D</li>
+<li>interpolate_1D -&gt; Signal.interpolate1D</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">signals.Image.estimate_2D_translation -&gt; Signal.estimate_shift2D</p>
+</li>
+<li><p class="first">Signal</p>
+<blockquote>
+<div><ul class="simple">
+<li>split_in -&gt; split</li>
+<li>crop_in_units -&gt; crop</li>
+<li>crop_in_pixels -&gt; crop</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Change syntax to create Signal objects. Instead of a dictionary
+Signal.__init__ takes keywords e.g with  a new syntax
+<tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span> <span class="pre">s</span> <span class="pre">=</span> <span class="pre">signals.Spectrum(np.arange(10))</span></tt> instead of
+<tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span> <span class="pre">s</span> <span class="pre">=</span> <span class="pre">signals.Spectrum({'data'</span> <span class="pre">:</span> <span class="pre">np.arange(10)})</span></tt></p>
+</li>
+<li></li>
 </ul>
 </div>
 </div>
@@ -114,8 +185,8 @@ See <a class="reference internal" href="tools.html#signal-operations"><em>Signal
 <li>Remove_background was broken for 1D spectrum</li>
 </ul>
 </div>
-<div class="section" id="api-changes">
-<h3>API changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>API changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>EELSSPectrum.find_low_loss_centre was renamed to estimate_zero_loss_peak_centre</li>
 <li>EELSSPectrum.calculate_FWHM was renamed to estimate_FWHM</li>
@@ -124,8 +195,8 @@ See <a class="reference internal" href="tools.html#signal-operations"><em>Signal
 </div>
 <div class="section" id="v0-5">
 <span id="changes-0-5"></span><h2>v0.5<a class="headerlink" href="#v0-5" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>New features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>New features<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The documentation was thoroughly revised, courtesy of M. Walls.</li>
 <li>New user interface to remove spikes from EELS spectra.</li>
@@ -147,8 +218,8 @@ the variable name <cite>elements</cite>.</li>
 <li>The ripple file format now supports storing the beam energy, the collection and the convergence angle.</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h3>Mayor bugs fixed<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Mayor bugs fixed<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The EELS core loss component had a bug in the calculation of the
 relativistic gamma that produced a gamma that was always
@@ -164,8 +235,8 @@ what occurs often in EDX data for example.</li>
 <li>The constrast of the image was not automatically updated.</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>API changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>API changes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>spatial_mask was renamed to navigation_mask</li>
 <li>Spectrum and Image are not loaded into the user namespace by default.
@@ -188,8 +259,8 @@ Hyperspy.</li>
 </div>
 <div class="section" id="v0-4-1">
 <span id="changes-0-4-1"></span><h2>v0.4.1<a class="headerlink" href="#v0-4-1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id5">
-<h3>New features<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>New features<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Added TIFF 16, 32 and 64 bits support by using (and distributing) Christoph Gohlke&#8217;s <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html">tifffile library</a>.</li>
@@ -227,8 +298,8 @@ Hyperspy.</li>
 </div>
 <div class="section" id="v0-4">
 <span id="changes-0-4"></span><h2>v0.4<a class="headerlink" href="#v0-4" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id6">
-<h3>New features<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>New features<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Add a slider to the filter ui.</li>
@@ -276,8 +347,8 @@ Hyperspy.</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id7">
-<h3>Bugs fixed<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>Bugs fixed<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Added missing keywords to plot_pca_factors and plot_ica_factors.</li>
@@ -313,8 +384,8 @@ Hyperspy.</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id8">
-<h3>Syntax changes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Syntax changes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>in decomposition V rename to explained_variance</li>
@@ -358,30 +429,31 @@ Hyperspy.</li>
 <li><a class="reference internal" href="#">What&#8217;s new</a><ul>
 <li><a class="reference internal" href="#v0-6">v0.6</a><ul>
 <li><a class="reference internal" href="#new-features">New features</a></li>
+<li><a class="reference internal" href="#api-changes">API changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-5-1">v0.5.1</a><ul>
 <li><a class="reference internal" href="#id1">New features</a></li>
 <li><a class="reference internal" href="#mayor-bugs-fixed">Mayor bugs fixed</a></li>
-<li><a class="reference internal" href="#api-changes">API changes</a></li>
+<li><a class="reference internal" href="#id2">API changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-5">v0.5</a><ul>
-<li><a class="reference internal" href="#id2">New features</a></li>
-<li><a class="reference internal" href="#id3">Mayor bugs fixed</a></li>
-<li><a class="reference internal" href="#id4">API changes</a></li>
+<li><a class="reference internal" href="#id3">New features</a></li>
+<li><a class="reference internal" href="#id4">Mayor bugs fixed</a></li>
+<li><a class="reference internal" href="#id5">API changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-4-1">v0.4.1</a><ul>
-<li><a class="reference internal" href="#id5">New features</a></li>
+<li><a class="reference internal" href="#id6">New features</a></li>
 <li><a class="reference internal" href="#bugs-fixed">Bugs fixed</a></li>
 <li><a class="reference internal" href="#syntax-changes">Syntax changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-4">v0.4</a><ul>
-<li><a class="reference internal" href="#id6">New features</a></li>
-<li><a class="reference internal" href="#id7">Bugs fixed</a></li>
-<li><a class="reference internal" href="#id8">Syntax changes</a></li>
+<li><a class="reference internal" href="#id7">New features</a></li>
+<li><a class="reference internal" href="#id8">Bugs fixed</a></li>
+<li><a class="reference internal" href="#id9">Syntax changes</a></li>
 </ul>
 </li>
 </ul>
