@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>model_fitting example code: simple_arctan_fit.py &mdash; Hyperspy 0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.6 documentation" href="../../index.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hyperspy 0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="model-fitting-example-code-simple-arctan-fit-py">
+<span id="model-fitting-simple-arctan-fit"></span><h1>model_fitting example code: simple_arctan_fit.py<a class="headerlink" href="#model-fitting-example-code-simple-arctan-fit-py" title="Permalink to this headline">¶</a></h1>
+<p>[<a class="reference external" href="simple_arctan_fit.py">source code</a>]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Creates a spectrum, and fits an arctan to it.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c">#Generate the data and make the spectrum</span>
+<span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">SpectrumSimulation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x_range</span><span class="p">))</span>
+<span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
+<span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">mapped_parameters</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Simple arctan fit&quot;</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c">#Make the arctan component for use in the model</span>
+<span class="n">arctan_component</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Arctan</span><span class="p">()</span>
+
+<span class="c">#Create the model and add the arctan component</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arctanComponent</span><span class="p">)</span>
+
+<span class="c">#Fit the arctan component to the spectrum</span>
+<span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c"># Print the result of the fit</span>
+<span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
+
+<span class="c">#Plot the spectrum and the model fitting</span>
+<span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Keywords: hyperspy, example, codex (see <em class="xref std std-ref">how-to-search-examples</em>)</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/examples/model_fitting/simple_arctan_fit.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hyperspy 0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The Hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

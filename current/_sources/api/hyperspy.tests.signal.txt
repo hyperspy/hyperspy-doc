@@ -1,0 +1,51 @@
+signal Package
+==============
+
+:mod:`signal` Package
+---------------------
+
+.. automodule:: hyperspy.tests.signal
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_eels` Module
+-----------------------
+
+.. automodule:: hyperspy.tests.signal.test_eels
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_fancy_indexing` Module
+---------------------------------
+
+.. automodule:: hyperspy.tests.signal.test_fancy_indexing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_signal_operators` Module
+-----------------------------------
+
+.. automodule:: hyperspy.tests.signal.test_signal_operators
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_spectrum` Module
+---------------------------
+
+.. automodule:: hyperspy.tests.signal.test_spectrum
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_tools` Module
+------------------------
+
+.. automodule:: hyperspy.tests.signal.test_tools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
