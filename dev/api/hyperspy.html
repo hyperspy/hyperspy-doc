@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hyperspy Package &mdash; Hyperspy 0.6 documentation</title>
+    <title>hyperspy Package &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.6 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
  
 <script type="text/javascript">
 
@@ -57,7 +57,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.6 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -81,38 +81,62 @@
 <em class="property">class </em><tt class="descclassname">hyperspy.axes.</tt><tt class="descname">AxesManager</tt><big>(</big><em>axes_list</em><big>)</big><a class="headerlink" href="#hyperspy.axes.AxesManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
 <p>Contains and manages the data axes.</p>
-<p>It can iterate over the navigation coordinates returning the 
-indices at the current iteration.</p>
-<p>It can only be indexed and sliced to access the DataAxis objects 
-that it contain. The indexing is in the same &#8220;natural order&#8221; as in 
-Signal, i.e. [nX, nY, ...,sX, sY,...] where <cite>n</cite> indicates a navigation axis and 
-<cite>s</cite> a signal axis. In addition it can be indexed using the DataAxis
-name.</p>
+<p>It supports indexing, slicing, subscriptins and iteration. As an interator,
+iterate over the navigation coordinates returning the current indices.
+It can only be indexed and sliced to access the DataAxis objects that it
+contains. Standard indexing and slicing follows the &#8220;natural order&#8221; as in
+Signal, i.e. [nX, nY, ...,sX, sY,...] where <cite>n</cite> indicates a navigation axis
+and <cite>s</cite> a signal axis. In addition AxesManager support indexing using
+complex numbers a + bj, where b can be one of 0, 1, 2 and 3 and a a valid
+index. If b is 3 AxesManager is indexed using the order of the axes in the
+array. If b is 1(2), indexes only the navigation(signal) axes in the
+natural order. In addition AxesManager supports subscription using
+axis name.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 <p>Create a spectrum with random data</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
-<span class="go">&lt;Axes manager, 4 axes, signal dimension: 1, navigation dimension: 3&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">&lt;undefined navigation axis, size: 2, index: 0&gt;</span>
+<span class="go">&lt;Axes manager, axes: (&lt;axis2 axis, size: 4, index: 0&gt;, &lt;axis1 axis, size: 3, index: 0&gt;, &lt;axis0 axis, size: 2, index: 0&gt;, &lt;axis3 axis, size: 5&gt;)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;axis2 axis, size: 4, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">3j</span><span class="p">]</span>
+<span class="go">&lt;axis0 axis, size: 2, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1j</span><span class="p">]</span>
+<span class="go">&lt;axis2 axis, size: 4, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2j</span><span class="p">]</span>
+<span class="go">&lt;axis3 axis, size: 5&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;y&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">]</span>
-<span class="go">&lt;y navigation axis, size: 2, index: 0&gt;</span>
+<span class="go">&lt;y axis, size: 3 index: 0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span>
 <span class="go">(0, 0, 0) (0, 0, 0)</span>
-<span class="go">(0, 0, 1) (0, 0, 1)</span>
-<span class="go">(0, 1, 0) (0, 1, 0)</span>
-<span class="go">(0, 1, 1) (0, 1, 1)</span>
 <span class="go">(1, 0, 0) (1, 0, 0)</span>
-<span class="go">(1, 0, 1) (1, 0, 1)</span>
+<span class="go">(2, 0, 0) (2, 0, 0)</span>
+<span class="go">(3, 0, 0) (3, 0, 0)</span>
+<span class="go">(0, 1, 0) (0, 1, 0)</span>
 <span class="go">(1, 1, 0) (1, 1, 0)</span>
+<span class="go">(2, 1, 0) (2, 1, 0)</span>
+<span class="go">(3, 1, 0) (3, 1, 0)</span>
+<span class="go">(0, 2, 0) (0, 2, 0)</span>
+<span class="go">(1, 2, 0) (1, 2, 0)</span>
+<span class="go">(2, 2, 0) (2, 2, 0)</span>
+<span class="go">(3, 2, 0) (3, 2, 0)</span>
+<span class="go">(0, 0, 1) (0, 0, 1)</span>
+<span class="go">(1, 0, 1) (1, 0, 1)</span>
+<span class="go">(2, 0, 1) (2, 0, 1)</span>
+<span class="go">(3, 0, 1) (3, 0, 1)</span>
+<span class="go">(0, 1, 1) (0, 1, 1)</span>
 <span class="go">(1, 1, 1) (1, 1, 1)</span>
+<span class="go">(2, 1, 1) (2, 1, 1)</span>
+<span class="go">(3, 1, 1) (3, 1, 1)</span>
+<span class="go">(0, 2, 1) (0, 2, 1)</span>
+<span class="go">(1, 2, 1) (1, 2, 1)</span>
+<span class="go">(2, 2, 1) (2, 2, 1)</span>
+<span class="go">(3, 2, 1) (3, 2, 1)</span>
 </pre></div>
 </div>
 <p class="rubric">Attributes</p>
@@ -493,7 +517,7 @@ iteration.</p>
 
 <dl class="class">
 <dt id="hyperspy.axes.DataAxis">
-<em class="property">class </em><tt class="descclassname">hyperspy.axes.</tt><tt class="descname">DataAxis</tt><big>(</big><em>size</em>, <em>index_in_array=None</em>, <em>name=''</em>, <em>scale=1.0</em>, <em>offset=0.0</em>, <em>units='undefined'</em>, <em>navigate=&lt;undefined&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.axes.DataAxis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.axes.</tt><tt class="descname">DataAxis</tt><big>(</big><em>size</em>, <em>index_in_array=None</em>, <em>name=&lt;undefined&gt;</em>, <em>scale=1.0</em>, <em>offset=0.0</em>, <em>units=&lt;undefined&gt;</em>, <em>navigate=&lt;undefined&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.axes.DataAxis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
@@ -673,8 +697,8 @@ iteration.</p>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_trait</span></tt>(name,&nbsp;value)</td>
 <td>Validates whether a value is legal for a trait.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.axes.DataAxis.value2index" title="hyperspy.axes.DataAxis.value2index"><tt class="xref py py-obj docutils literal"><span class="pre">value2index</span></tt></a>(value)</td>
-<td>Return the closest index to the given value if between the limits,</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.axes.DataAxis.value2index" title="hyperspy.axes.DataAxis.value2index"><tt class="xref py py-obj docutils literal"><span class="pre">value2index</span></tt></a>(value[,&nbsp;rounding])</td>
+<td>Return the closest index to the given value if between the limit.</td>
 </tr>
 </tbody>
 </table>
@@ -740,9 +764,8 @@ iteration.</p>
 
 <dl class="method">
 <dt id="hyperspy.axes.DataAxis.value2index">
-<tt class="descname">value2index</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#hyperspy.axes.DataAxis.value2index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the closest index to the given value if between the limits,
-otherwise it will return either the upper or lower limits</p>
+<tt class="descname">value2index</tt><big>(</big><em>value</em>, <em>rounding=&lt;built-in function round&gt;</em><big>)</big><a class="headerlink" href="#hyperspy.axes.DataAxis.value2index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the closest index to the given value if between the limit.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -750,6 +773,8 @@ otherwise it will return either the upper or lower limits</p>
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>value</strong> : float</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>int</strong> :</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><strong>ValueError if value is out of the axis limits.</strong> :</td>
 </tr>
 </tbody>
 </table>
@@ -781,11 +806,6 @@ otherwise it will return either the upper or lower limits</p>
 </tbody>
 </table>
 </dd></dl>
-
-<dl class="function">
-<dt id="hyperspy.axes.get_axis_group">
-<tt class="descclassname">hyperspy.axes.</tt><tt class="descname">get_axis_group</tt><big>(</big><em>n</em>, <em>label=''</em><big>)</big><a class="headerlink" href="#hyperspy.axes.get_axis_group" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="class">
 <dt id="hyperspy.axes.ndindex_nat">
@@ -827,8 +847,8 @@ otherwise it will return either the upper or lower limits</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">__call__</span></tt>(p,&nbsp;x[,&nbsp;onlyfree])</td>
-<td></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">__call__</span></tt>()</td>
+<td>Returns the corresponding model for the current coordinates</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.component.Component.connect" title="hyperspy.component.Component.connect"><tt class="xref py py-obj docutils literal"><span class="pre">connect</span></tt></a>(f)</td>
 <td></td>
@@ -1289,6 +1309,162 @@ it is applied.</p>
 </div>
 <div class="section" id="module-hyperspy.defaults_parser">
 <span id="defaults-parser-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">defaults_parser</span></tt> Module<a class="headerlink" href="#module-hyperspy.defaults_parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyperspy.defaults_parser.EDSConfig">
+<em class="property">class </em><tt class="descclassname">hyperspy.defaults_parser.</tt><tt class="descname">EDSConfig</tt><a class="headerlink" href="#hyperspy.defaults_parser.EDSConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_class_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a named trait attribute to this class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait</span></tt>(name,&nbsp;*trait)</td>
+<td>Adds a trait attribute to this object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_category</span></tt>(category)</td>
+<td>Adds a trait category to a class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">all_trait_names</span></tt>()</td>
+<td>Returns the list of all trait names, including implicitly defined</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">base_trait</span></tt>(name)</td>
+<td>Returns the base trait definition for a trait attribute.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of the class that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">clone_traits</span></tt>([traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Clones a new object from this one, optionally copying only a specified set of traits.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">configure_traits</span></tt>([filename,&nbsp;view,&nbsp;kind,&nbsp;...])</td>
+<td>Creates and displays a dialog box for editing values of trait</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">copy_traits</span></tt>(other[,&nbsp;traits,&nbsp;memo,&nbsp;copy])</td>
+<td>Copies another object&#8217;s trait attributes into this one.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">copyable_trait_names</span></tt>(**metadata)</td>
+<td>Returns the list of trait names to copy or clone by default.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">default_traits_view</span></tt>()</td>
+<td>Returns the name of the default traits view for the object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">edit_traits</span></tt>([view,&nbsp;parent,&nbsp;kind,&nbsp;context,&nbsp;...])</td>
+<td>Displays a user interface window for editing trait attribute values.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">editable_traits</span></tt>()</td>
+<td>Returns an alphabetically sorted list of the names of non-event</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">has_traits_interface</span></tt>(*interfaces)</td>
+<td>Returns whether the object implements a specified traits interface.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_change</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_event</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
+<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">print_traits</span></tt>([show_help])</td>
+<td>Prints the values of all explicitly-defined, non-event trait attributes on the current object, in an easily readable format.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait</span></tt>(name)</td>
+<td>Removes a trait attribute from this object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">reset_traits</span></tt>([traits])</td>
+<td>Resets some or all of an object&#8217;s trait attributes to their default values.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_trait_dispatch_handler</span></tt>(name,&nbsp;klass[,&nbsp;...])</td>
+<td>Sets a trait notification dispatch handler.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sync_trait</span></tt>(trait_name,&nbsp;object[,&nbsp;alias,&nbsp;...])</td>
+<td>Synchronizes the value of a trait attribute on this object with a trait attribute on another object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait</span></tt>(name[,&nbsp;force,&nbsp;copy])</td>
+<td>Returns the trait definition for the <em>name</em> trait attribute.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_context</span></tt>()</td>
+<td>Returns the default context to use for editing or configuring</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_get</span></tt>(*names,&nbsp;**metadata)</td>
+<td>Shortcut for getting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_items_event</span></tt>(event_trait,name,items_event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_monitor</span></tt>(handler[,&nbsp;remove])</td>
+<td>Adds or removes the specified <em>handler</em> from the list of active monitors.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_names</span></tt>(**metadata)</td>
+<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_property_changed</span></tt>(...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_set</span></tt>([trait_change_notify])</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_setq</span></tt>(**traits)</td>
+<td>Shortcut for setting object trait attributes.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_subclasses</span></tt>([all])</td>
+<td>Returns a list of the immediate (or all) subclasses of this class.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view</span></tt>([name,&nbsp;view_element])</td>
+<td>Gets or sets a ViewElement associated with an object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_elements</span></tt>()</td>
+<td>Returns the ViewElements object associated with the object&#8217;s</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_views</span></tt>([klass])</td>
+<td>Returns a list of the names of all view elements associated with the current object&#8217;s class.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits</span></tt>(**metadata)</td>
+<td>Returns a dictionary containing the definitions of all of the trait attributes of this object that match the set of <em>metadata</em> criteria.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_init</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_inited</span></tt>([True])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_trait</span></tt>(name,&nbsp;value)</td>
+<td>Validates whether a value is legal for a trait.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="class">
 <dt id="hyperspy.defaults_parser.EELSConfig">
 <em class="property">class </em><tt class="descclassname">hyperspy.defaults_parser.</tt><tt class="descname">EELSConfig</tt><a class="headerlink" href="#hyperspy.defaults_parser.EELSConfig" title="Permalink to this definition">¶</a></dt>
@@ -2085,212 +2261,6 @@ it is applied.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="hyperspy.defaults_parser.PreferencesHandler">
-<em class="property">class </em><tt class="descclassname">hyperspy.defaults_parser.</tt><tt class="descname">PreferencesHandler</tt><a class="headerlink" href="#hyperspy.defaults_parser.PreferencesHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traitsui.handler.Handler</span></tt></p>
-<p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_class_trait</span></tt>(name,&nbsp;*trait)</td>
-<td>Adds a named trait attribute to this class.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait</span></tt>(name,&nbsp;*trait)</td>
-<td>Adds a trait attribute to this object.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_category</span></tt>(category)</td>
-<td>Adds a trait category to a class.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">all_trait_names</span></tt>()</td>
-<td>Returns the list of all trait names, including implicitly defined</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">apply</span></tt>(info)</td>
-<td>Handles the <strong>Apply</strong> button being clicked.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">base_trait</span></tt>(name)</td>
-<td>Returns the base trait definition for a trait attribute.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">can_drop</span></tt>(info,&nbsp;object)</td>
-<td>Can the specified object be inserted into the view?</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">can_import</span></tt>(info,&nbsp;category)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_default_traits_view</span></tt>()</td>
-<td>Returns the name of the default traits view for the class.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_editable_traits</span></tt>()</td>
-<td>Returns an alphabetically sorted list of the names of non-event</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_names</span></tt>(**metadata)</td>
-<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view</span></tt>([name,&nbsp;view_element])</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_trait_view_elements</span></tt>()</td>
-<td>Returns the ViewElements object associated with the class.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">class_traits</span></tt>(**metadata)</td>
-<td>Returns a dictionary containing the definitions of all of the trait attributes of the class that match the set of <em>metadata</em> criteria.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">clone_traits</span></tt>([traits,&nbsp;memo,&nbsp;copy])</td>
-<td>Clones a new object from this one, optionally copying only a specified set of traits.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.defaults_parser.PreferencesHandler.close" title="hyperspy.defaults_parser.PreferencesHandler.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>(info,&nbsp;is_ok)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">closed</span></tt>(info,&nbsp;is_ok)</td>
-<td>Handles a dialog-based user interface being closed by the user.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">configure_traits</span></tt>([filename,&nbsp;view,&nbsp;kind,&nbsp;...])</td>
-<td>Configures the object&#8217;s traits.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">copy_traits</span></tt>(other[,&nbsp;traits,&nbsp;memo,&nbsp;copy])</td>
-<td>Copies another object&#8217;s trait attributes into this one.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">copyable_trait_names</span></tt>(**metadata)</td>
-<td>Returns the list of trait names to copy or clone by default.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">default_traits_view</span></tt>()</td>
-<td>Returns the name of the default traits view for the object&#8217;s class.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">dock_control_for</span></tt>(info,&nbsp;parent,&nbsp;object)</td>
-<td>Returns the DockControl object for a specified object.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">dock_window_empty</span></tt>(dock_window)</td>
-<td>Handles a DockWindow becoming empty.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">edit_traits</span></tt>([view,&nbsp;parent,&nbsp;kind,&nbsp;context,&nbsp;...])</td>
-<td>Edits the object&#8217;s traits.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">editable_traits</span></tt>()</td>
-<td>Returns an alphabetically sorted list of the names of non-event</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get</span></tt>(*names,&nbsp;**metadata)</td>
-<td>Shortcut for getting object trait attributes.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">has_traits_interface</span></tt>(*interfaces)</td>
-<td>Returns whether the object implements a specified traits interface.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">init</span></tt>(info)</td>
-<td>Initializes the controls of a user interface.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">init_info</span></tt>(info)</td>
-<td>Informs the handler what the UIInfo object for a View will be.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_change</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
-<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_trait_event</span></tt>(handler[,&nbsp;name,&nbsp;remove,&nbsp;...])</td>
-<td>Causes the object to invoke a handler whenever a trait attribute matching a specified pattern is modified, or removes the association.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">open_view_for</span></tt>(control[,&nbsp;use_mouse])</td>
-<td>Creates a new view of a specified control.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">position</span></tt>(info)</td>
-<td>Positions a dialog-based user interface on the display.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">print_traits</span></tt>([show_help])</td>
-<td>Prints the values of all explicitly-defined, non-event trait attributes on the current object, in an easily readable format.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait</span></tt>(name)</td>
-<td>Removes a trait attribute from this object.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_trait_listener</span></tt>(object[,&nbsp;prefix])</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">reset_traits</span></tt>([traits])</td>
-<td>Resets some or all of an object&#8217;s trait attributes to their default values.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">revert</span></tt>(info)</td>
-<td>Handles the <strong>Revert</strong> button being clicked.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set</span></tt>([trait_change_notify])</td>
-<td>Shortcut for setting object trait attributes.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_trait_dispatch_handler</span></tt>(name,&nbsp;klass[,&nbsp;...])</td>
-<td>Sets a trait notification dispatch handler.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">setattr</span></tt>(info,&nbsp;object,&nbsp;name,&nbsp;value)</td>
-<td>Handles the user setting a specified object trait&#8217;s value.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">show_help</span></tt>(info[,&nbsp;control])</td>
-<td>Shows the help associated with the view.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sync_trait</span></tt>(trait_name,&nbsp;object[,&nbsp;alias,&nbsp;...])</td>
-<td>Synchronizes the value of a trait attribute on this object with a trait attribute on another object.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait</span></tt>(name[,&nbsp;force,&nbsp;copy])</td>
-<td>Returns the trait definition for the <em>name</em> trait attribute.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_context</span></tt>()</td>
-<td>Returns the default context to use for editing or configuring</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_get</span></tt>(*names,&nbsp;**metadata)</td>
-<td>Shortcut for getting object trait attributes.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_items_event</span></tt>(event_trait,name,items_event)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_monitor</span></tt>(handler[,&nbsp;remove])</td>
-<td>Adds or removes the specified <em>handler</em> from the list of active monitors.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_names</span></tt>(**metadata)</td>
-<td>Returns a list of the names of all trait attributes whose definitions match the set of <em>metadata</em> criteria specified.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_property_changed</span></tt>(...)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_set</span></tt>([trait_change_notify])</td>
-<td>Shortcut for setting object trait attributes.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_setq</span></tt>(**traits)</td>
-<td>Shortcut for setting object trait attributes.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_subclasses</span></tt>([all])</td>
-<td>Returns a list of the immediate (or all) subclasses of this class.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view</span></tt>([name,&nbsp;view_element])</td>
-<td>Gets or sets a ViewElement associated with an object&#8217;s class.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_elements</span></tt>()</td>
-<td>Returns the ViewElements object associated with the object&#8217;s</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_view_for</span></tt>(info,&nbsp;view,&nbsp;object,&nbsp;...)</td>
-<td>Gets a specified View object.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">trait_views</span></tt>([klass])</td>
-<td>Returns a list of the names of all view elements associated with the current object&#8217;s class.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits</span></tt>(**metadata)</td>
-<td>Returns a dictionary containing the definitions of all of the trait attributes of this object that match the set of <em>metadata</em> criteria.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_init</span></tt>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">traits_inited</span></tt>([True])</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_trait</span></tt>(name,&nbsp;value)</td>
-<td>Validates whether a value is legal for a trait.</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="hyperspy.defaults_parser.PreferencesHandler.close">
-<tt class="descname">close</tt><big>(</big><em>info</em>, <em>is_ok</em><big>)</big><a class="headerlink" href="#hyperspy.defaults_parser.PreferencesHandler.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="function">
 <dt id="hyperspy.defaults_parser.config2template">
 <tt class="descclassname">hyperspy.defaults_parser.</tt><tt class="descname">config2template</tt><big>(</big><em>template</em>, <em>config</em><big>)</big><a class="headerlink" href="#hyperspy.defaults_parser.config2template" title="Permalink to this definition">¶</a></dt>
@@ -2347,6 +2317,12 @@ it is applied.</p>
 <dl class="exception">
 <dt id="hyperspy.exceptions.DM3TagTypeError">
 <em class="property">exception </em><tt class="descclassname">hyperspy.exceptions.</tt><tt class="descname">DM3TagTypeError</tt><big>(</big><em>value=''</em><big>)</big><a class="headerlink" href="#hyperspy.exceptions.DM3TagTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hyperspy.exceptions.DataDimensionError">
+<em class="property">exception </em><tt class="descclassname">hyperspy.exceptions.</tt><tt class="descname">DataDimensionError</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#hyperspy.exceptions.DataDimensionError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
 </dd></dl>
 
@@ -2470,13 +2446,44 @@ they are available, otherwise it will use the hydrogenic GOS.</p>
 <div class="section" id="module-hyperspy.io">
 <span id="io-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt> Module<a class="headerlink" href="#module-hyperspy.io" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="hyperspy.io.assign_signal_subclass">
+<tt class="descclassname">hyperspy.io.</tt><tt class="descname">assign_signal_subclass</tt><big>(</big><em>record_by=''</em>, <em>signal_type=''</em>, <em>signal_origin=''</em><big>)</big><a class="headerlink" href="#hyperspy.io.assign_signal_subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given record_by and signal_type return the matching Signal subclass.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>record_by: {&#8220;spectrum&#8221;, &#8220;image&#8221;, &#8220;&#8221;}</strong> :</p>
+<p><strong>signal_type</strong> : {&#8220;EELS&#8221;, &#8220;EDS&#8221;, &#8220;EDS_TEM&#8221;, &#8220;&#8221;, str}</p>
+<p><strong>signal_origin</strong> : {&#8220;experiment&#8221;, &#8220;simulation&#8221;, &#8220;&#8221;}</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>Signal or subclass</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hyperspy.io.dict2signal">
-<tt class="descclassname">hyperspy.io.</tt><tt class="descname">dict2signal</tt><big>(</big><em>signal_dict</em>, <em>record_by=None</em>, <em>signal_type=None</em><big>)</big><a class="headerlink" href="#hyperspy.io.dict2signal" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descclassname">hyperspy.io.</tt><tt class="descname">dict2signal</tt><big>(</big><em>signal_dict</em><big>)</big><a class="headerlink" href="#hyperspy.io.dict2signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a signal (or subclass) instance defined by a dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>signal_dict</strong> : dictionary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>s</strong> : Signal or subclass</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="hyperspy.io.load">
-<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load</tt><big>(</big><em>filenames=None</em>, <em>record_by=None</em>, <em>signal_type=None</em>, <em>stack=False</em>, <em>stack_axis=None</em>, <em>new_axis_name='stack_element'</em>, <em>mmap=False</em>, <em>mmap_dir=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load</tt><big>(</big><em>filenames=None</em>, <em>record_by=None</em>, <em>signal_type=None</em>, <em>signal_origin=None</em>, <em>stack=False</em>, <em>stack_axis=None</em>, <em>new_axis_name='stack_element'</em>, <em>mmap=False</em>, <em>mmap_dir=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load potentially multiple supported file into an hyperspy structure
 Supported formats: HDF5, msa, Gatan dm3, Ripple (rpl+raw)
 FEI ser and emi and hdf5, tif and a number of image formats.</p>
@@ -2498,19 +2505,43 @@ files can be loaded by using simple shell-style wildcards,
 e.g. &#8216;my_file*.msa&#8217; loads all the files that starts
 by &#8216;my_file&#8217; and has the &#8216;.msa&#8217; extension.</p>
 </div></blockquote>
-<p><strong>record_by</strong> : None | &#8216;spectrum&#8217; | &#8216;image&#8217;</p>
+<p><strong>record_by</strong> : {None, &#8216;spectrum&#8217;, &#8216;image&#8217;, &#8220;&#8221;}</p>
 <blockquote>
-<div><p>Manually set the way in which the data will be read. Possible
-values are &#8216;spectrum&#8217; or &#8216;image&#8217;.</p>
+<div><p>The value provided may determine the Signal subclass assigned to the 
+data.
+If None, the value is read or guessed from the file. Any other value
+overrides the value stored in the file if any.
+If &#8220;spectrum&#8221; load the data in a Spectrum (sub)class.
+If &#8220;image&#8221; load the data in an Image (sub)class.
+If &#8220;&#8221; (empty string) load the data in a Signal class.</p>
 </div></blockquote>
-<p><strong>signal_type</strong> : str</p>
+<p><strong>signal_type</strong> : {None, &#8220;EELS&#8221;, &#8220;EDS_TEM&#8221;, &#8220;EDS_SEM&#8221;, &#8220;&#8221;, str}</p>
 <blockquote>
-<div><p>Manually set the signal type of the data. Although only setting
-signal type to &#8216;EELS&#8217; will currently change the way the data is 
-loaded, it is good practice to set this parameter so it can be 
-stored when saving the file. Please note that, if the 
-signal_type is already defined in the file the information 
-will be overriden without warning.</p>
+<div><p>The acronym that identifies the signal type.
+The value provided may determine the Signal subclass assigned to the 
+data.
+If None the value is read/guessed from the file. Any other value
+overrides the value stored in the file if any.
+For electron energy-loss spectroscopy use &#8220;EELS&#8221;.
+For energy dispersive x-rays use &#8220;EDS_TEM&#8221; 
+if acquired from an electron-transparent sample — as it is usually 
+the case in a transmission electron  microscope (TEM) —,
+&#8220;EDS_SEM&#8221; if acquired from a non electron-transparent sample 
+— as it is usually the case in a scanning electron  microscope (SEM) —.
+If &#8220;&#8221; (empty string) the value is not read from the file and is 
+considered undefined.</p>
+</div></blockquote>
+<p><strong>signal_origin</strong> : {None, &#8220;experiment&#8221;, &#8220;simulation&#8221;, &#8220;&#8221;}</p>
+<blockquote>
+<div><p>Defines the origin of the signal.
+The value provided may determine the Signal subclass assigned to the 
+data.
+If None the value is read/guessed from the file. Any other value
+overrides the value stored in the file if any.
+Use &#8220;experiment&#8221; if loading experimental data.
+Use &#8220;simulation&#8221; if loading simulated data.
+If &#8220;&#8221; (empty string) the value is not read from the file and is 
+considered undefined.</p>
 </div></blockquote>
 <p><strong>stack</strong> : bool</p>
 <blockquote>
@@ -2559,7 +2590,7 @@ otherwise the default directory is used.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Loading a single file providing the signal type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;file.dm3&#39;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s">&#39;XPS&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;file.dm3&#39;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s">&#39;EDS_TEM&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Loading a single file and overriding its default record_by:</p>
@@ -2576,7 +2607,7 @@ otherwise the default directory is used.</p>
 
 <dl class="function">
 <dt id="hyperspy.io.load_single_file">
-<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load_single_file</tt><big>(</big><em>filename</em>, <em>record_by=None</em>, <em>output_level=2</em>, <em>signal_type=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load_single_file" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load_single_file</tt><big>(</big><em>filename</em>, <em>record_by=None</em>, <em>signal_type=None</em>, <em>signal_origin=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load_single_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load any supported file into an Hyperspy structure
 Supported formats: netCDF, msa, Gatan dm3, Ripple (rpl+raw)
 FEI ser and emi and hdf5.</p>
@@ -2589,16 +2620,10 @@ FEI ser and emi and hdf5.</p>
 <div><p>File name (including the extension)</p>
 </div></blockquote>
 <p><strong>record_by</strong> : {None, &#8216;spectrum&#8217;, &#8216;image&#8217;}</p>
-<blockquote>
+<blockquote class="last">
 <div><p>If None (default) it will try to guess the data type from the file,
 if &#8216;spectrum&#8217; the file will be loaded as an Spectrum object
 If &#8216;image&#8217; the file will be loaded as an Image object</p>
-</div></blockquote>
-<p><strong>output_level</strong> : int</p>
-<blockquote class="last">
-<div><p>If 0, do not output file loading text.
-If 1, output simple file summary (data type and shape)
-If 2, output more diagnostic output (e.g. number of tags for DM3 files)</p>
 </div></blockquote>
 </td>
 </tr>
@@ -2608,7 +2633,7 @@ If 2, output more diagnostic output (e.g. number of tags for DM3 files)</p>
 
 <dl class="function">
 <dt id="hyperspy.io.load_with_reader">
-<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load_with_reader</tt><big>(</big><em>filename</em>, <em>reader</em>, <em>record_by=None</em>, <em>signal_type=None</em>, <em>output_level=1</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load_with_reader" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.io.</tt><tt class="descname">load_with_reader</tt><big>(</big><em>filename</em>, <em>reader</em>, <em>record_by=None</em>, <em>signal_type=None</em>, <em>signal_origin=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.io.load_with_reader" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -2671,7 +2696,7 @@ If 2, output more diagnostic output (e.g. number of tags for DM3 files)</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.append" title="hyperspy.model.Model.append"><tt class="xref py py-obj docutils literal"><span class="pre">append</span></tt></a>(object)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.as_signal" title="hyperspy.model.Model.as_signal"><tt class="xref py py-obj docutils literal"><span class="pre">as_signal</span></tt></a>([out_of_range_to_nan])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.as_signal" title="hyperspy.model.Model.as_signal"><tt class="xref py py-obj docutils literal"><span class="pre">as_signal</span></tt></a>([component_list,&nbsp;out_of_range_to_nan])</td>
 <td>Returns a recreation of the dataset using the model.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.calculate_p_std" title="hyperspy.model.Model.calculate_p_std"><tt class="xref py py-obj docutils literal"><span class="pre">calculate_p_std</span></tt></a>(p0,&nbsp;method,&nbsp;*args)</td>
@@ -2681,10 +2706,16 @@ If 2, output more diagnostic output (e.g. number of tags for DM3 files)</p>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><tt class="xref py py-obj docutils literal"><span class="pre">disable_adjust_position</span></tt></a>([components,&nbsp;fix_them])</td>
-<td>Disables the interactive adjust position feature</td>
+<td>Disables the interactive adjust position feature   ..</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-obj docutils literal"><span class="pre">enable_adjust_position</span></tt></a>([components,&nbsp;fix_them])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.disable_plot_components" title="hyperspy.model.Model.disable_plot_components"><tt class="xref py py-obj docutils literal"><span class="pre">disable_plot_components</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-obj docutils literal"><span class="pre">enable_adjust_position</span></tt></a>([components,&nbsp;fix_them])</td>
 <td>Allow changing the <em>x</em> position of component by dragging</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.enable_plot_components" title="hyperspy.model.Model.enable_plot_components"><tt class="xref py py-obj docutils literal"><span class="pre">enable_plot_components</span></tt></a>()</td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.export_results" title="hyperspy.model.Model.export_results"><tt class="xref py py-obj docutils literal"><span class="pre">export_results</span></tt></a>([folder,&nbsp;format,&nbsp;save_std,&nbsp;...])</td>
 <td>Export the results of the parameters of the model to the desired folder.</td>
@@ -2698,79 +2729,82 @@ If 2, output more diagnostic output (e.g. number of tags for DM3 files)</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.fit" title="hyperspy.model.Model.fit"><tt class="xref py py-obj docutils literal"><span class="pre">fit</span></tt></a>([fitter,&nbsp;method,&nbsp;grad,&nbsp;weights,&nbsp;...])</td>
 <td>Fits the model to the experimental data</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">index</span></tt>((value,&nbsp;[start,&nbsp;...)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><tt class="xref py py-obj docutils literal"><span class="pre">fit_component</span></tt></a>(component[,&nbsp;signal_range,&nbsp;...])</td>
+<td>Fit just the given component in the given signal range.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">index</span></tt>((value,&nbsp;[start,&nbsp;...)</td>
 <td>Raises ValueError if the value is not present.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.insert" title="hyperspy.model.Model.insert"><tt class="xref py py-obj docutils literal"><span class="pre">insert</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.insert" title="hyperspy.model.Model.insert"><tt class="xref py py-obj docutils literal"><span class="pre">insert</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-obj docutils literal"><span class="pre">load_parameters_from_file</span></tt></a>(filename)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-obj docutils literal"><span class="pre">load_parameters_from_file</span></tt></a>(filename)</td>
 <td>Loads the parameters array from  a binary file written with</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-obj docutils literal"><span class="pre">multifit</span></tt></a>([mask,&nbsp;fetch_only_fixed,&nbsp;autosave,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-obj docutils literal"><span class="pre">multifit</span></tt></a>([mask,&nbsp;fetch_only_fixed,&nbsp;autosave,&nbsp;...])</td>
 <td>Fit the data to the model at all the positions of the  navigation dimensions.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.plot" title="hyperspy.model.Model.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.plot" title="hyperspy.model.Model.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([plot_components])</td>
 <td>Plots the current spectrum to the screen and a map with a</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.plot_results" title="hyperspy.model.Model.plot_results"><tt class="xref py py-obj docutils literal"><span class="pre">plot_results</span></tt></a>([only_free,&nbsp;only_active])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.plot_results" title="hyperspy.model.Model.plot_results"><tt class="xref py py-obj docutils literal"><span class="pre">plot_results</span></tt></a>([only_free,&nbsp;only_active])</td>
 <td>Plot the value of the parameters of the model</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">pop</span></tt>(...)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">pop</span></tt>(...)</td>
 <td>Raises IndexError if list is empty or index is out of range.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.print_current_values" title="hyperspy.model.Model.print_current_values"><tt class="xref py py-obj docutils literal"><span class="pre">print_current_values</span></tt></a>([only_free])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.print_current_values" title="hyperspy.model.Model.print_current_values"><tt class="xref py py-obj docutils literal"><span class="pre">print_current_values</span></tt></a>([only_free])</td>
 <td>Print the value of each parameter of the model.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.remove" title="hyperspy.model.Model.remove"><tt class="xref py py-obj docutils literal"><span class="pre">remove</span></tt></a>(object[,&nbsp;touch])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.remove" title="hyperspy.model.Model.remove"><tt class="xref py py-obj docutils literal"><span class="pre">remove</span></tt></a>(object[,&nbsp;touch])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.remove_signal_range" title="hyperspy.model.Model.remove_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">remove_signal_range</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.remove_signal_range" title="hyperspy.model.Model.remove_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">remove_signal_range</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Removes the data in the given range from the data range that</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.reset_signal_range" title="hyperspy.model.Model.reset_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">reset_signal_range</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.reset_signal_range" title="hyperspy.model.Model.reset_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">reset_signal_range</span></tt></a>()</td>
 <td>Resets the data range</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.reset_the_signal_range" title="hyperspy.model.Model.reset_the_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">reset_the_signal_range</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.reset_the_signal_range" title="hyperspy.model.Model.reset_the_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">reset_the_signal_range</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">reverse</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">reverse</span></tt></td>
 <td>L.reverse() &#8211; reverse <em>IN PLACE</em></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-obj docutils literal"><span class="pre">save_parameters2file</span></tt></a>(filename)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-obj docutils literal"><span class="pre">save_parameters2file</span></tt></a>(filename)</td>
 <td>Save the parameters array in binary format</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_boundaries" title="hyperspy.model.Model.set_boundaries"><tt class="xref py py-obj docutils literal"><span class="pre">set_boundaries</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_boundaries" title="hyperspy.model.Model.set_boundaries"><tt class="xref py py-obj docutils literal"><span class="pre">set_boundaries</span></tt></a>()</td>
 <td>Generate the boundary list.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_convolution_axis" title="hyperspy.model.Model.set_convolution_axis"><tt class="xref py py-obj docutils literal"><span class="pre">set_convolution_axis</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_convolution_axis" title="hyperspy.model.Model.set_convolution_axis"><tt class="xref py py-obj docutils literal"><span class="pre">set_convolution_axis</span></tt></a>()</td>
 <td>Creates an axis to use to generate the data of the model in the precise</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_current_values_to" title="hyperspy.model.Model.set_current_values_to"><tt class="xref py py-obj docutils literal"><span class="pre">set_current_values_to</span></tt></a>([components_list,&nbsp;mask])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_current_values_to" title="hyperspy.model.Model.set_current_values_to"><tt class="xref py py-obj docutils literal"><span class="pre">set_current_values_to</span></tt></a>([components_list,&nbsp;mask])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_mpfit_parameters_info" title="hyperspy.model.Model.set_mpfit_parameters_info"><tt class="xref py py-obj docutils literal"><span class="pre">set_mpfit_parameters_info</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_mpfit_parameters_info" title="hyperspy.model.Model.set_mpfit_parameters_info"><tt class="xref py py-obj docutils literal"><span class="pre">set_mpfit_parameters_info</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_free" title="hyperspy.model.Model.set_parameters_free"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_free</span></tt></a>([component_list,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_free" title="hyperspy.model.Model.set_parameters_free"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_free</span></tt></a>([component_list,&nbsp;...])</td>
 <td>Sets the parameters in a component in a model to free.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_not_free" title="hyperspy.model.Model.set_parameters_not_free"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_not_free</span></tt></a>([component_list,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_not_free" title="hyperspy.model.Model.set_parameters_not_free"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_not_free</span></tt></a>([component_list,&nbsp;...])</td>
 <td>Sets the parameters in a component in a model to not free.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_value" title="hyperspy.model.Model.set_parameters_value"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_value</span></tt></a>(parameter_name,&nbsp;value)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_parameters_value" title="hyperspy.model.Model.set_parameters_value"><tt class="xref py py-obj docutils literal"><span class="pre">set_parameters_value</span></tt></a>(parameter_name,&nbsp;value)</td>
 <td>Sets the value of a parameter in components in a model to a specified value</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.set_signal_range" title="hyperspy.model.Model.set_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_range</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.set_signal_range" title="hyperspy.model.Model.set_signal_range"><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_range</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Use only the selected spectral range defined in its own units in the  fitting routine.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">sort</span></tt></td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sort</span></tt></td>
 <td>L.sort(cmp=None, key=None, reverse=False) &#8211; stable sort <em>IN PLACE</em>;</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.store_current_values" title="hyperspy.model.Model.store_current_values"><tt class="xref py py-obj docutils literal"><span class="pre">store_current_values</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.store_current_values" title="hyperspy.model.Model.store_current_values"><tt class="xref py py-obj docutils literal"><span class="pre">store_current_values</span></tt></a>()</td>
 <td>Store the parameters of the current coordinates into the  parameters array.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.update_plot" title="hyperspy.model.Model.update_plot"><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.update_plot" title="hyperspy.model.Model.update_plot"><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -2799,14 +2833,19 @@ will be used by the fitting rountine</p>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.as_signal">
-<tt class="descname">as_signal</tt><big>(</big><em>out_of_range_to_nan=True</em><big>)</big><a class="headerlink" href="#hyperspy.model.Model.as_signal" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">as_signal</tt><big>(</big><em>component_list=None</em>, <em>out_of_range_to_nan=True</em><big>)</big><a class="headerlink" href="#hyperspy.model.Model.as_signal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a recreation of the dataset using the model.
 the spectral range that is not fitted is filled with nans.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>out_of_range_to_nan</strong> : bool</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>component_list</strong> : list of hyperspy components, optional</p>
+<blockquote>
+<div><p>If a list of components is given, only the components given in the
+list is used in making the returned spectrum</p>
+</div></blockquote>
+<p><strong>out_of_range_to_nan</strong> : bool</p>
 <blockquote>
 <div><p>If True the spectral range that is not fitted is filled with nans.</p>
 </div></blockquote>
@@ -2828,7 +2867,16 @@ the spectral range that is not fitted is filled with nans.</p>
 <dt id="hyperspy.model.Model.disable_adjust_position">
 <tt class="descname">disable_adjust_position</tt><big>(</big><em>components=None</em>, <em>fix_them=True</em><big>)</big><a class="headerlink" href="#hyperspy.model.Model.disable_adjust_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disables the interactive adjust position feature</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-obj docutils literal"><span class="pre">enable_adjust_position</span></tt></a></p>
+</div>
 </dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.model.Model.disable_plot_components">
+<tt class="descname">disable_plot_components</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.model.Model.disable_plot_components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.enable_adjust_position">
@@ -2863,6 +2911,11 @@ fit the model.</p>
 <p class="last"><a class="reference internal" href="#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><tt class="xref py py-obj docutils literal"><span class="pre">disable_adjust_position</span></tt></a></p>
 </div>
 </dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.model.Model.enable_plot_components">
+<tt class="descname">enable_plot_components</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.model.Model.enable_plot_components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.export_results">
@@ -3003,6 +3056,59 @@ fitter</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.model.Model.fit_component">
+<tt class="descname">fit_component</tt><big>(</big><em>component</em>, <em>signal_range='interactive'</em>, <em>estimate_parameters=True</em>, <em>fit_independent=False</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.model.Model.fit_component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit just the given component in the given signal range.</p>
+<p>This method is useful to obtain starting parameters for the 
+components. Any keyword arguments are passed to the fit method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>component</strong> : component instance</p>
+<blockquote>
+<div><p>The component must be in the model, otherwise an exception 
+is raised.</p>
+</div></blockquote>
+<p><strong>signal_range</strong> : {&#8216;interactive&#8217;, (left_value, right_value), None}</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>If &#8216;interactive&#8217; the signal range is selected using the span</dt>
+<dd><p class="first last">selector on the spectrum plot. The signal range can also 
+be manually specified by passing a tuple of floats. If None
+the current signal range is used.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>estimate_parameters</strong> : bool, default True</p>
+<blockquote>
+<div><p>If True will check if the component has an 
+estimate_parameters function, and use it to estimate the
+parameters in the component.</p>
+</div></blockquote>
+<p><strong>fit_independent</strong> : bool, default False</p>
+<blockquote class="last">
+<div><p>If True, all other components are disabled. If False, all other
+component paramemeters are fixed.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Signal range set interactivly</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit_component</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Signal range set through direct input</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit_component</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">signal_range</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.model.Model.insert">
 <tt class="descname">insert</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.model.Model.insert" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3066,7 +3172,7 @@ a list of valid arguments.</p>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.plot">
-<tt class="descname">plot</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.model.Model.plot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot</tt><big>(</big><em>plot_components=False</em><big>)</big><a class="headerlink" href="#hyperspy.model.Model.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the current spectrum to the screen and a map with a 
 cursor to explore the SI.</p>
 </dd></dl>
@@ -3108,8 +3214,11 @@ the file names modify the name attributes.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>only_free</strong> : bool</p>
 <blockquote class="last">
-<div><p>If True, only the value of the parameters that are free will be
-printed.</p>
+<div><dl class="docutils">
+<dt>If True, only the value of the parameters that are free will</dt>
+<dd><p class="first last">be printed.</p>
+</dd>
+</dl>
 </div></blockquote>
 </td>
 </tr>
@@ -3384,7 +3493,7 @@ it with the current parameters.</p>
 </table>
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.export_bss_results">
-<tt class="descname">export_bss_results</tt><big>(</big><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>multiple_files=None</em>, <em>save_figures=False</em>, <em>factor_prefix='bss_factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='bss_loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x56baf90&gt;</em>, <em>same_window=False</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures_format='png'</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.export_bss_results" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">export_bss_results</tt><big>(</big><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>multiple_files=None</em>, <em>save_figures=False</em>, <em>factor_prefix='bss_factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='bss_loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x50db410&gt;</em>, <em>same_window=False</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures_format='png'</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.export_bss_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export results from ICA to any of the supported formats.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3510,7 +3619,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.export_decomposition_results">
-<tt class="descname">export_decomposition_results</tt><big>(</big><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>factor_prefix='factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x56baf90&gt;</em>, <em>same_window=False</em>, <em>multiple_files=None</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures=False</em>, <em>save_figures_format='png'</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.export_decomposition_results" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">export_decomposition_results</tt><big>(</big><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>factor_prefix='factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x50db410&gt;</em>, <em>same_window=False</em>, <em>multiple_files=None</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures=False</em>, <em>save_figures_format='png'</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.export_decomposition_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export results from a decomposition to any of the supported 
 formats.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3687,7 +3796,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.plot_bss_loadings">
-<tt class="descname">plot_bss_loadings</tt><big>(</big><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='BSS loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x56baf90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.plot_bss_loadings" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot_bss_loadings</tt><big>(</big><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='BSS loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x50db410&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.plot_bss_loadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot loadings from ICA</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3797,7 +3906,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.plot_decomposition_loadings">
-<tt class="descname">plot_decomposition_loadings</tt><big>(</big><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='Decomposition loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x56baf90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.plot_decomposition_loadings" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot_decomposition_loadings</tt><big>(</big><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='Decomposition loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x50db410&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><big>)</big><a class="headerlink" href="#hyperspy.signal.MVATools.plot_decomposition_loadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot loadings from PCA</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3887,6 +3996,12 @@ get_bss_model methods.</p>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">align2D</span></tt>([crop,&nbsp;fill_value,&nbsp;shifts,&nbsp;roi,&nbsp;...])</td>
 <td>Align the images in place using user provided shifts or by  estimating the shifts.</td>
 </tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.as_image" title="hyperspy.signal.Signal.as_image"><tt class="xref py py-obj docutils literal"><span class="pre">as_image</span></tt></a>(image_axes)</td>
+<td>Convert signal to image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.as_spectrum" title="hyperspy.signal.Signal.as_spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">as_spectrum</span></tt></a>(spectral_axis)</td>
+<td>Return the Signal as a spectrum.</td>
+</tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">blind_source_separation</span></tt>([...])</td>
 <td>Blind source separation (BSS) on the result on the</td>
 </tr>
@@ -3917,113 +4032,141 @@ get_bss_model methods.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.diff" title="hyperspy.signal.Signal.diff"><tt class="xref py py-obj docutils literal"><span class="pre">diff</span></tt></a>(axis[,&nbsp;order])</td>
 <td>Returns a signal with the n-th order discrete difference along  given axis.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.estimate_poissonian_noise_variance" title="hyperspy.signal.Signal.estimate_poissonian_noise_variance"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_poissonian_noise_variance</span></tt></a>([dc,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_peak_width</span></tt>([factor,&nbsp;window,&nbsp;...])</td>
+<td>Estimate the width of the highest intensity of peak  of the spectra at a given fraction of its maximum.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.estimate_poissonian_noise_variance" title="hyperspy.signal.Signal.estimate_poissonian_noise_variance"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_poissonian_noise_variance</span></tt></a>([dc,&nbsp;...])</td>
 <td>Variance estimation supposing Poissonian noise.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift1D</span></tt>([start,&nbsp;end,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift1D</span></tt>([start,&nbsp;end,&nbsp;...])</td>
 <td>Estimate the shifts in the current signal axis using cross-correlation.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift2D</span></tt>([reference,&nbsp;...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift2D</span></tt>([reference,&nbsp;...])</td>
 <td>Estimate the shifts in a image using phase correlation</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">export_bss_results</span></tt>([comp_ids,&nbsp;folder,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">export_bss_results</span></tt>([comp_ids,&nbsp;folder,&nbsp;...])</td>
 <td>Export results from ICA to any of the supported formats.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">export_decomposition_results</span></tt>([comp_ids,&nbsp;...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">export_decomposition_results</span></tt>([comp_ids,&nbsp;...])</td>
 <td>Export results from a decomposition to any of the supported  formats.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">filter_butterworth</span></tt>([cutoff_frequency_ratio,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">filter_butterworth</span></tt>([cutoff_frequency_ratio,&nbsp;...])</td>
 <td>Butterworth filter in place.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">find_peaks1D_ohaver</span></tt>([xdim,&nbsp;slope_thresh,&nbsp;...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">find_peaks1D_ohaver</span></tt>([xdim,&nbsp;slope_thresh,&nbsp;...])</td>
 <td>Find peaks along a 1D line (peaks in spectrum/spectra).</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.fold" title="hyperspy.signal.Signal.fold"><tt class="xref py py-obj docutils literal"><span class="pre">fold</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.fold" title="hyperspy.signal.Signal.fold"><tt class="xref py py-obj docutils literal"><span class="pre">fold</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>If the signal was previously unfolded, folds it back</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">gaussian_filter</span></tt>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">gaussian_filter</span></tt>(*args,&nbsp;**kwargs)</td>
 <td>Applies a Gaussian filter in the spectral dimension in place.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_bss_model</span></tt>([components])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_bss_model</span></tt>([components])</td>
 <td>Return the spectrum generated with the selected number of</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.get_current_signal" title="hyperspy.signal.Signal.get_current_signal"><tt class="xref py py-obj docutils literal"><span class="pre">get_current_signal</span></tt></a>()</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.get_current_signal" title="hyperspy.signal.Signal.get_current_signal"><tt class="xref py py-obj docutils literal"><span class="pre">get_current_signal</span></tt></a>([auto_title,&nbsp;auto_filename])</td>
+<td>Returns the data at the current coordinates as a Signal subclass.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_decomposition_model</span></tt>([components])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_decomposition_model</span></tt>([components])</td>
 <td>Return the spectrum generated with the selected number of principal</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.get_dimensions_from_data" title="hyperspy.signal.Signal.get_dimensions_from_data"><tt class="xref py py-obj docutils literal"><span class="pre">get_dimensions_from_data</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.get_dimensions_from_data" title="hyperspy.signal.Signal.get_dimensions_from_data"><tt class="xref py py-obj docutils literal"><span class="pre">get_dimensions_from_data</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Get the dimension parameters from the data_cube.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_factors_as_spectrum</span></tt>()</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_factors_as_spectrum</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">hanning_taper</span></tt>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">hanning_taper</span></tt>(*args,&nbsp;**kwargs)</td>
 <td>Apply a hanning taper to the data in place.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.integrate_simpson" title="hyperspy.signal.Signal.integrate_simpson"><tt class="xref py py-obj docutils literal"><span class="pre">integrate_simpson</span></tt></a>(axis)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.integrate_simpson" title="hyperspy.signal.Signal.integrate_simpson"><tt class="xref py py-obj docutils literal"><span class="pre">integrate_simpson</span></tt></a>(axis)</td>
 <td>Returns a signal with the result of calculating the integral</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt>(start,&nbsp;end[,&nbsp;delta])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt>(start,&nbsp;end[,&nbsp;delta])</td>
 <td>Replace the data in a given range by interpolation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.max" title="hyperspy.signal.Signal.max"><tt class="xref py py-obj docutils literal"><span class="pre">max</span></tt></a>(axis[,&nbsp;return_signal])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.max" title="hyperspy.signal.Signal.max"><tt class="xref py py-obj docutils literal"><span class="pre">max</span></tt></a>(axis[,&nbsp;return_signal])</td>
 <td>Returns a signal with the maximum of the signal along an axis.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.mean" title="hyperspy.signal.Signal.mean"><tt class="xref py py-obj docutils literal"><span class="pre">mean</span></tt></a>(axis)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.mean" title="hyperspy.signal.Signal.mean"><tt class="xref py py-obj docutils literal"><span class="pre">mean</span></tt></a>(axis)</td>
 <td>Returns a signal with the average of the signal along an axis.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.min" title="hyperspy.signal.Signal.min"><tt class="xref py py-obj docutils literal"><span class="pre">min</span></tt></a>(axis)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.min" title="hyperspy.signal.Signal.min"><tt class="xref py py-obj docutils literal"><span class="pre">min</span></tt></a>(axis)</td>
 <td>Returns a signal with the minimum of the signal along an axis.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.next" title="hyperspy.signal.Signal.next"><tt class="xref py py-obj docutils literal"><span class="pre">next</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.next" title="hyperspy.signal.Signal.next"><tt class="xref py py-obj docutils literal"><span class="pre">next</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">normalize_factors</span></tt>([which,&nbsp;by,&nbsp;sort])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">normalize_factors</span></tt>([which,&nbsp;by,&nbsp;sort])</td>
 <td>Normalises the factors and modifies the loadings</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">normalize_poissonian_noise</span></tt>([...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">normalize_poissonian_noise</span></tt>([...])</td>
 <td>Scales the SI following Surf. Interface Anal. 2004; 36: 203–212</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.plot" title="hyperspy.signal.Signal.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([axes_manager])</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.plot" title="hyperspy.signal.Signal.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([navigator,&nbsp;axes_manager])</td>
+<td>Plot the signal at the current coordinates.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_bss_factors</span></tt>([comp_ids,&nbsp;calibrate,&nbsp;...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_bss_factors</span></tt>([comp_ids,&nbsp;calibrate,&nbsp;...])</td>
 <td>Plot factors from blind source separation results.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_bss_loadings</span></tt>([comp_ids,&nbsp;calibrate,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_bss_loadings</span></tt>([comp_ids,&nbsp;calibrate,&nbsp;...])</td>
 <td>Plot loadings from ICA</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_cumulative_explained_variance_ratio</span></tt>([n])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_cumulative_explained_variance_ratio</span></tt>([n])</td>
 <td>Plot the principal components explained variance up to the</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_decomposition_factors</span></tt>([comp_ids,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_decomposition_factors</span></tt>([comp_ids,&nbsp;...])</td>
 <td>Plot factors from a decomposition</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_decomposition_loadings</span></tt>([comp_ids,&nbsp;...])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_decomposition_loadings</span></tt>([comp_ids,&nbsp;...])</td>
 <td>Plot loadings from PCA</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_explained_variance_ratio</span></tt>([n,&nbsp;log,&nbsp;ax,&nbsp;...])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_explained_variance_ratio</span></tt>([n,&nbsp;log,&nbsp;ax,&nbsp;...])</td>
 <td>Plot the decomposition explained variance ratio vs index number</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_residual</span></tt>([axes_manager])</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_residual</span></tt>([axes_manager])</td>
 <td>Plot the residual between original data and reconstructed</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.rebin" title="hyperspy.signal.Signal.rebin"><tt class="xref py py-obj docutils literal"><span class="pre">rebin</span></tt></a>(new_shape)</td>
-<td>Rebins the data to the new shape</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.rebin" title="hyperspy.signal.Signal.rebin"><tt class="xref py py-obj docutils literal"><span class="pre">rebin</span></tt></a>(new_shape)</td>
+<td>Returns the object with the data rebinned.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_background</span></tt>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">remove_background</span></tt>(*args,&nbsp;**kwargs)</td>
 <td>Remove the background  in place using a gui.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">reverse_bss_component</span></tt>(component_number)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">reverse_bss_component</span></tt>(component_number)</td>
 <td>Reverse the independent component</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.roll_xy" title="hyperspy.signal.Signal.roll_xy"><tt class="xref py py-obj docutils literal"><span class="pre">roll_xy</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.roll_xy" title="hyperspy.signal.Signal.roll_xy"><tt class="xref py py-obj docutils literal"><span class="pre">roll_xy</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Roll over the x axis n_x positions and n_y positions the  former rows.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.rollaxis" title="hyperspy.signal.Signal.rollaxis"><tt class="xref py py-obj docutils literal"><span class="pre">rollaxis</span></tt></a>(axis,&nbsp;to_axis)</td>
+<td>Roll the specified axis backwards, until it lies in a given position.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.save" title="hyperspy.signal.Signal.save"><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></a>([filename,&nbsp;overwrite,&nbsp;extension])</td>
 <td>Saves the signal in the specified format.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.set_signal_origin" title="hyperspy.signal.Signal.set_signal_origin"><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_origin</span></tt></a>(origin)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.set_signal_type" title="hyperspy.signal.Signal.set_signal_type"><tt class="xref py py-obj docutils literal"><span class="pre">set_signal_type</span></tt></a>(signal_type)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">shift1D</span></tt>(shift_array[,&nbsp;interpolation_method,&nbsp;...])</td>
 <td>Shift the data in place over the signal axis by the amount specified by an array.</td>
@@ -4049,7 +4192,7 @@ get_bss_model methods.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.sum" title="hyperspy.signal.Signal.sum"><tt class="xref py py-obj docutils literal"><span class="pre">sum</span></tt></a>(axis)</td>
 <td>Sum the data over the given axis.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.swap_axes" title="hyperspy.signal.Signal.swap_axes"><tt class="xref py py-obj docutils literal"><span class="pre">swap_axes</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.swap_axes" title="hyperspy.signal.Signal.swap_axes"><tt class="xref py py-obj docutils literal"><span class="pre">swap_axes</span></tt></a>(axis1,&nbsp;axis2)</td>
 <td>Swaps the axes.</td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">undo_treatments</span></tt>()</td>
@@ -4072,6 +4215,74 @@ get_bss_model methods.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.signal.Signal.as_image">
+<tt class="descname">as_image</tt><big>(</big><em>image_axes</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.as_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert signal to image.</p>
+<p>The chosen image axes are moved to the last indices in the 
+array and the data is made contiguous for effecient 
+iteration over images.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image_axes</strong> : tuple of {int, complex, str}</p>
+<blockquote>
+<div><p>Select the image axes. Note that the order of the axes matters 
+and it is given in the &#8220;natural&#8221; i.e. X, Y, Z... order.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises :</th><td class="field-body"><p class="first last"><strong>DataDimensionError</strong> : when data.ndim &lt; 2</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (4, 3, 2, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">as_image</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">&lt;Image, title: , dimensions: (5, 2, 4, 3)&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">to_image</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">&lt;Image, title: , dimensions: (4, 5, 3, 2)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal.Signal.as_spectrum">
+<tt class="descname">as_spectrum</tt><big>(</big><em>spectral_axis</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.as_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Signal as a spectrum.</p>
+<p>The chosen spectral axis is moved to the last index in the 
+array and the data is made contiguous for effecient 
+iteration over spectra.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>spectral_axis</strong> : {int, complex, str}</p>
+<blockquote class="last">
+<div><p>Select the spectral axis to-be using its index or name.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span>
+<span class="go">&lt;Image, title: , dimensions: (4, 3, 6, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">to_spectrum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mi">1j</span><span class="p">)</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (6, 5, 4, 3)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">to_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (6, 5, 3, 4)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.signal.Signal.change_dtype">
 <tt class="descname">change_dtype</tt><big>(</big><em>dtype</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.change_dtype" title="Permalink to this definition">¶</a></dt>
@@ -4184,8 +4395,43 @@ provided array will be used.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.get_current_signal">
-<tt class="descname">get_current_signal</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.get_current_signal" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">get_current_signal</tt><big>(</big><em>auto_title=True</em>, <em>auto_filename=True</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.get_current_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data at the current coordinates as a Signal subclass.</p>
+<p>The signal subclass is the same as that of the current object. All the 
+axes navigation attribute are set to False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>auto_title</strong> : bool</p>
+<blockquote>
+<div><p>If True an space followed by the current indices in parenthesis
+are appended to the title.</p>
+</div></blockquote>
+<p><strong>auto_filename</strong> : bool</p>
+<blockquote>
+<div><p>If True and <cite>tmp_parameters.filename</cite> is defined 
+(what is always the case when the Signal has been read from a file),
+the filename is modified by appending an underscore and a parenthesis
+containing the current indices.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>cs</strong> : Signal subclass instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span>
+<span class="go">&lt;Image, title: , dimensions: (3, 2, 32, 32)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">get_current_signal</span><span class="p">()</span>
+<span class="go">&lt;Image, title:  (2, 1), dimensions: (32, 32)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.get_dimensions_from_data">
@@ -4300,6 +4546,11 @@ of the signal along an axis using Simpson&#8217;s rule.</p>
 </div>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="hyperspy.signal.Signal.navigation_indexer">
+<tt class="descname">navigation_indexer</tt><a class="headerlink" href="#hyperspy.signal.Signal.navigation_indexer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.signal.Signal.next">
 <tt class="descname">next</tt><big>(</big><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.next" title="Permalink to this definition">¶</a></dt>
@@ -4307,21 +4558,75 @@ of the signal along an axis using Simpson&#8217;s rule.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.plot">
-<tt class="descname">plot</tt><big>(</big><em>axes_manager=None</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">plot</tt><big>(</big><em>navigator='auto'</em>, <em>axes_manager=None</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the signal at the current coordinates.</p>
+<p>For multidimensional datasets an optional figure,
+the &#8220;navigator&#8221;, with a cursor to navigate that data is
+raised. In any case it is possible to navigate the data using
+the sliders. Currently only signals with signal_dimension equal to
+0, 1 and 2 can be plotted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>navigator</strong> : {&#8220;auto&#8221;, None, &#8220;spectrum&#8221;, Signal}</p>
+<blockquote>
+<div><p>If &#8220;auto&#8221;, if navigation_dimension &gt; 0, a navigator is
+provided to explore the data.
+If navigation_dimension is 1 and the signal is an image
+the navigator is a spectrum obtained by integrating 
+over the signal axes (the image).
+If navigation_dimension is 1 and the signal is a spectrum
+the navigator is an image obtained by stacking horizontally
+all the spectra in the dataset.
+If navigation_dimension is &gt; 1, the navigator is an image
+obtained by integrating the data over the signal axes.
+Additionaly, if navigation_dimension &gt; 2 a window                   
+with one slider per axis is raised to navigate the data.
+For example,
+if the dataset consists of 3 navigation axes X, Y, Z and one
+signal axis, E, the default navigator will be an image
+obtained by integrating the data over E at the current Z
+index and a window with sliders for the X, Y and Z axes 
+will be raised. Notice that changing the Z-axis index
+changes the navigator in this case.
+If None and the navigation dimension &gt; 0 a window
+with one slider per axis is raised to navigate the data.
+If &#8220;spectrum&#8221; and navigation_dimension &gt; 0 the navigator
+is always a spectrum obtained by integrating the data 
+over all other axes.
+Alternatively a Signal instance can be provided. The signal
+dimension must be 1 (for a spectrum navigator) or 2 (for a
+image navigator) and navigation_shape must be 0 (for a static 
+navigator) or navigation_shape + signal_shape must be equal
+to the navigator_shape of the current object (for a dynamic
+navigator).</p>
+</div></blockquote>
+<p><strong>axes_manager</strong> : {None, axes_manager}</p>
+<blockquote class="last">
+<div><p>If None <cite>axes_manager</cite> is used.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.rebin">
 <tt class="descname">rebin</tt><big>(</big><em>new_shape</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.rebin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rebins the data to the new shape</p>
+<dd><p>Returns the object with the data rebinned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>new_shape: tuple of ints</strong> :</p>
-<blockquote class="last">
+<blockquote>
 <div><p>The new shape must be a divisor of the original shape</p>
 </div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>s</strong> : Signal subclass</p>
 </td>
 </tr>
 </tbody>
@@ -4354,14 +4659,60 @@ acquisition routines.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.signal.Signal.rollaxis">
+<tt class="descname">rollaxis</tt><big>(</big><em>axis</em>, <em>to_axis</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.rollaxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Roll the specified axis backwards, until it lies in a given position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>axis</strong> : {int, str}</p>
+<blockquote>
+<div><p>The axis to roll backwards.  The positions of the other axes do not
+change relative to one another.</p>
+</div></blockquote>
+<p><strong>to_axis</strong> : {int, str}</p>
+<blockquote>
+<div><p>The axis is rolled until it lies before this other axis.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>s</strong> : Signal or subclass</p>
+<blockquote class="last">
+<div><p>Output signal.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">roll</span></tt></dt>
+<dd>swap_axes</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (3, 4, 5, 6)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">rollaxis</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (3, 4, 5, 6)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">rollaxis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (5, 3, 4, 6)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.signal.Signal.save">
 <tt class="descname">save</tt><big>(</big><em>filename=None</em>, <em>overwrite=None</em>, <em>extension=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the signal in the specified format.</p>
 <dl class="docutils">
-<dt>The function gets the format from the extension. You can use:</dt>
+<dt>The function gets the format from the extension.:</dt>
 <dd><ul class="first last simple">
 <li>hdf5 for HDF5</li>
-<li>rpl for Ripple (usefult to export to Digital Micrograph)</li>
+<li>rpl for Ripple (useful to export to Digital Micrograph)</li>
 <li>msa for EMSA/MSA single spectrum saving.</li>
 <li>Many image formats such as png, tiff, jpeg...</li>
 </ul>
@@ -4379,26 +4730,62 @@ see the specific format documentation.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str or None</p>
 <blockquote>
-<div><p>If None and tmp_parameters.filename and 
-tmp_paramters.folder are defined, the
-filename and extension will be taken from them.</p>
+<div><p>If None (default) and tmp_parameters.filename and 
+<cite>tmp_paramters.folder</cite> are defined, the
+filename and path will be taken from there. A valid
+extension can be provided e.g. &#8220;my_file.rpl&#8221;, see <cite>extension</cite>.</p>
 </div></blockquote>
 <p><strong>overwrite</strong> : None, bool</p>
 <blockquote>
 <div><p>If None, if the file exists it will query the user. If 
 True(False) it (does not) overwrites the file if it exists.</p>
 </div></blockquote>
-<p><strong>extension</strong> : str</p>
+<p><strong>extension</strong> : {None, &#8216;hdf5&#8217;, &#8216;rpl&#8217;, &#8216;msa&#8217;,common image extensions e.g. &#8216;tiff&#8217;, &#8216;png&#8217;}</p>
 <blockquote class="last">
-<div><p>The extension of the file that defines the file format, 
-e.g. &#8216;rpl&#8217;. It overwrite the extension given in filename
-if any.</p>
+<div><p>The extension of the file that defines the file format. 
+If None, the extesion is taken from the first not None in the follwoing list:
+i) the filename 
+ii)  <cite>tmp_parameters.extension</cite>
+iii) <cite>preferences.General.default_file_format</cite> in this order.</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal.Signal.set_signal_origin">
+<tt class="descname">set_signal_origin</tt><big>(</big><em>origin</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.set_signal_origin" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>origin</strong> : {&#8216;experiment&#8217;, &#8216;simulation&#8217;}</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises :</th><td class="field-body"><strong>ValueError if origin is not &#8216;experiment&#8217; or &#8216;simulation&#8217;</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal.Signal.set_signal_type">
+<tt class="descname">set_signal_type</tt><big>(</big><em>signal_type</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.set_signal_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>signal_type</strong> : {&#8220;EELS&#8221; or any other string describing the signal}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.signal.Signal.signal_indexer">
+<tt class="descname">signal_indexer</tt><a class="headerlink" href="#hyperspy.signal.Signal.signal_indexer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.split">
@@ -4499,18 +4886,21 @@ an axis.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.swap_axes">
-<tt class="descname">swap_axes</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.swap_axes" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">swap_axes</tt><big>(</big><em>axis1</em>, <em>axis2</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal.swap_axes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Swaps the axes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>axis1, axis2</strong> : {int | str}</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Specify the data axes in which to perform the operation.
 The axis can be specified using the index of the 
 axis in <cite>axes_manager</cite> or the axis name.</p>
 </div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>s</strong> : a copy of the object with the axes swapped.</p>
 </td>
 </tr>
 </tbody>
@@ -4600,37 +4990,40 @@ dimension 1</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.crop_spectrum" title="hyperspy.signal.Signal1DTools.crop_spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">crop_spectrum</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Crop in place the spectral dimension.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.estimate_shift1D" title="hyperspy.signal.Signal1DTools.estimate_shift1D"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift1D</span></tt></a>([start,&nbsp;end,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.estimate_peak_width" title="hyperspy.signal.Signal1DTools.estimate_peak_width"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_peak_width</span></tt></a>([factor,&nbsp;window,&nbsp;...])</td>
+<td>Estimate the width of the highest intensity of peak  of the spectra at a given fraction of its maximum.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.estimate_shift1D" title="hyperspy.signal.Signal1DTools.estimate_shift1D"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_shift1D</span></tt></a>([start,&nbsp;end,&nbsp;...])</td>
 <td>Estimate the shifts in the current signal axis using cross-correlation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.filter_butterworth" title="hyperspy.signal.Signal1DTools.filter_butterworth"><tt class="xref py py-obj docutils literal"><span class="pre">filter_butterworth</span></tt></a>([cutoff_frequency_ratio,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.filter_butterworth" title="hyperspy.signal.Signal1DTools.filter_butterworth"><tt class="xref py py-obj docutils literal"><span class="pre">filter_butterworth</span></tt></a>([cutoff_frequency_ratio,&nbsp;...])</td>
 <td>Butterworth filter in place.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.find_peaks1D_ohaver" title="hyperspy.signal.Signal1DTools.find_peaks1D_ohaver"><tt class="xref py py-obj docutils literal"><span class="pre">find_peaks1D_ohaver</span></tt></a>([xdim,&nbsp;slope_thresh,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.find_peaks1D_ohaver" title="hyperspy.signal.Signal1DTools.find_peaks1D_ohaver"><tt class="xref py py-obj docutils literal"><span class="pre">find_peaks1D_ohaver</span></tt></a>([xdim,&nbsp;slope_thresh,&nbsp;...])</td>
 <td>Find peaks along a 1D line (peaks in spectrum/spectra).</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.gaussian_filter" title="hyperspy.signal.Signal1DTools.gaussian_filter"><tt class="xref py py-obj docutils literal"><span class="pre">gaussian_filter</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.gaussian_filter" title="hyperspy.signal.Signal1DTools.gaussian_filter"><tt class="xref py py-obj docutils literal"><span class="pre">gaussian_filter</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Applies a Gaussian filter in the spectral dimension in place.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.hanning_taper" title="hyperspy.signal.Signal1DTools.hanning_taper"><tt class="xref py py-obj docutils literal"><span class="pre">hanning_taper</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.hanning_taper" title="hyperspy.signal.Signal1DTools.hanning_taper"><tt class="xref py py-obj docutils literal"><span class="pre">hanning_taper</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Apply a hanning taper to the data in place.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="hyperspy.signal.Signal1DTools.interpolate_in_between"><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt></a>(start,&nbsp;end[,&nbsp;delta])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="hyperspy.signal.Signal1DTools.interpolate_in_between"><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt></a>(start,&nbsp;end[,&nbsp;delta])</td>
 <td>Replace the data in a given range by interpolation.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.remove_background" title="hyperspy.signal.Signal1DTools.remove_background"><tt class="xref py py-obj docutils literal"><span class="pre">remove_background</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.remove_background" title="hyperspy.signal.Signal1DTools.remove_background"><tt class="xref py py-obj docutils literal"><span class="pre">remove_background</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Remove the background  in place using a gui.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.shift1D" title="hyperspy.signal.Signal1DTools.shift1D"><tt class="xref py py-obj docutils literal"><span class="pre">shift1D</span></tt></a>(shift_array[,&nbsp;interpolation_method,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.shift1D" title="hyperspy.signal.Signal1DTools.shift1D"><tt class="xref py py-obj docutils literal"><span class="pre">shift1D</span></tt></a>(shift_array[,&nbsp;interpolation_method,&nbsp;...])</td>
 <td>Shift the data in place over the signal axis by the amount specified by an array.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_lowess" title="hyperspy.signal.Signal1DTools.smooth_lowess"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_lowess</span></tt></a>([smoothing_parameter,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_lowess" title="hyperspy.signal.Signal1DTools.smooth_lowess"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_lowess</span></tt></a>([smoothing_parameter,&nbsp;...])</td>
 <td>Lowess data smoothing in place.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_savitzky_golay" title="hyperspy.signal.Signal1DTools.smooth_savitzky_golay"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_savitzky_golay</span></tt></a>([polynomial_order,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_savitzky_golay" title="hyperspy.signal.Signal1DTools.smooth_savitzky_golay"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_savitzky_golay</span></tt></a>([polynomial_order,&nbsp;...])</td>
 <td>Savitzky-Golay data smoothing in place.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_tv" title="hyperspy.signal.Signal1DTools.smooth_tv"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_tv</span></tt></a>([smoothing_parameter,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_tv" title="hyperspy.signal.Signal1DTools.smooth_tv"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_tv</span></tt></a>([smoothing_parameter,&nbsp;...])</td>
 <td>Total variation data smoothing in place.</td>
 </tr>
 </tbody>
@@ -4764,6 +5157,16 @@ plot.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal.Signal1DTools.estimate_peak_width">
+<tt class="descname">estimate_peak_width</tt><big>(</big><em>factor=0.5</em>, <em>window=None</em>, <em>return_interval=False</em><big>)</big><a class="headerlink" href="#hyperspy.signal.Signal1DTools.estimate_peak_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the width of the highest intensity of peak 
+of the spectra at a given fraction of its maximum.</p>
+<p>It can be used with asymmetric peaks. For accurate results any 
+background must be previously substracted.
+The estimation is performed by interpolation using cubic splines.</p>
 </dd></dl>
 
 <dl class="method">
@@ -5172,9 +5575,10 @@ of the automatically selected reference image.</p>
 <div><p>If int and <a href="#id6"><span class="problematic" id="id7">`</span></a>reference`==&#8217;stat&#8217; the number of images used
 as reference are limited to the given value.</p>
 </div></blockquote>
-<p><strong>roi</strong> : tuple of ints (top, bottom, left, right)</p>
+<p><strong>roi</strong> : tuple of ints or floats (left, right, top bottom)</p>
 <blockquote>
-<div><p>Define the region of interest</p>
+<div><p>Define the region of interest. If int(float) the position
+is given axis index(value).</p>
 </div></blockquote>
 <p><strong>sobel</strong> : bool</p>
 <blockquote>
@@ -5235,72 +5639,28 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.components.html">components Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#id1"><tt class="docutils literal"><span class="pre">components</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components._template"><tt class="docutils literal"><span class="pre">_template</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.arctan"><tt class="docutils literal"><span class="pre">arctan</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.bleasdale"><tt class="docutils literal"><span class="pre">bleasdale</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.eels_cl_edge"><tt class="docutils literal"><span class="pre">eels_cl_edge</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.eels_double_offset"><tt class="docutils literal"><span class="pre">eels_double_offset</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.eels_double_power_law"><tt class="docutils literal"><span class="pre">eels_double_power_law</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.eels_vignetting"><tt class="docutils literal"><span class="pre">eels_vignetting</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.error_function"><tt class="docutils literal"><span class="pre">error_function</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.exponential"><tt class="docutils literal"><span class="pre">exponential</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.gaussian"><tt class="docutils literal"><span class="pre">gaussian</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.logistic"><tt class="docutils literal"><span class="pre">logistic</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.lorentzian"><tt class="docutils literal"><span class="pre">lorentzian</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.offset"><tt class="docutils literal"><span class="pre">offset</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.pes_core_line_shape"><tt class="docutils literal"><span class="pre">pes_core_line_shape</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.pes_see"><tt class="docutils literal"><span class="pre">pes_see</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.polynomial"><tt class="docutils literal"><span class="pre">polynomial</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.power_law"><tt class="docutils literal"><span class="pre">power_law</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.rc"><tt class="docutils literal"><span class="pre">rc</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.scalable_fixed_pattern"><tt class="docutils literal"><span class="pre">scalable_fixed_pattern</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.spline"><tt class="docutils literal"><span class="pre">spline</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.voigt"><tt class="docutils literal"><span class="pre">voigt</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#module-hyperspy.components.volume_plasmon_drude"><tt class="docutils literal"><span class="pre">volume_plasmon_drude</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#template-module"><tt class="docutils literal"><span class="pre">_template</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#arctan-module"><tt class="docutils literal"><span class="pre">arctan</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#bleasdale-module"><tt class="docutils literal"><span class="pre">bleasdale</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#eels-cl-edge-module"><tt class="docutils literal"><span class="pre">eels_cl_edge</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#eels-double-offset-module"><tt class="docutils literal"><span class="pre">eels_double_offset</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#eels-double-power-law-module"><tt class="docutils literal"><span class="pre">eels_double_power_law</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#eels-vignetting-module"><tt class="docutils literal"><span class="pre">eels_vignetting</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#error-function-module"><tt class="docutils literal"><span class="pre">error_function</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#exponential-module"><tt class="docutils literal"><span class="pre">exponential</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#gaussian-module"><tt class="docutils literal"><span class="pre">gaussian</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#logistic-module"><tt class="docutils literal"><span class="pre">logistic</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#lorentzian-module"><tt class="docutils literal"><span class="pre">lorentzian</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#offset-module"><tt class="docutils literal"><span class="pre">offset</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#pes-core-line-shape-module"><tt class="docutils literal"><span class="pre">pes_core_line_shape</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#pes-see-module"><tt class="docutils literal"><span class="pre">pes_see</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#polynomial-module"><tt class="docutils literal"><span class="pre">polynomial</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#power-law-module"><tt class="docutils literal"><span class="pre">power_law</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#rc-module"><tt class="docutils literal"><span class="pre">rc</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#scalable-fixed-pattern-module"><tt class="docutils literal"><span class="pre">scalable_fixed_pattern</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#spline-module"><tt class="docutils literal"><span class="pre">spline</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#voigt-module"><tt class="docutils literal"><span class="pre">voigt</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.components.html#volume-plasmon-drude-module"><tt class="docutils literal"><span class="pre">volume_plasmon_drude</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.drawing.html">drawing Package</a><ul>
@@ -5318,7 +5678,9 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.drawing.html#module-hyperspy.drawing.spectrum"><tt class="docutils literal"><span class="pre">spectrum</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.drawing.html#module-hyperspy.drawing.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.drawing.html#module-hyperspy.drawing.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.drawing.html#module-hyperspy.drawing.widgets"><tt class="docutils literal"><span class="pre">widgets</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
@@ -5327,6 +5689,9 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.gui.html">gui Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#id1"><tt class="docutils literal"><span class="pre">gui</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.axes"><tt class="docutils literal"><span class="pre">axes</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.eds"><tt class="docutils literal"><span class="pre">eds</span></tt> Module</a><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.eels"><tt class="docutils literal"><span class="pre">eels</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
@@ -5337,9 +5702,7 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.messages"><tt class="docutils literal"><span class="pre">messages</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.mpl_traits_editor"><tt class="docutils literal"><span class="pre">mpl_traits_editor</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#mpl-traits-editor-module"><tt class="docutils literal"><span class="pre">mpl_traits_editor</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.gui.html#module-hyperspy.gui.tools"><tt class="docutils literal"><span class="pre">tools</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
@@ -5372,47 +5735,25 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.html">misc Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#id1"><tt class="docutils literal"><span class="pre">misc</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.config_dir"><tt class="docutils literal"><span class="pre">config_dir</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.dm3reader"><tt class="docutils literal"><span class="pre">dm3reader</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.fastica"><tt class="docutils literal"><span class="pre">fastica</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.image_utils"><tt class="docutils literal"><span class="pre">image_utils</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.import_sklearn"><tt class="docutils literal"><span class="pre">import_sklearn</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#dm3reader-module"><tt class="docutils literal"><span class="pre">dm3reader</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#fastica-module"><tt class="docutils literal"><span class="pre">fastica</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#image-utils-module"><tt class="docutils literal"><span class="pre">image_utils</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#import-sklearn-module"><tt class="docutils literal"><span class="pre">import_sklearn</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.interactive_ns"><tt class="docutils literal"><span class="pre">interactive_ns</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.natsort"><tt class="docutils literal"><span class="pre">natsort</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.physical_constants"><tt class="docutils literal"><span class="pre">physical_constants</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.progressbar"><tt class="docutils literal"><span class="pre">progressbar</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.tifffile"><tt class="docutils literal"><span class="pre">tifffile</span></tt> Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.html#requirements">Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.html#acknowledgements">Acknowledgements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.html#references">References</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.html#examples">Examples</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#tifffile-module"><tt class="docutils literal"><span class="pre">tifffile</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.tv_denoise"><tt class="docutils literal"><span class="pre">tv_denoise</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.utils_readfile"><tt class="docutils literal"><span class="pre">utils_readfile</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.utils_varia"><tt class="docutils literal"><span class="pre">utils_varia</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#module-hyperspy.misc.xmlreader"><tt class="docutils literal"><span class="pre">xmlreader</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#utils-readfile-module"><tt class="docutils literal"><span class="pre">utils_readfile</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#utils-varia-module"><tt class="docutils literal"><span class="pre">utils_varia</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#xmlreader-module"><tt class="docutils literal"><span class="pre">xmlreader</span></tt> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.eels.html">eels Package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.base_gos"><tt class="docutils literal"><span class="pre">base_gos</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.effective_angle"><tt class="docutils literal"><span class="pre">effective_angle</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.elements"><tt class="docutils literal"><span class="pre">elements</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.hartree_slater_gos"><tt class="docutils literal"><span class="pre">hartree_slater_gos</span></tt> Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.hydrogenic_gos"><tt class="docutils literal"><span class="pre">hydrogenic_gos</span></tt> Module</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.mpfit.html">mpfit Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.mpfit.html#id1"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.mpfit.html#module-hyperspy.misc.mpfit.mpfit"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Module</a><ul class="simple">
@@ -5443,68 +5784,24 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.signals.html">signals Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#id1"><tt class="docutils literal"><span class="pre">signals</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.eels"><tt class="docutils literal"><span class="pre">eels</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.eels_spectrum_simulation"><tt class="docutils literal"><span class="pre">eels_spectrum_simulation</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.image"><tt class="docutils literal"><span class="pre">image</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.pes"><tt class="docutils literal"><span class="pre">pes</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.spectrum"><tt class="docutils literal"><span class="pre">spectrum</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#module-hyperspy.signals.spectrum_simulation"><tt class="docutils literal"><span class="pre">spectrum_simulation</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#eds-module"><tt class="docutils literal"><span class="pre">eds</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#eds-sem-module"><tt class="docutils literal"><span class="pre">eds_sem</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#eds-tem-module"><tt class="docutils literal"><span class="pre">eds_tem</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#eels-module"><tt class="docutils literal"><span class="pre">eels</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#eels-spectrum-simulation-module"><tt class="docutils literal"><span class="pre">eels_spectrum_simulation</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#image-module"><tt class="docutils literal"><span class="pre">image</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#pes-module"><tt class="docutils literal"><span class="pre">pes</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#spectrum-module"><tt class="docutils literal"><span class="pre">spectrum</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.signals.html#spectrum-simulation-module"><tt class="docutils literal"><span class="pre">spectrum_simulation</span></tt> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.tests.html">tests Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.tests.html#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.tests.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.tests.component.html">component Package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.component.html#module-hyperspy.tests.component.test_component_set_parameters"><tt class="docutils literal"><span class="pre">test_component_set_parameters</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="hyperspy.tests.io.html">io Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.io.html#id1"><tt class="docutils literal"><span class="pre">io</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.io.html#module-hyperspy.tests.io.generate_dm_testing_files"><tt class="docutils literal"><span class="pre">generate_dm_testing_files</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.io.html#module-hyperspy.tests.io.test_dm3"><tt class="docutils literal"><span class="pre">test_dm3</span></tt> Module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.tests.model.html">model Package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.model.html#module-hyperspy.tests.model.test_parameter"><tt class="docutils literal"><span class="pre">test_parameter</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.model.html#module-hyperspy.tests.model.test_set_parameter_state"><tt class="docutils literal"><span class="pre">test_set_parameter_state</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.model.html#module-hyperspy.tests.model.test_set_parameter_value"><tt class="docutils literal"><span class="pre">test_set_parameter_value</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="hyperspy.tests.signal.html">signal Package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#id1"><tt class="docutils literal"><span class="pre">signal</span></tt> Package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal.test_eels"><tt class="docutils literal"><span class="pre">test_eels</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal.test_fancy_indexing"><tt class="docutils literal"><span class="pre">test_fancy_indexing</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal.test_signal_operators"><tt class="docutils literal"><span class="pre">test_signal_operators</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal.test_spectrum"><tt class="docutils literal"><span class="pre">test_spectrum</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal.test_tools"><tt class="docutils literal"><span class="pre">test_tools</span></tt> Module</a><ul class="simple">
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -5591,12 +5888,12 @@ Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.6 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
