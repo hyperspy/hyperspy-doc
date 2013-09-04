@@ -71,20 +71,232 @@
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">misc</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-hyperspy.misc"></span></div>
+<div class="section" id="module-hyperspy.misc.array_tools">
+<span id="array-tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">array_tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.array_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.array_tools.are_aligned">
+<tt class="descclassname">hyperspy.misc.array_tools.</tt><tt class="descname">are_aligned</tt><big>(</big><em>shape1</em>, <em>shape2</em><big>)</big><a class="headerlink" href="#hyperspy.misc.array_tools.are_aligned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if two numpy arrays are aligned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>shape1, shape2</strong> : iterable</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>isaligned</strong> : bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.array_tools.get_array_memory_size_in_GiB">
+<tt class="descclassname">hyperspy.misc.array_tools.</tt><tt class="descname">get_array_memory_size_in_GiB</tt><big>(</big><em>shape</em>, <em>dtype</em><big>)</big><a class="headerlink" href="#hyperspy.misc.array_tools.get_array_memory_size_in_GiB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the size and dtype returns the amount of memory that such
+an array needs to allocate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>shape: tuple</strong> :</p>
+<p><strong>dtype</strong> : data-type</p>
+<blockquote class="last">
+<div><p>The desired data-type for the array.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.array_tools.homogenize_ndim">
+<tt class="descclassname">hyperspy.misc.array_tools.</tt><tt class="descname">homogenize_ndim</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#hyperspy.misc.array_tools.homogenize_ndim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given any number of arrays returns the same arrays
+reshaped by adding facing dimensions of size 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.array_tools.rebin">
+<tt class="descclassname">hyperspy.misc.array_tools.</tt><tt class="descname">rebin</tt><big>(</big><em>a</em>, <em>new_shape</em><big>)</big><a class="headerlink" href="#hyperspy.misc.array_tools.rebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebin array.</p>
+<p>rebin ndarray data into a smaller ndarray of the same rank whose dimensions
+are factors of the original dimensions. eg. An array with 6 columns and 4
+rows can be reduced to have 6,3,2 or 1 columns and 4,2 or 1 rows.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>a</strong> : numpy array</p>
+<p><strong>new_shape</strong> : tuple</p>
+<blockquote>
+<div><p>shape after binning</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>numpy array</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Adapted from scipy cookbook</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">rand</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span> <span class="n">b</span><span class="o">=</span><span class="n">rebin</span><span class="p">(</span><span class="n">a</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">rand</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span> <span class="n">b</span><span class="o">=</span><span class="n">rebin</span><span class="p">(</span><span class="n">a</span><span class="p">,(</span><span class="mi">2</span><span class="p">,))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.array_tools.sarray2dict">
+<tt class="descclassname">hyperspy.misc.array_tools.</tt><tt class="descname">sarray2dict</tt><big>(</big><em>sarray</em>, <em>dictionary=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.array_tools.sarray2dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a struct array to an ordered dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>sarray: struct array</strong> :</p>
+<p><strong>dictionary: None or dic</strong> :</p>
+<blockquote>
+<div><p>If dictionary is not None the content of sarray will be appended to the
+given dictonary</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>Ordered dictionary</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="module-hyperspy.misc.config_dir">
 <span id="config-dir-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">config_dir</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.config_dir" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="dm3reader-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">dm3reader</span></tt> Module<a class="headerlink" href="#dm3reader-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="fastica-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">fastica</span></tt> Module<a class="headerlink" href="#fastica-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="image-utils-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">image_utils</span></tt> Module<a class="headerlink" href="#image-utils-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="import-sklearn-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">import_sklearn</span></tt> Module<a class="headerlink" href="#import-sklearn-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-hyperspy.misc.image_tools">
+<span id="image-tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image_tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.image_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.estimate_image_shift">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">estimate_image_shift</tt><big>(</big><em>ref</em>, <em>image</em>, <em>roi=None</em>, <em>sobel=True</em>, <em>medfilter=True</em>, <em>hanning=True</em>, <em>plot=False</em>, <em>dtype='float'</em>, <em>normalize_corr=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.estimate_image_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the shift in a image using phase correlation</p>
+<p>This method can only estimate the shift by comparing 
+bidimensional features that should not change the position 
+in the given axis. To decrease the memory usage, the time of 
+computation and the accuracy of the results it is convenient 
+to select a region of interest by setting the roi keyword.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>roi</strong> : tuple of ints (top, bottom, left, right)</p>
+<blockquote>
+<div><p>Define the region of interest</p>
+</div></blockquote>
+<p><strong>sobel</strong> : bool</p>
+<blockquote>
+<div><p>apply a sobel filter for edge enhancement</p>
+</div></blockquote>
+<p><strong>medfilter</strong> :  bool</p>
+<blockquote>
+<div><p>apply a median filter for noise reduction</p>
+</div></blockquote>
+<p><strong>hanning</strong> : bool</p>
+<blockquote>
+<div><p>Apply a 2d hanning filter</p>
+</div></blockquote>
+<p><strong>plot</strong> : bool</p>
+<blockquote>
+<div><p>If True plots the images after applying the filters and
+the phase correlation</p>
+</div></blockquote>
+<p><strong>reference</strong> : &#8216;current&#8217; | &#8216;cascade&#8217;</p>
+<blockquote>
+<div><p>If &#8216;current&#8217; (default) the image at the current 
+coordinates is taken as reference. If &#8216;cascade&#8217; each image
+is aligned with the previous one.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : str or dtype</p>
+<blockquote>
+<div><p>Typecode or data-type in which the calculations must be
+performed.</p>
+</div></blockquote>
+<p><strong>normalize_corr</strong> : bool</p>
+<blockquote>
+<div><p>If True use phase correlation instead of standard correlation</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>shifts: np.array</strong> :</p>
+<blockquote>
+<div><p>containing the estimate shifts</p>
+</div></blockquote>
+<p><strong>max_value</strong> : float</p>
+<blockquote class="last">
+<div><p>The maximum value of the correlation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.fft_correlation">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">fft_correlation</tt><big>(</big><em>in1</em>, <em>in2</em>, <em>normalize=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.fft_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correlation of two N-dimensional arrays using FFT.</p>
+<p>Adapted from scipy&#8217;s fftconvolve.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>in1, in2</strong> : array</p>
+<p><strong>normalize: bool</strong> :</p>
+<blockquote class="last">
+<div><p>If True performs phase correlation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.hanning2d">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">hanning2d</tt><big>(</big><em>M</em>, <em>N</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.hanning2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 2D hanning window created by outer product.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.shift_image">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">shift_image</tt><big>(</big><em>im</em>, <em>shift</em>, <em>fill_value=nan</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.shift_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.sobel_filter">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">sobel_filter</tt><big>(</big><em>im</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.sobel_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.image_tools.triu_indices_minus_diag">
+<tt class="descclassname">hyperspy.misc.image_tools.</tt><tt class="descname">triu_indices_minus_diag</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#hyperspy.misc.image_tools.triu_indices_minus_diag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the indices for the upper-triangle of an (n, n) array 
+excluding its diagonal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>n</strong> : int</p>
+<blockquote class="last">
+<div><p>The length of the square array</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-hyperspy.misc.interactive_ns">
 <span id="interactive-ns-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">interactive_ns</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.interactive_ns" title="Permalink to this headline">¶</a></h2>
@@ -96,6 +308,59 @@
 <dl class="function">
 <dt id="hyperspy.misc.interactive_ns.turn_logging_on">
 <tt class="descclassname">hyperspy.misc.interactive_ns.</tt><tt class="descname">turn_logging_on</tt><big>(</big><em>verbose=1</em><big>)</big><a class="headerlink" href="#hyperspy.misc.interactive_ns.turn_logging_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.math_tools">
+<span id="math-tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">math_tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.math_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.math_tools.antisymmetrize">
+<tt class="descclassname">hyperspy.misc.math_tools.</tt><tt class="descname">antisymmetrize</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#hyperspy.misc.math_tools.antisymmetrize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.math_tools.closest_nice_number">
+<tt class="descclassname">hyperspy.misc.math_tools.</tt><tt class="descname">closest_nice_number</tt><big>(</big><em>number</em><big>)</big><a class="headerlink" href="#hyperspy.misc.math_tools.closest_nice_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.math_tools.get_linear_interpolation">
+<tt class="descclassname">hyperspy.misc.math_tools.</tt><tt class="descname">get_linear_interpolation</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>x</em><big>)</big><a class="headerlink" href="#hyperspy.misc.math_tools.get_linear_interpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given two points in 2D returns y for a given x for y = ax + b</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>p1,p2</strong> : (x, y)</p>
+<p><strong>x</strong> : float</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>y</strong> : float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.math_tools.order_of_magnitude">
+<tt class="descclassname">hyperspy.misc.math_tools.</tt><tt class="descname">order_of_magnitude</tt><big>(</big><em>number</em><big>)</big><a class="headerlink" href="#hyperspy.misc.math_tools.order_of_magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Order of magnitude of the given number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>number</strong> : float</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>Float</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.math_tools.symmetrize">
+<tt class="descclassname">hyperspy.misc.math_tools.</tt><tt class="descname">symmetrize</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#hyperspy.misc.math_tools.symmetrize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -115,7 +380,7 @@
 
 <dl class="function">
 <dt id="hyperspy.misc.natsort.natsort">
-<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x74acb18&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsort</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x60f2b90&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsort" title="Permalink to this definition">¶</a></dt>
 <dd><p>In-place natural string sort.</p>
 </dd></dl>
 
@@ -127,7 +392,7 @@
 
 <dl class="function">
 <dt id="hyperspy.misc.natsort.natsorted">
-<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsorted</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x74acb18&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsorted" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.misc.natsort.</tt><tt class="descname">natsorted</tt><big>(</big><em>seq</em>, <em>cmp=&lt;function natcmp at 0x60f2b90&gt;</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.natsort.natsorted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a copy of seq, sorted by natural string sort.</p>
 </dd></dl>
 
@@ -140,6 +405,55 @@
 </div>
 <div class="section" id="module-hyperspy.misc.physical_constants">
 <span id="physical-constants-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">physical_constants</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.physical_constants" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hyperspy.misc.physics_tools">
+<span id="physics-tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">physics_tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.physics_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.physics_tools.bragg_scattering_angle">
+<tt class="descclassname">hyperspy.misc.physics_tools.</tt><tt class="descname">bragg_scattering_angle</tt><big>(</big><em>d</em>, <em>E0=100</em><big>)</big><a class="headerlink" href="#hyperspy.misc.physics_tools.bragg_scattering_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the first order bragg diffraction semiangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>d</strong> : float</p>
+<blockquote>
+<div><p>interplanar distance in m.</p>
+</div></blockquote>
+<p><strong>E0</strong> : float</p>
+<blockquote>
+<div><p>Incident energy in keV</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>float</strong> : Semiangle of scattering of the first order difracted beam. This is</p>
+<p class="last"><strong>two times the bragg angle.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.physics_tools.effective_Z">
+<tt class="descclassname">hyperspy.misc.physics_tools.</tt><tt class="descname">effective_Z</tt><big>(</big><em>Z_list</em>, <em>exponent=2.94</em><big>)</big><a class="headerlink" href="#hyperspy.misc.physics_tools.effective_Z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective atomic number of a compound or mixture.</p>
+<p>Exponent = 2.94 for X-ray absorption.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>Z_list</strong> : list of tuples</p>
+<blockquote class="last">
+<div><p>A list of tuples (f,Z) where f is the number of atoms of the element in
+the molecule and Z its atomic number</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-hyperspy.misc.progressbar">
 <span id="progressbar-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">progressbar</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.progressbar" title="Permalink to this headline">¶</a></h2>
@@ -295,7 +609,7 @@ automatically supports features like auto-resizing when available.</p>
 
 <dl class="class">
 <dt id="hyperspy.misc.progressbar.ProgressBar">
-<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x5e42250&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x6014f90&gt;], term_width=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.progressbar.</tt><tt class="descname">ProgressBar</tt><big>(</big><em>maxval=100, widgets=[&lt;hyperspy.misc.progressbar.Percentage object at 0x50d6790&gt;, ' ', &lt;hyperspy.misc.progressbar.Bar object at 0x4f85610&gt;], term_width=None</em><big>)</big><a class="headerlink" href="#hyperspy.misc.progressbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>This is the ProgressBar class, it updates and prints the bar.</p>
 <p>The term_width parameter may be an integer. Or None, in which case
@@ -523,8 +837,148 @@ for i in xrange(10000):</p>
 </dd></dl>
 
 </div>
-<div class="section" id="tifffile-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">tifffile</span></tt> Module<a class="headerlink" href="#tifffile-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-hyperspy.misc.spectrum_tools">
+<span id="spectrum-tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">spectrum_tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.spectrum_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.calc_coeff">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">calc_coeff</tt><big>(</big><em>num_points</em>, <em>pol_degree</em>, <em>diff_order=0</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.calc_coeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates filter coefficients for symmetric savitzky-golay filter.
+<a class="reference external" href="http://www.procoders.net">http://www.procoders.net</a>
+see: <a class="reference external" href="http://www.nrbook.com/a/bookcpdf/c14-8.pdf">http://www.nrbook.com/a/bookcpdf/c14-8.pdf</a></p>
+<dl class="docutils">
+<dt>num_points   means that 2*num_points+1 values contribute to the</dt>
+<dd>smoother.</dd>
+</dl>
+<p>pol_degree   is degree of fitting polynomial</p>
+<dl class="docutils">
+<dt>diff_order   is degree of implicit differentiation.</dt>
+<dd><p class="first">0 means that filter results in smoothing of function
+1 means that filter results in smoothing the first</p>
+<blockquote>
+<div>derivative of function.</div></blockquote>
+<p class="last">and so on ...</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.find_peaks_ohaver">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">find_peaks_ohaver</tt><big>(</big><em>y</em>, <em>x=None</em>, <em>slope_thresh=0.0</em>, <em>amp_thresh=None</em>, <em>medfilt_radius=5</em>, <em>maxpeakn=30000</em>, <em>peakgroup=10</em>, <em>subchannel=True</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.find_peaks_ohaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find peaks along a 1D line.</p>
+<p>Function to locate the positive peaks in a noisy x-y data set.</p>
+<p>Detects peaks by looking for downward zero-crossings in the first
+derivative that exceed &#8216;slope_thresh&#8217;.</p>
+<p>Returns an array containing position, height, and width of each peak.</p>
+<p>&#8216;slope_thresh&#8217; and &#8216;amp_thresh&#8217;, control sensitivity: higher values will
+neglect smaller features.</p>
+<dl class="docutils">
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>1D input array, e.g. a spectrum</dd>
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">array (optional)</span></dt>
+<dd>1D array describing the calibration of y (must have same shape as y)</dd>
+<dt>slope_thresh <span class="classifier-delimiter">:</span> <span class="classifier">float (optional)</span></dt>
+<dd>1st derivative threshold to count the peak
+default is set to 0.5
+higher values will neglect smaller features.</dd>
+<dt>amp_thresh <span class="classifier-delimiter">:</span> <span class="classifier">float (optional)</span></dt>
+<dd>intensity threshold above which   
+default is set to 10% of max(y)
+higher values will neglect smaller features.</dd>
+<dt>medfilt_radius <span class="classifier-delimiter">:</span> <span class="classifier">int (optional)</span></dt>
+<dd>median filter window to apply to smooth the data
+(see scipy.signal.medfilt)
+if 0, no filter will be applied.
+default is set to 5</dd>
+<dt>peakgroup <span class="classifier-delimiter">:</span> <span class="classifier">int (optional)</span></dt>
+<dd>number of points around the &#8220;top part&#8221; of the peak
+default is set to 10</dd>
+<dt>maxpeakn <span class="classifier-delimiter">:</span> <span class="classifier">int (optional)</span></dt>
+<dd>number of maximum detectable peaks
+default is set to 30000</dd>
+<dt>subchannel <span class="classifier-delimiter">:</span> <span class="classifier">bool (optional)</span></dt>
+<dd>default is set to True</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>P</strong> : structured array of shape (npeaks) and fields: position, width, height</p>
+<blockquote class="last">
+<div><p>contains position, height, and width of each peak</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Original code from T. C. O&#8217;Haver, 1995.
+Version 2  Last revised Oct 27, 2006 Converted to Python by 
+Michael Sarahan, Feb 2011.
+Revised to handle edges better.  MCS, Mar 2011</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">one_dim_findpeaks</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">array([[  1.68144859e-05,   9.99999943e-01,   3.57487961e+00],</span>
+<span class="go">       [  6.28318614e+00,   1.00000003e+00,   3.57589018e+00],</span>
+<span class="go">       [  1.25663708e+01,   1.00000002e+00,   3.57600673e+00],</span>
+<span class="go">       [  1.88495565e+01,   1.00000002e+00,   3.57597295e+00],</span>
+<span class="go">       [  2.51327421e+01,   1.00000003e+00,   3.57590284e+00],</span>
+<span class="go">       [  3.14159267e+01,   1.00000002e+00,   3.57600856e+00],</span>
+<span class="go">       [  3.76991124e+01,   1.00000002e+00,   3.57597984e+00],</span>
+<span class="go">       [  4.39822980e+01,   1.00000002e+00,   3.57591479e+00]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.interpolate1D">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">interpolate1D</tt><big>(</big><em>number_of_interpolation_points</em>, <em>data</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.interpolate1D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.resub">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">resub</tt><big>(</big><em>D</em>, <em>rhs</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.resub" title="Permalink to this definition">¶</a></dt>
+<dd><p>solves D D^T = rhs by resubstituion.
+D is lower triangle-matrix from cholesky-decomposition
+<a class="reference external" href="http://www.procoders.net">http://www.procoders.net</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.savitzky_golay">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">savitzky_golay</tt><big>(</big><em>data</em>, <em>kernel=11</em>, <em>order=4</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.savitzky_golay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Savitzky-Golay filter</p>
+<p>Adapted from scipy cookbook <a class="reference external" href="http://www.scipy.org/Cookbook/SavitzkyGolay">http://www.scipy.org/Cookbook/SavitzkyGolay</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : 1D numpy array</p>
+<p><strong>kernel</strong> : positiv integer &gt; 2*order giving the kernel size - order</p>
+<p><strong>order</strong> : order of the polynomial</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>returns smoothed data as a numpy array</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.sg">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">sg</tt><big>(</big><em>data</em>, <em>num_points</em>, <em>pol_degree</em>, <em>diff_order=0</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.sg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Savitzky-Golay filter
+<a class="reference external" href="http://www.procoders.net">http://www.procoders.net</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.spectrum_tools.smooth">
+<tt class="descclassname">hyperspy.misc.spectrum_tools.</tt><tt class="descname">smooth</tt><big>(</big><em>data</em>, <em>coeff</em><big>)</big><a class="headerlink" href="#hyperspy.misc.spectrum_tools.smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>applies coefficients calculated by calc_coeff() to signal
+<a class="reference external" href="http://www.procoders.net">http://www.procoders.net</a></p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-hyperspy.misc.tv_denoise">
 <span id="tv-denoise-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tv_denoise</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.tv_denoise" title="Permalink to this headline">¶</a></h2>
@@ -1076,19 +1530,53 @@ element having index j in object obj IN PLACE.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="utils-readfile-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">utils_readfile</span></tt> Module<a class="headerlink" href="#utils-readfile-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="utils-varia-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">utils_varia</span></tt> Module<a class="headerlink" href="#utils-varia-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="xmlreader-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">xmlreader</span></tt> Module<a class="headerlink" href="#xmlreader-module" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.eds.html">eds Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eds.html#id1"><tt class="docutils literal"><span class="pre">eds</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eds.html#module-hyperspy.misc.eds.FWHM"><tt class="docutils literal"><span class="pre">FWHM</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eds.html#module-hyperspy.misc.eds.TOA"><tt class="docutils literal"><span class="pre">TOA</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eds.html#module-hyperspy.misc.eds.elements"><tt class="docutils literal"><span class="pre">elements</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eds.html#module-hyperspy.misc.eds.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.eels.html">eels Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.base_gos"><tt class="docutils literal"><span class="pre">base_gos</span></tt> Module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.effective_angle"><tt class="docutils literal"><span class="pre">effective_angle</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.elements"><tt class="docutils literal"><span class="pre">elements</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.hartree_slater_gos"><tt class="docutils literal"><span class="pre">hartree_slater_gos</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.hydrogenic_gos"><tt class="docutils literal"><span class="pre">hydrogenic_gos</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.eels.html#module-hyperspy.misc.eels.tools"><tt class="docutils literal"><span class="pre">tools</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.io.html">io Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.io.html#module-hyperspy.misc.io.tifffile"><tt class="docutils literal"><span class="pre">tifffile</span></tt> Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.io.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.io.html#acknowledgements">Acknowledgements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.io.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.misc.io.html#examples">Examples</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.io.html#module-hyperspy.misc.io.tools"><tt class="docutils literal"><span class="pre">tools</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.io.html#module-hyperspy.misc.io.ttols"><tt class="docutils literal"><span class="pre">ttols</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.io.html#module-hyperspy.misc.io.utils_readfile"><tt class="docutils literal"><span class="pre">utils_readfile</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.machine_learning.html">machine_learning Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.machine_learning.html#module-hyperspy.misc.machine_learning.fastica"><tt class="docutils literal"><span class="pre">fastica</span></tt> Module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.machine_learning.html#module-hyperspy.misc.machine_learning.import_sklearn"><tt class="docutils literal"><span class="pre">import_sklearn</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.machine_learning.html#module-hyperspy.misc.machine_learning.orthomax"><tt class="docutils literal"><span class="pre">orthomax</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.machine_learning.html#module-hyperspy.misc.machine_learning.tools"><tt class="docutils literal"><span class="pre">tools</span></tt> Module</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="hyperspy.misc.mpfit.html">mpfit Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.mpfit.html#id1"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hyperspy.misc.mpfit.html#module-hyperspy.misc.mpfit.mpfit"><tt class="docutils literal"><span class="pre">mpfit</span></tt> Module</a><ul class="simple">
@@ -1124,25 +1612,22 @@ element having index j in object obj IN PLACE.</p>
   <ul>
 <li><a class="reference internal" href="#">misc Package</a><ul>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">misc</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.array_tools"><tt class="docutils literal"><span class="pre">array_tools</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.config_dir"><tt class="docutils literal"><span class="pre">config_dir</span></tt> Module</a></li>
-<li><a class="reference internal" href="#dm3reader-module"><tt class="docutils literal"><span class="pre">dm3reader</span></tt> Module</a></li>
-<li><a class="reference internal" href="#fastica-module"><tt class="docutils literal"><span class="pre">fastica</span></tt> Module</a></li>
-<li><a class="reference internal" href="#image-utils-module"><tt class="docutils literal"><span class="pre">image_utils</span></tt> Module</a></li>
-<li><a class="reference internal" href="#import-sklearn-module"><tt class="docutils literal"><span class="pre">import_sklearn</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.image_tools"><tt class="docutils literal"><span class="pre">image_tools</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.interactive_ns"><tt class="docutils literal"><span class="pre">interactive_ns</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.math_tools"><tt class="docutils literal"><span class="pre">math_tools</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.natsort"><tt class="docutils literal"><span class="pre">natsort</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.physical_constants"><tt class="docutils literal"><span class="pre">physical_constants</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.physics_tools"><tt class="docutils literal"><span class="pre">physics_tools</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.progressbar"><tt class="docutils literal"><span class="pre">progressbar</span></tt> Module</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#tifffile-module"><tt class="docutils literal"><span class="pre">tifffile</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.spectrum_tools"><tt class="docutils literal"><span class="pre">spectrum_tools</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.tv_denoise"><tt class="docutils literal"><span class="pre">tv_denoise</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-hyperspy.misc.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#utils-readfile-module"><tt class="docutils literal"><span class="pre">utils_readfile</span></tt> Module</a></li>
-<li><a class="reference internal" href="#utils-varia-module"><tt class="docutils literal"><span class="pre">utils_varia</span></tt> Module</a></li>
-<li><a class="reference internal" href="#xmlreader-module"><tt class="docutils literal"><span class="pre">xmlreader</span></tt> Module</a></li>
 <li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 </ul>
 </li>

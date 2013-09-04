@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>io Package &mdash; Hyperspy 0.6+dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6+dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="io-package">
+<h1>io Package<a class="headerlink" href="#io-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-hyperspy.misc.io.tifffile">
+<span id="tifffile-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tifffile</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.io.tifffile" title="Permalink to this headline">¶</a></h2>
+<p>Read and write image data from and to TIFF files.</p>
+<p>Image and meta-data can be read from TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH,
+and FluoView files. Only a subset of the TIFF specification is supported,
+mainly uncompressed and losslessly compressed 2**(0 to 6) bit integer,
+16, 32 and 64-bit float, grayscale and RGB(A) images, which are commonly
+used in bio-scientific imaging. Specifically, reading JPEG/CCITT
+compressed image data or EXIF/IPTC/GPS/XMP meta-data is not implemented.
+Only primary info records are read for STK, FluoView, and NIH image formats.</p>
+<p>TIFF, the Tagged Image File Format, is under the control of Adobe Systems.
+BigTIFF allows for files greater than 4 GB. STK, LSM, FluoView, and OME-TIFF
+are custom extensions defined by MetaMorph, Carl Zeiss MicroImaging,
+Olympus, and the Open Microscopy Environment consortium respectively.</p>
+<p>The API is not stable yet and might change between revisions.
+Tested on little-endian platforms only.</p>
+<p>For command line usage run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">tifffile.py</span> <span class="pre">--help</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body"><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/">Christoph Gohlke</a>,
+Laboratory for Fluorescence Dynamics, University of California, Irvine</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">2012.07.05</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://www.python.org">CPython 2.7 or 3.2</a></li>
+<li><a class="reference external" href="http://numpy.scipy.org">Numpy 1.6</a></li>
+<li><a class="reference external" href="http://matplotlib.sourceforge.net">Matplotlib 1.1</a>
+(optional for plotting)</li>
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/">tifffile.c 2012.01.01</a>
+(optional for faster decoding of PackBits and LZW encoded strings)</li>
+</ul>
+</div>
+<div class="section" id="acknowledgements">
+<h3>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Egor Zindy, University of Manchester, for cz_lsm_scan_info specifics.</li>
+<li>Wim Lewis, for a bug fix and some read_cz_lsm functions.</li>
+</ul>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>TIFF 6.0 Specification and Supplements. Adobe Systems Incorporated.
+<a class="reference external" href="http://partners.adobe.com/public/developer/tiff/">http://partners.adobe.com/public/developer/tiff/</a></li>
+<li>TIFF File Format FAQ. <a class="reference external" href="http://www.awaresystems.be/imaging/tiff/faq.html">http://www.awaresystems.be/imaging/tiff/faq.html</a></li>
+<li>MetaMorph Stack (STK) Image File Format.
+<a class="reference external" href="http://support.meta.moleculardevices.com/docs/t10243.pdf">http://support.meta.moleculardevices.com/docs/t10243.pdf</a></li>
+<li>File Format Description - LSM 5xx Release 2.0.
+<a class="reference external" href="http://ibb.gsf.de/homepage/karsten.rodenacker/IDL/Lsmfile.doc">http://ibb.gsf.de/homepage/karsten.rodenacker/IDL/Lsmfile.doc</a></li>
+<li>BioFormats. <a class="reference external" href="http://www.loci.wisc.edu/ome/formats.html">http://www.loci.wisc.edu/ome/formats.html</a></li>
+<li>The OME-TIFF format.
+<a class="reference external" href="http://www.openmicroscopy.org/site/support/file-formats/ome-tiff">http://www.openmicroscopy.org/site/support/file-formats/ome-tiff</a></li>
+</ol>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s">&#39;temp.tif&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">image</span> <span class="o">==</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tif</span> <span class="o">=</span> <span class="n">TIFFfile</span><span class="p">(</span><span class="s">&#39;test.tif&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image0</span> <span class="o">=</span> <span class="n">tif</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">tif</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">t</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">value</span>
+<span class="gp">... </span>    <span class="n">image</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">is_rgb</span><span class="p">:</span> <span class="k">pass</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">is_palette</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">t</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">color_map</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">is_stk</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">t</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">mm_uic_tags</span><span class="o">.</span><span class="n">number_planes</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">is_lsm</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">t</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">cz_lsm_info</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tif</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="hyperspy.misc.io.tifffile.imsave">
+<tt class="descclassname">hyperspy.misc.io.tifffile.</tt><tt class="descname">imsave</tt><big>(</big><em>filename</em>, <em>data</em>, <em>photometric=None</em>, <em>planarconfig=None</em>, <em>resolution=None</em>, <em>description=None</em>, <em>software='tifffile.py'</em>, <em>byteorder=None</em>, <em>bigtiff=False</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tifffile.imsave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write image data to TIFF file.</p>
+<p>Image data are written uncompressed in one stripe per plane.
+Dimensions larger than 2 or 3 (depending on photometric mode and
+planar configuration) are flattened and saved as separate pages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>Name of file to write.</p>
+</div></blockquote>
+<p><strong>data</strong> : array_like</p>
+<blockquote>
+<div><p>Input image. The last dimensions are assumed to be image height,
+width, and samples.</p>
+</div></blockquote>
+<p><strong>photometric</strong> : {&#8216;minisblack&#8217;, &#8216;miniswhite&#8217;, &#8216;rgb&#8217;}</p>
+<blockquote>
+<div><p>The color space of the image data.
+By default this setting is inferred from the data shape.</p>
+</div></blockquote>
+<p><strong>planarconfig</strong> : {&#8216;contig&#8217;, &#8216;planar&#8217;}</p>
+<blockquote>
+<div><p>Specifies if samples are stored contiguous or in separate planes.
+By default this setting is inferred from the data shape.
+&#8216;contig&#8217;: last dimension contains samples.
+&#8216;planar&#8217;: third last dimension contains samples.</p>
+</div></blockquote>
+<p><strong>resolution</strong> : ((int, int), (int, int))</p>
+<blockquote>
+<div><p>X and Y resolution in dots per inch as rational numbers.</p>
+</div></blockquote>
+<p><strong>description</strong> : str</p>
+<blockquote>
+<div><p>The subject of the image. Saved with the first page only.</p>
+</div></blockquote>
+<p><strong>software</strong> : str</p>
+<blockquote>
+<div><p>Name of the software used to create the image.
+Saved with the first page only.</p>
+</div></blockquote>
+<p><strong>byteorder</strong> : {&#8216;&lt;&#8217;, &#8216;&gt;&#8217;}</p>
+<blockquote>
+<div><p>The endianness of the data in the file.
+By default this is the system&#8217;s native byte order.</p>
+</div></blockquote>
+<p><strong>bigtiff</strong> : bool</p>
+<blockquote class="last">
+<div><p>If True the BigTIFF format is used.
+By default the standard TIFF format is used for data less than 2040 MB.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tifffile.imread">
+<tt class="descclassname">hyperspy.misc.io.tifffile.</tt><tt class="descname">imread</tt><big>(</big><em>filename</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tifffile.imread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return image data from TIFF file as numpy array.</p>
+<p>The first image series is returned if no arguments are provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>key</strong> : int, slice, or sequence of page indices</p>
+<blockquote>
+<div><p>Defines which pages to return as array.</p>
+</div></blockquote>
+<p><strong>series</strong> : int</p>
+<blockquote class="last">
+<div><p>Defines which series of pages to return as array.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s">&#39;test.tif&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tifffile.imshow">
+<tt class="descclassname">hyperspy.misc.io.tifffile.</tt><tt class="descname">imshow</tt><big>(</big><em>data</em>, <em>title=None</em>, <em>vmin=0</em>, <em>vmax=None</em>, <em>cmap=None</em>, <em>bitspersample=None</em>, <em>photometric='rgb'</em>, <em>interpolation='nearest'</em>, <em>dpi=96</em>, <em>figure=None</em>, <em>subplot=111</em>, <em>maxdim=4096</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tifffile.imshow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot n-dimensional images using matplotlib.pyplot.</p>
+<p>Return figure, subplot and plot axis.
+Requires pyplot already imported <tt class="docutils literal"><span class="pre">from</span> <span class="pre">matplotlib</span> <span class="pre">import</span> <span class="pre">pyplot</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>bitspersample</strong> : int or None</p>
+<blockquote>
+<div><p>Number of bits per channel in integer RGB images.</p>
+</div></blockquote>
+<p><strong>photometric</strong> : {&#8216;miniswhite&#8217;, &#8216;minisblack&#8217;, &#8216;rgb&#8217;, or &#8216;palette&#8217;}</p>
+<blockquote>
+<div><p>The color space of the image data.</p>
+</div></blockquote>
+<p><strong>title</strong> : str</p>
+<blockquote>
+<div><p>Window and subplot title.</p>
+</div></blockquote>
+<p><strong>figure</strong> : matplotlib.figure.Figure (optional).</p>
+<blockquote>
+<div><p>Matplotlib to use for plotting.</p>
+</div></blockquote>
+<p><strong>subplot</strong> : int</p>
+<blockquote>
+<div><p>A matplotlib.pyplot.subplot axis.</p>
+</div></blockquote>
+<p><strong>maxdim</strong> : int</p>
+<blockquote>
+<div><p>maximum image size in any dimension.</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : optional</p>
+<blockquote class="last">
+<div><p>Arguments for matplotlib.pyplot.imshow.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.misc.io.tifffile.TIFFfile">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.io.tifffile.</tt><tt class="descname">TIFFfile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tifffile.TIFFfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Read image and meta-data from TIFF, STK, LSM, and FluoView files.</p>
+<p>TIFFfile instances must be closed using the close method.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tif</span> <span class="o">=</span> <span class="n">TIFFfile</span><span class="p">(</span><span class="s">&#39;test.tif&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">images</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">finally</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">tif</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hyperspy.misc.io.tools">
+<span id="tools-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tools</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.io.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.io.tools.append2pathname">
+<tt class="descclassname">hyperspy.misc.io.tools.</tt><tt class="descname">append2pathname</tt><big>(</big><em>filename</em>, <em>to_append</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tools.append2pathname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a string to a path name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<p class="last"><strong>to_append</strong> : str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tools.dump_dictionary">
+<tt class="descclassname">hyperspy.misc.io.tools.</tt><tt class="descname">dump_dictionary</tt><big>(</big><em>file</em>, <em>dic</em>, <em>string='root'</em>, <em>node_separator='.'</em>, <em>value_separator=' = '</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tools.dump_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tools.ensure_directory">
+<tt class="descclassname">hyperspy.misc.io.tools.</tt><tt class="descname">ensure_directory</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tools.ensure_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the path exists and if it does not create the directory</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tools.incremental_filename">
+<tt class="descclassname">hyperspy.misc.io.tools.</tt><tt class="descname">incremental_filename</tt><big>(</big><em>filename</em>, <em>i=1</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tools.incremental_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a file with the same file name exists, returns a new filename that
+does not exists.</p>
+<p>The new file name is created by appending <cite>-n</cite> (where <cite>n</cite> is an integer)
+to path name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<p><strong>i</strong> : int</p>
+<blockquote class="last">
+<div><p>The number to be appended.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.tools.overwrite">
+<tt class="descclassname">hyperspy.misc.io.tools.</tt><tt class="descname">overwrite</tt><big>(</big><em>fname</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.tools.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>If file exists &#8216;fname&#8217;, ask for overwriting and return True or False,
+else return True.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.io.ttols">
+<span id="ttols-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ttols</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.io.ttols" title="Permalink to this headline">¶</a></h2>
+<p>Created on Thu Jun  6 12:10:39 2013</p>
+<p>&#64;author: fjd29</p>
+</div>
+<div class="section" id="module-hyperspy.misc.io.utils_readfile">
+<span id="utils-readfile-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utils_readfile</span></tt> Module<a class="headerlink" href="#module-hyperspy.misc.io.utils_readfile" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_boolean">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_boolean</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_boolean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 1-Byte charater from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_byte">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_byte</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_byte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 1-Byte charater from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_char">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_char</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 1-Byte charater from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_double">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_double</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_double" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 8-Byte floating point from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_float">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_float</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 4-Byte floating point from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_long">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_long</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_long" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 4-Byte integer from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_short">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_short</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 2-Byte integer from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_ulong">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_ulong</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_ulong" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 4-Byte integer from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.io.utils_readfile.read_ushort">
+<tt class="descclassname">hyperspy.misc.io.utils_readfile.</tt><tt class="descname">read_ushort</tt><big>(</big><em>f</em>, <em>endian</em><big>)</big><a class="headerlink" href="#hyperspy.misc.io.utils_readfile.read_ushort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a 2-Byte integer from file f
+with a given endianness (byte order).
+endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">io Package</a><ul>
+<li><a class="reference internal" href="#module-hyperspy.misc.io.tifffile"><tt class="docutils literal"><span class="pre">tifffile</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hyperspy.misc.io.tools"><tt class="docutils literal"><span class="pre">tools</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.io.ttols"><tt class="docutils literal"><span class="pre">ttols</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.io.utils_readfile"><tt class="docutils literal"><span class="pre">utils_readfile</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/hyperspy.misc.io.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, The Hyperspy development team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
