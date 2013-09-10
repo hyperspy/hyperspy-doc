@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Image Processing &mdash; Hyperspy 0.3.beta3-dev documentation</title>
+    <title>Image tools &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.beta3-dev',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,10 +27,25 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.3.beta3-dev documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Mapped parameters structure" href="mapped_parameters_structure.html" />
-    <link rel="prev" title="Electron Energy Loss Spectroscopy extra features" href="eels.html" /> 
+    <link rel="next" title="Data visualisation" href="visualisation.html" />
+    <link rel="prev" title="Spectrum tools" href="spectrum.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
   </head>
   <body>
     <div class="related">
@@ -46,12 +61,12 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
+          <a href="visualisation.html" title="Data visualisation"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
+          <a href="spectrum.html" title="Spectrum tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,169 +76,25 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="image-processing">
-<h1>Image Processing<a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="types-of-data">
-<h2>Types of data<a class="headerlink" href="#types-of-data" title="Permalink to this headline">¶</a></h2>
-<p>The &#8220;data&#8221; we&#8217;ll be addressing here will consist of several images of
-some highly repetitive structure with some slight variations in the
-structure from image to image.  For example, faces.  Or, more along
-the lines of the author&#8217;s research, images of a repetitive (though
-slightly varying) atomic structure.</p>
-<p>All images must be the same shape, same scale, and must be registered
-with one another.  The idea is that any pixel in one image should be
-directly comparable to the corresponding pixel in any other image.</p>
+  <div class="section" id="image-tools">
+<h1>Image tools<a class="headerlink" href="#image-tools" title="Permalink to this headline">¶</a></h1>
+<p>These methods are only available for Signal object with signal_dimension equal
+to two.</p>
+<div class="section" id="image-registration-alignment">
+<h2>Image registration (alignment)<a class="headerlink" href="#image-registration-alignment" title="Permalink to this headline">¶</a></h2>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal2DTools.align2D" title="hyperspy.signal.Signal2DTools.align2D"><tt class="xref py py-meth docutils literal"><span class="pre">align2D()</span></tt></a> method provides advanced image
+alignment functionality, including subpixel alignment.</p>
 </div>
-<div class="section" id="goals-of-analysis">
-<h2>Goals of analysis<a class="headerlink" href="#goals-of-analysis" title="Permalink to this headline">¶</a></h2>
-<p>What this analysis can provide you is one of several things:</p>
+<div class="section" id="cropping-an-image">
+<span id="image-crop"></span><h2>Cropping an image<a class="headerlink" href="#cropping-an-image" title="Permalink to this headline">¶</a></h2>
+<p>In addition to cropping using the powerful and compact <a class="reference internal" href="tools.html#signal-indexing"><em>Indexing</em></a>
+the following method is available to crop spectra the familiar top, bottom,
+left, right syntax.</p>
 <ul class="simple">
-<li>Factor images, which give you visual insight into correlated regions
-of change in your data</li>
-<li>Peak locations and other characteristics (height, shape,
-orientation)</li>
-<li>Factors of peak characteristics, showing correlated changes in
-heights, positions, shapes, and orientations.</li>
-<li>Classifications of several distinct structural variations into
-categories</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal2DTools.crop_image" title="hyperspy.signal.Signal2DTools.crop_image"><tt class="xref py py-meth docutils literal"><span class="pre">crop_image()</span></tt></a></li>
 </ul>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>The best way to start is to pick out several images you&#8217;ve taken under
-identical experimental conditions.  For microscopes, make sure the
-focus on all your images is roughly similar, and that you haven&#8217;t
-changed any apertures or anything else that would change what the
-image contrast means.</p>
-<p>Load your image(s) into a hyperspy object:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;filename.dm3&#39;</span><span class="p">)</span>
-<span class="c"># or, for many files:</span>
-<span class="n">d</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;*.dm3&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="cropping-cells">
-<h2>Cropping cells<a class="headerlink" href="#cropping-cells" title="Permalink to this headline">¶</a></h2>
-<p>To obtain the similar images that go into the analysis, we crop small
-sub-images from your original images.  Thanks to Mike getting sick of
-the tedium of doing this by hand, there&#8217;s an interactive tool for
-cropping cells from one or more images.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">cell_cropper</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>This dialog serves two primary functions:</p>
-<ul class="simple">
-<li>Picking your template<ul>
-<li>Drag the cursor indicated by the intersection of the white lines
-overlaid on your image.</li>
-<li>You can also adjust the top or left coordinates from the dialog in
-the upper right.</li>
-<li>Adjust the size of the template by entering a value in the
-corresponding box.</li>
-</ul>
-</li>
-<li>Locating cells that match the template on the image<ul>
-<li>Cross-correlation is automatically calculated on your image
-whenever the template changes.  You can view the cross-correlation
-map by checking the box below the image.</li>
-<li>Matches to the template are located by finding peaks on the cross
-correlation map.  This is slow, so click the &#8220;Find Peaks&#8221; button
-and be patient.</li>
-<li>Once peaks have been found, you can adjust the threshold to
-specify exactly which peaks should be cropped.  Right-click on the
-colorbar, and drag to select a threshold area.  Note that the
-transparency of the overlaid spots on the image changes as you
-change the threshold.  Opaque spots will be cropped, while
-transparent spots will not.</li>
-</ul>
-</li>
-</ul>
-<p>When you have found spots to your satisfaction, click OK (you won&#8217;t be
-able to click OK until you have at least some spots).  After clicking
-OK, the agg object now contains all of your cropped cells.</p>
-</div>
-<div class="section" id="analysis-in-image-space">
-<h2>Analysis in Image space<a class="headerlink" href="#analysis-in-image-space" title="Permalink to this headline">¶</a></h2>
-<p>The aggregate object we&#8217;ve created functions just like any other
-normal data object.  To run multivariate analysis on the stack of
-cropped images,</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">principal_components_analysis</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>To view your factor images, use the <strong>plotPca_factors</strong> method:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="why-ica-works-for-images">
-<h2>Why ICA works for images<a class="headerlink" href="#why-ica-works-for-images" title="Permalink to this headline">¶</a></h2>
-<p>For several real-world situations, the distributions of components
-that make up the system are not Gaussian.  This means that PCA will
-never work well for finding the original components - it can only
-derive Gaussian components.  Independent component analysis, on the
-other hand, derives components by intentionally maximizing the
-non-Gaussianity of components.  The idea is encapsulated by the
-<a class="reference external" href="http://en.wikipedia.org/wiki/Central_limit_theorem">Central Limit Theorem</a>,
-which states that the sum of any number of independent components
-will converge towards the Gaussian distribution.</p>
-</div>
-<div class="section" id="characterizing-image-peaks">
-<h2>Characterizing image peaks<a class="headerlink" href="#characterizing-image-peaks" title="Permalink to this headline">¶</a></h2>
-<p>To make the interpretation of factors more straightforward, you can
-derive characteristics for image peaks, and run multivariate analysis
-on the characteristics, rather than the image data.  Assuming that
-your characteristics properly parameterize your peaks (i.e. the
-parameterized peak does not lose important information), this
-description of your data is equivalent to the image.</p>
-<p>In hyperspy, you can quickly and easily characterize all the peaks in
-a stack of images with the <strong>peak_char_stack</strong> function.  Its one
-required parameter is the peak_width, which you should estimate
-visually from your images.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">peak_char_stack</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="meaning-of-peak-characteristics">
-<h2>Meaning of peak characteristics<a class="headerlink" href="#meaning-of-peak-characteristics" title="Permalink to this headline">¶</a></h2>
-<p>Peak characteristics currently come in sets of 7:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>0 and 1: the peak position</li>
-<li>2 and 3: the difference between peak position and target position</li>
-<li>4: the peak height (or change in peak height for a component)</li>
-<li>5: the peak orientation (or change in peak orientation for a</li>
-</ol>
-<blockquote>
-<div>component).  Orientation ranges from -pi/2 to pi/2 radians.</div></blockquote>
-<ol class="arabic simple">
-<li>6: the peak eccentricity (or change in peak eccentricity for a</li>
-</ol>
-<blockquote>
-<div>component).  Eccentricity ranges from 0 to 1, with 0 being a
-perfectly round object, and 1 being a line.</div></blockquote>
-</div></blockquote>
-</div>
-<div class="section" id="analysis-in-peak-space">
-<h2>Analysis in Peak space<a class="headerlink" href="#analysis-in-peak-space" title="Permalink to this headline">¶</a></h2>
-<p>Running multivariate analysis on peak characteristics is similar to
-analysis on image data, with the exception that you pass the on_peaks
-parameter as True.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">agg</span><span class="o">.</span><span class="n">principal_component_analysis</span><span class="p">(</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Similarly, plotting functions also take the on_peaks parameter.  They
-also offer a few more options to control exactly which of the peak
-parameters are plotted.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># default view for peak plotting is to plot shifts,</span>
-<span class="c"># magnified by a factor of 100, along with a scatter map</span>
-<span class="c"># of peak heights.</span>
-<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="c"># disable the vector plot of peak shifts</span>
-<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">plot_shifts</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="c"># plot peak orientation instead of peak height</span>
-<span class="n">agg</span><span class="o">.</span><span class="n">plotPca_factors</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">on_peaks</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">plot_char</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 </div>
 
@@ -238,26 +109,19 @@ parameters are plotted.</p>
             </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Image Processing</a><ul>
-<li><a class="reference internal" href="#types-of-data">Types of data</a></li>
-<li><a class="reference internal" href="#goals-of-analysis">Goals of analysis</a></li>
-<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li><a class="reference internal" href="#cropping-cells">Cropping cells</a></li>
-<li><a class="reference internal" href="#analysis-in-image-space">Analysis in Image space</a></li>
-<li><a class="reference internal" href="#why-ica-works-for-images">Why ICA works for images</a></li>
-<li><a class="reference internal" href="#characterizing-image-peaks">Characterizing image peaks</a></li>
-<li><a class="reference internal" href="#meaning-of-peak-characteristics">Meaning of peak characteristics</a></li>
-<li><a class="reference internal" href="#analysis-in-peak-space">Analysis in Peak space</a></li>
+<li><a class="reference internal" href="#">Image tools</a><ul>
+<li><a class="reference internal" href="#image-registration-alignment">Image registration (alignment)</a></li>
+<li><a class="reference internal" href="#cropping-an-image">Cropping an image</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="eels.html"
-                        title="previous chapter">Electron Energy Loss Spectroscopy extra features</a></p>
+  <p class="topless"><a href="spectrum.html"
+                        title="previous chapter">Spectrum tools</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="mapped_parameters_structure.html"
-                        title="next chapter">Mapped parameters structure</a></p>
+  <p class="topless"><a href="visualisation.html"
+                        title="next chapter">Data visualisation</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/user_guide/image.txt"
@@ -293,18 +157,18 @@ parameters are plotted.</p>
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
+          <a href="visualisation.html" title="Data visualisation"
              >next</a> |</li>
         <li class="right" >
-          <a href="eels.html" title="Electron Energy Loss Spectroscopy extra features"
+          <a href="spectrum.html" title="Spectrum tools"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

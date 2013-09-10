@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Electron Energy Loss Spectroscopy extra features &mdash; Hyperspy 0.3.beta3-dev documentation</title>
+    <title>Electron Energy Loss Spectroscopy &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.beta3-dev',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,10 +27,25 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.3.beta3-dev documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Image Processing" href="image.html" />
-    <link rel="prev" title="Curve fitting" href="model.html" /> 
+    <link rel="next" title="Energy-Dispersive X-Rays" href="eds.html" />
+    <link rel="prev" title="Curve fitting" href="model.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
   </head>
   <body>
     <div class="related">
@@ -46,12 +61,12 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="image.html" title="Image Processing"
+          <a href="eds.html" title="Energy-Dispersive X-Rays"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="model.html" title="Curve fitting"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,8 +76,197 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="electron-energy-loss-spectroscopy-extra-features">
-<h1>Electron Energy Loss Spectroscopy extra features<a class="headerlink" href="#electron-energy-loss-spectroscopy-extra-features" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="electron-energy-loss-spectroscopy">
+<h1>Electron Energy Loss Spectroscopy<a class="headerlink" href="#electron-energy-loss-spectroscopy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<p>These methods are only available for the following signals:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><tt class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></tt></a></li>
+</ul>
+<div class="section" id="spikes-removal">
+<h3>Spikes removal<a class="headerlink" href="#spikes-removal" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5: </span>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.spikes_removal_tool" title="hyperspy._signals.eels.EELSSpectrum.spikes_removal_tool"><tt class="xref py py-meth docutils literal"><span class="pre">spikes_removal_tool()</span></tt></a> replaces the
+old <tt class="xref py py-meth docutils literal"><span class="pre">remove_spikes()</span></tt>.</p>
+<p><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.spikes_removal_tool" title="hyperspy._signals.eels.EELSSpectrum.spikes_removal_tool"><tt class="xref py py-meth docutils literal"><span class="pre">spikes_removal_tool()</span></tt></a> provides an user
+interface to remove spikes from spectra.</p>
+<div class="figure align-center">
+<img alt="../_images/spikes_removal_tool.png" src="../_images/spikes_removal_tool.png" style="width: 500px;" />
+<p class="caption">Spikes removal tool</p>
+</div>
+</div>
+<div class="section" id="define-the-elemental-composition-of-the-sample">
+<h3>Define the elemental composition of the sample<a class="headerlink" href="#define-the-elemental-composition-of-the-sample" title="Permalink to this headline">¶</a></h3>
+<p>It can be useful to define the composition of the sample for archiving purposes
+or for some other process (e.g. curve fitting) that may use this information.
+The elemental composition of the sample can be defined using
+<a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.add_elements" title="hyperspy._signals.eels.EELSSpectrum.add_elements"><tt class="xref py py-meth docutils literal"><span class="pre">add_elements()</span></tt></a>. The information is stored
+in the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute (see
+<a class="reference internal" href="mapped_parameters_structure.html#mapped-parameters-structure"><em>Mapped parameters structure</em></a>)</p>
+</div>
+<div class="section" id="estimate-the-fwhm-of-a-peak">
+<h3>Estimate the FWHM of a peak<a class="headerlink" href="#estimate-the-fwhm-of-a-peak" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><tt class="xref py py-meth docutils literal"><span class="pre">estimate_FWHM()</span></tt></li>
+</ul>
+</div>
+<div class="section" id="estimate-the-thickness">
+<h3>Estimate the thickness<a class="headerlink" href="#estimate-the-thickness" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_thickness" title="hyperspy._signals.eels.EELSSpectrum.estimate_thickness"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_thickness()</span></tt></a> can estimate the
+thickness from a low-loss EELS spectrum.</p>
+</div>
+<div class="section" id="estimate-zero-loss-peak-centre">
+<h3>Estimate zero loss peak centre<a class="headerlink" href="#estimate-zero-loss-peak-centre" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre" title="hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_zero_loss_peak_centre()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="deconvolutions">
+<h3>Deconvolutions<a class="headerlink" href="#deconvolutions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.fourier_log_deconvolution" title="hyperspy._signals.eels.EELSSpectrum.fourier_log_deconvolution"><tt class="xref py py-meth docutils literal"><span class="pre">fourier_log_deconvolution()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.fourier_ratio_deconvolution" title="hyperspy._signals.eels.EELSSpectrum.fourier_ratio_deconvolution"><tt class="xref py py-meth docutils literal"><span class="pre">fourier_ratio_deconvolution()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.richardson_lucy_deconvolution" title="hyperspy._signals.eels.EELSSpectrum.richardson_lucy_deconvolution"><tt class="xref py py-meth docutils literal"><span class="pre">richardson_lucy_deconvolution()</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="estimate-elastic-scattering-threshold">
+<h3>Estimate elastic scattering threshold<a class="headerlink" href="#estimate-elastic-scattering-threshold" title="Permalink to this headline">¶</a></h3>
+<p>Use
+<a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold" title="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_elastic_scattering_threshold()</span></tt></a> to
+calculate separation point between elastic and inelastic scattering on some
+EELS low-loss spectra. This algorithm calculates the derivative of the signal
+and assigns the inflexion point to the first point below a certain tolerance.
+This tolerance value can be set using the tol keyword.</p>
+<p>Currently, the method uses smoothing to reduce the impact of the noise in the
+measure. The number of points used for the smoothing window can be specified by
+the npoints keyword.</p>
+</div>
+<div class="section" id="estimate-elastic-scattering-intensity">
+<h3>Estimate elastic scattering intensity<a class="headerlink" href="#estimate-elastic-scattering-intensity" title="Permalink to this headline">¶</a></h3>
+<p>Use <tt class="xref py py-meth docutils literal"><span class="pre">estimate_elastic_scattering_intensity()</span></tt> to calculate the integral
+below the zero loss peak (elastic intensity) from EELS low-loss spectra
+containing the zero loss peak. This integral can use the threshold image
+calculated by the
+<a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold" title="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_elastic_scattering_threshold()</span></tt></a> as
+end energy for the integration at each spectra or use the same energy value for
+all spectra. Also, if no threshold is specified, the routine will perform a
+rough estimation of the inflexion values at each spectrum.</p>
+</div>
+<div class="section" id="splice-zero-loss-peak">
+<h3>Splice zero loss peak<a class="headerlink" href="#splice-zero-loss-peak" title="Permalink to this headline">¶</a></h3>
+<p>Once <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold" title="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_elastic_scattering_threshold()</span></tt></a> has determined the elastic scattering threshold value(s), this tool can be used to separate the zero loss peak from the eels spectra. Use <tt class="xref py py-meth docutils literal"><span class="pre">splice_zero_loss_peak()</span></tt> in order to obtain a ZLP suitable for Fourier-Log deconvolution from your EELS low-loss spectra by setting the &#8220;smooth&#8221; option, that will apply the hanning window to the righ end of the data.</p>
+</div>
+</div>
+<div class="section" id="eels-curve-fitting">
+<span id="eds-tools-label"></span><h2>EELS curve fitting<a class="headerlink" href="#eels-curve-fitting" title="Permalink to this headline">¶</a></h2>
+<p>Hyperspy makes it really easy to quantify EELS core-loss spectra by curve
+fitting as it is shown in the next example of quantification of a boron nitride
+EELS spectrum from the <a class="reference external" href="http://pc-web.cemes.fr/eelsdb/index.php?page=home.php">The EELS Data Base</a>.</p>
+<p>Load the core-loss and low-loss spectra</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_B_K_Giovanni_Bertoni_100.msa&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_LowLoss_Giovanni_Bertoni_96.msa&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set some important experimental information that is missing from the original
+core-loss file</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">convergence_angle</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">collection_angle</span><span class="o">=</span><span class="mf">2.55</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Define the chemical composition of the sample</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">((</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We pass the low-loss spectrum to <a class="reference internal" href="../api/hyperspy.html#hyperspy.hspy.create_model" title="hyperspy.hspy.create_model"><tt class="xref py py-func docutils literal"><span class="pre">create_model()</span></tt></a> to include the
+effect of multiple scattering by Fourier-ratio convolution.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hyperspy has created the model and configured it automatically:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">[&lt;background (PowerLaw component)&gt;,</span>
+<span class="go">&lt;N_K (EELSCLEdge component)&gt;,</span>
+<span class="go">&lt;B_K (EELSCLEdge component)&gt;]</span>
+</pre></div>
+</div>
+<p>Furthermore, the components are available in the user namespace</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">N_K</span>
+<span class="go">&lt;N_K (EELSCLEdge component)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B_K</span>
+<span class="go">&lt;B_K (EELSCLEdge component)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">background</span>
+<span class="go">&lt;background (PowerLaw component)&gt;</span>
+</pre></div>
+</div>
+<p>Conveniently, variables named as the element symbol contain all the eels
+core-loss components of the element to facilitate applying some methods to all
+of them at once. Although in this example the list contains just one component
+this is not generally the case.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span>
+<span class="go">[&lt;N_K (EELSCLEdge component)&gt;]</span>
+</pre></div>
+</div>
+<p>By default the fine structure features are disabled (although the default value
+can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><em>Configuring hyperspy</em></a>). We must enable them
+to accurately fit this spectrum.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">enable_fine_structure</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We use smart_fit instead of standard fit method because smart_fit is optimized
+to fit EELS core-loss spectra</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">smart_fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Print the result of the fit</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">quantify</span><span class="p">()</span>
+<span class="go">Absolute quantification:</span>
+<span class="go">Elem.       Intensity</span>
+<span class="go">B   0.045648</span>
+<span class="go">N   0.048061</span>
+</pre></div>
+</div>
+<p>Visualize the result</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="../_images/curve_fitting_BN.png" src="../_images/curve_fitting_BN.png" style="width: 500px;" />
+</div>
+<p>There are several methods that are only available in
+<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel" title="hyperspy.models.eelsmodel.EELSModel"><tt class="xref py py-class docutils literal"><span class="pre">EELSModel</span></tt></a>:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><tt class="xref py py-meth docutils literal"><span class="pre">smart_fit()</span></tt></a> is a fit method that is
+more robust than the standard routine when fitting EELS data.</li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.quantify" title="hyperspy.models.eelsmodel.EELSModel.quantify"><tt class="xref py py-meth docutils literal"><span class="pre">quantify()</span></tt></a> prints the intensity at
+the current locations of all the EELS ionisation edges in the model.</li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data" title="hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data"><tt class="xref py py-meth docutils literal"><span class="pre">remove_fine_structure_data()</span></tt></a> removes
+the fine structure spectral data range (as defined by the
+<tt class="xref py py-attr docutils literal"><span class="pre">fine_structure_width)</span></tt>
+ionisation edge components. It is specially useful when fitting without
+convolving with a zero-loss peak.</li>
+</ul>
+<p>The following methods permit to easily enable/disable background and ionisation
+edges components:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><tt class="xref py py-meth docutils literal"><span class="pre">enable_edges()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><tt class="xref py py-meth docutils literal"><span class="pre">enable_background()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><tt class="xref py py-meth docutils literal"><span class="pre">disable_background()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">enable_fine_structure()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">disable_fine_structure()</span></tt></a></li>
+</ul>
+<p>The following methods permit to easily enable/disable several ionisation
+edge functionalities:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">set_all_edges_intensities_positive()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">unset_all_edges_intensities_positive()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">enable_free_onset_energy()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">disable_free_onset_energy()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><tt class="xref py py-meth docutils literal"><span class="pre">fix_edges()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><tt class="xref py py-meth docutils literal"><span class="pre">free_edges()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">fix_fine_structure()</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">free_fine_structure()</span></tt></a></li>
+</ul>
+</div>
 </div>
 
 
@@ -74,12 +278,32 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
             </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Electron Energy Loss Spectroscopy</a><ul>
+<li><a class="reference internal" href="#tools">Tools</a><ul>
+<li><a class="reference internal" href="#spikes-removal">Spikes removal</a></li>
+<li><a class="reference internal" href="#define-the-elemental-composition-of-the-sample">Define the elemental composition of the sample</a></li>
+<li><a class="reference internal" href="#estimate-the-fwhm-of-a-peak">Estimate the FWHM of a peak</a></li>
+<li><a class="reference internal" href="#estimate-the-thickness">Estimate the thickness</a></li>
+<li><a class="reference internal" href="#estimate-zero-loss-peak-centre">Estimate zero loss peak centre</a></li>
+<li><a class="reference internal" href="#deconvolutions">Deconvolutions</a></li>
+<li><a class="reference internal" href="#estimate-elastic-scattering-threshold">Estimate elastic scattering threshold</a></li>
+<li><a class="reference internal" href="#estimate-elastic-scattering-intensity">Estimate elastic scattering intensity</a></li>
+<li><a class="reference internal" href="#splice-zero-loss-peak">Splice zero loss peak</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eels-curve-fitting">EELS curve fitting</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="model.html"
                         title="previous chapter">Curve fitting</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="image.html"
-                        title="next chapter">Image Processing</a></p>
+  <p class="topless"><a href="eds.html"
+                        title="next chapter">Energy-Dispersive X-Rays</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/user_guide/eels.txt"
@@ -115,18 +339,18 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="image.html" title="Image Processing"
+          <a href="eds.html" title="Energy-Dispersive X-Rays"
              >next</a> |</li>
         <li class="right" >
           <a href="model.html" title="Curve fitting"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.3.beta3-dev documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
