@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>simple_simulations example code: two_gaussians.py &mdash; Hyperspy 0.7b1 documentation</title>
+    <title>simple_simulations example code: two_gaussians.py &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.7b1',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.7b1 documentation" href="../../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../../index.html" />
  
 <script type="text/javascript">
 
@@ -42,8 +42,8 @@
 </script>
 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -55,14 +55,14 @@
         <li class="right" >
           <a href="../../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li> 
+        <li><a href="../../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="simple-simulations-example-code-two-gaussians-py">
 <span id="simple-simulations-two-gaussians"></span><h1>simple_simulations example code: two_gaussians.py<a class="headerlink" href="#simple-simulations-example-code-two-gaussians-py" title="Permalink to this headline">¶</a></h1>
@@ -75,16 +75,15 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-
 <span class="c"># Create an empty spectrum</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)))</span>
 
 <span class="c"># Generate some simple data: two Gaussians with random centers and area</span>
 
 <span class="c"># First we create a model</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-<span class="c">## Define the first gaussian</span>
+<span class="c"># Define the first gaussian</span>
 <span class="n">gs1</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="c"># Add it to the model</span>
 <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gs1</span><span class="p">)</span>
@@ -92,14 +91,14 @@
 <span class="c"># Set the sparameters</span>
 <span class="n">gs1</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="c"># Make the center vary in the -5,5 range around 128</span>
-<span class="n">gs1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">gs1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
 <span class="n">gs1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;is_set&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="c"># Make the area vary between 0 and 10000</span>
-<span class="n">gs1</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">10000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">gs1</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">10000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
 <span class="n">gs1</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;is_set&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="c">## Second gaussian</span>
+<span class="c"># Second gaussian</span>
 <span class="n">gs2</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="c"># Add it to the model</span>
 <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gs2</span><span class="p">)</span>
@@ -108,11 +107,11 @@
 <span class="n">gs2</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">20</span>
 
 <span class="c"># Make the center vary in the -10,10 range around 768</span>
-<span class="n">gs2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">768</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span>
+<span class="n">gs2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">768</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span>
 <span class="n">gs2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;is_set&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="c"># Make the area vary between 0 and 20000</span>
-<span class="n">gs2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">20000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">gs2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;values&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="mi">20000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
 <span class="n">gs2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s">&#39;is_set&#39;</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="c"># Create the dataset</span>
@@ -135,17 +134,19 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/hyperspy_logo.png" alt="Logo"/>
             </a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/examples/simple_simulations/two_gaussians.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/examples/simple_simulations/two_gaussians.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -162,7 +163,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -174,12 +175,12 @@
         <li class="right" >
           <a href="../../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li> 
+        <li><a href="../../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
 </html>

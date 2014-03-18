@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Loading and saving data &mdash; Hyperspy 0.7b1 documentation</title>
+    <title>Loading and saving data &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7b1',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.7b1 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Tools" href="tools.html" />
-    <link rel="prev" title="Getting started" href="getting_started.html" />
+    <link rel="next" title="Metadata structure" href="metadata_structure.html" />
+    <link rel="prev" title="Dielectric function tools" href="dielectric_function.html" />
  
 <script type="text/javascript">
 
@@ -45,8 +45,8 @@
 </script>
 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -59,12 +59,12 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tools.html" title="Tools"
+          <a href="metadata_structure.html" title="Metadata structure"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="getting_started.html" title="Getting started"
+          <a href="dielectric_function.html" title="Dielectric function tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -72,7 +72,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="loading-and-saving-data">
 <span id="io"></span><h1><a class="toc-backref" href="#id5">Loading and saving data</a><a class="headerlink" href="#loading-and-saving-data" title="Permalink to this headline">¶</a></h1>
@@ -116,8 +116,8 @@ image lena.jpg you can type:</p>
 </pre></div>
 </div>
 <p>If the loading was successful, the variable <em class="guilabel">s</em> contains a generic
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a>, a <a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.spectrum.Spectrum" title="hyperspy._signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> or an
-<a class="reference internal" href="../api/hyperspy.signals.html#hyperspy._signals.image.Image" title="hyperspy._signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>.</p>
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a>, a <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.spectrum.Spectrum" title="hyperspy._signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> or an
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.image.Image" title="hyperspy._signals.image.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Note for python programmers: the data is stored in a numpy array
@@ -133,18 +133,18 @@ providing the <tt class="docutils literal"><span class="pre">signal</span></tt> 
 </div>
 <p>Some file formats store some extra information about the data, which can be
 stored in &#8220;attributes&#8221;. If Hyperspy manages to read some extra information
-about the data it stores it in <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt>
+about the data it stores it in <tt class="xref py py-attr docutils literal"><span class="pre">original_metadata</span></tt>
 attribute. Also, it is possible that other information will be mapped by
 Hyperspy to a standard location where it can be used by some standard routines,
-the <tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> attribute.</p>
+the <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> attribute.</p>
 <p>To print the content of the parameters simply:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">mapped_parameters</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
 </pre></div>
 </div>
-<p>The <tt class="xref py py-attr docutils literal"><span class="pre">original_parameters</span></tt> and
-<tt class="xref py py-attr docutils literal"><span class="pre">mapped_parameters</span></tt> can be exported to  text files
-using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryBrowser.export" title="hyperspy.misc.utils.DictionaryBrowser.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> method, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_parameters</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s">&#39;parameters&#39;</span><span class="p">)</span>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">original_metadata</span></tt> and
+<tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> can be exported to  text files
+using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="hyperspy.misc.utils.DictionaryTreeBrowser.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> method, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_metadata</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s">&#39;parameters&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="loading-multiple-files">
@@ -188,7 +188,8 @@ extension. If the filename does not contain the extension the default format
 contains the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> that you want to write to a file, the
 following will write the data to a file called <tt class="file docutils literal"><span class="pre">spectrum.hdf5</span></tt> in the
 default <a class="reference internal" href="#hdf5-format"><em>HDF5</em></a> format:</p>
-<div class="highlight-python"><pre>.. code-block:: python</pre>
+<div class="highlight-python"><div class="highlight"><pre>.. code-block:: python
+</pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;spectrum&#39;</span><span class="p">)</span>
 </pre></div>
@@ -379,7 +380,7 @@ with it, all of them will be read and returned as a list.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
@@ -415,17 +416,19 @@ with it, all of them will be read and returned as a list.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="getting_started.html"
-                        title="previous chapter">Getting started</a></p>
+  <p class="topless"><a href="dielectric_function.html"
+                        title="previous chapter">Dielectric function tools</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="tools.html"
-                        title="next chapter">Tools</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_guide/io.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <p class="topless"><a href="metadata_structure.html"
+                        title="next chapter">Metadata structure</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_guide/io.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -442,7 +445,7 @@ with it, all of them will be read and returned as a list.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -455,18 +458,18 @@ with it, all of them will be read and returned as a list.</p>
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tools.html" title="Tools"
+          <a href="metadata_structure.html" title="Metadata structure"
              >next</a> |</li>
         <li class="right" >
-          <a href="getting_started.html" title="Getting started"
+          <a href="dielectric_function.html" title="Dielectric function tools"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
 </html>

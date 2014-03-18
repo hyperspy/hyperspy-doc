@@ -1,0 +1,793 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>hyperspy.misc.borrowed.astroML package &mdash; Hyperspy 0.6+dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6+dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hyperspy-misc-borrowed-astroml-package">
+<h1>hyperspy.misc.borrowed.astroML package<a class="headerlink" href="#hyperspy-misc-borrowed-astroml-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hyperspy.misc.borrowed.astroML.bayesian_blocks">
+<span id="hyperspy-misc-borrowed-astroml-bayesian-blocks-module"></span><h2>hyperspy.misc.borrowed.astroML.bayesian_blocks module<a class="headerlink" href="#module-hyperspy.misc.borrowed.astroML.bayesian_blocks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bayesian-block-implementation">
+<h3>Bayesian Block implementation<a class="headerlink" href="#bayesian-block-implementation" title="Permalink to this headline">¶</a></h3>
+<p>Dynamic programming algorithm for finding the optimal adaptive-width histogram.</p>
+<p>Based on Scargle et al 2012 <a class="reference internal" href="#r34" id="id1">[R34]</a></p>
+<div class="section" id="references">
+<h4>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h4>
+<table class="docutils citation" frame="void" id="r34" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R34]</a></td><td><a class="reference external" href="http://adsabs.harvard.edu/abs/2012arXiv1207.5578S">http://adsabs.harvard.edu/abs/2012arXiv1207.5578S</a></td></tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.Events">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.borrowed.astroML.bayesian_blocks.</tt><tt class="descname">Events</tt><span class="sig-paren">(</span><em>p0=0.05</em>, <em>gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.Events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc</span></tt></a></p>
+<p>Fitness for binned or unbinned events</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>p0</strong> : float</p>
+<blockquote>
+<div><p>False alarm probability, used to compute the prior on N
+(see eq. 21 of Scargle 2012).  Default prior is for p0 = 0.</p>
+</div></blockquote>
+<p><strong>gamma</strong> : float or None</p>
+<blockquote class="last">
+<div><p>If specified, then use this gamma to compute the general prior form,
+p ~ gamma^N.  If gamma is specified, p0 is ignored.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.fitness" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.fitness"><tt class="xref py py-obj docutils literal"><span class="pre">fitness</span></tt></a>(N_k,&nbsp;T_k)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">gamma_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td>Basic prior, parametrized by gamma (eq.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">p0_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.prior" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.prior"><tt class="xref py py-obj docutils literal"><span class="pre">prior</span></tt></a>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_input</span></tt>(t,&nbsp;x,&nbsp;sigma)</td>
+<td>Check that input is valid</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.fitness">
+<tt class="descname">fitness</tt><span class="sig-paren">(</span><em>N_k</em>, <em>T_k</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.fitness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.prior">
+<tt class="descname">prior</tt><span class="sig-paren">(</span><em>N</em>, <em>Ntot</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.Events.prior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.borrowed.astroML.bayesian_blocks.</tt><tt class="descname">FitnessFunc</tt><span class="sig-paren">(</span><em>p0=0.05</em>, <em>gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class for fitness functions</p>
+<p>Each fitness function class has the following:
+- fitness(...) : compute fitness function.</p>
+<blockquote>
+<div>Arguments accepted by fitness must be among [T_k, N_k, a_k, b_k, c_k]</div></blockquote>
+<ul class="simple">
+<li>prior(N, Ntot) : compute prior on N given a total number of points Ntot</li>
+</ul>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.fitness" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.fitness"><tt class="xref py py-obj docutils literal"><span class="pre">fitness</span></tt></a>(**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.gamma_prior" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.gamma_prior"><tt class="xref py py-obj docutils literal"><span class="pre">gamma_prior</span></tt></a>(N,&nbsp;Ntot)</td>
+<td>Basic prior, parametrized by gamma (eq.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.p0_prior" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.p0_prior"><tt class="xref py py-obj docutils literal"><span class="pre">p0_prior</span></tt></a>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.prior" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.prior"><tt class="xref py py-obj docutils literal"><span class="pre">prior</span></tt></a>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.validate_input" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.validate_input"><tt class="xref py py-obj docutils literal"><span class="pre">validate_input</span></tt></a>(t,&nbsp;x,&nbsp;sigma)</td>
+<td>Check that input is valid</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.args">
+<tt class="descname">args</tt><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.fitness">
+<tt class="descname">fitness</tt><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.fitness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.gamma_prior">
+<tt class="descname">gamma_prior</tt><span class="sig-paren">(</span><em>N</em>, <em>Ntot</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.gamma_prior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic prior, parametrized by gamma (eq. 3 in Scargle 2012)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.p0_prior">
+<tt class="descname">p0_prior</tt><span class="sig-paren">(</span><em>N</em>, <em>Ntot</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.p0_prior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.prior">
+<tt class="descname">prior</tt><span class="sig-paren">(</span><em>N</em>, <em>Ntot</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.prior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.validate_input">
+<tt class="descname">validate_input</tt><span class="sig-paren">(</span><em>t</em>, <em>x</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc.validate_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that input is valid</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.borrowed.astroML.bayesian_blocks.</tt><tt class="descname">PointMeasures</tt><span class="sig-paren">(</span><em>p0=None</em>, <em>gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc</span></tt></a></p>
+<p>Fitness for point measures</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>gamma</strong> : float</p>
+<blockquote class="last">
+<div><p>specifies the prior on the number of bins: p ~ gamma^N
+if gamma is not specified, then a prior based on simulations
+will be used (see sec 3.3 of Scargle 2012)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.fitness" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.fitness"><tt class="xref py py-obj docutils literal"><span class="pre">fitness</span></tt></a>(a_k,&nbsp;b_k)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">gamma_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td>Basic prior, parametrized by gamma (eq.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">p0_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.prior" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.prior"><tt class="xref py py-obj docutils literal"><span class="pre">prior</span></tt></a>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">validate_input</span></tt>(t,&nbsp;x,&nbsp;sigma)</td>
+<td>Check that input is valid</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.fitness">
+<tt class="descname">fitness</tt><span class="sig-paren">(</span><em>a_k</em>, <em>b_k</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.fitness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.prior">
+<tt class="descname">prior</tt><span class="sig-paren">(</span><em>N</em>, <em>Ntot</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.PointMeasures.prior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.borrowed.astroML.bayesian_blocks.</tt><tt class="descname">RegularEvents</tt><span class="sig-paren">(</span><em>dt</em>, <em>p0=0.05</em>, <em>gamma=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc"><tt class="xref py py-class docutils literal"><span class="pre">hyperspy.misc.borrowed.astroML.bayesian_blocks.FitnessFunc</span></tt></a></p>
+<p>Fitness for regular events</p>
+<p>This is for data which has a fundamental &#8220;tick&#8221; length, so that all
+measured values are multiples of this tick length.  In each tick, there
+are either zero or one counts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dt</strong> : float</p>
+<blockquote>
+<div><p>tick rate for data</p>
+</div></blockquote>
+<p><strong>gamma</strong> : float</p>
+<blockquote class="last">
+<div><p>specifies the prior on the number of bins: p ~ gamma^N</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.fitness" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.fitness"><tt class="xref py py-obj docutils literal"><span class="pre">fitness</span></tt></a>(T_k,&nbsp;N_k)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">gamma_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td>Basic prior, parametrized by gamma (eq.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">p0_prior</span></tt>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">prior</span></tt>(N,&nbsp;Ntot)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.validate_input" title="hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.validate_input"><tt class="xref py py-obj docutils literal"><span class="pre">validate_input</span></tt></a>(t,&nbsp;x,&nbsp;sigma)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.fitness">
+<tt class="descname">fitness</tt><span class="sig-paren">(</span><em>T_k</em>, <em>N_k</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.fitness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.validate_input">
+<tt class="descname">validate_input</tt><span class="sig-paren">(</span><em>t</em>, <em>x</em>, <em>sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.RegularEvents.validate_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.borrowed.astroML.bayesian_blocks.bayesian_blocks">
+<tt class="descclassname">hyperspy.misc.borrowed.astroML.bayesian_blocks.</tt><tt class="descname">bayesian_blocks</tt><span class="sig-paren">(</span><em>t</em>, <em>x=None</em>, <em>sigma=None</em>, <em>fitness='events'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.bayesian_blocks.bayesian_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bayesian Blocks Implementation</p>
+<p>This is a flexible implementation of the Bayesian Blocks algorithm
+described in Scargle 2012 <a class="reference internal" href="#r35" id="id2">[R35]</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>t</strong> : array_like</p>
+<blockquote>
+<div><p>data times (one dimensional, length N)</p>
+</div></blockquote>
+<p><strong>x</strong> : array_like (optional)</p>
+<blockquote>
+<div><p>data values</p>
+</div></blockquote>
+<p><strong>sigma</strong> : array_like or float (optional)</p>
+<blockquote>
+<div><p>data errors</p>
+</div></blockquote>
+<p><strong>fitness</strong> : str or object</p>
+<blockquote>
+<div><p>the fitness function to use.
+If a string, the following options are supported:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>&#8216;events&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">binned or unbinned event data</span></dt>
+<dd><p class="first last">extra arguments are <cite>p0</cite>, which gives the false alarm probability
+to compute the prior, or <cite>gamma</cite> which gives the slope of the
+prior on the number of bins.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;regular_events&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">non-overlapping events measured at multiples</span></dt>
+<dd><p class="first last">of a fundamental tick rate, <cite>dt</cite>, which must be specified as an
+additional argument.  The prior can be specified through <cite>gamma</cite>,
+which gives the slope of the prior on the number of bins.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;measures&#8217; <span class="classifier-delimiter">:</span> <span class="classifier">fitness for a measured sequence with Gaussian errors</span></dt>
+<dd><p class="first last">The prior can be specified using <cite>gamma</cite>, which gives the slope
+of the prior on the number of bins.  If <cite>gamma</cite> is not specified,
+then a simulation-derived prior will be used.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Alternatively, the fitness can be a user-specified object of
+type derived from the FitnessFunc class.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>edges</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>array containing the (N+1) bin edges</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">astroML.plotting.hist</span></tt></dt>
+<dd>histogram plotting function which can make use of bayesian blocks.</dd>
+</dl>
+</div>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r35" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[R35]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Scargle, J <cite>et al.</cite> (2012)
+<a class="reference external" href="http://adsabs.harvard.edu/abs/2012arXiv1207.5578S">http://adsabs.harvard.edu/abs/2012arXiv1207.5578S</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Event data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bins</span> <span class="o">=</span> <span class="n">bayesian_blocks</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fitness</span><span class="o">=</span><span class="s">&#39;events&#39;</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Event data with repeats:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">[</span><span class="mi">80</span><span class="p">:]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bins</span> <span class="o">=</span> <span class="n">bayesian_blocks</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fitness</span><span class="o">=</span><span class="s">&#39;events&#39;</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Regular event data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bins</span> <span class="o">=</span> <span class="n">bayesian_blocks</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fitness</span><span class="o">=</span><span class="s">&#39;regular_events&#39;</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Measured point data with errors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bins</span> <span class="o">=</span> <span class="n">bayesian_blocks</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fitness</span><span class="o">=</span><span class="s">&#39;measures&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="module-hyperspy.misc.borrowed.astroML.histtools">
+<span id="hyperspy-misc-borrowed-astroml-histtools-module"></span><h2>hyperspy.misc.borrowed.astroML.histtools module<a class="headerlink" href="#module-hyperspy.misc.borrowed.astroML.histtools" title="Permalink to this headline">¶</a></h2>
+<p>Tools for working with distributions</p>
+<dl class="class">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.KnuthF">
+<em class="property">class </em><tt class="descclassname">hyperspy.misc.borrowed.astroML.histtools.</tt><tt class="descname">KnuthF</tt><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class which implements the function minimized by knuth_bin_width</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : array-like, one dimension</p>
+<blockquote class="last">
+<div><p>data to be histogrammed</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">knuth_bin_width</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">astroML.plotting.hist</span></tt></p>
+</div>
+<p class="rubric">Notes</p>
+<p>the function F is given by</p>
+<div class="math">
+<p><img src="../_images/math/d3f8b8303eb4b1044cdfbea694ac00885918ffd7.png" alt="F(M|x,I) = n\log(M) + \log\Gamma(\frac{M}{2})
+- M\log\Gamma(\frac{1}{2})
+- \log\Gamma(\frac{2n+M}{2})
++ \sum_{k=1}^M \log\Gamma(n_k + \frac{1}{2})"/></p>
+</div><p>where <img class="math" src="../_images/math/85011adca50d3725af2e048eeb9ec7b02ccdd401.png" alt="\Gamma"/> is the Gamma function, <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> is the number of
+data points, <img class="math" src="../_images/math/e99e14a0688fa0dfa34968afad0841ac5c801721.png" alt="n_k"/> is the number of measurements in bin <img class="math" src="../_images/math/e9203da50e1059455123460d4e716c9c7f440cc3.png" alt="k"/>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">__call__</span></tt>(M)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF.bins" title="hyperspy.misc.borrowed.astroML.histtools.KnuthF.bins"><tt class="xref py py-obj docutils literal"><span class="pre">bins</span></tt></a>(M)</td>
+<td>Return the bin edges given a width dx</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF.eval" title="hyperspy.misc.borrowed.astroML.histtools.KnuthF.eval"><tt class="xref py py-obj docutils literal"><span class="pre">eval</span></tt></a>(M)</td>
+<td>Evaluate the Knuth function</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.KnuthF.bins">
+<tt class="descname">bins</tt><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF.bins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the bin edges given a width dx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.KnuthF.eval">
+<tt class="descname">eval</tt><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the Knuth function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dx</strong> : float</p>
+<blockquote>
+<div><p>Width of bins</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>F</strong> : float</p>
+<blockquote class="last">
+<div><p>evaluation of the negative Knuth likelihood function:
+smaller values indicate a better fit.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width">
+<tt class="descclassname">hyperspy.misc.borrowed.astroML.histtools.</tt><tt class="descname">freedman_bin_width</tt><span class="sig-paren">(</span><em>data</em>, <em>return_bins=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the optimal histogram bin width using the Freedman-Diaconis rule</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : array-like, ndim=1</p>
+<blockquote>
+<div><p>observed (one-dimensional) data</p>
+</div></blockquote>
+<p><strong>return_bins</strong> : bool (optional)</p>
+<blockquote>
+<div><p>if True, then return the bin edges</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>width</strong> : float</p>
+<blockquote>
+<div><p>optimal bin width using Scott&#8217;s rule</p>
+</div></blockquote>
+<p><strong>bins</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>bin edges: returned if <cite>return_bins</cite> is True</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">knuth_bin_width</span></tt></a>, <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">scotts_bin_width</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">astroML.plotting.hist</span></tt></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The optimal bin width is</p>
+<div class="math">
+<p><img src="../_images/math/f63ec31a6708cc5ea87af0023839ac27883910ee.png" alt="\Delta_b = \frac{2(q_{75} - q_{25})}{n^{1/3}}"/></p>
+</div><p>where <img class="math" src="../_images/math/497c5fd1740e2639f695b5f4374cf66d984e82f2.png" alt="q_{N}"/> is the <img class="math" src="../_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/> percent quartile of the data, and
+<img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> is the number of data points.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.histogram">
+<tt class="descclassname">hyperspy.misc.borrowed.astroML.histtools.</tt><tt class="descname">histogram</tt><span class="sig-paren">(</span><em>a</em>, <em>bins=10</em>, <em>range=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enhanced histogram</p>
+<p>This is a histogram function that enables the use of more sophisticated
+algorithms for determining bins.  Aside from the <cite>bins</cite> argument allowing
+a string specified how bins are computed, the parameters are the same
+as numpy.histogram().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : array_like</p>
+<blockquote>
+<div><p>array of data to be histogrammed</p>
+</div></blockquote>
+<p><strong>bins</strong> : int or list or str (optional)</p>
+<blockquote>
+<div><p>If bins is a string, then it must be one of:
+&#8216;blocks&#8217; : use bayesian blocks for dynamic bin widths
+&#8216;knuth&#8217; : use Knuth&#8217;s rule to determine bins
+&#8216;scotts&#8217; : use Scott&#8217;s rule to determine bins
+&#8216;freedman&#8217; : use the Freedman-diaconis rule to determine bins</p>
+</div></blockquote>
+<p><strong>range</strong> : tuple or None (optional)</p>
+<blockquote>
+<div><p>the minimum and maximum range for the histogram.  If not specified,
+it will be (x.min(), x.max())</p>
+</div></blockquote>
+<p><strong>other keyword arguments are described in numpy.hist().</strong> :</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hist</strong> : array</p>
+<blockquote>
+<div><p>The values of the histogram. See <cite>normed</cite> and <cite>weights</cite> for a
+description of the possible semantics.</p>
+</div></blockquote>
+<p><strong>bin_edges</strong> : array of dtype float</p>
+<blockquote class="last">
+<div><p>Return the bin edges <tt class="docutils literal"><span class="pre">(length(hist)+1)</span></tt>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.histogram</span></tt>, <tt class="xref py py-obj docutils literal"><span class="pre">astroML.plotting.hist</span></tt></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width">
+<tt class="descclassname">hyperspy.misc.borrowed.astroML.histtools.</tt><tt class="descname">knuth_bin_width</tt><span class="sig-paren">(</span><em>data</em>, <em>return_bins=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the optimal histogram bin width using Knuth&#8217;s rule <a class="reference internal" href="#r36" id="id4">[R36]</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : array-like, ndim=1</p>
+<blockquote>
+<div><p>observed (one-dimensional) data</p>
+</div></blockquote>
+<p><strong>return_bins</strong> : bool (optional)</p>
+<blockquote>
+<div><p>if True, then return the bin edges</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dx</strong> : float</p>
+<blockquote>
+<div><p>optimal bin width. Bins are measured starting at the first data point.</p>
+</div></blockquote>
+<p><strong>bins</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>bin edges: returned if <cite>return_bins</cite> is True</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.KnuthF" title="hyperspy.misc.borrowed.astroML.histtools.KnuthF"><tt class="xref py py-obj docutils literal"><span class="pre">KnuthF</span></tt></a>, <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">freedman_bin_width</span></tt></a>, <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">scotts_bin_width</span></tt></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The optimal number of bins is the value M which maximizes the function</p>
+<div class="math">
+<p><img src="../_images/math/d3f8b8303eb4b1044cdfbea694ac00885918ffd7.png" alt="F(M|x,I) = n\log(M) + \log\Gamma(\frac{M}{2})
+- M\log\Gamma(\frac{1}{2})
+- \log\Gamma(\frac{2n+M}{2})
++ \sum_{k=1}^M \log\Gamma(n_k + \frac{1}{2})"/></p>
+</div><p>where <img class="math" src="../_images/math/85011adca50d3725af2e048eeb9ec7b02ccdd401.png" alt="\Gamma"/> is the Gamma function, <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> is the number of
+data points, <img class="math" src="../_images/math/e99e14a0688fa0dfa34968afad0841ac5c801721.png" alt="n_k"/> is the number of measurements in bin <img class="math" src="../_images/math/e9203da50e1059455123460d4e716c9c7f440cc3.png" alt="k"/>.</p>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r36" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[R36]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id5">2</a>)</em> Knuth, K.H. &#8220;Optimal Data-Based Binning for Histograms&#8221;.
+arXiv:0605197, 2006</td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width">
+<tt class="descclassname">hyperspy.misc.borrowed.astroML.histtools.</tt><tt class="descname">scotts_bin_width</tt><span class="sig-paren">(</span><em>data</em>, <em>return_bins=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.borrowed.astroML.histtools.scotts_bin_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the optimal histogram bin width using Scott&#8217;s rule:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : array-like, ndim=1</p>
+<blockquote>
+<div><p>observed (one-dimensional) data</p>
+</div></blockquote>
+<p><strong>return_bins</strong> : bool (optional)</p>
+<blockquote>
+<div><p>if True, then return the bin edges</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>width</strong> : float</p>
+<blockquote>
+<div><p>optimal bin width using Scott&#8217;s rule</p>
+</div></blockquote>
+<p><strong>bins</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>bin edges: returned if <cite>return_bins</cite> is True</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.knuth_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">knuth_bin_width</span></tt></a>, <a class="reference internal" href="#hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width" title="hyperspy.misc.borrowed.astroML.histtools.freedman_bin_width"><tt class="xref py py-obj docutils literal"><span class="pre">freedman_bin_width</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">astroML.plotting.hist</span></tt></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The optimal bin width is</p>
+<div class="math">
+<p><img src="../_images/math/c315a9c462c9d15b471cc37fc10bf9da8f3f6d32.png" alt="\Delta_b = \frac{3.5\sigma}{n^{1/3}}"/></p>
+</div><p>where <img class="math" src="../_images/math/2298cf1485084afe72757a9c8483af49a138d81f.png" alt="\sigma"/> is the standard deviation of the data, and
+<img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> is the number of data points.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyperspy.misc.borrowed.astroML">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hyperspy.misc.borrowed.astroML" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">hyperspy.misc.borrowed.astroML package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.borrowed.astroML.bayesian_blocks">hyperspy.misc.borrowed.astroML.bayesian_blocks module</a><ul>
+<li><a class="reference internal" href="#bayesian-block-implementation">Bayesian Block implementation</a><ul>
+<li><a class="reference internal" href="#references">References</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hyperspy.misc.borrowed.astroML.histtools">hyperspy.misc.borrowed.astroML.histtools module</a></li>
+<li><a class="reference internal" href="#module-hyperspy.misc.borrowed.astroML">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/hyperspy.misc.borrowed.astroML.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2012, The Hyperspy development team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

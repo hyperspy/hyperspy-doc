@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Curve fitting &mdash; Hyperspy 0.7b1 documentation</title>
+    <title>Curve fitting &mdash; Hyperspy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7b1',
+        VERSION:     '0.6+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.7b1 documentation" href="../index.html" />
+    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
     <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
-    <link rel="next" title="Mapped parameters structure" href="mapped_parameters_structure.html" />
+    <link rel="next" title="Electron Energy Loss Spectroscopy" href="eels.html" />
     <link rel="prev" title="Machine learning" href="mva.html" />
  
 <script type="text/javascript">
@@ -45,8 +45,8 @@
 </script>
 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -59,12 +59,12 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
+          <a href="eels.html" title="Electron Energy Loss Spectroscopy"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -72,7 +72,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="curve-fitting">
 <h1>Curve fitting<a class="headerlink" href="#curve-fitting" title="Permalink to this headline">¶</a></h1>
@@ -80,10 +80,13 @@
 model from a linear combinantion of predefined components and can use multiple
 optimisation algorithms to fit the model to experimental data. It supports
 bounds and weights.</p>
-<div class="section" id="generics-tools">
-<h2>Generics tools<a class="headerlink" href="#generics-tools" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7: </span>Before creating a model verify that the <tt class="docutils literal"><span class="pre">Signal.binned</span></tt> metadata
+attribute of the signal is set to the correct value because the resulting
+model depends on this parameter. See <a class="reference internal" href="tools.html#signal-binned"><em>Binned and unbinned signals</em></a> for more details.</p>
+</div>
 <div class="section" id="creating-a-model">
-<h3>Creating a model<a class="headerlink" href="#creating-a-model" title="Permalink to this headline">¶</a></h3>
+<h2>Creating a model<a class="headerlink" href="#creating-a-model" title="Permalink to this headline">¶</a></h2>
 <p>A <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> can be created using the
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.hspy.create_model" title="hyperspy.hspy.create_model"><tt class="xref py py-func docutils literal"><span class="pre">create_model()</span></tt></a> function, whose first argument is a
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> of any of its subclasses (often it is simply the
@@ -97,25 +100,25 @@ already included in the datafile, e.g.if s is EELS data, you may be asked for
 the accelerating voltage, convergence and collection angles etc.</p>
 </div>
 <div class="section" id="adding-components-to-the-model">
-<h3>Adding components to the model<a class="headerlink" href="#adding-components-to-the-model" title="Permalink to this headline">¶</a></h3>
-<p>In Hyperspy a model consists of a linear combination of <a class="reference internal" href="../api/hyperspy.components.html#module-hyperspy.components" title="hyperspy.components"><tt class="xref py py-mod docutils literal"><span class="pre">components</span></tt></a>.
+<h2>Adding components to the model<a class="headerlink" href="#adding-components-to-the-model" title="Permalink to this headline">¶</a></h2>
+<p>In Hyperspy a model consists of a linear combination of <a class="reference internal" href="../api/hyperspy.html#module-hyperspy.components" title="hyperspy.components"><tt class="xref py py-mod docutils literal"><span class="pre">components</span></tt></a>.
 These are some of the components which are currently available:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.eels_cl_edge.EELSCLEdge" title="hyperspy._components.eels_cl_edge.EELSCLEdge"><tt class="xref py py-class docutils literal"><span class="pre">EELSCLEdge</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude" title="hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude"><tt class="xref py py-class docutils literal"><span class="pre">VolumePlasmonDrude</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.power_law.PowerLaw" title="hyperspy._components.power_law.PowerLaw"><tt class="xref py py-class docutils literal"><span class="pre">PowerLaw</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.offset.Offset" title="hyperspy._components.offset.Offset"><tt class="xref py py-class docutils literal"><span class="pre">Offset</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.exponential.Exponential" title="hyperspy._components.exponential.Exponential"><tt class="xref py py-class docutils literal"><span class="pre">Exponential</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern" title="hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern"><tt class="xref py py-class docutils literal"><span class="pre">ScalableFixedPattern</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.gaussian.Gaussian" title="hyperspy._components.gaussian.Gaussian"><tt class="xref py py-class docutils literal"><span class="pre">Gaussian</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.lorentzian.Lorentzian" title="hyperspy._components.lorentzian.Lorentzian"><tt class="xref py py-class docutils literal"><span class="pre">Lorentzian</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.voigt.Voigt" title="hyperspy._components.voigt.Voigt"><tt class="xref py py-class docutils literal"><span class="pre">Voigt</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.polynomial.Polynomial" title="hyperspy._components.polynomial.Polynomial"><tt class="xref py py-class docutils literal"><span class="pre">Polynomial</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.logistic.Logistic" title="hyperspy._components.logistic.Logistic"><tt class="xref py py-class docutils literal"><span class="pre">Logistic</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.bleasdale.Bleasdale" title="hyperspy._components.bleasdale.Bleasdale"><tt class="xref py py-class docutils literal"><span class="pre">Bleasdale</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.error_function.Erf" title="hyperspy._components.error_function.Erf"><tt class="xref py py-class docutils literal"><span class="pre">Erf</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.pes_see.SEE" title="hyperspy._components.pes_see.SEE"><tt class="xref py py-class docutils literal"><span class="pre">SEE</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.components.html#hyperspy._components.arctan.Arctan" title="hyperspy._components.arctan.Arctan"><tt class="xref py py-class docutils literal"><span class="pre">Arctan</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.eels_cl_edge.EELSCLEdge" title="hyperspy._components.eels_cl_edge.EELSCLEdge"><tt class="xref py py-class docutils literal"><span class="pre">EELSCLEdge</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude" title="hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude"><tt class="xref py py-class docutils literal"><span class="pre">VolumePlasmonDrude</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.power_law.PowerLaw" title="hyperspy._components.power_law.PowerLaw"><tt class="xref py py-class docutils literal"><span class="pre">PowerLaw</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.offset.Offset" title="hyperspy._components.offset.Offset"><tt class="xref py py-class docutils literal"><span class="pre">Offset</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.exponential.Exponential" title="hyperspy._components.exponential.Exponential"><tt class="xref py py-class docutils literal"><span class="pre">Exponential</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern" title="hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern"><tt class="xref py py-class docutils literal"><span class="pre">ScalableFixedPattern</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.gaussian.Gaussian" title="hyperspy._components.gaussian.Gaussian"><tt class="xref py py-class docutils literal"><span class="pre">Gaussian</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.lorentzian.Lorentzian" title="hyperspy._components.lorentzian.Lorentzian"><tt class="xref py py-class docutils literal"><span class="pre">Lorentzian</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.voigt.Voigt" title="hyperspy._components.voigt.Voigt"><tt class="xref py py-class docutils literal"><span class="pre">Voigt</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.polynomial.Polynomial" title="hyperspy._components.polynomial.Polynomial"><tt class="xref py py-class docutils literal"><span class="pre">Polynomial</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.logistic.Logistic" title="hyperspy._components.logistic.Logistic"><tt class="xref py py-class docutils literal"><span class="pre">Logistic</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.bleasdale.Bleasdale" title="hyperspy._components.bleasdale.Bleasdale"><tt class="xref py py-class docutils literal"><span class="pre">Bleasdale</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.error_function.Erf" title="hyperspy._components.error_function.Erf"><tt class="xref py py-class docutils literal"><span class="pre">Erf</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.pes_see.SEE" title="hyperspy._components.pes_see.SEE"><tt class="xref py py-class docutils literal"><span class="pre">SEE</span></tt></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.arctan.Arctan" title="hyperspy._components.arctan.Arctan"><tt class="xref py py-class docutils literal"><span class="pre">Arctan</span></tt></a></li>
 </ul>
 <p>Writing a new component is very easy, so, if the function that you need to fit
 is not in the list above, by inspecting the code of, for example, the Gaussian
@@ -144,13 +147,13 @@ data that can be modelled using gaussians we might proceed as follows:</p>
 </div>
 <p>We could use the append method two times to add the two gaussians, but when
 adding multiple components it is handier to use the extend method that enables
-adding a list of components at once</p>
+adding a list of components at once.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">gaussian2</span><span class="p">,</span> <span class="n">gaussian3</span><span class="p">))</span> <span class="c">#note the double brackets!</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
 <span class="go">[&lt;Gaussian component&gt;, &lt;Gaussian component&gt;, &lt;Gaussian component&gt;]</span>
 </pre></div>
 </div>
-<p>We can customise the name of the components</p>
+<p>We can customise the name of the components.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Carbon&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Hydrogen&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Nitrogen&#39;</span>
@@ -160,9 +163,31 @@ adding a list of components at once</p>
 <span class="go"> &lt;Nitrogen (Gaussian component)&gt;]</span>
 </pre></div>
 </div>
+<p>Two components cannot have the same name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Carbon&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;ipython-input-5-2b5669fae54a&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+    <span class="n">g2</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Carbon&quot;</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy/hyperspy/component.py&quot;</span>, line <span class="m">466</span>, in <span class="n">name</span>
+    <span class="s">&quot;the name &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+<span class="gr">ValueError</span>: <span class="n">Another component already has the name Carbon</span>
+</pre></div>
+</div>
+<p>It is possible to access the components in the model by their name or by the
+index in the model.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">[&lt;Carbon (Gaussian component)&gt;,</span>
+<span class="go"> &lt;Hydrogen (Gaussian component)&gt;,</span>
+<span class="go"> &lt;Nitrogen (Gaussian component)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Carbon (Gaussian component)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">[</span><span class="s">&quot;Carbon&quot;</span><span class="p">]</span>
+<span class="go">&lt;Carbon (Gaussian component)&gt;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="getting-and-setting-parameter-values-and-attributes">
-<h3>Getting and setting parameter values and attributes<a class="headerlink" href="#getting-and-setting-parameter-values-and-attributes" title="Permalink to this headline">¶</a></h3>
+<h2>Getting and setting parameter values and attributes<a class="headerlink" href="#getting-and-setting-parameter-values-and-attributes" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.print_current_values" title="hyperspy.model.Model.print_current_values"><tt class="xref py py-meth docutils literal"><span class="pre">print_current_values()</span></tt></a> prints the value of the
 parameters of the components in the current coordinates.</p>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">parameters</span></tt> contains a list of the parameters
@@ -336,7 +361,7 @@ example:</p>
 </div>
 </div>
 <div class="section" id="fitting-the-model-to-the-data">
-<h3>Fitting the model to the data<a class="headerlink" href="#fitting-the-model-to-the-data" title="Permalink to this headline">¶</a></h3>
+<h2>Fitting the model to the data<a class="headerlink" href="#fitting-the-model-to-the-data" title="Permalink to this headline">¶</a></h2>
 <p>To fit the model to the data at the current coordinates (e.g. to fit one
 spectrum at a particular point in a spectrum-image) use
 <tt class="xref py py-meth docutils literal"><span class="pre">fit()</span></tt>.</p>
@@ -344,20 +369,20 @@ spectrum at a particular point in a spectrum-image) use
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span>New in version 0.7.</span></p>
+<p><span class="versionmodified">New in version 0.7.</span></p>
 </div>
 <p>In addition, it is possible to fit a given component  independently using the
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><tt class="xref py py-meth docutils literal"><span class="pre">fit_component()</span></tt></a> method, that is specially useful to ease
 setting starting parameters.</p>
 </div>
 <div class="section" id="visualizing-the-model">
-<h3>Visualizing the model<a class="headerlink" href="#visualizing-the-model" title="Permalink to this headline">¶</a></h3>
+<h2>Visualizing the model<a class="headerlink" href="#visualizing-the-model" title="Permalink to this headline">¶</a></h2>
 <p>To visualise the result use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.plot" title="hyperspy.model.Model.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a> method:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c"># Visualise the results</span>
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span>New in version 0.7.</span></p>
+<p><span class="versionmodified">New in version 0.7.</span></p>
 </div>
 <p>By default only the full model line is displayed in the plot. In addition, it
 is possible to display the individual components by calling
@@ -369,9 +394,9 @@ is possible to display the individual components by calling
 <p>To disable this feature call <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_plot_components" title="hyperspy.model.Model.disable_plot_components"><tt class="xref py py-meth docutils literal"><span class="pre">disable_plot_components()</span></tt></a>.</p>
 </div>
 <div class="section" id="setting-the-position-of-parameter-interactively">
-<h3>Setting the position of parameter interactively<a class="headerlink" href="#setting-the-position-of-parameter-interactively" title="Permalink to this headline">¶</a></h3>
+<h2>Setting the position of parameter interactively<a class="headerlink" href="#setting-the-position-of-parameter-interactively" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
-<p><span>New in version 0.6.</span></p>
+<p><span class="versionmodified">New in version 0.6.</span></p>
 </div>
 <p><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></tt></a> provides an interactive way of
 setting the position of the components with a well define position.
@@ -385,7 +410,7 @@ vertical lines.</p>
 </div>
 </div>
 <div class="section" id="exclude-data-from-the-fitting-process">
-<h3>Exclude data from the fitting process<a class="headerlink" href="#exclude-data-from-the-fitting-process" title="Permalink to this headline">¶</a></h3>
+<h2>Exclude data from the fitting process<a class="headerlink" href="#exclude-data-from-the-fitting-process" title="Permalink to this headline">¶</a></h2>
 <p>The following <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> methods can be used to exclude
 undesired spectral channels from the fitting process:</p>
 <ul class="simple">
@@ -395,7 +420,7 @@ undesired spectral channels from the fitting process:</p>
 </ul>
 </div>
 <div class="section" id="working-with-multidimensional-datasets">
-<h3>Working with multidimensional datasets<a class="headerlink" href="#working-with-multidimensional-datasets" title="Permalink to this headline">¶</a></h3>
+<h2>Working with multidimensional datasets<a class="headerlink" href="#working-with-multidimensional-datasets" title="Permalink to this headline">¶</a></h2>
 <p>To fit the model to the full datataset use <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-meth docutils literal"><span class="pre">multifit()</span></tt></a>,
 e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">()</span> <span class="c"># warning: this can be a lengthy process on large datasets</span>
@@ -410,7 +435,7 @@ given position manually. This is possible using
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fetch_stored_values" title="hyperspy.model.Model.fetch_stored_values"><tt class="xref py py-meth docutils literal"><span class="pre">fetch_stored_values()</span></tt></a>.</p>
 </div>
 <div class="section" id="visualising-the-result-of-the-fit">
-<h3>Visualising the result of the fit<a class="headerlink" href="#visualising-the-result-of-the-fit" title="Permalink to this headline">¶</a></h3>
+<h2>Visualising the result of the fit<a class="headerlink" href="#visualising-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.plot_results" title="hyperspy.model.Model.plot_results"><tt class="xref py py-meth docutils literal"><span class="pre">plot_results()</span></tt></a>,
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">Component</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component.plot" title="hyperspy.component.Component.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a> and
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.plot" title="hyperspy.component.Parameter.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a> methods
@@ -418,14 +443,14 @@ can be used to visualise the result of the fit <strong>when fitting multidimensi
 datasets</strong>.</p>
 </div>
 <div class="section" id="saving-and-loading-the-result-of-the-fit">
-<h3>Saving and loading the result of the fit<a class="headerlink" href="#saving-and-loading-the-result-of-the-fit" title="Permalink to this headline">¶</a></h3>
+<h2>Saving and loading the result of the fit<a class="headerlink" href="#saving-and-loading-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
 <p>To save the result of the fit to a single file use
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-meth docutils literal"><span class="pre">save_parameters2file()</span></tt></a> and
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-meth docutils literal"><span class="pre">load_parameters_from_file()</span></tt></a> to load back the results
 into the same model structure.</p>
 </div>
 <div class="section" id="exporting-the-result-of-the-fit">
-<h3>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this headline">¶</a></h3>
+<h2>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.export_results" title="hyperspy.model.Model.export_results"><tt class="xref py py-meth docutils literal"><span class="pre">export_results()</span></tt></a>,
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">Component</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component.export" title="hyperspy.component.Component.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> and
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.export" title="hyperspy.component.Parameter.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>
@@ -433,9 +458,9 @@ methods can be used to export the result of the optimization in all supported
 formats.</p>
 </div>
 <div class="section" id="batch-setting-of-parameter-attributes">
-<h3>Batch setting of parameter attributes<a class="headerlink" href="#batch-setting-of-parameter-attributes" title="Permalink to this headline">¶</a></h3>
+<h2>Batch setting of parameter attributes<a class="headerlink" href="#batch-setting-of-parameter-attributes" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
-<p><span>New in version 0.6.</span></p>
+<p><span class="versionmodified">New in version 0.6.</span></p>
 </div>
 <p>The following methods can be used to ease the task of setting some important
 parameter attributes:</p>
@@ -446,122 +471,12 @@ parameter attributes:</p>
 </ul>
 </div>
 </div>
-<div class="section" id="eels-curve-fitting">
-<h2>EELS curve fitting<a class="headerlink" href="#eels-curve-fitting" title="Permalink to this headline">¶</a></h2>
-<p>Hyperspy makes it really easy to quantify EELS core-loss spectra by curve
-fitting as it is shown in the next example of quantification of a boron nitride
-EELS spectrum from the <a class="reference external" href="http://pc-web.cemes.fr/eelsdb/index.php?page=home.php">The EELS Data Base</a>.</p>
-<p>Load the core-loss and low-loss spectra</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_B_K_Giovanni_Bertoni_100.msa&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_LowLoss_Giovanni_Bertoni_96.msa&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Set some important experimental information that is missing from the original
-core-loss file</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">convergence_angle</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">collection_angle</span><span class="o">=</span><span class="mf">2.55</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Define the chemical composition of the sample</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">((</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>We pass the low-loss spectrum to <a class="reference internal" href="../api/hyperspy.html#hyperspy.hspy.create_model" title="hyperspy.hspy.create_model"><tt class="xref py py-func docutils literal"><span class="pre">create_model()</span></tt></a> to include the
-effect of multiple scattering by Fourier-ratio convolution.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Hyperspy has created the model and configured it automatically:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
-<span class="go">[&lt;background (PowerLaw component)&gt;,</span>
-<span class="go">&lt;N_K (EELSCLEdge component)&gt;,</span>
-<span class="go">&lt;B_K (EELSCLEdge component)&gt;]</span>
-</pre></div>
-</div>
-<p>Furthermore, the components are available in the user namespace</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">N_K</span>
-<span class="go">&lt;N_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">B_K</span>
-<span class="go">&lt;B_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">background</span>
-<span class="go">&lt;background (PowerLaw component)&gt;</span>
-</pre></div>
-</div>
-<p>Conveniently, variables named as the element symbol contain all the eels
-core-loss components of the element to facilitate applying some methods to all
-of them at once. Although in this example the list contains just one component
-this is not generally the case.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span>
-<span class="go">[&lt;N_K (EELSCLEdge component)&gt;]</span>
-</pre></div>
-</div>
-<p>By default the fine structure features are disabled (although the default value
-can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><em>Configuring hyperspy</em></a>). We must enable them
-to accurately fit this spectrum.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">enable_fine_structure</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>We use smart_fit instead of standard fit method because smart_fit is optimized
-to fit EELS core-loss spectra</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">smart_fit</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Print the result of the fit</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">quantify</span><span class="p">()</span>
-<span class="go">Absolute quantification:</span>
-<span class="go">Elem.       Intensity</span>
-<span class="go">B   0.045648</span>
-<span class="go">N   0.048061</span>
-</pre></div>
-</div>
-<p>Visualize the result</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="figure align-center">
-<a class="reference internal image-reference" href="../_images/curve_fitting_BN.png"><img alt="../_images/curve_fitting_BN.png" src="../_images/curve_fitting_BN.png" style="width: 500px;" /></a>
-</div>
-<p>There are several methods that are only available in
-<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel" title="hyperspy.models.eelsmodel.EELSModel"><tt class="xref py py-class docutils literal"><span class="pre">EELSModel</span></tt></a>:</p>
-<ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><tt class="xref py py-meth docutils literal"><span class="pre">smart_fit()</span></tt></a> is a fit method that is
-more robust than the standard routine when fitting EELS data.</li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.quantify" title="hyperspy.models.eelsmodel.EELSModel.quantify"><tt class="xref py py-meth docutils literal"><span class="pre">quantify()</span></tt></a> prints the intensity at
-the current locations of all the EELS ionisation edges in the model.</li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data" title="hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data"><tt class="xref py py-meth docutils literal"><span class="pre">remove_fine_structure_data()</span></tt></a> removes
-the fine structure spectral data range (as defined by the
-<tt class="xref py py-attr docutils literal"><span class="pre">fine_structure_width)</span></tt>
-ionisation edge components. It is specially useful when fitting without
-convolving with a zero-loss peak.</li>
-</ul>
-<p>The following methods permit to easily enable/disable background and ionisation
-edges components:</p>
-<ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><tt class="xref py py-meth docutils literal"><span class="pre">enable_edges()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><tt class="xref py py-meth docutils literal"><span class="pre">enable_background()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><tt class="xref py py-meth docutils literal"><span class="pre">disable_background()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">enable_fine_structure()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">disable_fine_structure()</span></tt></a></li>
-</ul>
-<p>The following methods permit to easily enable/disable several ionisation
-edge functionalities:</p>
-<ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">set_all_edges_intensities_positive()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><tt class="xref py py-meth docutils literal"><span class="pre">unset_all_edges_intensities_positive()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">enable_free_onset_energy()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><tt class="xref py py-meth docutils literal"><span class="pre">disable_free_onset_energy()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><tt class="xref py py-meth docutils literal"><span class="pre">fix_edges()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><tt class="xref py py-meth docutils literal"><span class="pre">free_edges()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">fix_fine_structure()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><tt class="xref py py-meth docutils literal"><span class="pre">free_fine_structure()</span></tt></a></li>
-</ul>
-</div>
-</div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
@@ -569,7 +484,6 @@ edge functionalities:</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Curve fitting</a><ul>
-<li><a class="reference internal" href="#generics-tools">Generics tools</a><ul>
 <li><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
 <li><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
 <li><a class="reference internal" href="#getting-and-setting-parameter-values-and-attributes">Getting and setting parameter values and attributes</a></li>
@@ -584,23 +498,22 @@ edge functionalities:</p>
 <li><a class="reference internal" href="#batch-setting-of-parameter-attributes">Batch setting of parameter attributes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#eels-curve-fitting">EELS curve fitting</a></li>
-</ul>
-</li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="mva.html"
                         title="previous chapter">Machine learning</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="mapped_parameters_structure.html"
-                        title="next chapter">Mapped parameters structure</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_guide/model.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <p class="topless"><a href="eels.html"
+                        title="next chapter">Electron Energy Loss Spectroscopy</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_guide/model.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -617,7 +530,7 @@ edge functionalities:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -630,18 +543,18 @@ edge functionalities:</p>
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapped_parameters_structure.html" title="Mapped parameters structure"
+          <a href="eels.html" title="Electron Energy Loss Spectroscopy"
              >next</a> |</li>
         <li class="right" >
           <a href="mva.html" title="Machine learning"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.7b1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2012, The Hyperspy development team.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
 </html>
