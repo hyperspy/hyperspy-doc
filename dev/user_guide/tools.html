@@ -892,6 +892,66 @@ with histograms of several random chi-square distributions:</p>
 <tt class="xref py py-meth docutils literal"><span class="pre">electron_range()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">xray_range()</span></tt></p>
 </div>
 </div>
+<div class="section" id="setting-the-noise-properties">
+<span id="signal-noise-properties"></span><h2>Setting the noise properties<a class="headerlink" href="#setting-the-noise-properties" title="Permalink to this headline">¶</a></h2>
+<p>Some data operations require the data variance. Those methods use the
+<tt class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></tt> attribute if it exists. You can
+set this attribute as in the following example where we set the variance to be
+10:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s">&quot;Noise_properties.variance&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For heterocedastic noise the <tt class="docutils literal"><span class="pre">variance</span></tt> attribute must be a
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a>.  Poissonian noise is a common case  of
+heterocedastic noise where the variance is equal to the expected value. The
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.estimate_poissonian_noise_variance" title="hyperspy.signal.Signal.estimate_poissonian_noise_variance"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_poissonian_noise_variance()</span></tt></a>
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> method can help setting the variance of data with
+semi-poissonian noise. With the default arguments, this method simply sets the
+variance attribute to the given <tt class="docutils literal"><span class="pre">expected_value</span></tt>. However, more generally
+(although then noise is not strictly poissonian), the variance may be proportional
+to the expected value. Moreover, when the noise is a mixture of white
+(gaussian) and poissonian noise, the variance is described by the following
+linear model:</p>
+<blockquote>
+<div><div class="math">
+<p><img src="../_images/math/253a5ef181fafd515121a05c0026c74d23f6f8a5.png" alt="\mathrm{Var}[X] = (a * \mathrm{E}[X] + b) * c"/></p>
+</div></div></blockquote>
+<p>Where <cite>a</cite> is the <tt class="docutils literal"><span class="pre">gain_factor</span></tt>, <cite>b</cite> is the <tt class="docutils literal"><span class="pre">gain_offset</span></tt> (the gaussian
+noise variance) and <cite>c</cite> the <tt class="docutils literal"><span class="pre">correlation_factor</span></tt>. The correlation
+factor accounts for correlation of adjacent signal elements that can
+be modeled as a convolution with a gaussian point spread function.
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.estimate_poissonian_noise_variance" title="hyperspy.signal.Signal.estimate_poissonian_noise_variance"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_poissonian_noise_variance()</span></tt></a> can be used to set
+the noise properties when the variance can be described by this linear model,
+for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">SpectrumSimulation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_poissonian_noise</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
+<span class="go">├── General</span>
+<span class="go">│   └── title =</span>
+<span class="go">└── Signal</span>
+<span class="go">    ├── binned = False</span>
+<span class="go">    ├── record_by = spectrum</span>
+<span class="go">    ├── signal_origin = simulation</span>
+<span class="go">    └── signal_type =</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
+<span class="go">├── General</span>
+<span class="go">│   └── title =</span>
+<span class="go">└── Signal</span>
+<span class="go">    ├── Noise_properties</span>
+<span class="go">    │   ├── Variance_linear_model</span>
+<span class="go">    │   │   ├── correlation_factor = 1</span>
+<span class="go">    │   │   ├── gain_factor = 1</span>
+<span class="go">    │   │   └── gain_offset = 0</span>
+<span class="go">    │   └── variance = &lt;SpectrumSimulation, title: Variance of , dimensions: (|100)&gt;</span>
+<span class="go">    ├── binned = False</span>
+<span class="go">    ├── record_by = spectrum</span>
+<span class="go">    ├── signal_origin = simulation</span>
+<span class="go">    └── signal_type =</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -927,6 +987,7 @@ with histograms of several random chi-square distributions:</p>
 <li><a class="reference internal" href="#electron-and-x-ray-range">Electron and X-ray range</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#setting-the-noise-properties">Setting the noise properties</a></li>
 </ul>
 </li>
 </ul>

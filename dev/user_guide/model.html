@@ -364,16 +364,149 @@ example:</p>
 <h2>Fitting the model to the data<a class="headerlink" href="#fitting-the-model-to-the-data" title="Permalink to this headline">¶</a></h2>
 <p>To fit the model to the data at the current coordinates (e.g. to fit one
 spectrum at a particular point in a spectrum-image) use
-<tt class="xref py py-meth docutils literal"><span class="pre">fit()</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c"># Fit the data at the current coordinates</span>
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit" title="hyperspy.model.Model.fit"><tt class="xref py py-meth docutils literal"><span class="pre">fit()</span></tt></a>.</p>
+<p>The following table summarizes the features of the currently available
+optimizers:</p>
+<table border="1" class="docutils">
+<caption>Features of curve fitting optimizers.</caption>
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="25%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Optimizer</th>
+<th class="head">Bounds</th>
+<th class="head">Error estimation</th>
+<th class="head">Method</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8220;leastsq&#8221;</td>
+<td>No</td>
+<td>Yes</td>
+<td>least squares</td>
+</tr>
+<tr class="row-odd"><td>&#8220;mpfit&#8221;</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>least squares</td>
+</tr>
+<tr class="row-even"><td>&#8220;odr&#8221;</td>
+<td>No</td>
+<td>Yes</td>
+<td>least squares</td>
+</tr>
+<tr class="row-odd"><td>&#8220;fmin&#8221;</td>
+<td>No</td>
+<td>No</td>
+<td>least squares, maximum likelihood</td>
+</tr>
+</tbody>
+</table>
+<p>The following example shows how to perfom least squares with error estimation.</p>
+<p>First we create data consisting of a line line <tt class="docutils literal"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b</span></tt> with <tt class="docutils literal"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></tt>
+and <tt class="docutils literal"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">100</span></tt> and we add white noise to it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">SpectrumSimulation</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To fit it we create a model consisting of a
+<a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.polynomial.Polynomial" title="hyperspy._components.polynomial.Polynomial"><tt class="xref py py-class docutils literal"><span class="pre">Polynomial</span></tt></a> component of order 1 and fit it
+to the data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span>  <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>On fitting completion, the optimized value of the parameters and their estimated standard deviation
+are stored in the following line attributes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(0.99246156488437653, 103.67507406125888)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
+<span class="go">(0.11771053738516088, 13.541061301257537)</span>
+</pre></div>
+</div>
+<p>When the noise is heterocedastic, only if the
+<tt class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></tt> attribute of the
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.spectrum.Spectrum" title="hyperspy._signals.spectrum.Spectrum"><tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt></a> instance is defined can the errors be
+estimated accurately. If the variance is not defined, the standard deviation of
+the parameters are still computed and stored in the
+<tt class="xref py py-attr docutils literal"><span class="pre">std</span></tt> attribute by setting variance equal 1.
+However, the value won&#8217;t be correct unless an accurate value of the variance is
+defined in <tt class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></tt>. See
+<a class="reference internal" href="tools.html#signal-noise-properties"><em>Setting the noise properties</em></a> for more information.</p>
+<p>In the following example, we add poissonian noise to the data instead of
+gaussian noise and proceed to fit as in the previous example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">SpectrumSimulation</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_poissonian_noise</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span>  <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0052331707848698, -1.0723588390873573)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
+<span class="go">(0.0081710549764721901, 1.4117294994070277)</span>
+</pre></div>
+</div>
+<p>Because the noise is heterocedastic, the least squares optimizer estimation is
+biased. A more accurate result can be obtained by using weighted least squares
+instead that, although still biased for poissonian noise, is a good
+approximation in most cases.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">(</span><span class="n">expected_value</span><span class="o">=</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0004224896604759, -0.46982916592391377)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
+<span class="go">(0.0055752036447948173, 0.46950832982673557)</span>
+</pre></div>
+</div>
+<p>We can use poissonian maximum likelihood estimation
+instead that is an unbiased estimator for poissonian noise.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fitter</span><span class="o">=</span><span class="s">&quot;fmin&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;ml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0030718094185611, -0.63590210946134107)</span>
+</pre></div>
+</div>
+<p>Problems of ill-conditioning and divergence can be ameliorated by using bounded
+optimization. Currently, only the &#8220;mpfit&#8221; optimizer supports bounds. In the
+following example a gaussian histogram is fitted using a
+<a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.gaussian.Gaussian" title="hyperspy._components.gaussian.Gaussian"><tt class="xref py py-class docutils literal"><span class="pre">Gaussian</span></tt></a> component using mpfit and bounds on
+the <tt class="docutils literal"><span class="pre">centre</span></tt> parameter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="go">size=1e5)).get_histogram()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">binned</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmin</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmax</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bounded</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fitter</span><span class="o">=</span><span class="s">&quot;mpfit&quot;</span><span class="p">,</span> <span class="n">bounded</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
+<span class="go">Components  Parameter   Value</span>
+<span class="go">Gaussian</span>
+<span class="go">        sigma   0.00996345</span>
+<span class="go">        A   99918.7</span>
+<span class="go">        centre  9.99976</span>
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.7.</span></p>
+<p><span class="versionmodified">New in version 0.7: </span>The chi-squared, reduced chi-squared and the degrees of freedom are
+computed automatically when fitting. They are stored as signals, in the
+<tt class="xref py py-attr docutils literal"><span class="pre">chisq</span></tt>, <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.red_chisq" title="hyperspy.model.Model.red_chisq"><tt class="xref py py-attr docutils literal"><span class="pre">red_chisq</span></tt></a>  and
+<tt class="xref py py-attr docutils literal"><span class="pre">dof</span></tt> attributes of the model respectively. Note that,
+unless <tt class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></tt> contains an accurate
+estimation of the variance of the data, the chi-squared and reduced
+chi-squared cannot be computed correctly. This is also true for
+homocedastic noise.</p>
 </div>
-<p>In addition, it is possible to fit a given component  independently using the
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><tt class="xref py py-meth docutils literal"><span class="pre">fit_component()</span></tt></a> method, that is specially useful to ease
-setting starting parameters.</p>
 </div>
 <div class="section" id="visualizing-the-model">
 <h2>Visualizing the model<a class="headerlink" href="#visualizing-the-model" title="Permalink to this headline">¶</a></h2>
@@ -393,20 +526,25 @@ is possible to display the individual components by calling
 </div>
 <p>To disable this feature call <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_plot_components" title="hyperspy.model.Model.disable_plot_components"><tt class="xref py py-meth docutils literal"><span class="pre">disable_plot_components()</span></tt></a>.</p>
 </div>
-<div class="section" id="setting-the-position-of-parameter-interactively">
-<h2>Setting the position of parameter interactively<a class="headerlink" href="#setting-the-position-of-parameter-interactively" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setting-the-initial-parameters">
+<h2>Setting the initial parameters<a class="headerlink" href="#setting-the-initial-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Non-linear regression often requires setting sensible starting
+parameters. This can be done by plotting the model and adjusting the parameters
+by hand.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.6.</span></p>
+<p><span class="versionmodified">New in version 0.7: </span>In addition, it is possible to fit a given component  independently using
+the <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><tt class="xref py py-meth docutils literal"><span class="pre">fit_component()</span></tt></a> method.</p>
 </div>
-<p><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></tt></a> provides an interactive way of
-setting the position of the components with a well define position.
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">disable_adjust_position()</span></tt></a> disables the tool. This
-feature will be made from user friendly but adding a button to the UI to
-enable/disable it.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.6: </span>Also, <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></tt></a> provides an
+interactive way of setting the position of the components with a well
+define position.  <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><tt class="xref py py-meth docutils literal"><span class="pre">disable_adjust_position()</span></tt></a> disables
+the tool.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/model_adjust_position.png"><img alt="../_images/model_adjust_position.png" src="../_images/model_adjust_position.png" style="width: 500px;" /></a>
-<p class="caption">Adjust the position of the components interactively by dragging the
-vertical lines.</p>
+<p class="caption">Interactive component position adjustment tool.Drag the vertical lines
+to set the initial value of the position parameter.</p>
+</div>
 </div>
 </div>
 <div class="section" id="exclude-data-from-the-fitting-process">
@@ -419,10 +557,10 @@ undesired spectral channels from the fitting process:</p>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.reset_signal_range" title="hyperspy.model.Model.reset_signal_range"><tt class="xref py py-meth docutils literal"><span class="pre">reset_signal_range()</span></tt></a></li>
 </ul>
 </div>
-<div class="section" id="working-with-multidimensional-datasets">
-<h2>Working with multidimensional datasets<a class="headerlink" href="#working-with-multidimensional-datasets" title="Permalink to this headline">¶</a></h2>
-<p>To fit the model to the full datataset use <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-meth docutils literal"><span class="pre">multifit()</span></tt></a>,
-e.g.:</p>
+<div class="section" id="fitting-multidimensional-datasets">
+<h2>Fitting multidimensional datasets<a class="headerlink" href="#fitting-multidimensional-datasets" title="Permalink to this headline">¶</a></h2>
+<p>To fit the model to all the elements of a multidimensional datataset use
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.multifit" title="hyperspy.model.Model.multifit"><tt class="xref py py-meth docutils literal"><span class="pre">multifit()</span></tt></a>, e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">()</span> <span class="c"># warning: this can be a lengthy process on large datasets</span>
 </pre></div>
 </div>
@@ -489,9 +627,9 @@ parameter attributes:</p>
 <li><a class="reference internal" href="#getting-and-setting-parameter-values-and-attributes">Getting and setting parameter values and attributes</a></li>
 <li><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a></li>
 <li><a class="reference internal" href="#visualizing-the-model">Visualizing the model</a></li>
-<li><a class="reference internal" href="#setting-the-position-of-parameter-interactively">Setting the position of parameter interactively</a></li>
+<li><a class="reference internal" href="#setting-the-initial-parameters">Setting the initial parameters</a></li>
 <li><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
-<li><a class="reference internal" href="#working-with-multidimensional-datasets">Working with multidimensional datasets</a></li>
+<li><a class="reference internal" href="#fitting-multidimensional-datasets">Fitting multidimensional datasets</a></li>
 <li><a class="reference internal" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
 <li><a class="reference internal" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
 <li><a class="reference internal" href="#exporting-the-result-of-the-fit">Exporting the result of the fit</a></li>
