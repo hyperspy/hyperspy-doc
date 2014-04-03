@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dielectric function tools &mdash; HyperSpy 0.7 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+    <link rel="top" title="HyperSpy 0.7 documentation" href="../index.html" />
+    <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html" />
+    <link rel="next" title="Loading and saving data" href="io.html" />
+    <link rel="prev" title="Energy-Dispersive X-Rays Spectrometry (EDS)" href="eds.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io.html" title="Loading and saving data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="eds.html" title="Energy-Dispersive X-Rays Spectrometry (EDS)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">HyperSpy 0.7 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dielectric-function-tools">
+<h1>Dielectric function tools<a class="headerlink" href="#dielectric-function-tools" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<div class="section" id="number-of-effective-electrons">
+<h2>Number of effective electrons<a class="headerlink" href="#number-of-effective-electrons" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The Bethe f-sum rule gives rise to two definitions of the effective number (see
+<a class="reference internal" href="bibliography.html#egerton2011" id="id1">[Egerton2011]</a>):</p>
+<div class="math">
+<p><img src="../_images/math/48824fef1b709ae984071a5fb40f91e684bdb6e9.png" alt="n_{\mathrm{eff1}}\left(-\Im\left(\epsilon^{-1}\right)\right)=\frac{2\epsilon_{0}m_{0}}{\pi\hbar^{2}e^{2}n_{a}}\int_{0}^{E}E'\Im\left(\frac{-1}{\epsilon}\right)dE'
+
+n_{\mathrm{eff2}}\left(\epsilon_{2}\right)=\frac{2\epsilon_{0}m_{0}}{\pi\hbar^{2}e^{2}n_{a}}\int_{0}^{E}E'\epsilon_{2}\left(E'\right)dE'"/></p>
+</div><p>where <img class="math" src="../_images/math/04788fbc1317a7cbec182df7fd804abc676aa70e.png" alt="n_a"/> is the number of atoms (or molecules) per unit volume of the
+sample, <img class="math" src="../_images/math/734a1cffa7cefd99da87b4a1a7bd54061a57fece.png" alt="\epsilon_0"/> is the vacuum permittivity, <img class="math" src="../_images/math/dbb630b95e37c90143829f6ffc3410caa92b5463.png" alt="m_0"/> is the
+elecron mass and <img class="math" src="../_images/math/630e3a780577ea7921e81ee2ac5237dd1802ec8d.png" alt="e"/> is the electron charge.</p>
+<p>The
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction.get_number_of_effective_electrons" title="hyperspy._signals.dielectric_function.DielectricFunction.get_number_of_effective_electrons"><tt class="xref py py-meth docutils literal"><span class="pre">get_number_of_effective_electrons()</span></tt></a>
+method computes both.</p>
+</div>
+<div class="section" id="compute-the-electron-energy-loss-signal">
+<h2>Compute the electron energy-loss signal<a class="headerlink" href="#compute-the-electron-energy-loss-signal" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction.get_electron_energy_loss_spectrum" title="hyperspy._signals.dielectric_function.DielectricFunction.get_electron_energy_loss_spectrum"><tt class="xref py py-meth docutils literal"><span class="pre">get_electron_energy_loss_spectrum()</span></tt></a>
+&#8220;naively&#8221; computes the single-scattering electron-energy loss spectrum from the
+dielectric function given the zero-loss peak (or its integral) and the sample
+thickness using:</p>
+<div class="math">
+<p><img src="../_images/math/62d862d9fcab8016a18ae2313021d296fd7eb691.png" alt="S\left(E\right)=\frac{2I_{0}t}{\pi
+a_{0}m_{0}v^{2}}\ln\left[1+\left(\frac{\beta}{\theta(E)}\right)^{2}\right]\Im\left[\frac{-1}{\epsilon\left(E\right)}\right]"/></p>
+</div><p>where <img class="math" src="../_images/math/b384912b575da3b4822cf0dac6c0aa00b0a5d770.png" alt="I_0"/> is the zero-loss peak integral, <img class="math" src="../_images/math/ef9270877405055756d345facd044e4ab297f858.png" alt="t"/> the sample
+thickness, <img class="math" src="../_images/math/8ce03f78ed945f2ef3dac87c8799b55b393527e7.png" alt="\beta"/> the collection angle and <img class="math" src="../_images/math/afbe940b036f13a25ca5c6909b0812d13ad8a954.png" alt="\theta(E)"/> the
+characteristic scattering angle.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hyperspy_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Dielectric function tools</a><ul>
+<li><a class="reference internal" href="#number-of-effective-electrons">Number of effective electrons</a></li>
+<li><a class="reference internal" href="#compute-the-electron-energy-loss-signal">Compute the electron energy-loss signal</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="eds.html"
+                        title="previous chapter">Energy-Dispersive X-Rays Spectrometry (EDS)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io.html"
+                        title="next chapter">Loading and saving data</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_guide/dielectric_function.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io.html" title="Loading and saving data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="eds.html" title="Energy-Dispersive X-Rays Spectrometry (EDS)"
+             >previous</a> |</li>
+        <li><a href="../index.html">HyperSpy 0.7 documentation</a> &raquo;</li>
+          <li><a href="index.html" >HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2012, The HyperSpy development team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

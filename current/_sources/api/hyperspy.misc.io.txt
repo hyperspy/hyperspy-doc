@@ -1,0 +1,46 @@
+hyperspy.misc.io package
+========================
+
+Submodules
+----------
+
+hyperspy.misc.io.tifffile module
+--------------------------------
+
+.. automodule:: hyperspy.misc.io.tifffile
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hyperspy.misc.io.tools module
+-----------------------------
+
+.. automodule:: hyperspy.misc.io.tools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hyperspy.misc.io.ttols module
+-----------------------------
+
+.. automodule:: hyperspy.misc.io.ttols
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hyperspy.misc.io.utils_readfile module
+--------------------------------------
+
+.. automodule:: hyperspy.misc.io.utils_readfile
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.misc.io
+    :members:
+    :undoc-members:
+    :show-inheritance:
