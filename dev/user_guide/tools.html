@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
     <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
@@ -668,7 +669,7 @@ addition Hyperspy extend numpy&#8217;s broadcasting rules to the following cases
 </table>
 </div>
 <div class="section" id="iterating-over-the-navigation-axes">
-<h3>Iterating over the navigation axes<a class="headerlink" href="#iterating-over-the-navigation-axes" title="Permalink to this headline">¶</a></h3>
+<span id="signal-iterator"></span><h3>Iterating over the navigation axes<a class="headerlink" href="#iterating-over-the-navigation-axes" title="Permalink to this headline">¶</a></h3>
 <p>Signal instances are iterables over the navigation axes. For example, the
 following code creates a stack of 10 images and saves them in separate &#8220;png&#8221;
 files by iterating over the signal instance:</p>
@@ -712,12 +713,12 @@ to make a horizontal &#8220;collage&#8221; of the image stack:</p>
 </div>
 <p>Transforming the data at each coordinate as in the previous example using an
 external function can be more easily accomplished using the
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.apply_function" title="hyperspy.signal.Signal.apply_function"><tt class="xref py py-meth docutils literal"><span class="pre">apply_function()</span></tt></a> method:</p>
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.map" title="hyperspy.signal.Signal.map"><tt class="xref py py-meth docutils literal"><span class="pre">map()</span></tt></a> method:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">lena</span><span class="p">()]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;y&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span>
 <span class="gp">... </span>                           <span class="n">angle</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
 <span class="gp">... </span>                           <span class="n">reshape</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">collage</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">image</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">image_stack</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -727,7 +728,7 @@ external function can be more easily accomplished using the
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/rotate_lena_apply_simple.png"><img alt="../_images/rotate_lena_apply_simple.png" src="../_images/rotate_lena_apply_simple.png" style="width: 500px;" /></a>
 </div>
-<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.apply_function" title="hyperspy.signal.Signal.apply_function"><tt class="xref py py-meth docutils literal"><span class="pre">apply_function()</span></tt></a> method can also take variable
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.map" title="hyperspy.signal.Signal.map"><tt class="xref py py-meth docutils literal"><span class="pre">map()</span></tt></a> method can also take variable
 arguments as in the following example.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">lena</span><span class="p">()]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
@@ -737,7 +738,7 @@ arguments as in the following example.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">set_signal_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">modes</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">&#39;constant&#39;</span><span class="p">,</span> <span class="s">&#39;nearest&#39;</span><span class="p">,</span> <span class="s">&#39;reflect&#39;</span><span class="p">,</span> <span class="s">&#39;wrap&#39;</span><span class="p">]))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">modes</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">set_signal_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span>
 <span class="gp">... </span>                           <span class="n">angle</span><span class="o">=</span><span class="n">angles</span><span class="p">,</span>
 <span class="gp">... </span>                           <span class="n">reshape</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
 <span class="gp">... </span>                           <span class="n">mode</span><span class="o">=</span><span class="n">modes</span><span class="p">)</span>
@@ -776,7 +777,7 @@ following two methods:</p>
 </ul>
 </div>
 <div class="section" id="splitting-and-stacking">
-<h3>Splitting and stacking<a class="headerlink" href="#splitting-and-stacking" title="Permalink to this headline">¶</a></h3>
+<span id="signal-stack-split"></span><h3>Splitting and stacking<a class="headerlink" href="#splitting-and-stacking" title="Permalink to this headline">¶</a></h3>
 <p>Several objects can be stacked together over an existing axis or over a
 new axis using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.stack" title="hyperspy.misc.utils.stack"><tt class="xref py py-func docutils literal"><span class="pre">stack()</span></tt></a> function, if they share axis
 with same dimension.</p>
@@ -813,7 +814,7 @@ to reverse the <a class="reference internal" href="../api/hyperspy.misc.html#hyp
 </ul>
 </div>
 <div class="section" id="changing-the-data-type">
-<h3>Changing the data type<a class="headerlink" href="#changing-the-data-type" title="Permalink to this headline">¶</a></h3>
+<span id="signal-change-dtype"></span><h3>Changing the data type<a class="headerlink" href="#changing-the-data-type" title="Permalink to this headline">¶</a></h3>
 <p>Even if the original data is recorded with a limited dynamic range, it is often
 desirable to perform the analysis operations with a higher precision.
 Conversely, if space is limited, storing in a shorter data type can decrease
@@ -833,6 +834,43 @@ type in place, e.g.:</p>
 <span class="go">    Data representation: spectrum</span>
 <span class="go">    Data type: float64</span>
 </pre></div>
+</div>
+<div class="versionadded">
+<blockquote>
+<div><span class="versionmodified">New in version 0.7: </span><p>In addition to all standard numpy dtypes HyperSpy supports four extra
+dtypes for RGB images: rgb8, rgba8, rgb16 and rgba16. Changing
+from and to any rgbx dtype is more constrained than most other dtype
+conversions. To change to a rgbx dtype the signal <cite>record_by</cite> must be
+&#8220;spectrum&#8221;, <cite>signal_dimension</cite> must be 3(4) for rgb(rgba) dtypes and the
+dtype must be uint8(uint16) for rgbx8(rgbx16).  After conversion
+<cite>record_by</cite> becomes <cite>image</cite> and the spectra dimension is removed. The dtype
+of images of dtype rgbx8(rgbx16) can only be changed to uint8(uint16) and
+the <cite>record_by</cite> becomes &#8220;spectrum&#8221;.</p>
+<p>In the following example we create</p>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ly</span><span class="p">,</span> <span class="n">lx</span> <span class="o">=</span> <span class="n">rgb_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">offset_factor</span> <span class="o">=</span> <span class="mf">0.16</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size_factor</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">lx</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">ly</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">lx</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">lx</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">16</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">rgb_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s">&quot;uint16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Spectrum, title: , dimensions: (1024, 1024|3)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s">&quot;rgb16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Image, title: , dimensions: (|1024, 1024)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/rgb_example.png"><img alt="../_images/rgb_example.png" src="../_images/rgb_example.png" style="width: 500px;" /></a>
+<p class="caption">RGB data type example.</p>
+</div>
 </div>
 </div>
 </div>

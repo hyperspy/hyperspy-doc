@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
     <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
@@ -82,43 +83,121 @@ see <a class="reference external" href="https://github.com/hyperspy/hyperspy/com
 <span id="changes-0-7"></span><h2>v0.7<a class="headerlink" href="#v0-7" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="new-features">
 <h3>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="core">
+<h4>Core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>New signal, EDSSpectrum especialized in EDS data analysis. See
-<a class="reference internal" href="eels.html#eds-tools-label"><em>EELS curve fitting</em></a>.</li>
 <li>New syntax to index the <a class="reference internal" href="../api/hyperspy.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><tt class="xref py py-class docutils literal"><span class="pre">AxesManager</span></tt></a>.</li>
-<li>New Signal methods:<ul>
+<li>New Signal methods to transform between Signal subclasses. More information
+<a class="reference internal" href="tools.html#transforming-signal"><em>here</em></a>.<ul>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.set_signal_type" title="hyperspy.signal.Signal.set_signal_type"><tt class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.set_signal_origin" title="hyperspy.signal.Signal.set_signal_origin"><tt class="xref py py-meth docutils literal"><span class="pre">set_signal_origin()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.as_image" title="hyperspy.signal.Signal.as_image"><tt class="xref py py-meth docutils literal"><span class="pre">as_image()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.as_spectrum" title="hyperspy.signal.Signal.as_spectrum"><tt class="xref py py-meth docutils literal"><span class="pre">as_spectrum()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.estimate_peak_width" title="hyperspy.signal.Signal1DTools.estimate_peak_width"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_peak_width()</span></tt></a></li>
-<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.integrate_in_range" title="hyperspy.signal.Signal1DTools.integrate_in_range"><tt class="xref py py-meth docutils literal"><span class="pre">integrate_in_range()</span></tt></a></li>
 </ul>
 </li>
-<li>New database of EDS lines available in the user namespace, elements_EDS.</li>
-<li>The string representaion of the signal class now print the shape of the
+<li>The string representation of the Signal class now prints the shape of the
 data and includes a separator between the navigation and the signal axes e.g
 (100, 10| 5) for a signal with two navigation axes of size 100 and 10 and one
 signal axis of size 5.</li>
-<li>Added several extra options to the Signal <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.plot" title="hyperspy.signal.Signal.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a>
-method. See <a class="reference internal" href="visualisation.html#visualization-label"><em>Data visualisation</em></a>.</li>
-<li>Add support for RGBA data.</li>
+<li>Add support for RGBA data. See <a class="reference internal" href="tools.html#signal-change-dtype"><em>Changing the data type</em></a>.</li>
+<li>The default toolkit can now be saved in the preferences.</li>
+<li>Added full compatibility with the Qt toolkit that is now the default.</li>
+<li>Added compatibility witn the the GTK and TK toolkits, although with no GUI
+features.</li>
+<li>It is now possible to run HyperSpy in
+<a class="reference internal" href="getting_started.html#headless-label"><em>a headless system</em></a>.</li>
+<li>Added a CLI to <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.remove_background" title="hyperspy.signal.Signal1DTools.remove_background"><tt class="xref py py-meth docutils literal"><span class="pre">remove_background()</span></tt></a>.</li>
+<li>New <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.estimate_peak_width" title="hyperspy.signal.Signal1DTools.estimate_peak_width"><tt class="xref py py-meth docutils literal"><span class="pre">estimate_peak_width()</span></tt></a> method to estimate
+peak width.</li>
+<li>New methods to integrate over one axis:
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.integrate1D" title="hyperspy.signal.Signal.integrate1D"><tt class="xref py py-meth docutils literal"><span class="pre">integrate1D()</span></tt></a> and
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.integrate_in_range" title="hyperspy.signal.Signal1DTools.integrate_in_range"><tt class="xref py py-meth docutils literal"><span class="pre">integrate_in_range()</span></tt></a>.</li>
+<li>New <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> attribute, <tt class="docutils literal"><span class="pre">Signal.binned</span></tt>. Several
+methods behave differently on binned and unbinned signals.
+See <a class="reference internal" href="tools.html#signal-binned"><em>Binned and unbinned signals</em></a>.</li>
+<li>New <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.map" title="hyperspy.signal.Signal.map"><tt class="xref py py-meth docutils literal"><span class="pre">map()</span></tt></a> method to easily transform the
+data using a function that operates on individual signals. See
+<a class="reference internal" href="tools.html#signal-iterator"><em>Iterating over the navigation axes</em></a>.</li>
+<li>New <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.get_histogram" title="hyperspy.signal.Signal.get_histogram"><tt class="xref py py-meth docutils literal"><span class="pre">get_histogram()</span></tt></a> and
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.print_summary_statistics" title="hyperspy.signal.Signal.print_summary_statistics"><tt class="xref py py-meth docutils literal"><span class="pre">print_summary_statistics()</span></tt></a> methods.</li>
+<li>The spikes removal tool has been moved to the <tt class="xref py py-class docutils literal"><span class="pre">Spectrum</span></tt>
+class so that it is available for all its subclasses.</li>
+<li>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.split" title="hyperspy.signal.Signal.split"><tt class="xref py py-meth docutils literal"><span class="pre">split()</span></tt></a> method now can automatically split back
+stacked signals into its original part. See <a class="reference internal" href="tools.html#signal-stack-split"><em>Splitting and stacking</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="io">
+<h4>IO<a class="headerlink" href="#io" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
 <li>Improved support for FEI&#8217;s emi and ser files.</li>
 <li>Improved support for Gatan&#8217;s dm3 files.</li>
-<li>Add Gatan&#8217;s dm4 reading capabilities.</li>
-<li>Hyperspy now uses the blitting capabilities of the different toolkits to
-speed up the plotting of images.</li>
-<li>Hyperspy is now fully compatible with the Qt toolkit in addition to the WX
-toolkit. The Qt toolkit is now the default.</li>
-<li>Hyperspy can now use the GTK and TK toolkits, although without the GUI
-features.</li>
-<li>The default toolkit can now be saved in the preferences.</li>
-<li>It is now possible to run hyperspy in
-<a class="reference internal" href="getting_started.html#headless-label"><em>a headless system</em></a>.</li>
-<li>The Signal method
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.remove_background" title="hyperspy.signal.Signal1DTools.remove_background"><tt class="xref py py-meth docutils literal"><span class="pre">remove_background()</span></tt></a>
-now can be used without the GUI.</li>
+<li>Add support for reading Gatan&#8217;s dm4 files.</li>
 </ul>
+</div>
+<div class="section" id="plotting">
+<h4>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Use the blitting capabilities of the different toolkits to
+speed up the plotting of images.</li>
+<li>Added several extra options to the Signal <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.plot" title="hyperspy.signal.Signal.plot"><tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt></a>
+method to customize the navigator. See <a class="reference internal" href="visualisation.html#visualization-label"><em>Data visualisation</em></a>.</li>
+<li>Add compatibility with IPython&#8217;s matplotlib inline plotting. See
+<a class="reference internal" href="getting_started.html#inline-plotting"><em>Inline plotting</em></a>.</li>
+<li>New function, <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><tt class="xref py py-func docutils literal"><span class="pre">plot_spectra()</span></tt></a>, to plot several
+spectra in the same figure. See <a class="reference internal" href="visualisation.html#id3"><em>Plotting several spectra</em></a>.</li>
+<li>New function, <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><tt class="xref py py-func docutils literal"><span class="pre">plot_signals()</span></tt></a>, to plot several
+signals at the same time. See <a class="reference internal" href="visualisation.html#plot-signals"><em>Plotting several signals</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="curve-fitting">
+<h4>Curve fitting<a class="headerlink" href="#curve-fitting" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The chi-squared, reduced chi-squared and the degrees of freedom are
+computed automatically when fitting. See <a class="reference internal" href="model.html#model-fitting"><em>Fitting the model to the data</em></a>.</li>
+<li>New functionality to plot the individual components of a model. See
+<a class="reference internal" href="model.html#model-visualization"><em>Visualizing the model</em></a>.</li>
+<li>New method, <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><tt class="xref py py-meth docutils literal"><span class="pre">fit_component()</span></tt></a>, to help setting the
+starting parameters. See <a class="reference internal" href="model.html#model-starting"><em>Setting the initial parameters</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="machine-learning">
+<h4>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The PCA scree plot can now be easily obtained as a Signal. See
+<a class="reference internal" href="mva.html#scree-plot"><em>Scree plot</em></a>.</li>
+<li>The decomposition and blind source separation components can now be obtained
+as <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> instances. See <a class="reference internal" href="mva.html#mva-get-results"><em>Obtaining the results as Signal instances</em></a>.</li>
+<li>New methods to plot the decomposition and blind source separation results
+that support n-dimensional loadings. See <a class="reference internal" href="mva.html#mva-visualization"><em>Visualising results</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="dielectric-function">
+<h4>Dielectric function<a class="headerlink" href="#dielectric-function" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>New <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> subclass,
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction" title="hyperspy._signals.dielectric_function.DielectricFunction"><tt class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></tt></a>.</li>
+</ul>
+</div>
+<div class="section" id="eels">
+<h4>EELS<a class="headerlink" href="#eels" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>New method,
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis" title="hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis"><tt class="xref py py-meth docutils literal"><span class="pre">kramers_kronig_analysis()</span></tt></a> to calculate
+the dielectric function from low-loss electron energy-loss spectra based on
+the Kramers-Kronig relations. See <a class="reference internal" href="eels.html#eels-kk"><em>Kramers-Kronig Analysis</em></a>.</li>
+<li>New method to align the zero-loss peak,
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak"><tt class="xref py py-meth docutils literal"><span class="pre">align_zero_loss_peak()</span></tt></a>.</li>
+</ul>
+</div>
+<div class="section" id="eds">
+<h4>EDS<a class="headerlink" href="#eds" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>New signal, EDSSpectrum especialized in EDS data analysis. See
+<a class="reference internal" href="eels.html#eds-tools-label"><em>EELS curve fitting</em></a>.</li>
+<li>New database of EDS lines available in the <tt class="docutils literal"><span class="pre">elements</span></tt> attribute of the
+<tt class="docutils literal"><span class="pre">hspy.utils.material</span></tt> module.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="api-changes">
 <h3>API changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h3>
@@ -127,11 +206,14 @@ now can be used without the GUI.</li>
 been rellocated to specialized modules. misc.utils is no longer imported in
 hyperspy.hspy. A new hyperspy.utils module is imported instead.</li>
 <li>Objects that have been renamed<ul>
-<li>elements -&gt; elements_EELS</li>
-<li>Signal.navigation_indexer -&gt; inav</li>
-<li>Signal.signal_indexer -&gt; isig</li>
+<li><tt class="docutils literal"><span class="pre">hspy.elements</span></tt> -&gt; <tt class="docutils literal"><span class="pre">utils.material.elements</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">Signal.navigation_indexer</span></tt> -&gt; <tt class="docutils literal"><span class="pre">inav</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">Signal.signal_indexer</span></tt> -&gt; <tt class="docutils literal"><span class="pre">isig</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">Signal.mapped_parameters</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Signal.metadata</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">Signal.original_parameters</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Signal.original_metadata</span></tt>.</li>
 </ul>
 </li>
+<li>The metadata has been reorganized. See <a class="reference internal" href="metadata_structure.html#metadata-structure"><em>Metadata structure</em></a>.</li>
 <li>The following signal methods now operate out-of-place:<ul>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.swap_axes" title="hyperspy.signal.Signal.swap_axes"><tt class="xref py py-meth docutils literal"><span class="pre">swap_axes()</span></tt></a></li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.rebin" title="hyperspy.signal.Signal.rebin"><tt class="xref py py-meth docutils literal"><span class="pre">rebin()</span></tt></a></li>
@@ -507,7 +589,17 @@ Orsay VG parameters.</li>
   <ul>
 <li><a class="reference internal" href="#">What&#8217;s new</a><ul>
 <li><a class="reference internal" href="#v0-7">v0.7</a><ul>
-<li><a class="reference internal" href="#new-features">New features</a></li>
+<li><a class="reference internal" href="#new-features">New features</a><ul>
+<li><a class="reference internal" href="#core">Core</a></li>
+<li><a class="reference internal" href="#io">IO</a></li>
+<li><a class="reference internal" href="#plotting">Plotting</a></li>
+<li><a class="reference internal" href="#curve-fitting">Curve fitting</a></li>
+<li><a class="reference internal" href="#machine-learning">Machine learning</a></li>
+<li><a class="reference internal" href="#dielectric-function">Dielectric function</a></li>
+<li><a class="reference internal" href="#eels">EELS</a></li>
+<li><a class="reference internal" href="#eds">EDS</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#api-changes">API changes</a></li>
 </ul>
 </li>

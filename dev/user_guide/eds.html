@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
     <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
@@ -99,8 +100,9 @@ For a single spectrum:</p>
 </pre></div>
 </div>
 <p>For a spectrum_image (The .rpl file is recorded as an image in this example,
-The option record_by=&#8217;spectrum&#8217; set it back to a spectrum):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;spectrum_image.rpl&quot;</span><span class="p">,</span><span class="n">record_by</span><span class="o">=</span><span class="s">&quot;spectrum&quot;</span><span class="p">)</span>
+The method <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.as_spectrum" title="hyperspy.signal.Signal.as_spectrum"><tt class="xref py py-meth docutils literal"><span class="pre">as_spectrum()</span></tt></a> set it back to a spectrum
+with the energy axis in first position):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;spectrum_image.rpl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For a stack of spectrum_images (The &#8220;*&#8221; replace all chains of string, in this
@@ -128,20 +130,21 @@ detector parameters are stored in stored in the
 <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt>
 attribute (see <a class="reference internal" href="metadata_structure.html#metadata-structure"><em>Metadata structure</em></a>). These parameters can be displayed
 as follow:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">TEM</span>
-<span class="go">├── EDS</span>
-<span class="go">│   ├── azimuth_angle = 0.0</span>
-<span class="go">│   ├── elevation_angle = 37.0</span>
-<span class="go">│   ├── energy_resolution_MnKa = 130.0</span>
-<span class="go">│   ├── live_time = 30.0</span>
-<span class="go">│   └── real_time = 55.0</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">TEM</span>
+<span class="go">├── Detector</span>
+<span class="go">│   └── EDS</span>
+<span class="go">│       ├── azimuth_angle = 0.0</span>
+<span class="go">│       ├── elevation_angle = 37.0</span>
+<span class="go">│       ├── energy_resolution_MnKa = 130.0</span>
+<span class="go">│       ├── live_time = 30.0</span>
+<span class="go">│       └── real_time = 55.0</span>
 <span class="go">├── beam_current = 0.0</span>
 <span class="go">├── beam_energy = 300</span>
 <span class="go">└── tilt_stage = 36.0</span>
 </pre></div>
 </div>
 <p>These parameters can be set directly:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">TEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">300</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">TEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">300</span>
 </pre></div>
 </div>
 <p>or with the
@@ -196,7 +199,7 @@ method.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load spectrum.msa which contains the parameters</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;spectrum.msa&quot;</span><span class="p">,</span><span class="n">signal_type</span><span class="o">=</span><span class="s">&quot;EDS_TEM&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Load spectrum_image.rpl which contains no parameters</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;spectrum_image.rpl&quot;</span><span class="p">,</span><span class="n">record_by</span><span class="o">=</span><span class="s">&quot;spectrum&quot;</span><span class="p">,</span><span class="n">signal_type</span><span class="o">=</span><span class="s">&quot;EDS_TEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;spectrum_image.rpl&quot;</span><span class="p">,</span><span class="n">signal_type</span><span class="o">=</span><span class="s">&quot;EDS_TEM&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Set all the properties of spec to spec_img</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span><span class="o">.</span><span class="n">get_calibration_from</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
 </pre></div>
@@ -209,10 +212,10 @@ method.</p>
 <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> attribute). It can be displayed as
 follow:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
-<span class="go">├── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_Ka&#39;]</span>
 <span class="go">├── description = Sample 1.3</span>
 <span class="go">├── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
-<span class="go">└── thickness = 100</span>
+<span class="go">├── thickness = 100</span>
+<span class="go">└── xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_Ka&#39;]</span>
 </pre></div>
 </div>
 <p>The following methods are either called &#8220;set&#8221; or &#8220;add&#8221;. When &#8220;set&#8221;
@@ -237,31 +240,32 @@ abbreviations are accepted:</p>
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.set_lines" title="hyperspy._signals.eds.EDSSpectrum.set_lines"><tt class="xref py py-meth docutils literal"><span class="pre">set_lines()</span></tt></a> and
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.add_lines" title="hyperspy._signals.eds.EDSSpectrum.add_lines"><tt class="xref py py-meth docutils literal"><span class="pre">add_lines()</span></tt></a> methods. The corresponding
 elements will be added automatically. Several lines per elements can be defined.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s">&quot;Ni_La&quot;</span><span class="p">,</span><span class="s">&quot;Ti_Ka&quot;</span><span class="p">,</span><span class="s">&quot;Al_Ka&quot;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s">&quot;Ni&quot;</span><span class="p">,</span><span class="s">&quot;Ti&quot;</span><span class="p">,</span><span class="s">&quot;Al&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s">&quot;Ni_La&quot;</span><span class="p">,</span><span class="s">&quot;Ti_Ka&quot;</span><span class="p">,</span><span class="s">&quot;Al_Ka&quot;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">add_lines</span><span class="p">([</span><span class="s">&quot;Ti_La&quot;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
-<span class="go">├── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_Ka&#39;, &#39;Ti_La&#39;]</span>
-<span class="go">└── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
+<span class="go">├── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
+<span class="go">└── xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_Ka&#39;, &#39;Ti_La&#39;]</span>
 </pre></div>
 </div>
 <p>These methods can be used automatically, if the beam energy is set.
 The most excited X-ray line is selected per element (highest energy above an
 overvoltage of 2 (&lt; beam energy / 2)).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s">&quot;Ni&quot;</span><span class="p">,</span><span class="s">&quot;Ti&quot;</span><span class="p">,</span><span class="s">&quot;Al&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">SEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">TEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">30</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
-<span class="go">├── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_Ka&#39;, &#39;Ti_Ka&#39;]</span>
-<span class="go">└── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">SEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([])</span>
+<span class="go">├── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
+<span class="go">└── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_Ka&#39;, &#39;Ti_Ka&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">TEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
-<span class="go">├── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_La&#39;]</span>
-<span class="go">└── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
+<span class="go">├── elements = [&#39;Al&#39;, &#39;Ni&#39;, &#39;Ti&#39;]</span>
+<span class="go">└── Xray_lines = [&#39;Al_Ka&#39;, &#39;Ni_La&#39;, &#39;Ti_La&#39;]</span>
 </pre></div>
 </div>
 <p>A warning is raised, if setting a X-ray lines higher than the beam energy.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">SEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">TEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">add_lines</span><span class="p">([</span><span class="s">&quot;Ta_Ka&quot;</span><span class="p">])</span>
 <span class="go">Warning: Ta Ka is above the data energy range.</span>
 </pre></div>
@@ -325,7 +329,7 @@ Mn Ka to the peak energy (&#8220;energy_resolution_MnKa&#8221; in metadata).</p>
 </div>
 <p>The X-ray lines defined in &#8220;metadata.Sample.Xray_lines&#8221; (see above)
 are used by default.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s">&quot;Ni_La&quot;</span><span class="p">,</span><span class="s">&quot;Ti_Ka&quot;</span><span class="p">,</span><span class="s">&quot;Al_Ka&quot;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s">&quot;Ni_La&quot;</span><span class="p">,</span><span class="s">&quot;Ti_Ka&quot;</span><span class="p">,</span><span class="s">&quot;Al_Ka&quot;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spec_img</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
 <span class="go">[&lt;Image, title: Intensity of Al_Ka at 1.49 keV from Spectrum image,</span>
 <span class="go"> dimensions: (|128, 95)&gt;,</span>
@@ -334,6 +338,16 @@ are used by default.</p>
 <span class="go">&lt;Image, title: Intensity of Ti_Ka at 4.51 keV from Spectrum image,</span>
 <span class="go"> dimensions: (|128, 95)&gt;]</span>
 </pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.integrate_in_range" title="hyperspy.signal.Signal1DTools.integrate_in_range"><tt class="xref py py-meth docutils literal"><span class="pre">integrate_in_range()</span></tt></a>
+method (see <a class="reference internal" href="spectrum.html#integrate-1d-label"><em>spectrum tools</em></a>) provides
+an interactive way to generate intensity map.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">spec</span><span class="o">.</span><span class="n">integrate_in_range</span><span class="p">()</span>
+<span class="go">&lt;Image, title: , dimensions: (|128, 95)&gt;</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/EDS_integrate_in_range.png"><img alt="../_images/EDS_integrate_in_range.png" src="../_images/EDS_integrate_in_range.png" style="width: 800px;" /></a>
 </div>
 </div>
 </div>
