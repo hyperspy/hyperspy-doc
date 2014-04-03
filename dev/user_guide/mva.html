@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Machine learning &mdash; Hyperspy 0.6+dev documentation</title>
+    <title>Machine learning &mdash; HyperSpy 0.6+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,11 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="Hyperspy 0.6+dev documentation" href="../index.html" />
-    <link rel="up" title="Hyperspy User Guide (DRAFT)" href="index.html" />
+    <link rel="top" title="HyperSpy 0.6+dev documentation" href="../index.html" />
+    <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Curve fitting" href="model.html" />
     <link rel="prev" title="Data visualisation" href="visualisation.html" />
  
@@ -65,8 +64,8 @@
         <li class="right" >
           <a href="visualisation.html" title="Data visualisation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.6+dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -79,8 +78,8 @@
 <h1>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>Hyperspy provides easy access to several &#8220;machine learning&#8221; algorithms which
-can be useful when analysing hyperspectral data. In particular, decomposition
+<p>HyperSpy provides easy access to several &#8220;machine learning&#8221; algorithms which
+can be useful when analysing multidimensional data. In particular, decomposition
 algorithms such as principal component analysis (PCA) or blind source
 separation (BSS) algorithms such as independent component analysis (ICA) are
 available through the methods described in this section.</p>
@@ -96,7 +95,7 @@ decomposition before attempting to perform a BSS.</p>
 </div>
 <div class="section" id="nomenclature">
 <span id="decomposition-nomenclature"></span><h2>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h2>
-<p>Hyperspy performs the decomposition of a dataset into two new datasets: one
+<p>HyperSpy performs the decomposition of a dataset into two new datasets: one
 with the dimension of the signal space which we will call <cite>factors</cite> and the
 other with the dimension of the navigation space which we will call <cite>loadings</cite>.
 The same nomenclature applies to the result of BSS.</p>
@@ -117,14 +116,14 @@ any of its subclasses which most likely has been previously loaded with the
 multidimensional, i.e. <tt class="docutils literal"><span class="pre">s.axes_manager.navigation_size</span></tt> must be greater than
 one.</p>
 <p>Several algorithms exist for performing this analysis. The default algorithm in
-Hyperspy is <tt class="xref py py-const docutils literal"><span class="pre">SVD</span></tt>, which performs PCA using an approach called
+HyperSpy is <tt class="xref py py-const docutils literal"><span class="pre">SVD</span></tt>, which performs PCA using an approach called
 &#8220;singular value decomposition&#8221;. This method has many options. For more details
 read method documentation.</p>
 <div class="section" id="poissonian-noise">
 <h3>Poissonian noise<a class="headerlink" href="#poissonian-noise" title="Permalink to this headline">¶</a></h3>
 <p>Most decomposition algorithms assume that the noise of the data follows a
 Gaussian distribution. In the case that the data that you are analysing follow
-a Poissonian distribution instead, Hyperspy can &#8220;normalize&#8221; the data by
+a Poissonian distribution instead, HyperSpy can &#8220;normalize&#8221; the data by
 performing a scaling operation which can greatly enhance the result.</p>
 <p>To perform Poissonian noise normalisation:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">The</span> <span class="nb">long</span> <span class="n">way</span><span class="p">:</span>
@@ -177,7 +176,7 @@ different data pre-treatment in the same figure using
 is achieved by using a limited set of components to make a model of the
 original, omitting the later components that ideally contain only noise. This
 is know as <em>dimensionality reduction</em>.</p>
-<p>To perform this operation with Hyperspy, run the
+<p>To perform this operation with HyperSpy, run the
 <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.get_decomposition_model" title="hyperspy.learn.mva.MVA.get_decomposition_model"><tt class="xref py py-meth docutils literal"><span class="pre">get_decomposition_model()</span></tt></a> method, usually after
 estimating the dimension of your data e.g. by using the <a class="reference internal" href="#scree-plot"><em>Scree plot</em></a>. For
 example:</p>
@@ -196,8 +195,6 @@ used to construct the model.</li>
 construct the model.</li>
 </ul>
 </div>
-<p>Usually a low integer (&lt;10) will be the appropriate choice for most types of
-hyperspectral data</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">Unlike most of the analysis functions, this function returns a new
@@ -223,7 +220,7 @@ decomposition by a process called Blind Source Separation (BSS). For more
 information about the blind source separation you can read the <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0893608000000265">following
 introductory article</a> or <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S030439911000255X">this
 other article</a> from the
-authors of Hyperspy for an application to EELS analysis.</p>
+authors of HyperSpy for an application to EELS analysis.</p>
 <p>To perform BSS on the result of a decomposition, run the
 <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.blind_source_separation" title="hyperspy.learn.mva.MVA.blind_source_separation"><tt class="xref py py-meth docutils literal"><span class="pre">blind_source_separation()</span></tt></a> method, e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">blind_source_separation</span><span class="p">(</span><span class="n">number_of_components</span><span class="p">)</span>
@@ -268,8 +265,8 @@ method.</p>
 <p>The decomposition and BSS results are internally stored in the
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> class where all the methods discussed in this
 chapter can find them. However, they are stored as numpy array. Frequently it
-is useful to obtain the decomposition/BSS factors and loadings as Hyperspy
-signals and Hyperspy provides the following four methods for that pourpose:</p>
+is useful to obtain the decomposition/BSS factors and loadings as HyperSpy
+signals and HyperSpy provides the following four methods for that pourpose:</p>
 <ul class="simple">
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_decomposition_loadings" title="hyperspy.signal.MVATools.get_decomposition_loadings"><tt class="xref py py-meth docutils literal"><span class="pre">get_decomposition_loadings()</span></tt></a>.</li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_decomposition_factors" title="hyperspy.signal.MVATools.get_decomposition_factors"><tt class="xref py py-meth docutils literal"><span class="pre">get_decomposition_factors()</span></tt></a>.</li>
@@ -284,7 +281,7 @@ analysis.</p>
 <div class="section" id="saving-in-the-main-file">
 <h3>Saving in the main file<a class="headerlink" href="#saving-in-the-main-file" title="Permalink to this headline">¶</a></h3>
 <p>When you save the object on which you&#8217;ve performed machine learning analysis in
-the <a class="reference internal" href="io.html#hdf5-format"><em>HDF5</em></a> format (the default in Hyperspy) (see
+the <a class="reference internal" href="io.html#hdf5-format"><em>HDF5</em></a> format (the default in HyperSpy) (see
 <a class="reference internal" href="io.html#saving-files"><em>Saving data to files</em></a>) the result of the analysis is automatically saved in the
 file and it is loaded with the rest of the data when you load the file.</p>
 <p>This option is the simplest because everything is stored in the same file and
@@ -308,7 +305,7 @@ e.g.:</p>
 <div class="section" id="exporting">
 <h3>Exporting<a class="headerlink" href="#exporting" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to export the results of machine learning to any format
-supported by Hyperspy using:</p>
+supported by HyperSpy using:</p>
 <ul class="simple">
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.export_decomposition_results" title="hyperspy.signal.MVATools.export_decomposition_results"><tt class="xref py py-meth docutils literal"><span class="pre">export_decomposition_results()</span></tt></a> or</li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.export_bss_results" title="hyperspy.signal.MVATools.export_bss_results"><tt class="xref py py-meth docutils literal"><span class="pre">export_bss_results()</span></tt></a>.</li>
@@ -317,7 +314,7 @@ supported by Hyperspy using:</p>
 data is exported, so please consult the method documentation. The options
 include the choice of file format, the prefixes for loadings and factors,
 saving figures instead of data and more.</p>
-<p>Please note that the exported data cannot easily be loaded into Hyperspy&#8217;s
+<p>Please note that the exported data cannot easily be loaded into HyperSpy&#8217;s
 machine learning structure.</p>
 </div>
 </div>
@@ -407,12 +404,12 @@ machine learning structure.</p>
         <li class="right" >
           <a href="visualisation.html" title="Data visualisation"
              >previous</a> |</li>
-        <li><a href="../index.html">Hyperspy 0.6+dev documentation</a> &raquo;</li>
-          <li><a href="index.html" >Hyperspy User Guide (DRAFT)</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.6+dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2012, The Hyperspy development team.
+        &copy; Copyright 2012, The HyperSpy development team.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
