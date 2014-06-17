@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hyperspy._signals package &mdash; HyperSpy 0.7+dev documentation</title>
+    <title>hyperspy._signals package &mdash; HyperSpy 0.7.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7+dev',
+        VERSION:     '0.7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="HyperSpy 0.7+dev documentation" href="../index.html" />
+    <link rel="top" title="HyperSpy 0.7.1 documentation" href="../index.html" />
  
 <script type="text/javascript">
 
@@ -56,7 +56,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7+dev documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.7.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -355,7 +355,7 @@
 <dt>Compute the number of effective electrons using the Bethe f-sum</dt>
 <dd><p class="first">rule.</p>
 <p class="last">The Bethe f-sum rule gives rise to two definitions of the effective
-number (see <a class="reference internal" href="#id4" id="id1">[Egerton2011]</a>):
+number (see <a class="reference internal" href="../user_guide/bibliography.html#egerton2011" id="id1">[Egerton2011]</a>):
 $n_{mathrm{eff}}left(-Imleft(epsilon^{-1}</p>
 </dd>
 </dl>
@@ -1782,7 +1782,7 @@ the values.</p>
 <td>Rough estimation of the elastic scattering intensity by truncation of a EELS low-loss spectrum.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold" title="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_elastic_scattering_threshold</span></tt></a>([...])</td>
-<td>Calculates the first inflexion point of the spectrum derivative within a window using a specified tolerance.</td>
+<td>Calculate the first inflexion point of the spectrum derivative within a window.</td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_peak_width</span></tt>([factor,&nbsp;window,&nbsp;...])</td>
 <td>Estimate the width of the highest intensity of peak of the spectra at a given fraction of its maximum.</td>
@@ -2151,18 +2151,23 @@ float/int.</p>
 <dl class="method">
 <dt id="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold">
 <tt class="descname">estimate_elastic_scattering_threshold</tt><span class="sig-paren">(</span><em>window=10.0</em>, <em>tol=None</em>, <em>number_of_points=5</em>, <em>polynomial_order=3</em>, <em>start=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_threshold" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the first inflexion point of the spectrum derivative
-within a window using a specified tolerance.</p>
-<p>It previously smoothes the data using a Savitzky-Golay algorithm
-(can be turned off). This method assumes that the zero-loss peak is
-located at position zero in all the spectra.</p>
+<dd><p>Calculate the first inflexion point of the spectrum derivative
+within a window.</p>
+<p>This method assumes that the zero-loss peak is located at position zero
+in all the spectra. Currently it looks for an inflexion point, that can
+be a local maximum or minimum. Therefore, to estimate the elastic
+scattering threshold <cite>start</cite> + <cite>window</cite> must be less than the first
+maximum for all spectra (often the bulk plasmon maximum). If there is
+more than one inflexion point in energy the window it selects the
+smoother one what, often, but not always, is a good choice in this
+case.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>window</strong> : {None, float}</p>
 <blockquote>
-<div><p>If None, the search for the local minimum is performed
+<div><p>If None, the search for the local inflexion point is performed
 using the full energy range. A positive float will restrict
 the search to the (0,window] energy window, where window is given
 in the axis units. If no inflexion point is found in this
@@ -2195,7 +2200,8 @@ looking for the inflexion point.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>threshold</strong> : Signal</p>
 <blockquote class="last">
 <div><p>A Signal of the same dimension as the input spectrum
-navigation space containing the estimated threshold.</p>
+navigation space containing the estimated threshold. Where the
+threshold couldn&#8217;t be estimated the value is set to nan.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -2203,8 +2209,14 @@ navigation space containing the estimated threshold.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><tt class="xref py py-obj docutils literal"><span class="pre">align1D</span></tt></p>
+<p class="last"><a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_intensity" title="hyperspy._signals.eels.EELSSpectrum.estimate_elastic_scattering_intensity"><tt class="xref py py-obj docutils literal"><span class="pre">estimate_elastic_scattering_intensity</span></tt></a>, <a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak"><tt class="xref py py-obj docutils literal"><span class="pre">align_zero_loss_peak</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">find_peaks1D_ohaver</span></tt>, <tt class="xref py py-obj docutils literal"><span class="pre">fourier_ratio_deconvolution.</span></tt></p>
 </div>
+<p class="rubric">Notes</p>
+<p>The main purpose of this method is to be used as input for
+<cite>estimate_elastic_scattering_intensity</cite>. Indeed, for currently
+achievable energy resolutions, there is not such a thing as a elastic
+scattering threshold. Therefore, please be aware of the limitations of
+this method when using it.</p>
 </dd></dl>
 
 <dl class="method">
@@ -2398,7 +2410,7 @@ energy limit of the SI will be incluided</p>
 <dd><p>Calculate the complex
 dielectric function from a single scattering distribution (SSD) using
 the Kramers-Kronig relations.</p>
-<p>It uses the FFT method as in <a class="reference internal" href="#id4" id="id2">[Egerton2011]</a>.  The SSD is an
+<p>It uses the FFT method as in <a class="reference internal" href="../user_guide/bibliography.html#egerton2011" id="id2">[Egerton2011]</a>.  The SSD is an
 EELSSpectrum instance containing SSD low-loss EELS with no zero-loss
 peak. The internal loop is devised to approximately subtract the
 surface plasmon contribution supposing an unoxidized planar surface and
@@ -2500,7 +2512,7 @@ metadata.</p>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>This method is based in Egerton&#8217;s Matlab code <a class="reference internal" href="#id4" id="id3">[Egerton2011]</a> with some
+<p>This method is based in Egerton&#8217;s Matlab code <a class="reference internal" href="../user_guide/bibliography.html#egerton2011" id="id3">[Egerton2011]</a> with some
 minor differences:</p>
 <ul class="simple">
 <li>The integrals are performed using the simpsom rule instead of using
@@ -2677,7 +2689,7 @@ raises an UI item to fill the values</p>
 <td>Rough estimation of the elastic scattering intensity by truncation of a EELS low-loss spectrum.</td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_elastic_scattering_threshold</span></tt>([...])</td>
-<td>Calculates the first inflexion point of the spectrum derivative within a window using a specified tolerance.</td>
+<td>Calculate the first inflexion point of the spectrum derivative within a window.</td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">estimate_peak_width</span></tt>([factor,&nbsp;window,&nbsp;...])</td>
 <td>Estimate the width of the highest intensity of peak of the spectra at a given fraction of its maximum.</td>
@@ -4424,7 +4436,7 @@ marked as True (masked)</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7+dev documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.7.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
