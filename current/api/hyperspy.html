@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hyperspy package &mdash; HyperSpy 0.7.1 documentation</title>
+    <title>hyperspy package &mdash; HyperSpy 0.7.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7.1',
+        VERSION:     '0.7.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="HyperSpy 0.7.1 documentation" href="../index.html" />
+    <link rel="top" title="HyperSpy 0.7.2 documentation" href="../index.html" />
  
 <script type="text/javascript">
 
@@ -56,7 +56,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.7.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -3484,7 +3484,7 @@ fit the model to the data and access the components in the model.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.remove" title="hyperspy.model.Model.remove"><tt class="xref py py-obj docutils literal"><span class="pre">remove</span></tt></a>(object[,&nbsp;touch])</td>
 <td>Remove component from model.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.as_signal" title="hyperspy.model.Model.as_signal"><tt class="xref py py-obj docutils literal"><span class="pre">as_signal</span></tt></a>([component_list,&nbsp;out_of_range_to_nan])</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.as_signal" title="hyperspy.model.Model.as_signal"><tt class="xref py py-obj docutils literal"><span class="pre">as_signal</span></tt></a>([component_list,&nbsp;...])</td>
 <td>Returns a recreation of the dataset using the model.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.store_current_values" title="hyperspy.model.Model.store_current_values"><tt class="xref py py-obj docutils literal"><span class="pre">store_current_values</span></tt></a>()</td>
@@ -3493,7 +3493,7 @@ fit the model to the data and access the components in the model.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.fetch_stored_values" title="hyperspy.model.Model.fetch_stored_values"><tt class="xref py py-obj docutils literal"><span class="pre">fetch_stored_values</span></tt></a>([only_fixed])</td>
 <td>Fetch the value of the parameters that has been previously stored.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.update_plot" title="hyperspy.model.Model.update_plot"><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt></a>([component])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.model.Model.update_plot" title="hyperspy.model.Model.update_plot"><tt class="xref py py-obj docutils literal"><span class="pre">update_plot</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Update model plot.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.model.Model.plot" title="hyperspy.model.Model.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([plot_components])</td>
@@ -3574,7 +3574,7 @@ will be used by the fitting rountine</p>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.as_signal">
-<tt class="descname">as_signal</tt><span class="sig-paren">(</span><em>component_list=None</em>, <em>out_of_range_to_nan=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.as_signal" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">as_signal</tt><span class="sig-paren">(</span><em>component_list=None</em>, <em>out_of_range_to_nan=True</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.as_signal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a recreation of the dataset using the model.
 the spectral range that is not fitted is filled with nans.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3590,6 +3590,11 @@ be specified by name, index or themselves.</p>
 <p><strong>out_of_range_to_nan</strong> : bool</p>
 <blockquote>
 <div><p>If True the spectral range that is not fitted is filled with nans.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -3612,9 +3617,28 @@ be specified by name, index or themselves.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.model.Model.calculate_p_std">
-<tt class="descname">calculate_p_std</tt><span class="sig-paren">(</span><em>p0</em>, <em>method</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.calculate_p_std" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="hyperspy.model.Model.assign_current_values_to_all">
+<tt class="descname">assign_current_values_to_all</tt><span class="sig-paren">(</span><em>components_list=None</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.assign_current_values_to_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parameter values for all positions to the current ones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>component_list</strong> : list of components, optional</p>
+<blockquote>
+<div><p>If a list of components is given, the operation will be performed
+only in the value of the parameters of the given components.
+The components can be specified by name, index or themselves.</p>
+</div></blockquote>
+<p><strong>mask</strong> : boolean numpy array or None, optional</p>
+<blockquote class="last">
+<div><p>The operation won&#8217;t be performed where mask is True.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.disable_adjust_position">
@@ -3901,7 +3925,7 @@ the &#8216;save_parameters2file&#8217; function</p>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.multifit">
-<tt class="descname">multifit</tt><span class="sig-paren">(</span><em>mask=None</em>, <em>fetch_only_fixed=False</em>, <em>autosave=False</em>, <em>autosave_every=10</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.multifit" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">multifit</tt><span class="sig-paren">(</span><em>mask=None</em>, <em>fetch_only_fixed=False</em>, <em>autosave=False</em>, <em>autosave_every=10</em>, <em>show_progressbar=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.multifit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the data to the model at all the positions of the
 navigation dimensions.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3927,6 +3951,11 @@ with a frequency defined by autosave_every.</p>
 <p><strong>autosave_every</strong> : int</p>
 <blockquote>
 <div><p>Save the result of fitting every given number of spectra.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
 </div></blockquote>
 <p><strong>**kwargs</strong> : key word arguments</p>
 <blockquote class="last">
@@ -4352,7 +4381,7 @@ it with the current parameters.</p>
 
 <dl class="method">
 <dt id="hyperspy.model.Model.update_plot">
-<tt class="descname">update_plot</tt><span class="sig-paren">(</span><em>component=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.update_plot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update_plot</tt><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.Model.update_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update model plot.</p>
 <p>The updating can be suspended using <cite>suspend_update</cite>.</p>
 <div class="admonition seealso">
@@ -4417,7 +4446,7 @@ it with the current parameters.</p>
 </table>
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.export_bss_results">
-<tt class="descname">export_bss_results</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>multiple_files=None</em>, <em>save_figures=False</em>, <em>factor_prefix='bss_factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='bss_loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x2ac2d64dad90&gt;</em>, <em>same_window=False</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures_format='png'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.export_bss_results" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">export_bss_results</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>multiple_files=None</em>, <em>save_figures=False</em>, <em>factor_prefix='bss_factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='bss_loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x7fa13a0b3b90&gt;</em>, <em>same_window=False</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures_format='png'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.export_bss_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export results from ICA to any of the supported formats.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4547,7 +4576,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.export_decomposition_results">
-<tt class="descname">export_decomposition_results</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>factor_prefix='factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x2ac2d64dad90&gt;</em>, <em>same_window=False</em>, <em>multiple_files=None</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures=False</em>, <em>save_figures_format='png'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.export_decomposition_results" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">export_decomposition_results</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>folder=None</em>, <em>calibrate=True</em>, <em>factor_prefix='factor'</em>, <em>factor_format=None</em>, <em>loading_prefix='loading'</em>, <em>loading_format=None</em>, <em>comp_label=None</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x7fa13a0b3b90&gt;</em>, <em>same_window=False</em>, <em>multiple_files=None</em>, <em>no_nans=True</em>, <em>per_row=3</em>, <em>save_figures=False</em>, <em>save_figures_format='png'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.export_decomposition_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export results from a decomposition to any of the supported
 formats.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -4760,7 +4789,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.plot_bss_loadings">
-<tt class="descname">plot_bss_loadings</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='BSS loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x2ac2d64dad90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.plot_bss_loadings" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot_bss_loadings</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='BSS loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x7fa13a0b3b90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.plot_bss_loadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot loadings from ICA</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4915,7 +4944,7 @@ some peak characteristic.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.MVATools.plot_decomposition_loadings">
-<tt class="descname">plot_decomposition_loadings</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='Decomposition loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x2ac2d64dad90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.plot_decomposition_loadings" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot_decomposition_loadings</tt><span class="sig-paren">(</span><em>comp_ids=None</em>, <em>calibrate=True</em>, <em>same_window=None</em>, <em>comp_label='Decomposition loading'</em>, <em>with_factors=False</em>, <em>cmap=&lt;matplotlib.colors.LinearSegmentedColormap object at 0x7fa13a0b3b90&gt;</em>, <em>no_nans=False</em>, <em>per_row=3</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.MVATools.plot_decomposition_loadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot loadings from PCA.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -5144,10 +5173,10 @@ to 1(2). (Default 2)</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.integrate_simpson" title="hyperspy.signal.Signal.integrate_simpson"><tt class="xref py py-obj docutils literal"><span class="pre">integrate_simpson</span></tt></a>(axis)</td>
 <td>Returns a signal with the result of calculating the integral of the signal along an axis using Simpson&#8217;s rule.</td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt>(start,&nbsp;end[,&nbsp;delta])</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt>(start,&nbsp;end[,&nbsp;delta,&nbsp;...])</td>
 <td>Replace the data in a given range by interpolation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.map" title="hyperspy.signal.Signal.map"><tt class="xref py py-obj docutils literal"><span class="pre">map</span></tt></a>(function,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal.map" title="hyperspy.signal.Signal.map"><tt class="xref py py-obj docutils literal"><span class="pre">map</span></tt></a>(function[,&nbsp;show_progressbar])</td>
 <td>Apply a function to the signal data at all the coordinates.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal.max" title="hyperspy.signal.Signal.max"><tt class="xref py py-obj docutils literal"><span class="pre">max</span></tt></a>(axis[,&nbsp;return_signal])</td>
@@ -5226,7 +5255,7 @@ to 1(2). (Default 2)</p>
 <td>Lowess data smoothing in place.</td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">smooth_savitzky_golay</span></tt>([polynomial_order,&nbsp;...])</td>
-<td>Savitzky-Golay data smoothing in place.</td>
+<td>Apply a Savitzky-Golay filter to the data in place.</td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">smooth_tv</span></tt>([smoothing_parameter,&nbsp;...])</td>
 <td>Total variation data smoothing in place.</td>
@@ -5721,7 +5750,7 @@ of the signal along an axis using Simpson&#8217;s rule.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal.map">
-<tt class="descname">map</tt><span class="sig-paren">(</span><em>function</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal.map" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map</tt><span class="sig-paren">(</span><em>function</em>, <em>show_progressbar=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal.map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a function to the signal data at all the coordinates.</p>
 <p>The function must operate on numpy arrays and the output <em>must have the
 same dimensions as the input</em>. The function is applied to the data at
@@ -5740,6 +5769,11 @@ progress.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>function</strong> : function</p>
 <blockquote>
 <div><p>A function that can be applied to the signal.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
 </div></blockquote>
 <p><strong>keyword arguments</strong> : any valid keyword argument</p>
 <blockquote class="last">
@@ -6066,7 +6100,7 @@ change relative to one another.</p>
 <p>If no extension is provided the default file format as defined
 in the <cite>preferences</cite> is used.
 Please note that not all the formats supports saving datasets of
-arbitrary dimensions, e.g. msa only suports 1D data.</p>
+arbitrary dimensions, e.g. msa only supports 1D data.</p>
 <p>Each format accepts a different set of parameters. For details
 see the specific format documentation.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -6088,7 +6122,7 @@ True(False) it (does not) overwrites the file if it exists.</p>
 <p><strong>extension</strong> : {None, &#8216;hdf5&#8217;, &#8216;rpl&#8217;, &#8216;msa&#8217;,common image extensions e.g. &#8216;tiff&#8217;, &#8216;png&#8217;}</p>
 <blockquote class="last">
 <div><p>The extension of the file that defines the file format.
-If None, the extesion is taken from the first not None in the follwoing list:
+If None, the extension is taken from the first not None in the following list:
 i) the filename
 ii)  <cite>tmp_parameters.extension</cite>
 iii) <cite>preferences.General.default_file_format</cite> in this order.</p>
@@ -6193,7 +6227,7 @@ split will return the former list of signals
 splitting is homegenous. When the axis size is not divisible
 by the number_of_parts the reminder data is lost without
 warning. If number_of_parts and step_sizes is &#8216;auto&#8217;,
-number_of_parts equals the lenght of the axis,
+number_of_parts equals the length of the axis,
 step_sizes equals one  and the axis is supress from each sub_spectra.</p>
 </div></blockquote>
 <p><strong>step_sizes</strong> : {&#8216;auto&#8217; | list of ints | int}</p>
@@ -6472,7 +6506,7 @@ dimension 1</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.integrate_in_range" title="hyperspy.signal.Signal1DTools.integrate_in_range"><tt class="xref py py-obj docutils literal"><span class="pre">integrate_in_range</span></tt></a>([signal_range])</td>
 <td>Sums the spectrum over an energy range, giving the integrated area.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="hyperspy.signal.Signal1DTools.interpolate_in_between"><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt></a>(start,&nbsp;end[,&nbsp;delta])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="hyperspy.signal.Signal1DTools.interpolate_in_between"><tt class="xref py py-obj docutils literal"><span class="pre">interpolate_in_between</span></tt></a>(start,&nbsp;end[,&nbsp;delta,&nbsp;...])</td>
 <td>Replace the data in a given range by interpolation.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.remove_background" title="hyperspy.signal.Signal1DTools.remove_background"><tt class="xref py py-obj docutils literal"><span class="pre">remove_background</span></tt></a>([signal_range,&nbsp;...])</td>
@@ -6485,7 +6519,7 @@ dimension 1</p>
 <td>Lowess data smoothing in place.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_savitzky_golay" title="hyperspy.signal.Signal1DTools.smooth_savitzky_golay"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_savitzky_golay</span></tt></a>([polynomial_order,&nbsp;...])</td>
-<td>Savitzky-Golay data smoothing in place.</td>
+<td>Apply a Savitzky-Golay filter to the data in place.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.signal.Signal1DTools.smooth_tv" title="hyperspy.signal.Signal1DTools.smooth_tv"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_tv</span></tt></a>([smoothing_parameter,&nbsp;...])</td>
 <td>Total variation data smoothing in place.</td>
@@ -6634,7 +6668,7 @@ plot.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.estimate_peak_width">
-<tt class="descname">estimate_peak_width</tt><span class="sig-paren">(</span><em>factor=0.5</em>, <em>window=None</em>, <em>return_interval=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.estimate_peak_width" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">estimate_peak_width</tt><span class="sig-paren">(</span><em>factor=0.5</em>, <em>window=None</em>, <em>return_interval=False</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.estimate_peak_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimate the width of the highest intensity of peak
 of the spectra at a given fraction of its maximum.</p>
 <p>It can be used with asymmetric peaks. For accurate results any
@@ -6663,6 +6697,11 @@ method cannot compute the width and a NaN is stored instead.</p>
 desired height fraction at the left and right of the
 peak.</p>
 </div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
+</div></blockquote>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>width or [width, left, right], depending on the value of</strong> :</p>
@@ -6675,7 +6714,7 @@ peak.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.estimate_shift1D">
-<tt class="descname">estimate_shift1D</tt><span class="sig-paren">(</span><em>start=None</em>, <em>end=None</em>, <em>reference_indices=None</em>, <em>max_shift=None</em>, <em>interpolate=True</em>, <em>number_of_interpolation_points=5</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.estimate_shift1D" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">estimate_shift1D</tt><span class="sig-paren">(</span><em>start=None</em>, <em>end=None</em>, <em>reference_indices=None</em>, <em>max_shift=None</em>, <em>interpolate=True</em>, <em>number_of_interpolation_points=5</em>, <em>mask=None</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.estimate_shift1D" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>Estimate the shifts in the current signal axis using</dt>
 <dd>cross-correlation.</dd>
@@ -6721,6 +6760,11 @@ too big can saturate the memory</p>
 <div><p>It must have signal_dimension = 0 and navigation_shape equal to the
 current signal. Where mask is True the shift is not computed
 and set to nan.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -6906,7 +6950,7 @@ signal range with integers.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.interpolate_in_between">
-<tt class="descname">interpolate_in_between</tt><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>delta=3</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">interpolate_in_between</tt><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>delta=3</em>, <em>show_progressbar=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.interpolate_in_between" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace the data in a given range by interpolation.</p>
 <p>The operation is performed in place.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -6921,6 +6965,11 @@ axis index. If float they are taken as the axis value.</p>
 <p><strong>All extra keyword arguments are passed to</strong> :</p>
 <p><strong>scipy.interpolate.interp1d. See the function documentation</strong> :</p>
 <p><strong>for details.</strong> :</p>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
+</div></blockquote>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</p>
@@ -6969,7 +7018,7 @@ If Polynomial is used, the polynomial order can be specified</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.shift1D">
-<tt class="descname">shift1D</tt><span class="sig-paren">(</span><em>shift_array</em>, <em>interpolation_method='linear'</em>, <em>crop=True</em>, <em>fill_value=nan</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.shift1D" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">shift1D</tt><span class="sig-paren">(</span><em>shift_array</em>, <em>interpolation_method='linear'</em>, <em>crop=True</em>, <em>fill_value=nan</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.shift1D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shift the data in place over the signal axis by the amount specified
 by an array.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -6998,6 +7047,11 @@ needed.</p>
 <div><p>If crop is False fill the data outside of the original
 interval with the given value where needed.</p>
 </div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
+</div></blockquote>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</p>
@@ -7009,33 +7063,98 @@ interval with the given value where needed.</p>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.smooth_lowess">
-<tt class="descname">smooth_lowess</tt><span class="sig-paren">(</span><em>smoothing_parameter=None</em>, <em>number_of_iterations=None</em>, <em>differential_order=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_lowess" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">smooth_lowess</tt><span class="sig-paren">(</span><em>smoothing_parameter=None</em>, <em>number_of_iterations=None</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_lowess" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lowess data smoothing in place.</p>
+<p>If <cite>smoothing_parameter</cite> or <cite>number_of_iterations</cite> are None the method
+is run in interactive mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>smoothing_parameter: float or None</strong> :</p>
+<blockquote>
+<div><p>Between 0 and 1. The fraction of the data used
+when estimating each y-value.</p>
+</div></blockquote>
+<p><strong>number_of_iterations: int or None</strong> :</p>
+<blockquote>
+<div><p>The number of residual-based reweightings
+to perform.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</p>
+<p class="last"><strong>ImportError if statsmodels is not installed.</strong> :</p>
+</td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Notes</p>
+<p>This method uses the lowess algorithm from statsmodels. statsmodels
+is required for this method.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.smooth_savitzky_golay">
-<tt class="descname">smooth_savitzky_golay</tt><span class="sig-paren">(</span><em>polynomial_order=None</em>, <em>number_of_points=None</em>, <em>differential_order=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_savitzky_golay" title="Permalink to this definition">¶</a></dt>
-<dd><p>Savitzky-Golay data smoothing in place.</p>
+<tt class="descname">smooth_savitzky_golay</tt><span class="sig-paren">(</span><em>polynomial_order=None</em>, <em>window_length=None</em>, <em>differential_order=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_savitzky_golay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a Savitzky-Golay filter to the data in place.</p>
+<p>If <cite>polynomial_order</cite> or <cite>window_length</cite> or <cite>differential_order</cite> are
+None the method is run in interactive mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>window_length</strong> : int</p>
+<blockquote>
+<div><p>The length of the filter window (i.e. the number of coefficients).
+<cite>window_length</cite> must be a positive odd integer.</p>
+</div></blockquote>
+<p><strong>polynomial_order</strong> : int</p>
+<blockquote>
+<div><p>The order of the polynomial used to fit the samples.
+<cite>polyorder</cite> must be less than <cite>window_length</cite>.</p>
+</div></blockquote>
+<p><strong>differential_order: int, optional</strong> :</p>
+<blockquote class="last">
+<div><p>The order of the derivative to compute.  This must be a
+nonnegative integer.  The default is 0, which means to filter
+the data without differentiating.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>More information about the filter in <cite>scipy.signal.savgol_filter</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal1DTools.smooth_tv">
-<tt class="descname">smooth_tv</tt><span class="sig-paren">(</span><em>smoothing_parameter=None</em>, <em>differential_order=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_tv" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">smooth_tv</tt><span class="sig-paren">(</span><em>smoothing_parameter=None</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal1DTools.smooth_tv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total variation data smoothing in place.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>smoothing_parameter: float or None</strong> :</p>
+<blockquote>
+<div><p>Denoising weight relative to L2 minimization. If None the method
+is run in interactive mode.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>SignalDimensionError if the signal dimension is not 1.</strong> :</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -7130,7 +7249,7 @@ converted to indices.</div></blockquote>
 
 <dl class="method">
 <dt id="hyperspy.signal.Signal2DTools.estimate_shift2D">
-<tt class="descname">estimate_shift2D</tt><span class="sig-paren">(</span><em>reference='current'</em>, <em>correlation_threshold=None</em>, <em>chunk_size=30</em>, <em>roi=None</em>, <em>normalize_corr=False</em>, <em>sobel=True</em>, <em>medfilter=True</em>, <em>hanning=True</em>, <em>plot=False</em>, <em>dtype='float'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal2DTools.estimate_shift2D" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">estimate_shift2D</tt><span class="sig-paren">(</span><em>reference='current'</em>, <em>correlation_threshold=None</em>, <em>chunk_size=30</em>, <em>roi=None</em>, <em>normalize_corr=False</em>, <em>sobel=True</em>, <em>medfilter=True</em>, <em>hanning=True</em>, <em>plot=False</em>, <em>dtype='float'</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal.Signal2DTools.estimate_shift2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimate the shifts in a image using phase correlation</p>
 <p>This method can only estimate the shift by comparing
 bidimensional features that should not change position
@@ -7190,6 +7309,11 @@ the phase correlation</p>
 <blockquote>
 <div><p>Typecode or data-type in which the calculations must be
 performed.</p>
+</div></blockquote>
+<p><strong>show_progressbar</strong> : None or bool</p>
+<blockquote>
+<div><p>If True, display a progress bar. If None the default is set in
+<cite>preferences</cite>.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -7372,7 +7496,7 @@ the <a class="reference internal" href="#module-hyperspy.hspy" title="hyperspy.h
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.7.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
