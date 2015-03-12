@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hyperspy.drawing package &mdash; HyperSpy 0.7.3 documentation</title>
+    <title>hyperspy.drawing package &mdash; HyperSpy 0.8+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7.3',
+        VERSION:     '0.8+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="HyperSpy 0.7.3 documentation" href="../index.html" />
+    <link rel="top" title="HyperSpy 0.8+dev documentation" href="../index.html" />
  
 <script type="text/javascript">
 
@@ -56,7 +56,7 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.3 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.8+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -630,6 +630,137 @@ np.histogram().</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="hyperspy.drawing.utils.plot_images">
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_images</tt><span class="sig-paren">(</span><em>images</em>, <em>cmap=None</em>, <em>no_nans=False</em>, <em>per_row=3</em>, <em>label='auto'</em>, <em>labelwrap=30</em>, <em>suptitle=None</em>, <em>suptitle_fontsize=18</em>, <em>colorbar='multi'</em>, <em>scalebar=None</em>, <em>scalebar_color='white'</em>, <em>interp='nearest'</em>, <em>axes_decor='all'</em>, <em>padding=None</em>, <em>tight_layout=True</em>, <em>aspect='auto'</em>, <em>min_asp=0.1</em>, <em>fig=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot multiple images as sub-images in one figure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>images</strong> : list of Signals to plot</p>
+<blockquote>
+<div><p>If any signal is not an image, a ValueError will be raised
+multi-dimensional images will have each plane plotted as a separate image</p>
+</div></blockquote>
+<p><strong>cmap</strong> : matplotlib colormap</p>
+<blockquote>
+<div><p>The colormap used for the images, by default read from pyplot</p>
+</div></blockquote>
+<p><strong>no_nans</strong> : bool</p>
+<blockquote>
+<div><p>If True, removes NaN&#8217;s from the plots.</p>
+</div></blockquote>
+<p><strong>per_row</strong> : int</p>
+<blockquote>
+<div><p>The number of plots in each row</p>
+</div></blockquote>
+<p><strong>label</strong> : None, str, or list of str</p>
+<blockquote>
+<div><p>Control the title labeling of the plotted images.
+If None, no titles will be shown.
+If &#8216;auto&#8217; (default), function will try to determine suitable titles using Image titles,
+falling back to the &#8216;titles&#8217; option if no good short titles are detected.
+Works best if all images to be plotted have the same beginning to their titles.
+If &#8216;titles&#8217; , the title from each image&#8217;s metadata.General.title will be used.
+If any other single str, images will be labeled in sequence using that str as a prefix.
+If a list of str, the list elements will be used to determine the labels (repeated, if necessary).</p>
+</div></blockquote>
+<p><strong>labelwrap</strong> : int</p>
+<blockquote>
+<div><p>integer specifying the number of characters that will be used on one line
+If the function returns an unexpected blank figure, lower this value to reduce
+overlap of the labels between each figure</p>
+</div></blockquote>
+<p><strong>suptitle</strong> : str</p>
+<blockquote>
+<div><p>Title to use at the top of the figure. If called with label=&#8217;auto&#8217;, this parameter will override
+the automatically determined title.</p>
+</div></blockquote>
+<p><strong>suptitle_fontsize</strong> : int</p>
+<blockquote>
+<div><p>Font size to use for super title at top of figure</p>
+</div></blockquote>
+<p><strong>colorbar</strong> : None, &#8216;multi&#8217; (default), or &#8216;single&#8217;</p>
+<blockquote>
+<div><p>Controls the type of colorbars that are plotted.
+If None, no colorbar is plotted.
+If &#8216;multi&#8217;, individual colorbars are plotted for each (non-RGB) image
+If &#8216;single&#8217;, all (non-RGB) images are plotted on the same scale, and one colorbar is shown for all</p>
+</div></blockquote>
+<p><strong>interp</strong> : None or str</p>
+<blockquote>
+<div><p>Type of interpolation to use with matplotlib.imshow()
+Possible values are:
+None, &#8216;none&#8217;, &#8216;nearest&#8217;, &#8216;bilinear&#8217;, &#8216;bicubic&#8217;, &#8216;spline16&#8217;,
+&#8216;spline36&#8217;, &#8216;hanning&#8217;, &#8216;hamming&#8217;, &#8216;hermite&#8217;, &#8216;kaiser&#8217;, &#8216;quadric&#8217;,
+&#8216;catrom&#8217;, &#8216;gaussian&#8217;, &#8216;bessel&#8217;, &#8216;mitchell&#8217;, &#8216;sinc&#8217;, &#8216;lanczos&#8217;</p>
+</div></blockquote>
+<p><strong>scalebar</strong> : None, &#8216;all&#8217;, or list of ints</p>
+<blockquote>
+<div><p>If None (or False), no scalebars will be added to the images.
+If &#8216;all&#8217;, scalebars will be added to all images.
+If list of ints, scalebars will be added to each image specified by number.</p>
+</div></blockquote>
+<p><strong>scalebar_color</strong> : str</p>
+<blockquote>
+<div><p>A valid MPL color string; will be used as the scalebar color</p>
+</div></blockquote>
+<p><strong>axes_decor</strong> : str</p>
+<blockquote>
+<div><p>Controls how the axes are displayed on each image; default is &#8216;all&#8217;
+If &#8216;all&#8217;, both ticks and axis labels will be shown
+If &#8216;ticks&#8217;, no axis labels will be shown, but ticks and tick labels will
+If &#8216;off&#8217;, all decorations and frame will be disabled
+If None, no axis decorations will be shown, but ticks/frame will</p>
+</div></blockquote>
+<p><strong>padding</strong> : None or dict</p>
+<blockquote>
+<div><p>This parameter controls the spacing between images. If None, default options will be used
+Otherwise, supply a dictionary with the spacing options as keywords and desired values as values
+Values should be supplied as used in pyplot.subplots_adjust(), and can be:</p>
+<blockquote>
+<div><p>&#8216;left&#8217;, &#8216;bottom&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;wspace&#8217; (width), and &#8216;hspace&#8217; (height)</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>tight_layout</strong> : bool</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>If true, hyperspy will attempt to improve image placement in figure using matplotlib&#8217;s tight_layout</dt>
+<dd><p class="first last">This is known to cause some problems, so an option is provided to disable it.
+Turn this option off if output is not as expected, or try adjusting <cite>labelwrap</cite> or <cite>per_row</cite></p>
+</dd>
+</dl>
+<p>If false, repositioning images inside the figure will be left as an exercise for the user.</p>
+</div></blockquote>
+<p><strong>aspect</strong> : str or (float, int, long)</p>
+<blockquote>
+<div><p>If &#8216;auto&#8217;, aspect ratio will be automatically determined, subject to min_asp.
+If &#8216;square&#8217;, image will be forced onto square display.
+If &#8216;equal&#8217;, aspect ratio of 1 will be enforced.
+If float (or int/long), given value will be used.</p>
+</div></blockquote>
+<p><strong>min_asp</strong> : float</p>
+<blockquote>
+<div><p>Minimum aspect ratio to be used when plotting images</p>
+</div></blockquote>
+<p><strong>fig</strong> : mpl figure</p>
+<blockquote>
+<div><p>If set, the images will be plotted to an existing MPL figure</p>
+</div></blockquote>
+<p><strong>*args, **kwargs</strong> :</p>
+<blockquote>
+<div><p>Additional arguments passed to matplotlib.imshow()</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>axes_list, a list of subplot axes that hold the images</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hyperspy.drawing.utils.plot_signals">
 <tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_signals</tt><span class="sig-paren">(</span><em>signal_list</em>, <em>sync=True</em>, <em>navigator='auto'</em>, <em>navigator_list=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_signals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot several signals at the same time.</p>
@@ -667,7 +798,7 @@ If None, the argument specified in navigator will be used.</p>
 
 <dl class="function">
 <dt id="hyperspy.drawing.utils.plot_spectra">
-<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_spectra</tt><span class="sig-paren">(</span><em>spectra</em>, <em>style='default'</em>, <em>color=None</em>, <em>line_style=None</em>, <em>padding=1.0</em>, <em>legend=None</em>, <em>legend_picking=True</em>, <em>fig=None</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_spectra" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_spectra</tt><span class="sig-paren">(</span><em>spectra</em>, <em>style='default'</em>, <em>color=None</em>, <em>line_style=None</em>, <em>padding=1.0</em>, <em>legend=None</em>, <em>legend_picking=True</em>, <em>legend_loc='upper right'</em>, <em>fig=None</em>, <em>ax=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot several spectra in the same figure.</p>
 <p>Extra keyword arguments are passed to <cite>matplotlib.figure</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -717,6 +848,11 @@ is used.</p>
 <div><p>If true, a spectrum can be toggle on and off by clicking on
 the legended line.</p>
 </div></blockquote>
+<p><strong>legend_loc</strong> : str or int</p>
+<blockquote>
+<div><p>This parameter controls where the legend is placed on the figure;
+see the pyplot.legend docstring for valid values</p>
+</div></blockquote>
 <p><strong>fig</strong> : matplotlib figure or None</p>
 <blockquote>
 <div><p>If None, a default figure will be created. Specifying fig will
@@ -726,6 +862,11 @@ not work for the &#8216;heatmap&#8217; style.</p>
 <blockquote>
 <div><p>If None, a default ax will be created. Will not work for &#8216;mosaic&#8217;
 or &#8216;heatmap&#8217; style.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> :</p>
+<blockquote>
+<div><p>remaining keyword arguments are passed to matplotlib.figure() or
+matplotlib.subplots(). Has no effect on &#8216;heatmap&#8217; style.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -769,12 +910,6 @@ or &#8216;heatmap&#8217; style.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -793,39 +928,17 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_on</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.onmove" title="hyperspy.drawing.widgets.DraggableHorizontalLine.onmove"><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt></a>(event)</td>
-<td>on mouse motion draw the cursor if picked</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch" title="hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td></td>
-</tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableHorizontalLine.onmove">
-<tt class="descname">onmove</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.onmove" title="Permalink to this definition">¶</a></dt>
-<dd><p>on mouse motion draw the cursor if picked</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch">
-<tt class="descname">set_patch</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position">
-<tt class="descname">update_patch_position</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableHorizontalLine.update_patch_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -839,12 +952,6 @@ or &#8216;heatmap&#8217; style.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -863,33 +970,17 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_on</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt>(event)</td>
-<td>This method must be provided by the subclass</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableLabel.set_patch" title="hyperspy.drawing.widgets.DraggableLabel.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableLabel.update_patch_position" title="hyperspy.drawing.widgets.DraggableLabel.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td></td>
-</tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableLabel.set_patch">
-<tt class="descname">set_patch</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableLabel.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableLabel.update_patch_position">
-<tt class="descname">update_patch_position</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableLabel.update_patch_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -903,12 +994,6 @@ or &#8216;heatmap&#8217; style.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.add_axes" title="hyperspy.drawing.widgets.DraggablePatch.add_axes"><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt></a>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.add_patch_to" title="hyperspy.drawing.widgets.DraggablePatch.add_patch_to"><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt></a>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.button_release" title="hyperspy.drawing.widgets.DraggablePatch.button_release"><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt></a>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -927,33 +1012,17 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.is_on" title="hyperspy.drawing.widgets.DraggablePatch.is_on"><tt class="xref py py-obj docutils literal"><span class="pre">is_on</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.onmove" title="hyperspy.drawing.widgets.DraggablePatch.onmove"><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt></a>(event)</td>
-<td>This method must be provided by the subclass</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.onpick" title="hyperspy.drawing.widgets.DraggablePatch.onpick"><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt></a>(event)</td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.onpick" title="hyperspy.drawing.widgets.DraggablePatch.onpick"><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt></a>(event)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.set_mpl_ax" title="hyperspy.drawing.widgets.DraggablePatch.set_mpl_ax"><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt></a>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.set_on" title="hyperspy.drawing.widgets.DraggablePatch.set_on"><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt></a>(value)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.set_patch" title="hyperspy.drawing.widgets.DraggablePatch.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggablePatch.update_patch_position" title="hyperspy.drawing.widgets.DraggablePatch.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td>This method must be provided by the subclass</td>
-</tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.add_axes">
-<tt class="descname">add_axes</tt><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.add_axes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.add_patch_to">
-<tt class="descname">add_patch_to</tt><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.add_patch_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggablePatch.button_release">
 <tt class="descname">button_release</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.button_release" title="Permalink to this definition">¶</a></dt>
@@ -986,31 +1055,19 @@ or &#8216;heatmap&#8217; style.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.onmove">
-<tt class="descname">onmove</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.onmove" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method must be provided by the subclass</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggablePatch.onpick">
 <tt class="descname">onpick</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.onpick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.DraggablePatch.set_mpl_ax">
+<tt class="descname">set_mpl_ax</tt><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.set_mpl_ax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggablePatch.set_on">
 <tt class="descname">set_on</tt><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.set_on" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.set_patch">
-<tt class="descname">set_patch</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggablePatch.update_patch_position">
-<tt class="descname">update_patch_position</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggablePatch.update_patch_position" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method must be provided by the subclass</p>
-</dd></dl>
 
 </dd></dl>
 
@@ -1025,12 +1082,6 @@ or &#8216;heatmap&#8217; style.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -1064,25 +1115,16 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">on_key_press</span></tt>(event)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.onmove" title="hyperspy.drawing.widgets.DraggableSquare.onmove"><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt></a>(event)</td>
-<td>on mouse motion draw the cursor if picked</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.set_patch" title="hyperspy.drawing.widgets.DraggableSquare.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt>(size)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_position" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_size" title="hyperspy.drawing.widgets.DraggableSquare.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt>(size)</td>
 <td></td>
 </tr>
 </tbody>
@@ -1095,27 +1137,6 @@ or &#8216;heatmap&#8217; style.</p>
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.DraggableSquare.calculate_size">
 <tt class="descname">calculate_size</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.calculate_size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableSquare.onmove">
-<tt class="descname">onmove</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.onmove" title="Permalink to this definition">¶</a></dt>
-<dd><p>on mouse motion draw the cursor if picked</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableSquare.set_patch">
-<tt class="descname">set_patch</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableSquare.update_patch_position">
-<tt class="descname">update_patch_position</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableSquare.update_patch_size">
-<tt class="descname">update_patch_size</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableSquare.update_patch_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1131,12 +1152,6 @@ or &#8216;heatmap&#8217; style.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -1155,39 +1170,17 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_on</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.onmove" title="hyperspy.drawing.widgets.DraggableVerticalLine.onmove"><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt></a>(event)</td>
-<td>on mouse motion draw the cursor if picked</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.set_patch" title="hyperspy.drawing.widgets.DraggableVerticalLine.set_patch"><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position" title="hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt></a>()</td>
-<td></td>
-</tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableVerticalLine.onmove">
-<tt class="descname">onmove</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableVerticalLine.onmove" title="Permalink to this definition">¶</a></dt>
-<dd><p>on mouse motion draw the cursor if picked</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableVerticalLine.set_patch">
-<tt class="descname">set_patch</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableVerticalLine.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position">
-<tt class="descname">update_patch_position</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.DraggableVerticalLine.update_patch_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1207,50 +1200,58 @@ or &#8216;heatmap&#8217; style.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">disconnect_events</span></tt>()</td>
 <td>Disconnect all events created by this widget.</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ignore</span></tt>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.dummy" title="hyperspy.drawing.widgets.ModifiableSpanSelector.dummy"><tt class="xref py py-obj docutils literal"><span class="pre">dummy</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ignore</span></tt>(event)</td>
 <td>return <em>True</em> if <em>event</em> should be ignored</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press" title="hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press"><tt class="xref py py-obj docutils literal"><span class="pre">mm_on_press</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press" title="hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press"><tt class="xref py py-obj docutils literal"><span class="pre">mm_on_press</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_release" title="hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_release"><tt class="xref py py-obj docutils literal"><span class="pre">mm_on_release</span></tt></a>(event)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_release" title="hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_release"><tt class="xref py py-obj docutils literal"><span class="pre">mm_on_release</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_left" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_left"><tt class="xref py py-obj docutils literal"><span class="pre">move_left</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_left" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_left"><tt class="xref py py-obj docutils literal"><span class="pre">move_left</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_rect" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_rect"><tt class="xref py py-obj docutils literal"><span class="pre">move_rect</span></tt></a>(event)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_rect" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_rect"><tt class="xref py py-obj docutils literal"><span class="pre">move_rect</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_right" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_right"><tt class="xref py py-obj docutils literal"><span class="pre">move_right</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.move_right" title="hyperspy.drawing.widgets.ModifiableSpanSelector.move_right"><tt class="xref py py-obj docutils literal"><span class="pre">move_right</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">new_axes</span></tt>(ax)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">new_axes</span></tt>(ax)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt>(event)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt>(event)</td>
 <td>on motion notify event</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">press</span></tt>(event)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">press</span></tt>(event)</td>
 <td>on button press event</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.release" title="hyperspy.drawing.widgets.ModifiableSpanSelector.release"><tt class="xref py py-obj docutils literal"><span class="pre">release</span></tt></a>(event)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.release" title="hyperspy.drawing.widgets.ModifiableSpanSelector.release"><tt class="xref py py-obj docutils literal"><span class="pre">release</span></tt></a>(event)</td>
 <td>When the button is realeased, the span stays in the screen and the</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.turn_off" title="hyperspy.drawing.widgets.ModifiableSpanSelector.turn_off"><tt class="xref py py-obj docutils literal"><span class="pre">turn_off</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.turn_off" title="hyperspy.drawing.widgets.ModifiableSpanSelector.turn_off"><tt class="xref py py-obj docutils literal"><span class="pre">turn_off</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt>()</td>
 <td>Draw using newfangled blit or oldfangled draw depending</td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(event)</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt>(event)</td>
 <td>force an update of the background</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.update_range" title="hyperspy.drawing.widgets.ModifiableSpanSelector.update_range"><tt class="xref py py-obj docutils literal"><span class="pre">update_range</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.update_range" title="hyperspy.drawing.widgets.ModifiableSpanSelector.update_range"><tt class="xref py py-obj docutils literal"><span class="pre">update_range</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="hyperspy.drawing.widgets.ModifiableSpanSelector.dummy">
+<tt class="descname">dummy</tt><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.dummy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press">
 <tt class="descname">mm_on_press</tt><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.ModifiableSpanSelector.mm_on_press" title="Permalink to this definition">¶</a></dt>
@@ -1306,12 +1307,6 @@ iteractivity machinery passes to modify mode</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_axes</span></tt>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">add_patch_to</span></tt>(ax)</td>
-<td></td>
-</tr>
 <tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">button_release</span></tt>(event)</td>
 <td>whenever a mouse button is released</td>
 </tr>
@@ -1339,26 +1334,17 @@ iteractivity machinery passes to modify mode</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.on_key_press" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.on_key_press"><tt class="xref py py-obj docutils literal"><span class="pre">on_key_press</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt>(event)</td>
-<td>This method must be provided by the subclass</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">onpick</span></tt>(event)</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_mpl_ax</span></tt>(ax)</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_on</span></tt>(value)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">set_patch</span></tt>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size"><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt></a>(size)</td>
 <td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size"><tt class="xref py py-obj docutils literal"><span class="pre">set_size</span></tt></a>(size)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_position</span></tt>()</td>
-<td>This method must be provided by the subclass</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size" title="hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size"><tt class="xref py py-obj docutils literal"><span class="pre">update_patch_size</span></tt></a>()</td>
-<td>This method must be provided by the subclass</td>
 </tr>
 </tbody>
 </table>
@@ -1387,17 +1373,11 @@ iteractivity machinery passes to modify mode</p>
 <tt class="descname">set_size</tt><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.set_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size">
-<tt class="descname">update_patch_size</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.ResizebleDraggablePatch.update_patch_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method must be provided by the subclass</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
 <dt id="hyperspy.drawing.widgets.Scale_Bar">
-<em class="property">class </em><tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">Scale_Bar</tt><span class="sig-paren">(</span><em>ax</em>, <em>units</em>, <em>pixel_size=None</em>, <em>color='white'</em>, <em>position=None</em>, <em>max_size_ratio=0.25</em>, <em>lw=2</em>, <em>lenght=None</em>, <em>animated=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">hyperspy.drawing.widgets.</tt><tt class="descname">Scale_Bar</tt><span class="sig-paren">(</span><em>ax</em>, <em>units</em>, <em>pixel_size=None</em>, <em>color='white'</em>, <em>position=None</em>, <em>max_size_ratio=0.25</em>, <em>lw=2</em>, <em>length=None</em>, <em>animated=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -1426,7 +1406,7 @@ iteractivity machinery passes to modify mode</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_color" title="hyperspy.drawing.widgets.Scale_Bar.set_color"><tt class="xref py py-obj docutils literal"><span class="pre">set_color</span></tt></a>(c)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght" title="hyperspy.drawing.widgets.Scale_Bar.set_lenght"><tt class="xref py py-obj docutils literal"><span class="pre">set_lenght</span></tt></a>(lenght)</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_length" title="hyperspy.drawing.widgets.Scale_Bar.set_length"><tt class="xref py py-obj docutils literal"><span class="pre">set_length</span></tt></a>(length)</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.widgets.Scale_Bar.set_position" title="hyperspy.drawing.widgets.Scale_Bar.set_position"><tt class="xref py py-obj docutils literal"><span class="pre">set_position</span></tt></a>(x,&nbsp;y)</td>
@@ -1473,8 +1453,8 @@ iteractivity machinery passes to modify mode</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hyperspy.drawing.widgets.Scale_Bar.set_lenght">
-<tt class="descname">set_lenght</tt><span class="sig-paren">(</span><em>lenght</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.set_lenght" title="Permalink to this definition">¶</a></dt>
+<dt id="hyperspy.drawing.widgets.Scale_Bar.set_length">
+<tt class="descname">set_length</tt><span class="sig-paren">(</span><em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.widgets.Scale_Bar.set_length" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1567,7 +1547,7 @@ iteractivity machinery passes to modify mode</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.3 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">HyperSpy 0.8+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

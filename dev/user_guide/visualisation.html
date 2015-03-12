@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Data visualization &mdash; HyperSpy 0.7.3 documentation</title>
+    <title>Data visualization &mdash; HyperSpy 0.8+dev documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.7.3',
+        VERSION:     '0.8+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
-    <link rel="top" title="HyperSpy 0.7.3 documentation" href="../index.html" />
+    <link rel="top" title="HyperSpy 0.8+dev documentation" href="../index.html" />
     <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html" />
     <link rel="next" title="Machine learning" href="mva.html" />
     <link rel="prev" title="Image tools" href="image.html" />
@@ -65,7 +65,7 @@
         <li class="right" >
           <a href="image.html" title="Image tools"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">HyperSpy 0.8+dev documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>  
@@ -268,9 +268,92 @@ P. Burdet, <cite>et al.</cite>, Acta Materialia, 61, p. 3090-3098 (2013) (see
 </div>
 <div class="section" id="plotting-multiple-signals">
 <span id="plot-spectra"></span><h2>Plotting multiple signals<a class="headerlink" href="#plotting-multiple-signals" title="Permalink to this headline">¶</a></h2>
-<p>HyperSpy provides two functions to plot multiple signals (spectra, images or
-other signals): <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><tt class="xref py py-func docutils literal"><span class="pre">plot_spectra()</span></tt></a> and
+<p>HyperSpy provides three functions to plot multiple signals (spectra, images or
+other signals): <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><tt class="xref py py-func docutils literal"><span class="pre">plot_images()</span></tt></a>, <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><tt class="xref py py-func docutils literal"><span class="pre">plot_spectra()</span></tt></a>, and
 <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><tt class="xref py py-func docutils literal"><span class="pre">plot_signals()</span></tt></a> in the <tt class="docutils literal"><span class="pre">utils.plot</span></tt> package.</p>
+<div class="section" id="plotting-several-images">
+<span id="plot-images"></span><h3>Plotting several images<a class="headerlink" href="#plotting-several-images" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p><a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><tt class="xref py py-func docutils literal"><span class="pre">plot_images()</span></tt></a> is used to plot several images in the
+same figure. It supports many configurations and has many options available
+to customize the resulting output. The function returns a list of
+<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.axes">matplotlib axes</a>, which
+can be used to further customize the figure. Some examples are given below.</p>
+<p>A common usage for <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><tt class="xref py py-func docutils literal"><span class="pre">plot_images()</span></tt></a> is to view the
+different slices of a multidimensional image (a <em>hyperimage</em>):</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;multi-dimensional image&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im1_3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_images_defaults.png"><img alt="../_images/plot_images_defaults.png" src="../_images/plot_images_defaults.png" style="width: 500px;" /></a>
+</div>
+<p>By default, <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><tt class="xref py py-func docutils literal"><span class="pre">plot_images()</span></tt></a> will attempt to auto-label the images
+based on the Signal titles. The labels (and title) can be customized with the <cite>suptitle</cite> and <cite>label</cite> arguments.
+In this example, the axes labels are also disabled with <cite>axes_decor</cite> so only ticks are shown:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;multi-dimensional image&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im1_3</span><span class="p">,</span> <span class="n">suptitle</span><span class="o">=</span><span class="s">&#39;Custom figure title&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Image 1&#39;</span><span class="p">,</span> <span class="s">&#39;Image 2&#39;</span><span class="p">,</span> <span class="s">&#39;Image 3&#39;</span><span class="p">,</span> <span class="s">&#39;Image 4&#39;</span><span class="p">,</span> <span class="s">&#39;Image 5&#39;</span><span class="p">,</span> <span class="s">&#39;Image 6&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">axes_decor</span><span class="o">=</span><span class="s">&#39;ticks&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_images_custom-labels.png"><img alt="../_images/plot_images_custom-labels.png" src="../_images/plot_images_custom-labels.png" style="width: 500px;" /></a>
+</div>
+<p><a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><tt class="xref py py-func docutils literal"><span class="pre">plot_images()</span></tt></a> can also be used to easily plot a list of <cite>Images</cite>, comparing
+different <cite>Signals</cite>, including RGB images (example below available <a class="reference download internal" href="../_downloads/plot_images_rgb1.png"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a>).
+This example also demonstrates how to wrap labels using <cite>labelwrap</cite> (for preventing overlap) and using a single
+<cite>colorbar</cite> for all the Images, as opposed to multiple individual ones:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im4</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">32</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;plot_images_rgb1.png&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;im0&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s">&#39;nm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s">&#39;nm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1_3</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;multi-dimensional image&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im4</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;im4&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;RGB&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">([</span><span class="n">im0</span><span class="p">,</span> <span class="n">im1_3</span><span class="p">,</span> <span class="n">im4</span><span class="p">,</span> <span class="n">rgb</span><span class="p">],</span> <span class="n">colorbar</span><span class="o">=</span><span class="s">&#39;single&#39;</span><span class="p">,</span> <span class="n">labelwrap</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_images_image-list.png"><img alt="../_images/plot_images_image-list.png" src="../_images/plot_images_image-list.png" style="width: 500px;" /></a>
+</div>
+<p>Another example for this function is plotting EDS line intensities. Using a spectrum image with
+EDS data (<a class="reference download internal" href="../_downloads/plot_images_eds.hdf5"><tt class="xref download docutils literal"><span class="pre">download</span></tt></a>), one can use the following commands
+to get a representative figure of the line intensities. This example also demonstrates changing the colormap (with <cite>cmap</cite>),
+adding scalebars to the plots (with <cite>scalebar</cite>), and changing the <cite>padding</cite> between the images. The padding is specified as
+a dictionary, which is used to call <tt class="xref py py-func docutils literal"><span class="pre">matplotlib.figure.Figure.subplots_adjust()</span></tt>
+(see <a class="reference external" href="http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust">documentation</a>).</p>
+<p><em>Note, this padding can also be changed interactively by clicking on the</em> <img alt="subplots_adjust" src="../_images/plot_images_subplots.png" />
+<em>button in the GUI (button may be different when using different graphical backends).</em></p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;plot_images_eds.hdf5&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">per_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s">&#39;off&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">suptitle_fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="s">&#39;single&#39;</span><span class="p">,</span> <span class="n">suptitle</span><span class="o">=</span><span class="s">&#39;EDS Line intensity&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;La M$</span><span class="se">\\</span><span class="s">alpha$&#39;</span><span class="p">,</span> <span class="s">&#39;Mn K$</span><span class="se">\\</span><span class="s">alpha$&#39;</span><span class="p">,</span> <span class="s">&#39;Zr L$</span><span class="se">\\</span><span class="s">alpha$&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s">&#39;cubehelix&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">scalebar</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span> <span class="n">scalebar_color</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">padding</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;top&#39;</span><span class="p">:</span><span class="mf">0.85</span><span class="p">,</span><span class="s">&#39;bottom&#39;</span><span class="p">:</span><span class="mf">0.10</span><span class="p">,</span><span class="s">&#39;left&#39;</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span><span class="s">&#39;right&#39;</span><span class="p">:</span><span class="mf">0.85</span><span class="p">,</span><span class="s">&#39;wspace&#39;</span><span class="p">:</span><span class="mf">0.10</span><span class="p">,</span><span class="s">&#39;hspace&#39;</span><span class="p">:</span><span class="mf">0.10</span><span class="p">})</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_images_eds.png"><img alt="../_images/plot_images_eds.png" src="../_images/plot_images_eds.png" style="width: 500px;" /></a>
+</div>
+</div>
 <div class="section" id="plotting-several-spectra">
 <span id="id3"></span><h3>Plotting several spectra<a class="headerlink" href="#plotting-several-spectra" title="Permalink to this headline">¶</a></h3>
 <div class="versionadded">
@@ -282,7 +365,7 @@ being &#8220;overlap&#8221;. The default style is configurable in <a class="refe
 <p>In the following example we create a list of 9 single spectra (gaussian
 functions with different sigma values) and plot them in the same figure using
 <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><tt class="xref py py-func docutils literal"><span class="pre">plot_spectra()</span></tt></a>. Note that, in this case, the legend
-labels are taken from the indivual spectrum titles. By clicking on the
+labels are taken from the individual spectrum titles. By clicking on the
 legended line, a spectrum can be toggled on and off.</p>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">200</span><span class="p">)))</span>
@@ -349,6 +432,31 @@ and provide the legend labels:</p>
 </div>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/plot_spectra_mosaic.png"><img alt="../_images/plot_spectra_mosaic.png" src="../_images/plot_spectra_mosaic.png" style="width: 500px;" /></a>
+</div>
+<p>For the &#8220;heatmap&#8221; style, different <a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">matplotlib color schemes</a> can be used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.cm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_spectra</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;heatmap&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_spectra_heatmap_jet.png"><img alt="../_images/plot_spectra_heatmap_jet.png" src="../_images/plot_spectra_heatmap_jet.png" style="width: 500px;" /></a>
+</div>
+<p>Any parameter that can be passed to matplotlib.pyplot.figure can also be used with plot_spectra()
+to allow further customization  (when using the &#8220;overlap&#8221;, &#8220;cascade&#8221;, or &#8220;mosaic&#8221; styles).
+In the following example, <cite>dpi</cite>, <cite>facecolor</cite>, <cite>frameon</cite>, and <cite>num</cite> are all parameters
+that are passed directly to matplotlib.pyplot.figure as keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">1000</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">legendtext</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Plot 0&#39;</span><span class="p">,</span> <span class="s">&#39;Plot 1&#39;</span><span class="p">,</span> <span class="s">&#39;Plot 2&#39;</span><span class="p">,</span> <span class="s">&#39;Plot 3&#39;</span><span class="p">,</span> <span class="s">&#39;Plot 4&#39;</span><span class="p">,</span> <span class="s">&#39;Plot 5&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cascade_plot</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_spectra</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;cascade&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="n">legendtext</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cascade_plot</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&quot;X-axis&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cascade_plot</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&quot;Y-axis&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cascade_plot</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Cascade plot&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/plot_spectra_kwargs.png"><img alt="../_images/plot_spectra_kwargs.png" src="../_images/plot_spectra_kwargs.png" style="width: 500px;" /></a>
 </div>
 <p>The function returns a matplotlib ax object, which can be used to customize the figure:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">1000</span><span class="p">)))</span>
@@ -450,6 +558,7 @@ each plot:</p>
 <li><a class="reference internal" href="#customizing-the-navigator">Customizing the &#8220;navigator&#8221;</a></li>
 <li><a class="reference internal" href="#using-mayavi-to-visualize-3d-data">Using Mayavi to visualize 3D data</a></li>
 <li><a class="reference internal" href="#plotting-multiple-signals">Plotting multiple signals</a><ul>
+<li><a class="reference internal" href="#plotting-several-images">Plotting several images</a></li>
 <li><a class="reference internal" href="#plotting-several-spectra">Plotting several spectra</a><ul>
 <li><a class="reference internal" href="#plotting-several-signals">Plotting several signals</a></li>
 </ul>
@@ -508,7 +617,7 @@ each plot:</p>
         <li class="right" >
           <a href="image.html" title="Image tools"
              >previous</a> |</li>
-        <li><a href="../index.html">HyperSpy 0.7.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">HyperSpy 0.8+dev documentation</a> &raquo;</li>
           <li><a href="index.html" >HyperSpy User Guide (DRAFT)</a> &raquo;</li> 
       </ul>
     </div>
