@@ -623,10 +623,28 @@ datasets</strong>.</p>
 </div>
 <div class="section" id="saving-and-loading-the-result-of-the-fit">
 <h2>Saving and loading the result of the fit<a class="headerlink" href="#saving-and-loading-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>
-<p>To save the result of the fit to a single file use
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-meth docutils literal"><span class="pre">save_parameters2file()</span></tt></a> and
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-meth docutils literal"><span class="pre">load_parameters_from_file()</span></tt></a> to load back the results
-into the same model structure.</p>
+<p>As of HyperSpy 0.8, the following is the only way to save a model to  a file
+and load it back. Note that this method is known to be brittle i.e. there is no
+guarantee that a version of HyperSpy different from the one used to save the
+model will be able to load it sucessfully.  Also, it is advisable not to use
+this method in combination with functions that alter the value of the
+parameters interactively (e.g.  <cite>enable_adjust_position</cite>) as the modifications
+made by this functions are normally not stored in the IPython notebook or
+Python script.</p>
+<p>To save a model:</p>
+<ol class="arabic simple">
+<li>Save the parameter arrays to a file using
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.save_parameters2file" title="hyperspy.model.Model.save_parameters2file"><tt class="xref py py-meth docutils literal"><span class="pre">save_parameters2file()</span></tt></a>.</li>
+<li>Save all the commands that used to create the model to a file. This
+can be done in the form of an IPython notebook or a Python script.</li>
+<li>(Optional) Comment out or delete the fitting commangs (e.g. <cite>multifit</cite>).</li>
+</ol>
+<p>To recreate the model:</p>
+<ol class="arabic simple">
+<li>Execute the IPython notebook or Python script.</li>
+<li>Use <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.load_parameters_from_file" title="hyperspy.model.Model.load_parameters_from_file"><tt class="xref py py-meth docutils literal"><span class="pre">load_parameters_from_file()</span></tt></a> to load back the
+parameter values and arrays.</li>
+</ol>
 </div>
 <div class="section" id="exporting-the-result-of-the-fit">
 <h2>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this headline">¶</a></h2>

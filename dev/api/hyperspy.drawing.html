@@ -129,7 +129,7 @@ the image when the coordinates of an AxesManager change.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.is_active" title="hyperspy.drawing.mpl_he.MPL_HyperExplorer.is_active"><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot" title="hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot" title="hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>(**kwargs)</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot_navigator" title="hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot_navigator"><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt></a>()</td>
@@ -162,7 +162,7 @@ the image when the coordinates of an AxesManager change.</p>
 
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot">
-<tt class="descname">plot</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">plot</tt><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.mpl_he.MPL_HyperExplorer.plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -203,21 +203,73 @@ the image when the coordinates of an AxesManager change.</p>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_active</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(**kwargs)</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>()</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signal</span></tt></a>([colorbar,&nbsp;scalebar,&nbsp;...])</td>
+<td>Plot image.</td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
 <dt id="hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal">
-<tt class="descname">plot_signal</tt><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">plot_signal</tt><span class="sig-paren">(</span><em>colorbar=True</em>, <em>scalebar=True</em>, <em>scalebar_color='white'</em>, <em>axes_ticks=None</em>, <em>auto_contrast=True</em>, <em>saturated_pixels=0.2</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>no_nans=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.mpl_hie.MPL_HyperImage_Explorer.plot_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>colorbar</strong> : bool, optional</p>
+<blockquote>
+<div><p>If true, a colorbar is plotted for non-RGB images.</p>
+</div></blockquote>
+<p><strong>scalebar</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True and the units and scale of the x and y axes are the same a
+scale bar is plotted.</p>
+</div></blockquote>
+<p><strong>scalebar_color</strong> : str, optional</p>
+<blockquote>
+<div><p>A valid MPL color string; will be used as the scalebar color.</p>
+</div></blockquote>
+<p><strong>axes_ticks</strong> : {None, bool}, optional</p>
+<blockquote>
+<div><p>If True, plot the axes ticks. If None axes_ticks are only
+plotted when the scale bar is not plotted. If False the axes ticks
+are never plotted.</p>
+</div></blockquote>
+<p><strong>auto_contrast</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, the contrast is stretched for each image using the
+<cite>saturated_pixels</cite> value. Default True</p>
+</div></blockquote>
+<p><strong>saturated_pixels: scalar</strong> :</p>
+<blockquote>
+<div><p>The percentage of pixels that are left out of the bounds. For
+example, the low and high bounds of a value of 1 are the
+0.5% and 99.5% percentiles. It must be in the [0, 100] range.</p>
+</div></blockquote>
+<p><strong>vmin, vmax</strong> : scalar, optional</p>
+<blockquote>
+<div><p><cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data. If
+<cite>auto_contrast</cite> is True (i.e. default) these values are ignore.</p>
+</div></blockquote>
+<p><strong>no_nans</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, set nans to zero for plotting.</p>
+</div></blockquote>
+<p><strong>**kwargs, optional</strong> :</p>
+<blockquote class="last">
+<div><p>Additional key word arguments passed to matplotlib.imshow()</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -255,7 +307,7 @@ to explore the SI.</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer" title="hyperspy.drawing.mpl_hse.MPL_HyperSpectrum_Explorer.key2switch_right_pointer"><tt class="xref py py-obj docutils literal"><span class="pre">key2switch_right_pointer</span></tt></a>(event)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>()</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(**kwargs)</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot_navigator</span></tt>()</td>
@@ -322,22 +374,25 @@ to explore the SI.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.add_line" title="hyperspy.drawing.spectrum.SpectrumFigure.add_line"><tt class="xref py py-obj docutils literal"><span class="pre">add_line</span></tt></a>(line[,&nbsp;ax])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.close" title="hyperspy.drawing.spectrum.SpectrumFigure.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.add_marker" title="hyperspy.drawing.spectrum.SpectrumFigure.add_marker"><tt class="xref py py-obj docutils literal"><span class="pre">add_marker</span></tt></a>(marker)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_axis</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.close" title="hyperspy.drawing.spectrum.SpectrumFigure.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="hyperspy.drawing.spectrum.SpectrumFigure.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_axis</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_right_axis</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_figure" title="hyperspy.drawing.spectrum.SpectrumFigure.create_figure"><tt class="xref py py-obj docutils literal"><span class="pre">create_figure</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.plot" title="hyperspy.drawing.spectrum.SpectrumFigure.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis" title="hyperspy.drawing.spectrum.SpectrumFigure.create_right_axis"><tt class="xref py py-obj docutils literal"><span class="pre">create_right_axis</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.update" title="hyperspy.drawing.spectrum.SpectrumFigure.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.plot" title="hyperspy.drawing.spectrum.SpectrumFigure.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.drawing.spectrum.SpectrumFigure.update" title="hyperspy.drawing.spectrum.SpectrumFigure.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
 <td></td>
 </tr>
 </tbody>
@@ -345,6 +400,11 @@ to explore the SI.</p>
 <dl class="method">
 <dt id="hyperspy.drawing.spectrum.SpectrumFigure.add_line">
 <tt class="descname">add_line</tt><span class="sig-paren">(</span><em>line</em>, <em>ax='left'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.add_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.drawing.spectrum.SpectrumFigure.add_marker">
+<tt class="descname">add_marker</tt><span class="sig-paren">(</span><em>marker</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.spectrum.SpectrumFigure.add_marker" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -483,7 +543,7 @@ to explore the SI.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>figure: &#8216;last&#8217; | matplolib.figure</strong> :</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>figure: &#8216;last&#8217; | matplotlib.figure</strong> :</p>
 <blockquote class="last">
 <div><p>If &#8216;last&#8217; pick the last figure</p>
 </div></blockquote>
@@ -564,7 +624,7 @@ the <cite>utils.plot.plot_spectra</cite> function.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>signal_list</strong> : iterable</p>
 <blockquote>
 <div><p>Ordered spectra list to plot. If <cite>style</cite> is &#8220;cascade&#8221; or &#8220;mosaic&#8221;
-the spectra can have diffent size and axes.</p>
+the spectra can have different size and axes.</p>
 </div></blockquote>
 <p><strong>bins</strong> : int or list or str, optional</p>
 <blockquote>
@@ -579,30 +639,31 @@ the spectra can have diffent size and axes.</p>
 <div><p>the minimum and maximum range for the histogram. If not specified,
 it will be (x.min(), x.max())</p>
 </div></blockquote>
-<p><strong>color</strong> : valid matplotlib color or a list of them or <cite>None</cite>, otional.</p>
+<p><strong>color</strong> : valid matplotlib color or a list of them or <cite>None</cite>, optional.</p>
 <blockquote>
 <div><p>Sets the color of the lines of the plots. If a list, if its length is
 less than the number of spectra to plot, the colors will be cycled. If
 If <cite>None</cite>, use default matplotlib color cycle.</p>
 </div></blockquote>
-<p><strong>line_style: valid matplotlib line style or a list of them or `None`, otional.</strong> :</p>
+<p><strong>line_style: valid matplotlib line style or a list of them or `None`,</strong> :</p>
+<p><strong>optional.</strong> :</p>
 <blockquote>
 <div><p>The main line style are &#8216;-&#8216;,&#8217;&#8211;&#8217;,&#8217;steps&#8217;,&#8217;-.&#8217;,&#8217;:&#8217;.
 If a list, if its length is less than the number of
 spectra to plot, line_style will be cycled. If
 If <cite>None</cite>, use continuous lines, eg: (&#8216;-&#8216;,&#8217;&#8211;&#8217;,&#8217;steps&#8217;,&#8217;-.&#8217;,&#8217;:&#8217;)</p>
 </div></blockquote>
-<p><strong>legend: None or list of str or &#8216;auto&#8217;, otional.</strong> :</p>
+<p><strong>legend: None or list of str or &#8216;auto&#8217;, optional.</strong> :</p>
 <blockquote>
 <div><p>Display a legend. If &#8216;auto&#8217;, the title of each spectra
 (metadata.General.title) is used.</p>
 </div></blockquote>
-<p><strong>legend_picking: bool, otional.</strong> :</p>
+<p><strong>legend_picking: bool, optional.</strong> :</p>
 <blockquote>
 <div><p>If true, a spectrum can be toggle on and off by clicking on
 the legended line.</p>
 </div></blockquote>
-<p><strong>fig</strong> : matplotlib figure or None, otional.</p>
+<p><strong>fig</strong> : matplotlib figure or None, optional.</p>
 <blockquote>
 <div><p>If None, a default figure will be created.</p>
 </div></blockquote>
@@ -631,133 +692,172 @@ np.histogram().</p>
 
 <dl class="function">
 <dt id="hyperspy.drawing.utils.plot_images">
-<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_images</tt><span class="sig-paren">(</span><em>images</em>, <em>cmap=None</em>, <em>no_nans=False</em>, <em>per_row=3</em>, <em>label='auto'</em>, <em>labelwrap=30</em>, <em>suptitle=None</em>, <em>suptitle_fontsize=18</em>, <em>colorbar='multi'</em>, <em>scalebar=None</em>, <em>scalebar_color='white'</em>, <em>interp='nearest'</em>, <em>axes_decor='all'</em>, <em>padding=None</em>, <em>tight_layout=True</em>, <em>aspect='auto'</em>, <em>min_asp=0.1</em>, <em>fig=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_images" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">hyperspy.drawing.utils.</tt><tt class="descname">plot_images</tt><span class="sig-paren">(</span><em>images</em>, <em>cmap=None</em>, <em>no_nans=False</em>, <em>per_row=3</em>, <em>label='auto'</em>, <em>labelwrap=30</em>, <em>suptitle=None</em>, <em>suptitle_fontsize=18</em>, <em>colorbar='multi'</em>, <em>saturated_pixels=0.2</em>, <em>scalebar=None</em>, <em>scalebar_color='white'</em>, <em>axes_decor='all'</em>, <em>padding=None</em>, <em>tight_layout=False</em>, <em>aspect='auto'</em>, <em>min_asp=0.1</em>, <em>namefrac_thresh=0.4</em>, <em>fig=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot multiple images as sub-images in one figure.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>images</strong> : list of Signals to plot</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>images</strong> : list</p>
 <blockquote>
-<div><p>If any signal is not an image, a ValueError will be raised
-multi-dimensional images will have each plane plotted as a separate image</p>
+<div><p><cite>images</cite> should be a list of Signals (Images) to plot
+If any signal is not an image, a ValueError will be raised
+multi-dimensional images will have each plane plotted as a separate
+image</p>
 </div></blockquote>
-<p><strong>cmap</strong> : matplotlib colormap</p>
+<p><strong>cmap</strong> : matplotlib colormap, optional</p>
 <blockquote>
 <div><p>The colormap used for the images, by default read from pyplot</p>
 </div></blockquote>
-<p><strong>no_nans</strong> : bool</p>
+<p><strong>no_nans</strong> : bool, optional</p>
 <blockquote>
-<div><p>If True, removes NaN&#8217;s from the plots.</p>
+<div><p>If True, set nans to zero for plotting.</p>
 </div></blockquote>
-<p><strong>per_row</strong> : int</p>
+<p><strong>per_row</strong> : int, optional</p>
 <blockquote>
 <div><p>The number of plots in each row</p>
 </div></blockquote>
-<p><strong>label</strong> : None, str, or list of str</p>
+<p><strong>label</strong> : None, str, or list of str, optional</p>
 <blockquote>
 <div><p>Control the title labeling of the plotted images.
 If None, no titles will be shown.
-If &#8216;auto&#8217; (default), function will try to determine suitable titles using Image titles,
-falling back to the &#8216;titles&#8217; option if no good short titles are detected.
-Works best if all images to be plotted have the same beginning to their titles.
-If &#8216;titles&#8217; , the title from each image&#8217;s metadata.General.title will be used.
-If any other single str, images will be labeled in sequence using that str as a prefix.
-If a list of str, the list elements will be used to determine the labels (repeated, if necessary).</p>
+If &#8216;auto&#8217; (default), function will try to determine suitable titles
+using Image titles, falling back to the &#8216;titles&#8217; option if no good
+short titles are detected.
+Works best if all images to be plotted have the same beginning
+to their titles.
+If &#8216;titles&#8217;, the title from each image&#8217;s metadata.General.title
+will be used.
+If any other single str, images will be labeled in sequence using
+that str as a prefix.
+If a list of str, the list elements will be used to determine the
+labels (repeated, if necessary).</p>
 </div></blockquote>
-<p><strong>labelwrap</strong> : int</p>
+<p><strong>labelwrap</strong> : int, optional</p>
 <blockquote>
-<div><p>integer specifying the number of characters that will be used on one line
-If the function returns an unexpected blank figure, lower this value to reduce
-overlap of the labels between each figure</p>
+<div><p>integer specifying the number of characters that will be used on
+one line
+If the function returns an unexpected blank figure, lower this
+value to reduce overlap of the labels between each figure</p>
 </div></blockquote>
-<p><strong>suptitle</strong> : str</p>
+<p><strong>suptitle</strong> : str, optional</p>
 <blockquote>
-<div><p>Title to use at the top of the figure. If called with label=&#8217;auto&#8217;, this parameter will override
-the automatically determined title.</p>
+<div><p>Title to use at the top of the figure. If called with label=&#8217;auto&#8217;,
+this parameter will override the automatically determined title.</p>
 </div></blockquote>
-<p><strong>suptitle_fontsize</strong> : int</p>
+<p><strong>suptitle_fontsize</strong> : int, optional</p>
 <blockquote>
 <div><p>Font size to use for super title at top of figure</p>
 </div></blockquote>
-<p><strong>colorbar</strong> : None, &#8216;multi&#8217; (default), or &#8216;single&#8217;</p>
+<p><strong>colorbar</strong> : {&#8216;multi&#8217;, None, &#8216;single&#8217;}</p>
 <blockquote>
 <div><p>Controls the type of colorbars that are plotted.
 If None, no colorbar is plotted.
-If &#8216;multi&#8217;, individual colorbars are plotted for each (non-RGB) image
-If &#8216;single&#8217;, all (non-RGB) images are plotted on the same scale, and one colorbar is shown for all</p>
+If &#8216;multi&#8217; (default), individual colorbars are plotted for each
+(non-RGB) image
+If &#8216;single&#8217;, all (non-RGB) images are plotted on the same scale,
+and one colorbar is shown for all</p>
 </div></blockquote>
-<p><strong>interp</strong> : None or str</p>
+<p><strong>saturated_pixels: scalar</strong> :</p>
 <blockquote>
-<div><p>Type of interpolation to use with matplotlib.imshow()
-Possible values are:
-None, &#8216;none&#8217;, &#8216;nearest&#8217;, &#8216;bilinear&#8217;, &#8216;bicubic&#8217;, &#8216;spline16&#8217;,
-&#8216;spline36&#8217;, &#8216;hanning&#8217;, &#8216;hamming&#8217;, &#8216;hermite&#8217;, &#8216;kaiser&#8217;, &#8216;quadric&#8217;,
-&#8216;catrom&#8217;, &#8216;gaussian&#8217;, &#8216;bessel&#8217;, &#8216;mitchell&#8217;, &#8216;sinc&#8217;, &#8216;lanczos&#8217;</p>
+<div><p>The percentage of pixels that are left out of the bounds.  For example,
+the low and high bounds of a value of 1 are the 0.5% and 99.5%
+percentiles. It must be in the [0, 100] range.</p>
 </div></blockquote>
-<p><strong>scalebar</strong> : None, &#8216;all&#8217;, or list of ints</p>
+<p><strong>scalebar</strong> : {None, &#8216;all&#8217;, list of ints}, optional</p>
 <blockquote>
 <div><p>If None (or False), no scalebars will be added to the images.
 If &#8216;all&#8217;, scalebars will be added to all images.
-If list of ints, scalebars will be added to each image specified by number.</p>
+If list of ints, scalebars will be added to each image specified.</p>
 </div></blockquote>
-<p><strong>scalebar_color</strong> : str</p>
+<p><strong>scalebar_color</strong> : str, optional</p>
 <blockquote>
 <div><p>A valid MPL color string; will be used as the scalebar color</p>
 </div></blockquote>
-<p><strong>axes_decor</strong> : str</p>
+<p><strong>axes_decor</strong> : {&#8216;all&#8217;, &#8216;ticks&#8217;, &#8216;off&#8217;, None}, optional</p>
 <blockquote>
 <div><p>Controls how the axes are displayed on each image; default is &#8216;all&#8217;
 If &#8216;all&#8217;, both ticks and axis labels will be shown
-If &#8216;ticks&#8217;, no axis labels will be shown, but ticks and tick labels will
+If &#8216;ticks&#8217;, no axis labels will be shown, but ticks/labels will
 If &#8216;off&#8217;, all decorations and frame will be disabled
 If None, no axis decorations will be shown, but ticks/frame will</p>
 </div></blockquote>
-<p><strong>padding</strong> : None or dict</p>
+<p><strong>padding</strong> : None or dict, optional</p>
 <blockquote>
-<div><p>This parameter controls the spacing between images. If None, default options will be used
-Otherwise, supply a dictionary with the spacing options as keywords and desired values as values
-Values should be supplied as used in pyplot.subplots_adjust(), and can be:</p>
+<div><p>This parameter controls the spacing between images.
+If None, default options will be used
+Otherwise, supply a dictionary with the spacing options as
+keywords and desired values as values
+Values should be supplied as used in pyplot.subplots_adjust(),
+and can be:</p>
 <blockquote>
-<div><p>&#8216;left&#8217;, &#8216;bottom&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;wspace&#8217; (width), and &#8216;hspace&#8217; (height)</p>
+<div><p>&#8216;left&#8217;, &#8216;bottom&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;wspace&#8217; (width),
+and &#8216;hspace&#8217; (height)</p>
 </div></blockquote>
 </div></blockquote>
-<p><strong>tight_layout</strong> : bool</p>
+<p><strong>tight_layout</strong> : bool, optional</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>If true, hyperspy will attempt to improve image placement in figure using matplotlib&#8217;s tight_layout</dt>
-<dd><p class="first last">This is known to cause some problems, so an option is provided to disable it.
-Turn this option off if output is not as expected, or try adjusting <cite>labelwrap</cite> or <cite>per_row</cite></p>
-</dd>
-</dl>
-<p>If false, repositioning images inside the figure will be left as an exercise for the user.</p>
+<div><p>If true, hyperspy will attempt to improve image placement in
+figure using matplotlib&#8217;s tight_layout
+If false, repositioning images inside the figure will be left as
+an exercise for the user.</p>
 </div></blockquote>
-<p><strong>aspect</strong> : str or (float, int, long)</p>
+<p><strong>aspect</strong> : str or numeric, optional</p>
 <blockquote>
-<div><p>If &#8216;auto&#8217;, aspect ratio will be automatically determined, subject to min_asp.
+<div><p>If &#8216;auto&#8217;, aspect ratio is auto determined, subject to min_asp.
 If &#8216;square&#8217;, image will be forced onto square display.
 If &#8216;equal&#8217;, aspect ratio of 1 will be enforced.
 If float (or int/long), given value will be used.</p>
 </div></blockquote>
-<p><strong>min_asp</strong> : float</p>
+<p><strong>min_asp</strong> : float, optional</p>
 <blockquote>
 <div><p>Minimum aspect ratio to be used when plotting images</p>
 </div></blockquote>
-<p><strong>fig</strong> : mpl figure</p>
+<p><strong>namefrac_thresh</strong> : float, optional</p>
+<blockquote>
+<div><p>Threshold to use for auto-labeling. This parameter controls how
+much of the titles must be the same for the auto-shortening of
+labels to activate. Can vary from 0 to 1. Smaller values
+encourage shortening of titles by auto-labeling, while larger
+values will require more overlap in titles before activing the
+auto-label code.</p>
+</div></blockquote>
+<p><strong>fig</strong> : mpl figure, optional</p>
 <blockquote>
 <div><p>If set, the images will be plotted to an existing MPL figure</p>
 </div></blockquote>
-<p><strong>*args, **kwargs</strong> :</p>
+<p><strong>*args, **kwargs, optional</strong> :</p>
 <blockquote>
 <div><p>Additional arguments passed to matplotlib.imshow()</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>axes_list, a list of subplot axes that hold the images</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>axes_list</strong> : list</p>
+<blockquote class="last">
+<div><p>a list of subplot axes that hold the images</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><tt class="xref py py-obj docutils literal"><span class="pre">plot_spectra</span></tt></a></dt>
+<dd>Plotting of multiple spectra</dd>
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><tt class="xref py py-obj docutils literal"><span class="pre">plot_signals</span></tt></a></dt>
+<dd>Plotting of multiple signals</dd>
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_histograms" title="hyperspy.drawing.utils.plot_histograms"><tt class="xref py py-obj docutils literal"><span class="pre">plot_histograms</span></tt></a></dt>
+<dd>Compare signal histograms</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p><cite>interpolation</cite> is a useful parameter to provide as a keyword
+argument to control how the space between pixels is interpolated. A
+value of <tt class="docutils literal"><span class="pre">'nearest'</span></tt> will cause no interpolation between pixels.</p>
+<p><cite>tight_layout</cite> is known to be quite brittle, so an option is provided
+to disable it. Turn this option off if output is not as expected,
+or try adjusting <cite>label</cite>, <cite>labelwrap</cite>, or <cite>per_row</cite></p>
 </dd></dl>
 
 <dl class="function">
