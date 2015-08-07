@@ -349,8 +349,14 @@ to the stdout</p>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.learn.mva.MVA.get_explained_variance_ratio" title="hyperspy.learn.mva.MVA.get_explained_variance_ratio"><code class="xref py py-obj docutils literal"><span class="pre">get_explained_variance_ratio</span></code></a>()</td>
 <td>Return the explained variation ratio of the PCA components as a Spectrum.</td>
 </tr>
+<tr class="row-odd"><td><a class="reference internal" href="#hyperspy.learn.mva.MVA.normalize_bss_components" title="hyperspy.learn.mva.MVA.normalize_bss_components"><code class="xref py py-obj docutils literal"><span class="pre">normalize_bss_components</span></code></a>([target,&nbsp;function])</td>
+<td>Normalize BSS components.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hyperspy.learn.mva.MVA.normalize_decomposition_components" title="hyperspy.learn.mva.MVA.normalize_decomposition_components"><code class="xref py py-obj docutils literal"><span class="pre">normalize_decomposition_components</span></code></a>([target,&nbsp;...])</td>
+<td>Normalize decomposition components.</td>
+</tr>
 <tr class="row-odd"><td><a class="reference internal" href="#hyperspy.learn.mva.MVA.normalize_factors" title="hyperspy.learn.mva.MVA.normalize_factors"><code class="xref py py-obj docutils literal"><span class="pre">normalize_factors</span></code></a>([which,&nbsp;by,&nbsp;sort])</td>
-<td>Normalises the factors and modifies the loadings</td>
+<td>Normalises the factors and modifies the loadings accordingly.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#hyperspy.learn.mva.MVA.normalize_poissonian_noise" title="hyperspy.learn.mva.MVA.normalize_poissonian_noise"><code class="xref py py-obj docutils literal"><span class="pre">normalize_poissonian_noise</span></code></a>([...])</td>
 <td>Scales the SI following Surf.</td>
@@ -374,7 +380,7 @@ to the stdout</p>
 </table>
 <dl class="method">
 <dt id="hyperspy.learn.mva.MVA.blind_source_separation">
-<code class="descname">blind_source_separation</code><span class="sig-paren">(</span><em>number_of_components=None</em>, <em>algorithm='sklearn_fastica'</em>, <em>diff_order=1</em>, <em>factors=None</em>, <em>comp_list=None</em>, <em>mask=None</em>, <em>on_loadings=False</em>, <em>pretreatment=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.blind_source_separation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">blind_source_separation</code><span class="sig-paren">(</span><em>number_of_components=None</em>, <em>algorithm='sklearn_fastica'</em>, <em>diff_order=1</em>, <em>diff_axes=None</em>, <em>factors=None</em>, <em>comp_list=None</em>, <em>mask=None</em>, <em>on_loadings=False</em>, <em>pretreatment=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.blind_source_separation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blind source separation (BSS) on the result on the
 decomposition.</p>
 <p>Available algorithms: FastICA, JADE, CuBICA, and TDSEP</p>
@@ -389,13 +395,24 @@ decomposition.</p>
 <p><strong>algorithm</strong> : {FastICA, JADE, CuBICA, TDSEP}</p>
 <p><strong>diff_order</strong> : int</p>
 <blockquote>
-<div><p>Sometimes it is convenient to perform the BSS on the derivative
-of the signal. If diff_order is 0, the signal is not differentiated.</p>
+<div><p>Sometimes it is convenient to perform the BSS on the derivative of
+the signal. If diff_order is 0, the signal is not differentiated.</p>
 </div></blockquote>
-<p><strong>factors</strong> : numpy.array</p>
+<p><strong>diff_axes</strong> : None or list of ints or strings</p>
 <blockquote>
-<div><p>Factors to decompose. If None, the BSS is performed on the result
-of a previous decomposition.</p>
+<div><p>If None, when <cite>diff_order</cite> is greater than 1 and <cite>signal_dimension</cite>
+(<cite>navigation_dimension</cite>) when <cite>on_loadings</cite> is False (True) is
+greater than 1, the differences are calculated across all
+signal (navigation) axes. Otherwise the axes can be specified in
+a list.</p>
+</div></blockquote>
+<p><strong>factors</strong> : Signal or numpy array.</p>
+<blockquote>
+<div><p>Factors to decompose. If None, the BSS is performed on the
+factors of a previous decomposition. If a Signal instance the
+navigation dimension must be 1 and the size greater than 1. If a
+numpy array (deprecated) the factors are stored in a 2d array
+stacked over the last axis.</p>
 </div></blockquote>
 <p><strong>comp_list</strong> : boolen numpy array</p>
 <blockquote>
@@ -405,10 +422,11 @@ of a previous decomposition.</p>
 </dd>
 </dl>
 </div></blockquote>
-<p><strong>mask</strong> : numpy boolean array with the same dimension as the signal</p>
+<p><strong>mask</strong> : bool numpy array or Signal instance.</p>
 <blockquote>
-<div><p>If not None, the signal locations marked as True (masked) will
-not be passed to the BSS algorithm.</p>
+<div><p>If not None, the signal locations marked as True are masked. The
+mask shape must be equal to the signal shape
+(navigation shape) when <cite>on_loadings</cite> is False (True).</p>
 </div></blockquote>
 <p><strong>on_loadings</strong> : bool</p>
 <blockquote>
@@ -563,10 +581,52 @@ Spectrum.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.learn.mva.MVA.normalize_bss_components">
+<code class="descname">normalize_bss_components</code><span class="sig-paren">(</span><em>target='factors'</em>, <em>function=&lt;function sum&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.normalize_bss_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize BSS components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>target</strong> : {&#8220;factors&#8221;, &#8220;loadings&#8221;}</p>
+<p><strong>function</strong> : numpy universal function, optional, default np.sum</p>
+<blockquote class="last">
+<div><p>Each target component is divided by the output of function(target).
+<cite>function</cite> must return a scalar when operating on numpy arrays and
+must have an <cite>axis</cite>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.learn.mva.MVA.normalize_decomposition_components">
+<code class="descname">normalize_decomposition_components</code><span class="sig-paren">(</span><em>target='factors'</em>, <em>function=&lt;function sum&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.normalize_decomposition_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize decomposition components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>target</strong> : {&#8220;factors&#8221;, &#8220;loadings&#8221;}</p>
+<p><strong>function</strong> : numpy universal function, optional, default np.sum</p>
+<blockquote class="last">
+<div><p>Each target component is divided by the output of function(target).
+<cite>function</cite> must return a scalar when operating on numpy arrays and
+must have an <cite>axis</cite>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.learn.mva.MVA.normalize_factors">
 <code class="descname">normalize_factors</code><span class="sig-paren">(</span><em>which='bss'</em>, <em>by='area'</em>, <em>sort=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.normalize_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalises the factors and modifies the loadings
-accordingly</p>
+accordingly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -651,7 +711,7 @@ given number</p>
 </div></blockquote>
 <p><strong>Examples</strong></p>
 <p><strong>&#8212;&#8212;-</strong></p>
-<p><strong>&gt;&gt;&gt; s = load(&#8216;some_file&#8217;)</strong></p>
+<p><strong>&gt;&gt;&gt; s = hs.load(&#8216;some_file&#8217;)</strong></p>
 <p><strong>&gt;&gt;&gt; s.decomposition(True) # perform PCA</strong></p>
 <p><strong>&gt;&gt;&gt; s.blind_source_separation(3)  # perform ICA on 3 PCs</strong></p>
 <p><strong>&gt;&gt;&gt; s.reverse_bss_component(1) # reverse IC 1</strong></p>
@@ -676,7 +736,7 @@ given number</p>
 </div></blockquote>
 <p><strong>Examples</strong></p>
 <p><strong>&#8212;&#8212;-</strong></p>
-<p><strong>&gt;&gt;&gt; s = load(&#8216;some_file&#8217;)</strong></p>
+<p><strong>&gt;&gt;&gt; s = hs.load(&#8216;some_file&#8217;)</strong></p>
 <p><strong>&gt;&gt;&gt; s.decomposition(True) # perform PCA</strong></p>
 <p><strong>&gt;&gt;&gt; s.reverse_decomposition_component(1) # reverse IC 1</strong></p>
 <p class="last"><strong>&gt;&gt;&gt; s.reverse_decomposition_component((0, 2)) # reverse ICs 0 and 2</strong></p>
@@ -697,6 +757,11 @@ given number</p>
 <dl class="function">
 <dt id="hyperspy.learn.mva.centering_and_whitening">
 <code class="descclassname">hyperspy.learn.mva.</code><code class="descname">centering_and_whitening</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.centering_and_whitening" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.learn.mva.get_derivative">
+<code class="descclassname">hyperspy.learn.mva.</code><code class="descname">get_derivative</code><span class="sig-paren">(</span><em>signal</em>, <em>diff_axes</em>, <em>diff_order</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.get_derivative" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

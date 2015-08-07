@@ -67,22 +67,22 @@
 <p>[<a class="reference external" href="curve_fitting_data.py">source code</a>]</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot; Loads hyperspy as a regular python library, loads spectrums from files, does curve fitting, and plotting the model and original spectrum to a png file&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">hyperspy.hspy</span> <span class="kn">as</span> <span class="nn">hspy</span>
+<span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="kn">as</span> <span class="nn">hs</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="n">coreLossSpectrumFileName</span> <span class="o">=</span> <span class="s">&quot;coreloss_spectrum.msa&quot;</span>
 <span class="n">lowlossSpectrumFileName</span> <span class="o">=</span> <span class="s">&quot;lowloss_spectrum.msa&quot;</span>
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">hspy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">coreLossSpectrumFileName</span><span class="p">)</span><span class="o">.</span><span class="n">to_EELS</span><span class="p">()</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">coreLossSpectrumFileName</span><span class="p">)</span><span class="o">.</span><span class="n">to_EELS</span><span class="p">()</span>
 <span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">((</span><span class="s">&quot;Mn&quot;</span><span class="p">,</span> <span class="s">&quot;O&quot;</span><span class="p">))</span>
 <span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span>
     <span class="n">beam_energy</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
     <span class="n">convergence_angle</span><span class="o">=</span><span class="mf">24.6</span><span class="p">,</span>
     <span class="n">collection_angle</span><span class="o">=</span><span class="mf">13.6</span><span class="p">)</span>
 
-<span class="n">ll</span> <span class="o">=</span> <span class="n">hspy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">lowlossSpectrumFileName</span><span class="p">)</span><span class="o">.</span><span class="n">to_EELS</span><span class="p">()</span>
+<span class="n">ll</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">lowlossSpectrumFileName</span><span class="p">)</span><span class="o">.</span><span class="n">to_EELS</span><span class="p">()</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">hspy</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">enable_fine_structure</span><span class="p">()</span>
 <span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">&quot;smart&quot;</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>

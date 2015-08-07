@@ -157,8 +157,8 @@ correct for surface plasmon excitations in layers.</p>
 fitting as it is shown in the next example of quantification of a boron nitride
 EELS spectrum from the <a class="reference external" href="http://pc-web.cemes.fr/eelsdb/index.php?page=home.php">The EELS Data Base</a>.</p>
 <p>Load the core-loss and low-loss spectra</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_B_K_Giovanni_Bertoni_100.msa&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_LowLoss_Giovanni_Bertoni_96.msa&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_B_K_Giovanni_Bertoni_100.msa&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;BN_(hex)_LowLoss_Giovanni_Bertoni_96.msa&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Set some important experimental information that is missing from the original
@@ -170,17 +170,25 @@ core-loss file</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">((</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>We pass the low-loss spectrum to <a class="reference internal" href="../api/hyperspy.html#hyperspy.hspy.create_model" title="hyperspy.hspy.create_model"><code class="xref py py-func docutils literal"><span class="pre">create_model()</span></code></a> to include the
-effect of multiple scattering by Fourier-ratio convolution.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
+<p>In order to include the effect of plural scattering we provide the low-loss spectrum to <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.create_model" title="hyperspy._signals.eels.EELSSpectrum.create_model"><code class="xref py py-meth docutils literal"><span class="pre">create_model()</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="n">ll</span><span class="o">=</span><span class="n">ll</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>HyperSpy has created the model and configured it automatically:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
-<span class="go">[&lt;background (PowerLaw component)&gt;,</span>
-<span class="go">&lt;N_K (EELSCLEdge component)&gt;,</span>
-<span class="go">&lt;B_K (EELSCLEdge component)&gt;]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span>
+<span class="go">   # |            Attribute Name |            Component Name |            Component Type</span>
+<span class="go">---- | ------------------------- | ------------------------- | -------------------------</span>
+<span class="go">   0 |                background |                background |                  PowerLaw</span>
+<span class="go">   1 |                       N_K |                       N_K |                EELSCLEdge</span>
+<span class="go">   2 |                       B_K |                       B_K |                EELSCLEdge</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Notice that the PowerLaw component has been automatically renamed to
+&#8220;background&#8221;. This behaviour is deprecated and will be removed in
+HyperSpy 0.9. From them on this component will keep its original name,
+&#8220;PowerLaw&#8221;.</p>
 </div>
 <p>Furthermore, the components are available in the user namespace</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">N_K</span>
@@ -191,6 +199,21 @@ effect of multiple scattering by Fourier-ratio convolution.</p>
 <span class="go">&lt;background (PowerLaw component)&gt;</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This feature is deprecated and will be removed in HyperSpy 0.9. To access
+the automatically created component use the following equivalent syntax:</p>
+<blockquote class="last">
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">N_K</span>
+<span class="go">&lt;N_K (EELSCLEdge component)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">B_K</span>
+<span class="go">&lt;B_K (EELSCLEdge component)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">background</span>
+<span class="go">&lt;background (PowerLaw component)&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
 <p>Conveniently, variables named as the element symbol contain all the eels
 core-loss components of the element to facilitate applying some methods to all
 of them at once. Although in this example the list contains just one component
@@ -200,7 +223,7 @@ this is not generally the case.</p>
 </pre></div>
 </div>
 <p>By default the fine structure features are disabled (although the default value
-can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>Configuring hyperspy</span></a>). We must enable them
+can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>Configuring HyperSpy</span></a>). We must enable them
 to accurately fit this spectrum.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">enable_fine_structure</span><span class="p">()</span>
 </pre></div>
