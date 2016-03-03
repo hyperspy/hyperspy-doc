@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Energy-Dispersive X-Rays Spectrometry (EDS) &mdash; HyperSpy 0.8.3 documentation</title>
+  <title>Energy-Dispersive X-Rays Spectrometry (EDS) &mdash; HyperSpy 0.8.4 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.3 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 0.8.4 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Dielectric function tools" href="dielectric_function.html"/>
         <link rel="prev" title="Electron Energy Loss Spectroscopy" href="eels.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.3
+                0.8.4
               </div>
             
           
@@ -225,7 +225,7 @@ P. Burdet, <cite>et al.</cite>, Acta Materialia, 61, p. 3090-3098 (2013) (see
 </div>
 <div class="section" id="loading">
 <h3>Loading<a class="headerlink" href="#loading" title="Permalink to this headline">¶</a></h3>
-<p>All data are loaded with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> function, as described in details in
+<p>All data are loaded with the <code class="xref py py-func docutils literal"><span class="pre">load()</span></code> function, as described in details in
 <a class="reference internal" href="io.html#loading-files"><span>Loading files</span></a>. HyperSpy is able to import different formats,
 among them &#8221;.msa&#8221; and &#8221;.rpl&#8221; (the raw format of Oxford Instrument and Brucker).</p>
 <p>Here is three example for files exported by Oxford Instrument software (INCA).
@@ -236,7 +236,7 @@ For a single spectrum:</p>
 </pre></div>
 </div>
 <p>For a spectrum image (The .rpl file is recorded as an image in this example,
-The method <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.as_spectrum" title="hyperspy.signal.Signal.as_spectrum"><code class="xref py py-meth docutils literal"><span class="pre">as_spectrum()</span></code></a> set it back to a spectrum
+The method <code class="xref py py-meth docutils literal"><span class="pre">as_spectrum()</span></code> set it back to a spectrum
 with the energy axis in first position):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si</span>
@@ -255,7 +255,7 @@ example 01, 02, 03,...):</p>
 <div class="section" id="microscope-and-detector-parameters">
 <span id="eds-calibration-label"></span><h3>Microscope and detector parameters<a class="headerlink" href="#microscope-and-detector-parameters" title="Permalink to this headline">¶</a></h3>
 <p>First, the type of microscope (&#8220;EDS_TEM&#8221; or &#8220;EDS_SEM&#8221;) needs to be set with the
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.set_signal_type" title="hyperspy.signal.Signal.set_signal_type"><code class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></code></a> method. The class of the
+<code class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></code> method. The class of the
 object is thus assigned, and specific EDS methods become available.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
@@ -263,7 +263,7 @@ object is thus assigned, and specific EDS methods become available.</p>
 <span class="go">&lt;EDSSEMSpectrum, title: Spectrum, dimensions: (|1024)&gt;</span>
 </pre></div>
 </div>
-<p>or as an argument of the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> function:</p>
+<p>or as an argument of the <code class="xref py py-func docutils literal"><span class="pre">load()</span></code> function:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">&lt;EDSSEMSpectrum, title: Spectrum, dimensions: (|1024)&gt;</span>
@@ -311,7 +311,7 @@ as follow:</p>
 </div>
 <p>If the microscope and detector parameters are not written in the original file, some
 of them are set by default. The default values can be changed in the
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.defaults_parser.Preferences" title="hyperspy.defaults_parser.Preferences"><code class="xref py py-class docutils literal"><span class="pre">Preferences</span></code></a> class (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>preferences</span></a>).</p>
+<code class="xref py py-class docutils literal"><span class="pre">Preferences</span></code> class (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>preferences</span></a>).</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">preferences</span><span class="o">.</span><span class="n">EDS</span><span class="o">.</span><span class="n">eds_detector_elevation</span> <span class="o">=</span> <span class="mi">37</span>
 </pre></div>
 </div>
@@ -326,7 +326,7 @@ of them are set by default. The default values can be changed in the
 </div>
 <div class="section" id="energy-axis">
 <h3>Energy axis<a class="headerlink" href="#energy-axis" title="Permalink to this headline">¶</a></h3>
-<p>The main values for the energy axis are automatically imported from the file, if existing. The properties of the energy axis can be set manually with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal"><span class="pre">AxesManager</span></code></a>.
+<p>The main values for the energy axis are automatically imported from the file, if existing. The properties of the energy axis can be set manually with the <code class="xref py py-class docutils literal"><span class="pre">AxesManager</span></code>.
 (see <a class="reference internal" href="getting_started.html#setting-axis-properties"><span>Axis properties</span></a> for more info):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
@@ -335,7 +335,7 @@ of them are set by default. The default values can be changed in the
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span>
 </pre></div>
 </div>
-<p>or with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.axes.AxesManager.gui" title="hyperspy.axes.AxesManager.gui"><code class="xref py py-meth docutils literal"><span class="pre">gui()</span></code></a> method:</p>
+<p>or with the <code class="xref py py-meth docutils literal"><span class="pre">gui()</span></code> method:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -605,7 +605,7 @@ are used by default.</p>
 <span class="go">Pt (Pt_La): Composition = 84.59 atomic percent</span>
 </pre></div>
 </div>
-<p>either with <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.material.weight_to_atomic" title="hyperspy.misc.material.weight_to_atomic"><code class="xref py py-func docutils literal"><span class="pre">weight_to_atomic()</span></code></a>. The reverse method is <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.material.atomic_to_weight" title="hyperspy.misc.material.atomic_to_weight"><code class="xref py py-func docutils literal"><span class="pre">atomic_to_weight()</span></code></a>.</p>
+<p>either with <code class="xref py py-func docutils literal"><span class="pre">weight_to_atomic()</span></code>. The reverse method is <code class="xref py py-func docutils literal"><span class="pre">atomic_to_weight()</span></code>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># With weight_percent from before</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">atomic_percent</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">weight_to_atomic</span><span class="p">(</span><span class="n">weight_percent</span><span class="p">)</span>
 </pre></div>
@@ -654,7 +654,7 @@ are used by default.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.3',
+            VERSION:'0.8.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
