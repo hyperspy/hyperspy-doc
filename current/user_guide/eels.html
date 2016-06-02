@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Electron Energy Loss Spectroscopy &mdash; HyperSpy 0.8.4 documentation</title>
+  <title>Electron Energy Loss Spectroscopy &mdash; HyperSpy 0.8.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.4 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Energy-Dispersive X-Rays Spectrometry (EDS)" href="eds.html"/>
         <link rel="prev" title="Curve fitting" href="model.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.4
+                0.8.5
               </div>
             
           
@@ -109,8 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrum.html">Spectrum tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="image.html">Image tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
@@ -188,7 +188,7 @@
 <span id="eels-tools-label"></span><h2>Tools for EELS data analysis<a class="headerlink" href="#tools-for-eels-data-analysis" title="Permalink to this headline">¶</a></h2>
 <p>The functions described in this chapter are only available for the
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><code class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></code></a> class. To transform a
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal" title="hyperspy.signal.Signal"><code class="xref py py-class docutils literal"><span class="pre">Signal</span></code></a> (or subclass) into a
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> (or subclass) into a
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><code class="xref py py-class docutils literal"><span class="pre">EELSSpectrum</span></code></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s2">&quot;EELS&quot;</span><span class="p">)</span>
 </pre></div>
@@ -214,10 +214,10 @@ thickness from a low-loss EELS spectrum using the Log-Ratio method.</p>
 </div>
 <div class="section" id="zero-loss-peak-centre-and-alignment">
 <h3>Zero-loss peak centre and alignment<a class="headerlink" href="#zero-loss-peak-centre-and-alignment" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre" title="hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre"><code class="xref py py-meth docutils literal"><span class="pre">estimate_zero_loss_peak_centre()</span></code></a> can be used to estimate the position of the zero-loss peak. The method assumes that the ZLP is the most intense feature in the spectra. For a more general approach see <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.find_peaks1D_ohaver" title="hyperspy.signal.Signal1DTools.find_peaks1D_ohaver"><code class="xref py py-meth docutils literal"><span class="pre">find_peaks1D_ohaver()</span></code></a>.</p>
+<p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre" title="hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre"><code class="xref py py-meth docutils literal"><span class="pre">estimate_zero_loss_peak_centre()</span></code></a> can be used to estimate the position of the zero-loss peak. The method assumes that the ZLP is the most intense feature in the spectra. For a more general approach see <code class="xref py py-meth docutils literal"><span class="pre">find_peaks1D_ohaver()</span></code>.</p>
 <p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak"><code class="xref py py-meth docutils literal"><span class="pre">align_zero_loss_peak()</span></code></a> can
 align the ZLP with subpixel accuracy. It is more robust and easy to use than
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal1DTools.align1D" title="hyperspy.signal.Signal1DTools.align1D"><code class="xref py py-meth docutils literal"><span class="pre">align1D()</span></code></a> for the task. Note that it is possible to apply the same alignment to other spectra using the <cite>also_align</cite> argument. This can be useful e.g. to align core-loss spectra acquired quasi-simultaneously.</p>
+<code class="xref py py-meth docutils literal"><span class="pre">align1D()</span></code> for the task. Note that it is possible to apply the same alignment to other spectra using the <cite>also_align</cite> argument. This can be useful e.g. to align core-loss spectra acquired quasi-simultaneously.</p>
 </div>
 <div class="section" id="deconvolutions">
 <h3>Deconvolutions<a class="headerlink" href="#deconvolutions" title="Permalink to this headline">¶</a></h3>
@@ -302,7 +302,7 @@ given in mrad. <cite>beam_energy</cite> is in keV.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Notice that the PowerLaw component has been automatically renamed to
 &#8220;background&#8221;. This behaviour is deprecated and will be removed in
-HyperSpy 0.9. From them on this component will keep its original name,
+Hyperspy 1.0. From them on this component will keep its original name,
 &#8220;PowerLaw&#8221;.</p>
 </div>
 <p>Furthermore, the components are available in the user namespace</p>
@@ -316,7 +316,7 @@ HyperSpy 0.9. From them on this component will keep its original name,
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>This feature is deprecated and will be removed in HyperSpy 0.9. To access
+<p>This feature is deprecated and will be removed in Hyperspy 1.0. To access
 the automatically created component use the following equivalent syntax:</p>
 <blockquote class="last">
 <div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">N_K</span>
@@ -368,13 +368,13 @@ to fit EELS core-loss spectra</p>
 <a class="reference internal image-reference" href="../_images/curve_fitting_BN.png"><img alt="../_images/curve_fitting_BN.png" src="../_images/curve_fitting_BN.png" style="width: 500px;" /></a>
 </div>
 <p>There are several methods that are only available in
-<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel" title="hyperspy.models.eelsmodel.EELSModel"><code class="xref py py-class docutils literal"><span class="pre">EELSModel</span></code></a>:</p>
+<code class="xref py py-class docutils literal"><span class="pre">EELSModel</span></code>:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><code class="xref py py-meth docutils literal"><span class="pre">smart_fit()</span></code></a> is a fit method that is
+<li><code class="xref py py-meth docutils literal"><span class="pre">smart_fit()</span></code> is a fit method that is
 more robust than the standard routine when fitting EELS data.</li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.quantify" title="hyperspy.models.eelsmodel.EELSModel.quantify"><code class="xref py py-meth docutils literal"><span class="pre">quantify()</span></code></a> prints the intensity at
+<li><code class="xref py py-meth docutils literal"><span class="pre">quantify()</span></code> prints the intensity at
 the current locations of all the EELS ionisation edges in the model.</li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data" title="hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data"><code class="xref py py-meth docutils literal"><span class="pre">remove_fine_structure_data()</span></code></a> removes
+<li><code class="xref py py-meth docutils literal"><span class="pre">remove_fine_structure_data()</span></code> removes
 the fine structure spectral data range (as defined by the
 <code class="xref py py-attr docutils literal"><span class="pre">fine_structure_width)</span></code>
 ionisation edge components. It is specially useful when fitting without
@@ -383,28 +383,28 @@ convolving with a zero-loss peak.</li>
 <p>The following methods permit to easily enable/disable background and ionisation
 edges components:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-meth docutils literal"><span class="pre">enable_edges()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-meth docutils literal"><span class="pre">enable_background()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-meth docutils literal"><span class="pre">disable_background()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-meth docutils literal"><span class="pre">enable_fine_structure()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-meth docutils literal"><span class="pre">disable_fine_structure()</span></code></a></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">enable_edges()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">enable_background()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">disable_background()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">enable_fine_structure()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">disable_fine_structure()</span></code></li>
 </ul>
 <p>The following methods permit to easily enable/disable several ionisation
 edge functionalities:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-meth docutils literal"><span class="pre">set_all_edges_intensities_positive()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-meth docutils literal"><span class="pre">unset_all_edges_intensities_positive()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-meth docutils literal"><span class="pre">enable_free_onset_energy()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-meth docutils literal"><span class="pre">disable_free_onset_energy()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-meth docutils literal"><span class="pre">fix_edges()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-meth docutils literal"><span class="pre">free_edges()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-meth docutils literal"><span class="pre">fix_fine_structure()</span></code></a></li>
-<li><a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-meth docutils literal"><span class="pre">free_fine_structure()</span></code></a></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">set_all_edges_intensities_positive()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">unset_all_edges_intensities_positive()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">enable_free_onset_energy()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">disable_free_onset_energy()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">fix_edges()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">free_edges()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">fix_fine_structure()</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">free_fine_structure()</span></code></li>
 </ul>
 <p>When fitting edges with fine structure enabled it is often desirable that the
 fine structure region of nearby ionization edges does not overlap. HyperSpy
 provides a method,
-<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.resolve_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.resolve_fine_structure"><code class="xref py py-meth docutils literal"><span class="pre">resolve_fine_structure()</span></code></a>, to
+<code class="xref py py-meth docutils literal"><span class="pre">resolve_fine_structure()</span></code>, to
 automatically adjust the fine structure to prevent fine structure to avoid
 overlapping. This method is executed automatically when e.g. components are
 added or removed from the model, but sometimes is necessary to call it
@@ -412,9 +412,9 @@ manually.</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.7.1: </span>Sometimes it is desirable to disable the automatic adjustment of the fine
 structure width. It is possible to suspend this feature by calling
-<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width" title="hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width"><code class="xref py py-meth docutils literal"><span class="pre">suspend_auto_fine_structure_width()</span></code></a>.
+<code class="xref py py-meth docutils literal"><span class="pre">suspend_auto_fine_structure_width()</span></code>.
 To resume it use
-<a class="reference internal" href="../api/hyperspy.models.html#hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width" title="hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width"><code class="xref py py-meth docutils literal"><span class="pre">suspend_auto_fine_structure_width()</span></code></a></p>
+<code class="xref py py-meth docutils literal"><span class="pre">suspend_auto_fine_structure_width()</span></code></p>
 </div>
 </div>
 </div>
@@ -460,7 +460,7 @@ To resume it use
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.4',
+            VERSION:'0.8.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

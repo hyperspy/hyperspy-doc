@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; HyperSpy 0.8.4 documentation</title>
+  <title>Getting started &mdash; HyperSpy 0.8.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.4 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Tools: the Signal class" href="tools.html"/>
         <link rel="prev" title="Installing HyperSpy" href="install.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.4
+                0.8.5
               </div>
             
           
@@ -121,8 +121,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrum.html">Spectrum tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="image.html">Image tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
@@ -243,7 +243,7 @@ follows:</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Starting HyperSpy using the <code class="docutils literal"><span class="pre">hyperspy</span></code> starting script and the
 <code class="docutils literal"><span class="pre">%hyperspy</span></code> IPython magic is now deprecated and will be removed in
-HyperSpy 0.9. The IPython magic does not work with IPython 4 and
+Hyperspy 1.0. The IPython magic does not work with IPython 4 and
 above.</p>
 </div>
 </div>
@@ -306,9 +306,9 @@ libraries. Simply select the most appropiate signal from the
 <a class="reference internal" href="../api/hyperspy.html#module-hyperspy.signals" title="hyperspy.signals"><code class="xref py py-mod docutils literal"><span class="pre">signals</span></code></a> module and create a new instance by passing a numpy array
 to the constructor e.g.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_np_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">my_np_array</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">my_np_array</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">&lt;Spectrum, title: , dimensions: (20, 10|100)&gt;</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (20, 10|100)&gt;</span>
 </pre></div>
 </div>
 <p>The numpy array is stored in the <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> attribute
@@ -324,16 +324,18 @@ spectra) has three dimensions X, Y and energy-loss. In HyperSpy, X and Y are
 the <em>navigation</em> dimensions an the energy-loss is the <em>signal</em> dimension. To
 make this distinction more explicit the representation of the object includes
 a separator <code class="docutils literal"><span class="pre">|</span></code> between the navigaton and signal dimensions e.g.</p>
-<p>In Hyperpsy a spectrum image has signal dimension 1 and navigation dimension 2.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)))</span>
+<p>In Hyperpsy a spectrum image has signal dimension 1 and navigation dimension 2
+and is stored in the Signal1D subclass.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">&lt;Spectrum, title: , dimensions: (20, 10|30)&gt;</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (20, 10|30)&gt;</span>
 </pre></div>
 </div>
-<p>An image stack has signal dimension 2 and navigation dimension 1.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<p>An image stack has signal dimension 2 and navigation dimension 1 and is stored
+in the Signal2D subclass.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span>
-<span class="go">&lt;Image, title: , dimensions: (30|20, 10)&gt;</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (30|20, 10)&gt;</span>
 </pre></div>
 </div>
 <p>Note the HyperSpy rearranges the axes position to match the following pattern:
@@ -346,9 +348,9 @@ This is the order used for <a class="reference internal" href="tools.html#signal
 that is stored in the <code class="xref py py-attr docutils literal"><span class="pre">axes_manager</span></code> attribute of
 the signal class. The indidual axes can be accessed by indexing the AxesManager
 e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span> <span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span> <span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">&lt;Spectrum, title: , dimensions: (20, 10|100)&gt;</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (20, 10|100)&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
 <span class="go">&lt;Axes manager, axes: (&lt;Unnamed 0th axis, size: 20, index: 0&gt;, &lt;Unnamed 1st</span>
 <span class="go">axis, size: 10, index: 0&gt;|&lt;Unnamed 2nd axis, size: 100&gt;)&gt;</span>
@@ -512,7 +514,7 @@ calling the <code class="xref py py-meth docutils literal"><span class="pre">gui
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.4',
+            VERSION:'0.8.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

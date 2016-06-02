@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Curve fitting &mdash; HyperSpy 0.8.4 documentation</title>
+  <title>Curve fitting &mdash; HyperSpy 0.8.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.4 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Electron Energy Loss Spectroscopy" href="eels.html"/>
         <link rel="prev" title="Machine learning" href="mva.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.4
+                0.8.5
               </div>
             
           
@@ -109,8 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrum.html">Spectrum tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="image.html">Image tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Curve fitting</a><ul>
@@ -198,7 +198,7 @@ model depends on this parameter. See <a class="reference internal" href="tools.h
 <div class="section" id="creating-a-model">
 <h2>Creating a model<a class="headerlink" href="#creating-a-model" title="Permalink to this headline">¶</a></h2>
 <p>A <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a> can be created using the
-<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.spectrum.Spectrum.create_model" title="hyperspy._signals.spectrum.Spectrum.create_model"><code class="xref py py-meth docutils literal"><span class="pre">create_model()</span></code></a> method:</p>
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal1d.Signal1D.create_model" title="hyperspy._signals.signal1d.Signal1D.create_model"><code class="xref py py-meth docutils literal"><span class="pre">create_model()</span></code></a> method:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;YourDataFilenameHere&#39;</span><span class="p">)</span> <span class="c1"># Load the data from a file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span> <span class="c1"># Create the model and asign it to the variable m</span>
 </pre></div>
@@ -227,6 +227,7 @@ These are some of the components which are currently available:</p>
 <li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.error_function.Erf" title="hyperspy._components.error_function.Erf"><code class="xref py py-class docutils literal"><span class="pre">Erf</span></code></a></li>
 <li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.pes_see.SEE" title="hyperspy._components.pes_see.SEE"><code class="xref py py-class docutils literal"><span class="pre">SEE</span></code></a></li>
 <li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.arctan.Arctan" title="hyperspy._components.arctan.Arctan"><code class="xref py py-class docutils literal"><span class="pre">Arctan</span></code></a></li>
+<li><a class="reference internal" href="../api/hyperspy._components.html#hyperspy._components.heaviside.HeavisideStep" title="hyperspy._components.heaviside.HeavisideStep"><code class="xref py py-class docutils literal"><span class="pre">HeavisideStep</span></code></a></li>
 </ul>
 <p>However, this doesn&#8217;t mean that you have to limit yourself to this meagre list of function.</p>
 <div class="versionadded" id="expression-component-label">
@@ -416,7 +417,7 @@ back to <cite>True</cite>.</p>
 To enable this feature for a given component set the
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component.active_is_multidimensional" title="hyperspy.component.Component.active_is_multidimensional"><code class="xref py py-attr docutils literal"><span class="pre">active_is_multidimensional</span></code></a> attribute to
 <cite>True</cite>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
@@ -450,7 +451,7 @@ the free parameters.</p>
 <p>If a model contains several components with the same parameters, it is possible
 to change them all by using <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.set_parameters_value" title="hyperspy.model.Model.set_parameters_value"><code class="xref py py-meth docutils literal"><span class="pre">set_parameters_value()</span></code></a>.
 Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
@@ -675,8 +676,8 @@ to the data.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>On fitting completion, the optimized value of the parameters and their estimated standard deviation
-are stored in the following line attributes:</p>
+<p>On fitting completion, the optimized value of the parameters and their estimated
+standard deviation are stored in the following line attributes:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
 <span class="go">(0.99246156488437653, 103.67507406125888)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
@@ -685,7 +686,7 @@ are stored in the following line attributes:</p>
 </div>
 <p>When the noise is heterocedastic, only if the
 <code class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></code> attribute of the
-<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.spectrum.Spectrum" title="hyperspy._signals.spectrum.Spectrum"><code class="xref py py-class docutils literal"><span class="pre">Spectrum</span></code></a> instance is defined can the errors be
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal"><span class="pre">Signal1D</span></code></a> instance is defined can the errors be
 estimated accurately. If the variance is not defined, the standard deviation of
 the parameters are still computed and stored in the
 <code class="xref py py-attr docutils literal"><span class="pre">std</span></code> attribute by setting variance equal 1.
@@ -711,7 +712,7 @@ gaussian noise and proceed to fit as in the previous example.</p>
 biased. A more accurate result can be obtained by using weighted least squares
 instead that, although still biased for poissonian noise, is a good
 approximation in most cases.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">(</span><span class="n">expected_value</span><span class="o">=</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">(</span><span class="n">expected_value</span><span class="o">=</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
 <span class="go">(1.0004224896604759, -0.46982916592391377)</span>
@@ -797,13 +798,32 @@ by hand.</p>
 the <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.fit_component" title="hyperspy.model.Model.fit_component"><code class="xref py py-meth docutils literal"><span class="pre">fit_component()</span></code></a> method.</p>
 </div>
 <div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.5: </span><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.notebook_interaction" title="hyperspy.model.Model.notebook_interaction"><code class="xref py py-meth docutils literal"><span class="pre">notebook_interaction()</span></code></a>,</p>
+</div>
+<p id="notebook-interaction-label">If running in a Jupyter Notebook, interactive widgets can be used to
+conveniently adjust the parameter values by running
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.notebook_interaction" title="hyperspy.model.Model.notebook_interaction"><code class="xref py py-meth docutils literal"><span class="pre">notebook_interaction()</span></code></a> for <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model" title="hyperspy.model.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a>,
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal"><span class="pre">Component</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal"><span class="pre">Parameter</span></code></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.notebook_interaction" title="hyperspy.model.Model.notebook_interaction"><code class="xref py py-meth docutils literal"><span class="pre">notebook_interaction()</span></code></a> functions require
+<code class="docutils literal"><span class="pre">ipywidgets</span></code>, which is an optional dependency of HyperSpy.</p>
+</div>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/notebook_widgets.png"><img alt="../_images/notebook_widgets.png" src="../_images/notebook_widgets.png" style="width: 985px;" /></a>
+<p class="caption"><span class="caption-text">Interactive widgets for the full model in a Jupyter notebook. Drag the
+sliders to adjust current parameter values. Typing different minimum and
+maximum values changes the boundaries of the slider.</span></p>
+</div>
+<div class="versionadded">
 <p><span class="versionmodified">New in version 0.6: </span><a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><code class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><code class="xref py py-meth docutils literal"><span class="pre">disable_adjust_position()</span></code></a></p>
 </div>
 <p>Also, <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.enable_adjust_position" title="hyperspy.model.Model.enable_adjust_position"><code class="xref py py-meth docutils literal"><span class="pre">enable_adjust_position()</span></code></a> provides an interactive
 way of setting the position of the components with a well define position.
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.model.Model.disable_adjust_position" title="hyperspy.model.Model.disable_adjust_position"><code class="xref py py-meth docutils literal"><span class="pre">disable_adjust_position()</span></code></a> disables the tool.</p>
-<div class="figure align-center" id="id2">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/model_adjust_position.png"><img alt="../_images/model_adjust_position.png" src="../_images/model_adjust_position.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Interactive component position adjustment tool.Drag the vertical lines
 to set the initial value of the position parameter.</span></p>
@@ -931,7 +951,7 @@ parameter attributes:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.4',
+            VERSION:'0.8.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

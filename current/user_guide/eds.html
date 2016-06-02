@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Energy-Dispersive X-Rays Spectrometry (EDS) &mdash; HyperSpy 0.8.4 documentation</title>
+  <title>Energy-Dispersive X-Rays Spectrometry (EDS) &mdash; HyperSpy 0.8.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.4 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Dielectric function tools" href="dielectric_function.html"/>
         <link rel="prev" title="Electron Energy Loss Spectroscopy" href="eels.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.4
+                0.8.5
               </div>
             
           
@@ -109,8 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrum.html">Spectrum tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="image.html">Image tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
@@ -232,30 +232,30 @@ among them &#8221;.msa&#8221; and &#8221;.rpl&#8221; (the raw format of Oxford I
 For a single spectrum:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">&lt;Spectrum, title: Spectrum, dimensions: (|1024)&gt;</span>
+<span class="go">&lt;Signal1D, title: Signal1D, dimensions: (|1024)&gt;</span>
 </pre></div>
 </div>
 <p>For a spectrum image (The .rpl file is recorded as an image in this example,
-The method <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.as_spectrum" title="hyperspy.signal.Signal.as_spectrum"><code class="xref py py-meth docutils literal"><span class="pre">as_spectrum()</span></code></a> set it back to a spectrum
-with the energy axis in first position):</p>
+The method <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.as_signal1D" title="hyperspy.signal.BaseSignal.as_signal1D"><code class="xref py py-meth docutils literal"><span class="pre">as_signal1D()</span></code></a> set it back to a one
+dimensional signal with the energy axis in first position):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si</span>
-<span class="go">&lt;Spectrum, title: , dimensions: (256, 224|1024)&gt;</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (256, 224|1024)&gt;</span>
 </pre></div>
 </div>
 <p>For a stack of spectrum images (The &#8220;*&#8221; replace all chains of string, in this
 example 01, 02, 03,...):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_0*.rpl&quot;</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span> <span class="o">=</span> <span class="n">si4D</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span> <span class="o">=</span> <span class="n">si4D</span><span class="o">.</span><span class="n">as_signal1D</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span>
-<span class="go">&lt;Spectrum, title:, dimensions: (256, 224, 2|1024)&gt;</span>
+<span class="go">&lt;Signal1D, title:, dimensions: (256, 224, 2|1024)&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="microscope-and-detector-parameters">
 <span id="eds-calibration-label"></span><h3>Microscope and detector parameters<a class="headerlink" href="#microscope-and-detector-parameters" title="Permalink to this headline">¶</a></h3>
 <p>First, the type of microscope (&#8220;EDS_TEM&#8221; or &#8220;EDS_SEM&#8221;) needs to be set with the
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.Signal.set_signal_type" title="hyperspy.signal.Signal.set_signal_type"><code class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></code></a> method. The class of the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.set_signal_type" title="hyperspy.signal.BaseSignal.set_signal_type"><code class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></code></a> method. The class of the
 object is thus assigned, and specific EDS methods become available.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
@@ -547,8 +547,8 @@ are used by default.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;core_shell.hdf5&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s1">&#39;Fe_Ka&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt_La&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
-<span class="go">[&lt;Image, title: X-ray line intensity of Core shell: Fe_Ka at 6.40 keV, dimensions: (|64, 64)&gt;,</span>
-<span class="go">&lt;Image, title: X-ray line intensity of Core shell: Pt_La at 9.44 keV, dimensions: (|64, 64)&gt;]</span>
+<span class="go">[&lt;Signal2D, title: X-ray line intensity of Core shell: Fe_Ka at 6.40 keV, dimensions: (|64, 64)&gt;,</span>
+<span class="go">&lt;Signal2D, title: X-ray line intensity of Core shell: Pt_La at 9.44 keV, dimensions: (|64, 64)&gt;]</span>
 </pre></div>
 </div>
 <p>The windows of integration can be visualised using <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code></a> method</p>
@@ -654,7 +654,7 @@ are used by default.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.4',
+            VERSION:'0.8.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
