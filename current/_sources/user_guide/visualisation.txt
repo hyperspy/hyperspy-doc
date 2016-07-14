@@ -78,7 +78,7 @@ PageUp      Increase step size
 PageDown    Decrease step size
 ``+``           Increase pointer size
 ``-``           Decrease pointer size
-``h``       Launch the contrast adjustment tool (only for Image)
+``h``       Launch the contrast adjustment tool (only for Signal2D)
 =========   =============================
 
 To close all the figures run the following command:
@@ -135,7 +135,7 @@ contrast controls are HyperSpy-specific, however `matplotlib.imshow
 
     >>> import scipy
     >>> img = hs.signals.Signal2D(scipy.misc.lena())
-    >>> img.plot(colorbar=True, scalebar=False, auto_contrast=True,
+    >>> img.plot(colorbar=True, scalebar=False,
     >>> 	 axes_ticks=True, cmap='RdYlBu_r', saturated_pixels=0)
 
 
@@ -242,7 +242,7 @@ plotted with sliders.
 
 .. code-block:: python
 
-    >>> s = hs.load('TiFeNi_0*.rpl', stack=True).as_spectrum(0)
+    >>> s = hs.load('TiFeNi_0*.rpl', stack=True).as_signal1D(0)
     >>> s.plot()
 
 
@@ -259,7 +259,7 @@ can be used as an external signal for the navigator.
 .. code-block:: python
 
     >>> im = hs.load('image*.tif', stack=True)
-    >>> s = hs.load('TiFeNi_0*.rpl', stack=True).as_spectrum(0)
+    >>> s = hs.load('TiFeNi_0*.rpl', stack=True).as_signal1D(0)
     >>> dim = s.axes_manager.navigation_shape
     >>> #Rebin the image
     >>> im = im.rebin([dim[2], dim[0], dim[1]])
@@ -293,7 +293,7 @@ the "maximum spectrum" for which each channel is the maximum of all pixels.
 .. code-block:: python
 
     >>> imgSpec = hs.load('TiFeNi_0*.rpl', stack=True)
-    >>> specMax = imgSpec.max(-1).max(-1).max(-1).as_spectrum(0)
+    >>> specMax = imgSpec.max(-1).max(-1).max(-1).as_signal1D(0)
     >>> imgSpec.plot(navigator=specMax)
 
 
@@ -380,7 +380,7 @@ different slices of a multidimensional image (a *hyperimage*):
 
     >>> import scipy
     >>> image = hs.signals.Signal2D([scipy.misc.lena()]*6)
-    >>> angles = hs.signals.Signal(range(10,70,10))
+    >>> angles = hs.signals.BaseSignal(range(10,70,10))
     >>> angles.axes_manager.set_signal_dimension(0)
     >>> image.map(scipy.ndimage.rotate, angle=angles, reshape=False)
     >>> hs.plot.plot_images(image, tight_layout=True)
@@ -403,7 +403,7 @@ In this example, the axes labels and the ticks are also disabled with `axes_deco
 
     >>> import scipy
     >>> image = hs.signals.Signal2D([scipy.misc.lena()]*6)
-    >>> angles = hs.signals.Signal(range(10,70,10))
+    >>> angles = hs.signals.BaseSignal(range(10,70,10))
     >>> angles.axes_manager.set_signal_dimension(0)
     >>> image.map(scipy.ndimage.rotate, angle=angles, reshape=False)
     >>> hs.plot.plot_images(
@@ -433,7 +433,7 @@ This example also demonstrates how to wrap labels using `labelwrap` (for prevent
 
     >>> # load lena into 6 hyperimage
     >>> image1 = hs.signals.Signal2D([scipy.misc.lena()]*6)
-    >>> angles = hs.signals.Signal(range(10,70,10))
+    >>> angles = hs.signals.BaseSignal(range(10,70,10))
     >>> angles.axes_manager.set_signal_dimension(0)
     >>> image1.map(scipy.ndimage.rotate, angle=angles, reshape=False)
 
@@ -524,7 +524,7 @@ legended line, a spectrum can be toggled on and off.
      >>> s.axes_manager[0].offset = -10
      >>> s.axes_manager[0].scale = 0.1
      >>> m = s.create_model()
-     >>> g = components.Gaussian()
+     >>> g = hs.components1D.Gaussian()
      >>> m.append(g)
      >>> gaussians = []
      >>> labels = []
@@ -740,7 +740,7 @@ signals must have the same dimensions. To plot two spectra at the same time:
 .. code-block:: python
 
     >>> import scipy.misc
-    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_spectrum(0)[:,:3]
+    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_signal1D(0)[:,:3]
     >>> s2 = s1.deepcopy()*-1
     >>> hs.plot.plot_signals([s1, s2])
 
@@ -749,7 +749,7 @@ signals must have the same dimensions. To plot two spectra at the same time:
   :width:   500
 
   The :py:func:`~.drawing.utils.plot_signals` plots several signals with
-  optinal syncronised navigation.
+  optional synchronized navigation.
 
 The navigator can be specified by using the navigator argument, where the
 different options are "auto", None, "spectrum", "slider" or Signal.
@@ -760,7 +760,7 @@ To specify the navigator:
 .. code-block:: python
 
     >>> import scipy.misc
-    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_spectrum(0)[:,:3]
+    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_signal1D(0)[:,:3]
     >>> s2 = s1.deepcopy()*-1
     >>> hs.plot.plot_signals([s1, s2], navigator="slider")
 
@@ -778,7 +778,7 @@ For example:
 .. code-block:: python
 
     >>> import scipy.misc
-    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_spectrum(0)[:,:3]
+    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_signal1D(0)[:,:3]
     >>> s2 = s1.deepcopy()*-1
     >>> s3 = hs.signals.Signal1D(np.linspace(0,9,9).reshape([3,3]))
     >>> hs.plot.plot_signals([s1, s2], navigator_list=["slider", s3])
@@ -797,7 +797,7 @@ each plot:
 .. code-block:: python
 
     >>> import scipy.misc
-    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_spectrum(0)[:,:3]
+    >>> s1 = hs.signals.Signal1D(scipy.misc.face()).as_signal1D(0)[:,:3]
     >>> s2 = s1.deepcopy()*-1
     >>> hs.plot.plot_signals([s1, s2], sync=False, navigator_list=["slider", "slider"])
 
@@ -835,7 +835,7 @@ By providing an array of positions, the marker can also change position when nav
 
     >>> from skimage.feature import peak_local_max
     >>> import scipy.misc
-    >>> ims = hs.signals.Signal(scipy.misc.face()).as_image([0,1])
+    >>> ims = hs.signals.BaseSignal(scipy.misc.face()).as_signal2D([0,1])
     >>> index = array([peak_local_max(im.data, min_distance=100, num_peaks=4)
     >>>                for im in ims])
     >>> for i in range(4):
