@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Energy-Dispersive X-Rays Spectrometry (EDS) &mdash; HyperSpy 0.8.6+dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HyperSpy 0.8.6+dev documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Dielectric function tools" href="dielectric_function.html"/>
+        <link rel="prev" title="Electron Energy Loss Spectroscopy" href="eels.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.8.6+dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Energy-Dispersive X-Rays Spectrometry (EDS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spectrum-loading-and-parameters">Spectrum loading and parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#loading">Loading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#microscope-and-detector-parameters">Microscope and detector parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#energy-axis">Energy axis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#related-method">Related method</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#describing-the-sample">Describing the sample</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#elements">Elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#x-ray-lines">X-ray lines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#element-database">Element database</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting">Plotting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot-x-ray-lines">Plot X-ray lines</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#get-lines-intensity">Get lines intensity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#background-subtraction">Background subtraction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantification">Quantification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">HyperSpy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+      
+    <li>Energy-Dispersive X-Rays Spectrometry (EDS)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_guide/eds.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="energy-dispersive-x-rays-spectrometry-eds">
+<span id="eds-label"></span><h1>Energy-Dispersive X-Rays Spectrometry (EDS)<a class="headerlink" href="#energy-dispersive-x-rays-spectrometry-eds" title="Permalink to this headline">¶</a></h1>
+<p>The methods described here are specific to the following signals:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_tem.EDSTEMSpectrum" title="hyperspy._signals.eds_tem.EDSTEMSpectrum"><code class="xref py py-class docutils literal"><span class="pre">EDSTEMSpectrum</span></code></a></li>
+<li><a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_sem.EDSSEMSpectrum" title="hyperspy._signals.eds_sem.EDSSEMSpectrum"><code class="xref py py-class docutils literal"><span class="pre">EDSSEMSpectrum</span></code></a></li>
+</ul>
+<p>This chapter described step by step the analysis of an EDS
+spectrum (SEM or TEM).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See also the <a class="reference external" href="http://nbviewer.ipython.org/github/hyperspy/hyperspy-demos/blob/master/electron_microscopy/EDS/">EDS tutorials</a> .</p>
+</div>
+<div class="section" id="spectrum-loading-and-parameters">
+<h2>Spectrum loading and parameters<a class="headerlink" href="#spectrum-loading-and-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Data files used in the following examples can be downloaded using</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://cook.msm.cam.ac.uk//~hyperspy//EDS_tutorial//&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;Ni_superalloy_1pix.msa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ni_superalloy_1pix.msa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;Ni_superalloy_010.rpl&#39;</span><span class="p">,</span> <span class="s1">&#39;Ni_superalloy_010.rpl&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;Ni_superalloy_010.raw&#39;</span><span class="p">,</span> <span class="s1">&#39;Ni_superalloy_010.raw&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The sample and the data used in this chapter are described in
+P. Burdet, <cite>et al.</cite>, Acta Materialia, 61, p. 3090-3098 (2013) (see
+<a class="reference external" href="http://infoscience.epfl.ch/record/185861/">abstract</a>).</p>
+</div>
+<div class="section" id="loading">
+<h3>Loading<a class="headerlink" href="#loading" title="Permalink to this headline">¶</a></h3>
+<p>All data are loaded with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> function, as described in details in
+<a class="reference internal" href="io.html#loading-files"><span>Loading files</span></a>. HyperSpy is able to import different formats,
+among them &#8221;.msa&#8221; and &#8221;.rpl&#8221; (the raw format of Oxford Instrument and Brucker).</p>
+<p>Here is three example for files exported by Oxford Instrument software (INCA).
+For a single spectrum:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: Signal1D, dimensions: (|1024)&gt;</span>
+</pre></div>
+</div>
+<p>For a spectrum image (The .rpl file is recorded as an image in this example,
+The method <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.as_signal1D" title="hyperspy.signal.BaseSignal.as_signal1D"><code class="xref py py-meth docutils literal"><span class="pre">as_signal1D()</span></code></a> set it back to a one
+dimensional signal with the energy axis in first position):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (256, 224|1024)&gt;</span>
+</pre></div>
+</div>
+<p>For a stack of spectrum images (The &#8220;*&#8221; replace all chains of string, in this
+example 01, 02, 03,...):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_0*.rpl&quot;</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span> <span class="o">=</span> <span class="n">si4D</span><span class="o">.</span><span class="n">as_signal1D</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si4D</span>
+<span class="go">&lt;Signal1D, title:, dimensions: (256, 224, 2|1024)&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="microscope-and-detector-parameters">
+<span id="eds-calibration-label"></span><h3>Microscope and detector parameters<a class="headerlink" href="#microscope-and-detector-parameters" title="Permalink to this headline">¶</a></h3>
+<p>First, the type of microscope (&#8220;EDS_TEM&#8221; or &#8220;EDS_SEM&#8221;) needs to be set with the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.set_signal_type" title="hyperspy.signal.BaseSignal.set_signal_type"><code class="xref py py-meth docutils literal"><span class="pre">set_signal_type()</span></code></a> method. The class of the
+object is thus assigned, and specific EDS methods become available.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;EDSSEMSpectrum, title: Spectrum, dimensions: (|1024)&gt;</span>
+</pre></div>
+</div>
+<p>or as an argument of the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;EDSSEMSpectrum, title: Spectrum, dimensions: (|1024)&gt;</span>
+</pre></div>
+</div>
+<p>The main values for the microscope parameters are
+automatically imported from the file, if existing. The microscope and
+detector parameters are stored in stored in the
+<code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code>
+attribute (see <a class="reference internal" href="metadata_structure.html#metadata-structure"><span>Metadata structure</span></a>). These parameters can be displayed
+as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">SEM</span>
+<span class="go">├── Detector</span>
+<span class="go">│   └── EDS</span>
+<span class="go">│       ├── azimuth_angle = 63.0</span>
+<span class="go">│       ├── elevation_angle = 35.0</span>
+<span class="go">│       ├── energy_resolution_MnKa = 130.0</span>
+<span class="go">│       ├── live_time = 0.006855</span>
+<span class="go">│       └── real_time = 0.0</span>
+<span class="go">├── beam_current = 0.0</span>
+<span class="go">├── beam_energy = 15.0</span>
+<span class="go">└── tilt_stage = 38.0</span>
+</pre></div>
+</div>
+<p>These parameters can be set directly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Acquisition_instrument</span><span class="o">.</span><span class="n">SEM</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">30</span>
+</pre></div>
+</div>
+<p>or with the
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.set_microscope_parameters" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.set_microscope_parameters"><code class="xref py py-meth docutils literal"><span class="pre">set_microscope_parameters()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or raising the gui:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/EDS_microscope_parameters_gui.png"><img alt="../_images/EDS_microscope_parameters_gui.png" src="../_images/EDS_microscope_parameters_gui.png" style="width: 350px;" /></a>
+<p class="caption"><span class="caption-text">EDS microscope parameters preferences window.</span></p>
+</div>
+<p>If the microscope and detector parameters are not written in the original file, some
+of them are set by default. The default values can be changed in the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.defaults_parser.Preferences" title="hyperspy.defaults_parser.Preferences"><code class="xref py py-class docutils literal"><span class="pre">Preferences</span></code></a> class (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>preferences</span></a>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">preferences</span><span class="o">.</span><span class="n">EDS</span><span class="o">.</span><span class="n">eds_detector_elevation</span> <span class="o">=</span> <span class="mi">37</span>
+</pre></div>
+</div>
+<p>or raising the gui:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">preferences</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/EDS_preferences_gui.png"><img alt="../_images/EDS_preferences_gui.png" src="../_images/EDS_preferences_gui.png" style="width: 400px;" /></a>
+<p class="caption"><span class="caption-text">EDS preferences window.</span></p>
+</div>
+</div>
+<div class="section" id="energy-axis">
+<h3>Energy axis<a class="headerlink" href="#energy-axis" title="Permalink to this headline">¶</a></h3>
+<p>The main values for the energy axis are automatically imported from the file, if existing. The properties of the energy axis can be set manually with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal"><span class="pre">AxesManager</span></code></a>.
+(see <a class="reference internal" href="getting_started.html#setting-axis-properties"><span>Axis properties</span></a> for more info):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;keV&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>or with the <a class="reference internal" href="../api/hyperspy.html#hyperspy.axes.AxesManager.gui" title="hyperspy.axes.AxesManager.gui"><code class="xref py py-meth docutils literal"><span class="pre">gui()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/EDS_energy_axis_gui.png"><img alt="../_images/EDS_energy_axis_gui.png" src="../_images/EDS_energy_axis_gui.png" style="width: 280px;" /></a>
+<p class="caption"><span class="caption-text">Axis properties window.</span></p>
+</div>
+</div>
+<div class="section" id="related-method">
+<h3>Related method<a class="headerlink" href="#related-method" title="Permalink to this headline">¶</a></h3>
+<p>All the above parameters can be copy from one spectrum (for example exported from one pixel) to another one
+with the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.get_calibration_from" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.get_calibration_from"><code class="xref py py-meth docutils literal"><span class="pre">get_calibration_from()</span></code></a>
+method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># s1pixel contains all the parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s1pixel</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># si contains no parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_010.rpl&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_spectrum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Copy all the properties of s1pixel to si</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si</span><span class="o">.</span><span class="n">get_calibration_from</span><span class="p">(</span><span class="n">s1pixel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="describing-the-sample">
+<span id="eds-sample-label"></span><h2>Describing the sample<a class="headerlink" href="#describing-the-sample" title="Permalink to this headline">¶</a></h2>
+<p>The description of the sample is stored in metadata.Sample (in the
+<code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> attribute). It can be displayed as
+follow:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span><span class="o">.</span><span class="n">thickness</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
+<span class="go">├── description = FePt bimetallic nanoparticles</span>
+<span class="go">├── elements = [&#39;Fe&#39;, &#39;Pt&#39;]</span>
+<span class="go">├── thickness = 100</span>
+<span class="go">└── xray_lines = [&#39;Fe_Ka&#39;, &#39;Pt_La&#39;]</span>
+</pre></div>
+</div>
+<p>The following methods are either called &#8220;set&#8221; or &#8220;add&#8221;. When &#8220;set&#8221;
+methods erases all previously defined values, the &#8220;add&#8221; methods add the
+values to the previously defined values.</p>
+<div class="section" id="elements">
+<h3>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h3>
+<p>The elements present in the sample can be defined with the
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.set_elements" title="hyperspy._signals.eds.EDSSpectrum.set_elements"><code class="xref py py-meth docutils literal"><span class="pre">set_elements()</span></code></a>  and
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.add_elements" title="hyperspy._signals.eds.EDSSpectrum.add_elements"><code class="xref py py-meth docutils literal"><span class="pre">add_elements()</span></code></a> methods.  Only element
+abbreviations are accepted:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">([</span><span class="s1">&#39;Cu&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
+<span class="go">└── elements = [&#39;Cu&#39;, &#39;Fe&#39;, &#39;Pt&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="x-ray-lines">
+<h3>X-ray lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this headline">¶</a></h3>
+<p>Similarly, the X-ray lines can be defined with the
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.set_lines" title="hyperspy._signals.eds.EDSSpectrum.set_lines"><code class="xref py py-meth docutils literal"><span class="pre">set_lines()</span></code></a> and
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.add_lines" title="hyperspy._signals.eds.EDSSpectrum.add_lines"><code class="xref py py-meth docutils literal"><span class="pre">add_lines()</span></code></a> methods. The corresponding
+elements will be added automatically. Several lines per elements can be defined.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s1">&#39;Fe_Ka&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt_La&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">([</span><span class="s1">&#39;Fe_La&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
+<span class="go">├── elements = [&#39;Fe&#39;, &#39;Pt&#39;]</span>
+<span class="go">└── xray_lines = [&#39;Fe_Ka&#39;, &#39;Fe_La&#39;, &#39;Pt_La&#39;]</span>
+</pre></div>
+</div>
+<p>These methods can be used automatically, if the beam energy is set.
+The most excited X-ray line is selected per element (highest energy above an
+overvoltage of 2 (&lt; beam energy / 2)).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu&#39;</span><span class="p">,</span> <span class="s1">&#39;Mn&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
+<span class="go">├── elements = [&#39;Al&#39;, &#39;Cu&#39;, &#39;Mn&#39;]</span>
+<span class="go">└── xray_lines = [&#39;Al_Ka&#39;, &#39;Cu_Ka&#39;, &#39;Mn_Ka&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span>
+<span class="go">├── elements = [&#39;Al&#39;, &#39;Cu&#39;, &#39;Mn&#39;]</span>
+<span class="go">└── xray_lines = [&#39;Al_Ka&#39;, &#39;Cu_La&#39;, &#39;Mn_La&#39;]</span>
+</pre></div>
+</div>
+<p>A warning is raised, if setting a X-ray lines higher than the beam energy.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s1">&#39;Mn&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">([</span><span class="s1">&#39;Mn_Ka&#39;</span><span class="p">])</span>
+<span class="go">Warning: Mn Ka is above the data energy range.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="element-database">
+<h3>Element database<a class="headerlink" href="#element-database" title="Permalink to this headline">¶</a></h3>
+<p>An elemental database is available with the energy of the X-ray lines.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">Fe</span><span class="o">.</span><span class="n">General_properties</span>
+<span class="go">├── Z = 26</span>
+<span class="go">├── atomic_weight = 55.845</span>
+<span class="go">└── name = iron</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">Fe</span><span class="o">.</span><span class="n">Physical_properties</span>
+<span class="go">└── density (g/cm^3) = 7.874</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">Fe</span><span class="o">.</span><span class="n">Atomic_properties</span><span class="o">.</span><span class="n">Xray_lines</span>
+<span class="go">├── Ka</span>
+<span class="go">│   ├── energy (keV) = 6.404</span>
+<span class="go">│   └── weight = 1.0</span>
+<span class="go">├── Kb</span>
+<span class="go">│   ├── energy (keV) = 7.0568</span>
+<span class="go">│   └── weight = 0.1272</span>
+<span class="go">├── La</span>
+<span class="go">│   ├── energy (keV) = 0.705</span>
+<span class="go">│   └── weight = 1.0</span>
+<span class="go">├── Lb3</span>
+<span class="go">│   ├── energy (keV) = 0.792</span>
+<span class="go">│   └── weight = 0.02448</span>
+<span class="go">├── Ll</span>
+<span class="go">│   ├── energy (keV) = 0.615</span>
+<span class="go">│   └── weight = 0.3086</span>
+<span class="go">└── Ln</span>
+<span class="go">    ├── energy (keV) = 0.62799</span>
+<span class="go">    └── weight = 0.12525</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plotting">
+<span id="eds-plot-label"></span><h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h2>
+<p>As decribed in <a class="reference internal" href="visualisation.html#visualization-label"><span>visualisation</span></a>, the
+<code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code> method can be used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/EDS_plot_spectrum.png"><img alt="../_images/EDS_plot_spectrum.png" src="../_images/EDS_plot_spectrum.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">EDS spectrum.</span></p>
+</div>
+<p>An example of plotting EDS data of higher dimension (3D SEM-EDS) is given in
+<span class="xref std std-ref">visualisation multi-dimension</span>.</p>
+<div class="section" id="plot-x-ray-lines">
+<span id="eds-plot-markers-label"></span><h3>Plot X-ray lines<a class="headerlink" href="#plot-x-ray-lines" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p>X-ray lines can be labbeled on a plot with
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code></a>. The lines are
+either given, either retrieved from &#8220;metadata.Sample.Xray_lines&#8221;,
+or selected with the same method as
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.add_lines" title="hyperspy._signals.eds.EDSSpectrum.add_lines"><code class="xref py py-meth docutils literal"><span class="pre">add_lines()</span></code></a> using the
+elements in &#8220;metadata.Sample.elements&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">([</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span><span class="s1">&#39;Cu&#39;</span><span class="p">,</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="s1">&#39;Zr&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/EDS_plot_Xray_default.png"><img alt="../_images/EDS_plot_Xray_default.png" src="../_images/EDS_plot_Xray_default.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">EDS spectrum plot with line markers.</span></p>
+</div>
+<p>Selecting certain type of lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">([</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span><span class="s1">&#39;Cu&#39;</span><span class="p">,</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="s1">&#39;Zr&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">only_lines</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Ka&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../_images/EDS_plot_Xray_a.png"><img alt="../_images/EDS_plot_Xray_a.png" src="../_images/EDS_plot_Xray_a.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">EDS spectrum plot with a selection of line markers.</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="get-lines-intensity">
+<span id="id1"></span><h2>Get lines intensity<a class="headerlink" href="#get-lines-intensity" title="Permalink to this headline">¶</a></h2>
+<p>Data files used in the following examples can be downloaded using</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://cook.msm.cam.ac.uk//~hyperspy//EDS_tutorial//&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;core_shell.hdf5&#39;</span><span class="p">,</span> <span class="s1">&#39;core_shell.hdf5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The sample and the data used in this section are described in
+D. Roussow et al., Nano Lett, 10.1021/acs.nanolett.5b00449 (2015).</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p>The width of integration is defined by extending the energy resolution of
+Mn Ka to the peak energy (&#8220;energy_resolution_MnKa&#8221; in metadata).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;core_shell.hdf5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">([</span><span class="s1">&#39;Fe_Ka&#39;</span><span class="p">],</span> <span class="n">plot_result</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/EDS_get_lines_intensity.png"><img alt="../_images/EDS_get_lines_intensity.png" src="../_images/EDS_get_lines_intensity.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">Iron map as computed and displayed by <code class="docutils literal"><span class="pre">get_lines_intensity</span></code>.</span></p>
+</div>
+<p>The X-ray lines defined in &#8220;metadata.Sample.Xray_lines&#8221; (see above)
+are used by default.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;core_shell.hdf5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_lines</span><span class="p">([</span><span class="s1">&#39;Fe_Ka&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt_La&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
+<span class="go">[&lt;Signal2D, title: X-ray line intensity of Core shell: Fe_Ka at 6.40 keV, dimensions: (|64, 64)&gt;,</span>
+<span class="go">&lt;Signal2D, title: X-ray line intensity of Core shell: Pt_La at 9.44 keV, dimensions: (|64, 64)&gt;]</span>
+</pre></div>
+</div>
+<p>The windows of integration can be visualised using <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code></a> method</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()[</span><span class="mf">5.</span><span class="p">:</span><span class="mf">13.</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">integration_windows</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/EDS_integration_windows.png"><img alt="../_images/EDS_integration_windows.png" src="../_images/EDS_integration_windows.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">EDS spectrum with integration windows markers.</span></p>
+</div>
+<div class="section" id="background-subtraction">
+<span id="eds-background-subtraction-label"></span><h3>Background subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p>The background can be subtracted from the X-ray intensities with the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.get_lines_intensity" title="hyperspy._signals.eds.EDSSpectrum.get_lines_intensity"><code class="xref py py-meth docutils literal"><span class="pre">get_lines_intensity()</span></code></a> method. The background value is obtained by averaging the intensity in two windows on each side of the X-ray line. The position of the windows can be estimated with the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.estimate_background_windows" title="hyperspy._signals.eds.EDSSpectrum.estimate_background_windows"><code class="xref py py-meth docutils literal"><span class="pre">estimate_background_windows()</span></code></a> method and can be plotted with the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code></a> method as follow. The integration windows are plotted with dashed lines.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()[</span><span class="mf">5.</span><span class="p">:</span><span class="mf">13.</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bw</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_background_windows</span><span class="p">(</span><span class="n">line_width</span><span class="o">=</span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">background_windows</span><span class="o">=</span><span class="n">bw</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">(</span><span class="n">background_windows</span><span class="o">=</span><span class="n">bw</span><span class="p">,</span> <span class="n">plot_result</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/EDS_background_subtraction.png"><img alt="../_images/EDS_background_subtraction.png" src="../_images/EDS_background_subtraction.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">EDS spectrum with background subtraction markers.</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="quantification">
+<span id="eds-quantification-label"></span><h2>Quantification<a class="headerlink" href="#quantification" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p>One TEM quantification method (Cliff-Lorimer) is implemented so far.</p>
+<p>Quantification can be applied from the intensities (background subtracted) with the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification"><code class="xref py py-meth docutils literal"><span class="pre">quantification()</span></code></a> method. The required k-factors can be usually found in the EDS manufacturer software.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kfactors</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.450226</span><span class="p">,</span> <span class="mf">5.075602</span><span class="p">]</span> <span class="c1">#For Fe Ka and Pt La</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bw</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_background_windows</span><span class="p">(</span><span class="n">line_width</span><span class="o">=</span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intensities</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">(</span><span class="n">background_windows</span><span class="o">=</span><span class="n">bw</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">weight_percent</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">quantification</span><span class="p">(</span><span class="n">intensities</span><span class="p">,</span> <span class="n">kfactors</span><span class="p">,</span> <span class="n">plot_result</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">Fe (Fe_Ka): Composition = 4.96 weight percent</span>
+<span class="go">Pt (Pt_La): Composition = 95.04 weight percent</span>
+</pre></div>
+</div>
+<p>The obtained composition is in weight percent. It can be changed transformed into atomic percent either with the option <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification"><code class="xref py py-meth docutils literal"><span class="pre">quantification()</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># With s, intensities and kfactors from before</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">quantification</span><span class="p">(</span><span class="n">intensities</span><span class="p">,</span> <span class="n">kfactors</span><span class="p">,</span> <span class="n">plot_result</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                 <span class="n">composition_units</span><span class="o">=</span><span class="s1">&#39;atomic&#39;</span><span class="p">)</span>
+<span class="go">Fe (Fe_Ka): Composition = 15.41 atomic percent</span>
+<span class="go">Pt (Pt_La): Composition = 84.59 atomic percent</span>
+</pre></div>
+</div>
+<p>either with <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.material.weight_to_atomic" title="hyperspy.misc.material.weight_to_atomic"><code class="xref py py-func docutils literal"><span class="pre">weight_to_atomic()</span></code></a>. The reverse method is <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.material.atomic_to_weight" title="hyperspy.misc.material.atomic_to_weight"><code class="xref py py-func docutils literal"><span class="pre">atomic_to_weight()</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># With weight_percent from before</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atomic_percent</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">weight_to_atomic</span><span class="p">(</span><span class="n">weight_percent</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dielectric_function.html" class="btn btn-neutral float-right" title="Dielectric function tools" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="eels.html" class="btn btn-neutral" title="Electron Energy Loss Spectroscopy" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.8.6+dev',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
