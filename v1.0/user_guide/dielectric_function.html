@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Dielectric function tools &mdash; HyperSpy 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HyperSpy 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Loading and saving data" href="io.html"/>
+        <link rel="prev" title="Energy-Dispersive X-ray Spectrometry (EDS)" href="eds.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Dielectric function tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#number-of-effective-electrons">Number of effective electrons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compute-the-electron-energy-loss-signal">Compute the electron energy-loss signal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">HyperSpy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+      
+    <li>Dielectric function tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_guide/dielectric_function.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dielectric-function-tools">
+<h1>Dielectric function tools<a class="headerlink" href="#dielectric-function-tools" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code> class inherits from
+<code class="xref py py-class docutils literal"><span class="pre">ComplexSignal</span></code> and can thus access complex properties.
+To convert a <code class="xref py py-class docutils literal"><span class="pre">ComplexSignal</span></code> to a
+<code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code>, make sure that the signal dimension
+and signal type are properly set:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s1">&#39;DielectricFunction&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction" title="hyperspy._signals.dielectric_function.DielectricFunction"><code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code></a> is complex and therefore
+is a subclass of <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.complex_signal1d.ComplexSignal1D" title="hyperspy._signals.complex_signal1d.ComplexSignal1D"><code class="xref py py-class docutils literal"><span class="pre">ComplexSignal1D</span></code></a>.</p>
+<div class="section" id="number-of-effective-electrons">
+<h2>Number of effective electrons<a class="headerlink" href="#number-of-effective-electrons" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The Bethe f-sum rule gives rise to two definitions of the effective number (see
+<a class="reference internal" href="../api/hyperspy._signals.html#id4" id="id1">[Egerton2011]</a>):</p>
+<div class="math">
+<p><img src="../_images/math/48824fef1b709ae984071a5fb40f91e684bdb6e9.png" alt="n_{\mathrm{eff1}}\left(-\Im\left(\epsilon^{-1}\right)\right)=\frac{2\epsilon_{0}m_{0}}{\pi\hbar^{2}e^{2}n_{a}}\int_{0}^{E}E'\Im\left(\frac{-1}{\epsilon}\right)dE'
+
+n_{\mathrm{eff2}}\left(\epsilon_{2}\right)=\frac{2\epsilon_{0}m_{0}}{\pi\hbar^{2}e^{2}n_{a}}\int_{0}^{E}E'\epsilon_{2}\left(E'\right)dE'"/></p>
+</div><p>where <img class="math" src="../_images/math/04788fbc1317a7cbec182df7fd804abc676aa70e.png" alt="n_a"/> is the number of atoms (or molecules) per unit volume of the
+sample, <img class="math" src="../_images/math/734a1cffa7cefd99da87b4a1a7bd54061a57fece.png" alt="\epsilon_0"/> is the vacuum permittivity, <img class="math" src="../_images/math/dbb630b95e37c90143829f6ffc3410caa92b5463.png" alt="m_0"/> is the
+elecron mass and <img class="math" src="../_images/math/630e3a780577ea7921e81ee2ac5237dd1802ec8d.png" alt="e"/> is the electron charge.</p>
+<p>The
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction.get_number_of_effective_electrons" title="hyperspy._signals.dielectric_function.DielectricFunction.get_number_of_effective_electrons"><code class="xref py py-meth docutils literal"><span class="pre">get_number_of_effective_electrons()</span></code></a>
+method computes both.</p>
+</div>
+<div class="section" id="compute-the-electron-energy-loss-signal">
+<h2>Compute the electron energy-loss signal<a class="headerlink" href="#compute-the-electron-energy-loss-signal" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction.get_electron_energy_loss_spectrum" title="hyperspy._signals.dielectric_function.DielectricFunction.get_electron_energy_loss_spectrum"><code class="xref py py-meth docutils literal"><span class="pre">get_electron_energy_loss_spectrum()</span></code></a>
+&#8220;naively&#8221; computes the single-scattering electron-energy loss spectrum from the
+dielectric function given the zero-loss peak (or its integral) and the sample
+thickness using:</p>
+<div class="math">
+<p><img src="../_images/math/62d862d9fcab8016a18ae2313021d296fd7eb691.png" alt="S\left(E\right)=\frac{2I_{0}t}{\pi
+a_{0}m_{0}v^{2}}\ln\left[1+\left(\frac{\beta}{\theta(E)}\right)^{2}\right]\Im\left[\frac{-1}{\epsilon\left(E\right)}\right]"/></p>
+</div><p>where <img class="math" src="../_images/math/b384912b575da3b4822cf0dac6c0aa00b0a5d770.png" alt="I_0"/> is the zero-loss peak integral, <img class="math" src="../_images/math/ef9270877405055756d345facd044e4ab297f858.png" alt="t"/> the sample
+thickness, <img class="math" src="../_images/math/8ce03f78ed945f2ef3dac87c8799b55b393527e7.png" alt="\beta"/> the collection semi-angle and <img class="math" src="../_images/math/afbe940b036f13a25ca5c6909b0812d13ad8a954.png" alt="\theta(E)"/> the
+characteristic scattering angle.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="io.html" class="btn btn-neutral float-right" title="Loading and saving data" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="eds.html" class="btn btn-neutral" title="Energy-Dispersive X-ray Spectrometry (EDS)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Metadata structure &mdash; HyperSpy 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HyperSpy 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Bibliography" href="bibliography.html"/>
+        <link rel="prev" title="Events" href="events.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Metadata structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acquisition-instrument">Acquisition_instrument</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tem">TEM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sem">SEM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detector">Detector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sample">Sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signal">Signal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#noise-properties">Noise_properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#internal-parameters">_Internal_parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stacking-history">Stacking_history</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#folding">Folding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">HyperSpy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+      
+    <li>Metadata structure</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_guide/metadata_structure.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="metadata-structure">
+<span id="id1"></span><h1>Metadata structure<a class="headerlink" href="#metadata-structure" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> class stores metadata in the
+<code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> attribute that has a tree structure. By
+convention, the nodes labels are capitalized and the leaves are not
+capitalized.</p>
+<p>When a leaf contains a quantity that is not dimensionless, the units can be
+given in an extra leaf with the same label followed by the &#8220;_units&#8221; suffix.</p>
+<p>The metadata structure is represented in the following tree diagram. The
+default units are given in parentheses. Details about the leaves can be found
+in the following sections of this chapter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>├── Acquisition_instrument
+│   ├── SEM
+│   │   ├── Detector
+│   │   │   └── EDS
+│   │   │       ├── azimuth_angle (º)
+│   │   │       ├── elevation_angle (º)
+│   │   │       ├── energy_resolution_MnKa (eV)
+│   │   │       ├── live_time (s)
+│   │   │       └── real_time (s)
+│   │   ├── beam_current (nA)
+│   │   ├── beam_energy (keV)
+│   │   ├── convergence_angle (mrad)
+│   │   ├── microscope
+│   │   └── tilt_stage (º)
+│   └── TEM
+│       ├── Detector
+│       │   ├── EDS
+│       │   │   ├── azimuth_angle (º)
+│       │   │   ├── elevation_angle (º)
+│       │   │   ├── energy_resolution_MnKa (eV)
+│       │   │   ├── live_time (s)
+│       │   │   └── real_time (s)
+│       │   └── EELS
+│       │       ├── collection_angle (mrad)
+│       │       ├── dwell_time (s)
+│       │       ├── exposure (s)
+│       │       └── spectrometer
+│       ├── acquisition_mode
+│       ├── beam_current (nA)
+│       ├── beam_energy (keV)
+│       ├── convergence_angle (mrad)
+│       ├── microscope
+│       └── tilt_stage (º)
+├── General
+│   ├── date
+│   ├── original_filename
+│   ├── time
+│   └── title
+├── Sample
+│   ├── description
+│   ├── elements
+│   ├── thickness
+│   └── xray_lines
+└── Signal
+    ├── Noise_properties
+    │   ├── Variance_linear_model
+    │   │   ├── correlation_factor
+    │   │   ├── gain_factor
+    │   │   ├── gain_offset
+    │   │   └── parameters_estimation_method
+    │   └── variance
+    ├── binned
+    ├── signal_type
+    └── signal_origin
+</pre></div>
+</div>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>title</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">A title for the signal, e.g. &#8220;Sample overview&#8221;</p>
+</dd>
+<dt>original_filename</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">If the signal was loaded from a file this key stores the name of the
+original file.</p>
+</dd>
+<dt>time</dt>
+<dd><p class="first">type: datetime.time</p>
+<p class="last">The acquistion or creation time.</p>
+</dd>
+<dt>date</dt>
+<dd><p class="first">type: datetime.time</p>
+<p class="last">The acquistion or creation date.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="acquisition-instrument">
+<h2>Acquisition_instrument<a class="headerlink" href="#acquisition-instrument" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tem">
+<h3>TEM<a class="headerlink" href="#tem" title="Permalink to this headline">¶</a></h3>
+<p>Contain information relevant to transmission electron microscope signals.</p>
+<dl class="docutils">
+<dt>microscope</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The microscope model, e.g. VG 501</p>
+</dd>
+<dt>acquisition_mode</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Either &#8216;TEM&#8217; or &#8216;STEM&#8217;</p>
+</dd>
+<dt>convergence_angle</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The beam convergence semi-angle in mrad.</p>
+</dd>
+<dt>beam_energy</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The energy of the electron beam in keV</p>
+</dd>
+<dt>beam_current</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The beam current in nA.</p>
+</dd>
+<dt>dwell_time</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The dwell time in seconds. This is relevant for STEM acquisition</p>
+</dd>
+<dt>exposure</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+</dd>
+<dt>tilt_stage</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The tilt of the stage in degree.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="sem">
+<h3>SEM<a class="headerlink" href="#sem" title="Permalink to this headline">¶</a></h3>
+<p>Contain information relevant to scanning electron microscope signals.</p>
+<dl class="docutils">
+<dt>microscope</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The microscope model, e.g. VG 501</p>
+</dd>
+<dt>convergence_angle</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The beam convergence semi-angle in mrad.</p>
+</dd>
+<dt>beam_energy</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The energy of the electron beam in keV</p>
+</dd>
+<dt>beam_current</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The beam current in nA.</p>
+</dd>
+<dt>tilt_stage</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The tilt of the stage in degree.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="detector">
+<h3>Detector<a class="headerlink" href="#detector" title="Permalink to this headline">¶</a></h3>
+<p>All instruments can contain a &#8220;Detector&#8221; node with information about the
+detector used to acquire the signal. EDX and EELS detectors should follow the
+following structure:</p>
+<div class="section" id="eels">
+<h4>EELS<a class="headerlink" href="#eels" title="Permalink to this headline">¶</a></h4>
+<p>This node stores parameters relevant to electron energy loss spectroscopy
+signals.</p>
+<dl class="docutils">
+<dt>spectrometer</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The spectrometer model, e.g. Gatan 666</p>
+</dd>
+<dt>collection_angle</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The collection semi-angle in mrad.</p>
+</dd>
+<dt>dwell_time</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The dwell time in seconds. This is relevant for STEM acquisition</p>
+</dd>
+<dt>exposure</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="eds">
+<h4>EDS<a class="headerlink" href="#eds" title="Permalink to this headline">¶</a></h4>
+<p>This node stores parameters relevant to electron X-ray energy dispersive
+spectroscopy data.</p>
+<dl class="docutils">
+<dt>azimuth_angle</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The azimuth angle of the detector in degree. If the azimuth is zero,
+the detector is perpendicular to the tilt axis.</p>
+</dd>
+<dt>elevation_angle</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The elevation angle of the detector in degree. The detector is perpendicular
+to the surface with an angle of 90.</p>
+</dd>
+<dt>energy_resolution_MnKa</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The full width at half maximum (FWHM) of the manganese K alpha
+(Mn Ka) peak in eV. This value is used as a first approximation
+of the energy resolution of the detector.</p>
+</dd>
+<dt>real_time</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The time spent to record the spectrum in second.</p>
+</dd>
+<dt>live_time</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The time spent to record the spectrum in second, compensated for the
+dead time of the detector.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="sample">
+<h2>Sample<a class="headerlink" href="#sample" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>description</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">A brief description of the sample</p>
+</dd>
+<dt>elements</dt>
+<dd><p class="first">type: list</p>
+<p class="last">A list of the symbols of the elements composing the sample, e.g. [&#8216;B&#8217;, &#8216;N&#8217;]
+for a sample composed of Boron and Nitrogen.</p>
+</dd>
+<dt>xray_lines</dt>
+<dd><p class="first">type: list</p>
+<p class="last">A list of the symbols of the X-ray lines to be used for processing,
+e.g. [&#8216;Al_Ka&#8217;, &#8216;Ni_Lb&#8217;] for the K alpha line of Aluminum
+and the L beta line of Nickel.</p>
+</dd>
+<dt>thickness</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The thickness of the sample in m.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="signal">
+<h2>Signal<a class="headerlink" href="#signal" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>signal_type</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">A term that describes the signal type, e.g. EDS, PES... This information
+can be used by HyperSpy to load the file as a specific signal class and
+therefore the naming should be standarised. Currently HyperSpy provides
+special signal class for photoemission spectroscopy, electron energy
+loss spectroscopy and energy dispersive spectroscopy. The signal_type in these cases should be respectively
+PES, EELS and EDS_TEM (EDS_SEM).</p>
+</dd>
+<dt>signal_origin</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Describes the origin of the signal e.g. &#8216;simulation&#8217; or &#8216;experiment&#8217;.</p>
+</dd>
+<dt>record_by</dt>
+<dd><p class="first">type: Str
+.. deprecated:: 2.1 (HyperSpy v1.0)</p>
+<p class="last">One of &#8216;spectrum&#8217; or &#8216;image&#8217;. It describes how the data is stored in memory.
+If &#8216;spectrum&#8217; the spectral data is stored in the faster index.</p>
+</dd>
+</dl>
+<div class="section" id="noise-properties">
+<h3>Noise_properties<a class="headerlink" href="#noise-properties" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>variance</dt>
+<dd><p class="first">type: float or BaseSignal instance.</p>
+<p class="last">The variance of the data. It can be a float when the noise is Gaussian or a
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> instance if the noise is heteroscedastic, in which
+case it must have the same dimensions as <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal"><span class="pre">data</span></code></a>.</p>
+</dd>
+</dl>
+<div class="section" id="variance-linear-model">
+<h4>Variance_linear_model<a class="headerlink" href="#variance-linear-model" title="Permalink to this headline">¶</a></h4>
+<p>In some cases the variance can be calculated from the data using a simple linear
+model: <code class="docutils literal"><span class="pre">variance</span> <span class="pre">=</span> <span class="pre">(gain_factor</span> <span class="pre">*</span> <span class="pre">data</span> <span class="pre">+</span> <span class="pre">gain_offset)</span> <span class="pre">*</span> <span class="pre">correlation_factor</span></code>.</p>
+<dl class="docutils">
+<dt>gain_factor</dt>
+<dd>type: Float</dd>
+<dt>gain_offset</dt>
+<dd>type: Float</dd>
+<dt>correlation_factor</dt>
+<dd>type: Float</dd>
+<dt>parameters_estimation_method</dt>
+<dd>type: Str</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="internal-parameters">
+<h2>_Internal_parameters<a class="headerlink" href="#internal-parameters" title="Permalink to this headline">¶</a></h2>
+<p>This node is &#8220;private&#8221; and therefore is not displayed when printing the
+<code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> attribute. For example, an &#8220;energy&#8221; leaf
+should be accompanied by an &#8220;energy_units&#8221; leaf.</p>
+<div class="section" id="stacking-history">
+<h3>Stacking_history<a class="headerlink" href="#stacking-history" title="Permalink to this headline">¶</a></h3>
+<p>Generated when using <code class="xref py py-meth docutils literal"><span class="pre">stack()</span></code>. Used by
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.split" title="hyperspy.signal.BaseSignal.split"><code class="xref py py-meth docutils literal"><span class="pre">split()</span></code></a>, to retrieve the former list of signal.</p>
+<dl class="docutils">
+<dt>step_sizes</dt>
+<dd><p class="first">type: list of int</p>
+<p class="last">Step sizes used that can be used in split.</p>
+</dd>
+<dt>axis</dt>
+<dd><blockquote class="first">
+<div>type: int</div></blockquote>
+<p class="last">The axis index in axes manager on which the dataset were stacked.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="folding">
+<h3>Folding<a class="headerlink" href="#folding" title="Permalink to this headline">¶</a></h3>
+<p>Constains parameters that related to the folding/unfolding of signals.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="events.html" class="btn btn-neutral" title="Events" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
