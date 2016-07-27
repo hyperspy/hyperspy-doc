@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy._signals package &mdash; HyperSpy 1.0 documentation</title>
+  <title>hyperspy._signals package &mdash; HyperSpy 1.0.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.0 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.0.1 documentation" href="../index.html"/>
         <link rel="up" title="hyperspy package" href="hyperspy.html"/>
         <link rel="next" title="hyperspy.datasets package" href="hyperspy.datasets.html"/>
         <link rel="prev" title="hyperspy._components package" href="hyperspy._components.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                1.0
+                1.0.1
               </div>
             
           
@@ -326,7 +326,7 @@ complex dtypes are allowed. If real valued properties are required use <cite>rea
 
 <dl class="method">
 <dt id="hyperspy._signals.complex_signal.ComplexSignal.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>navigator='auto'</em>, <em>axes_manager=None</em>, <em>representation='cartesian'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.complex_signal.ComplexSignal.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>navigator='auto'</em>, <em>axes_manager=None</em>, <em>representation='cartesian'</em>, <em>same_axes=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.complex_signal.ComplexSignal.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the signal at the current coordinates.</p>
 <p>For multidimensional datasets an optional figure,
 the &#8220;navigator&#8221;, with a cursor to navigate that data is
@@ -374,12 +374,18 @@ effect and is always &#8220;slider&#8221;.</li>
 <li><strong>axes_manager</strong> (<em>{None, axes_manager}</em>) &#8211; If None <cite>axes_manager</cite> is used.</li>
 <li><strong>representation</strong> (<em>{'cartesian' or 'polar'}</em>) &#8211; Determines if the real and imaginary part of the complex data is plotted (&#8216;cartesian&#8217;,
 default), or if the amplitude and phase should be used (&#8216;polar&#8217;).</li>
-<li><strong>optional</strong> (<em>**kwargs,</em>) &#8211; Additional key word arguments passed to matplotlib.imshow()</li>
+<li><strong>same_axes</strong> (<em>bool, default True</em>) &#8211; If True (default) plot the real and
+imaginary parts (or amplitude and phase) in the same figure if
+the signal is one-dimensional.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="docutils">
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs, optional</dt>
+<dd>Additional key word arguments passed to matplotlib.imshow()</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -470,7 +476,7 @@ the axis with the according scale taken into account. Both are available via the
 
 <dl class="method">
 <dt id="hyperspy._signals.complex_signal2d.ComplexSignal2D.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>colorbar=True</em>, <em>scalebar=True</em>, <em>scalebar_color='white'</em>, <em>axes_ticks=None</em>, <em>auto_contrast=True</em>, <em>saturated_pixels=0</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>no_nans=False</em>, <em>centre_colormap='auto'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.complex_signal2d.ComplexSignal2D.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>colorbar=True</em>, <em>scalebar=True</em>, <em>scalebar_color='white'</em>, <em>axes_ticks=None</em>, <em>saturated_pixels=0</em>, <em>vmin=None</em>, <em>vmax=None</em>, <em>no_nans=False</em>, <em>centre_colormap='auto'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.complex_signal2d.ComplexSignal2D.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the signal at the current coordinates.</p>
 <p>For multidimensional datasets an optional figure,
 the &#8220;navigator&#8221;, with a cursor to navigate that data is
@@ -526,21 +532,25 @@ are never plotted.</li>
 <li><strong>saturated_pixels</strong> (<em>scalar</em>) &#8211; The percentage of pixels that are left out of the bounds.
 For example, the low and high bounds of a value of 1 are the 0.5%
 and 99.5% percentiles. It must be in the [0, 100] range.</li>
-<li><strong>vmax</strong> (<em>vmin,</em>) &#8211; <cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data. If at
-least one of them is given <cite>auto_contrast</cite> is set to False and any
-missing values are calculated automatically.</li>
+<li><strong>vmax</strong> (<em>vmin,</em>) &#8211; <cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data.</li>
 <li><strong>no_nans</strong> (<em>bool, optional</em>) &#8211; If True, set nans to zero for plotting.</li>
 <li><strong>centre_colormap</strong> (<em>{&quot;auto&quot;, True, False}</em>) &#8211; If True the centre of the color scheme is set to zero. This is
 specially useful when using diverging color schemes. If &#8220;auto&#8221;
 (default), diverging color schemes are automatically centred.</li>
 <li><strong>representation</strong> (<em>{'cartesian' or 'polar'}</em>) &#8211; Determines if the real and imaginary part of the complex data is plotted (&#8216;cartesian&#8217;,
 default), or if the amplitude and phase should be used (&#8216;polar&#8217;).</li>
-<li><strong>optional</strong> (<em>**kwargs,</em>) &#8211; Additional key word arguments passed to matplotlib.imshow()</li>
+<li><strong>same_axes</strong> (<em>bool, default True</em>) &#8211; If True (default) plot the real and
+imaginary parts (or amplitude and phase) in the same figure if
+the signal is one-dimensional.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="docutils">
+<dt><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs, optional</dt>
+<dd>Additional key word arguments passed to matplotlib.imshow()</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -564,7 +574,7 @@ default), or if the amplitude and phase should be used (&#8216;polar&#8217;).</l
 <dt>Compute the number of effective electrons using the Bethe f-sum</dt>
 <dd><p class="first">rule.</p>
 <p class="last">The Bethe f-sum rule gives rise to two definitions of the effective
-number (see <a class="reference internal" href="#id4" id="id1">[Egerton2011]</a>):
+number (see <a class="reference internal" href="#id8" id="id5">[Egerton2011]</a>):
 $n_{mathrm{eff}}left(-Imleft(epsilon^{-1}</p>
 </dd>
 </dl>
@@ -1187,7 +1197,7 @@ software</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ref</strong> (<a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal" title="hyperspy.tests.signal"><em>signal</em></a>) &#8211; The reference contains the calibration in its
+<li><strong>ref</strong> (<a class="reference internal" href="hyperspy.models.html#hyperspy.models.model2d.Model2D.signal" title="hyperspy.models.model2d.Model2D.signal"><em>signal</em></a>) &#8211; The reference contains the calibration in its
 metadata</li>
 <li><strong>nb_pix</strong> (<em>int</em>) &#8211; The live time (real time corrected from the &#8220;dead time&#8221;)
 is divided by the number of pixel (spectrums), giving an
@@ -1347,7 +1357,7 @@ software</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ref</strong> (<a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal" title="hyperspy.tests.signal"><em>signal</em></a>) &#8211; The reference contains the calibration in its
+<li><strong>ref</strong> (<a class="reference internal" href="hyperspy.models.html#hyperspy.models.model2d.Model2D.signal" title="hyperspy.models.model2d.Model2D.signal"><em>signal</em></a>) &#8211; The reference contains the calibration in its
 metadata</li>
 <li><strong>nb_pix</strong> (<em>int</em>) &#8211; The live time (real time corrected from the &#8220;dead time&#8221;)
 is divided by the number of pixel (spectrums), giving an
@@ -1506,7 +1516,7 @@ pixel is considered as vacuum.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>mask</strong> &#8211; The mask of the region</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hyperspy.tests.signal.html#module-hyperspy.tests.signal" title="hyperspy.tests.signal">signal</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hyperspy.models.html#hyperspy.models.model2d.Model2D.signal" title="hyperspy.models.model2d.Model2D.signal">signal</a></td>
 </tr>
 </tbody>
 </table>
@@ -1905,7 +1915,7 @@ energy limit of the SI will be incluided</td>
 <dd><p>Calculate the complex
 dielectric function from a single scattering distribution (SSD) using
 the Kramers-Kronig relations.</p>
-<p>It uses the FFT method as in <a class="reference internal" href="#id4" id="id2">[Egerton2011]</a>.  The SSD is an
+<p>It uses the FFT method as in <a class="reference internal" href="#id8" id="id6">[Egerton2011]</a>.  The SSD is an
 EELSSpectrum instance containing SSD low-loss EELS with no zero-loss
 peak. The internal loop is devised to approximately subtract the
 surface plasmon contribution supposing an unoxidized planar surface and
@@ -1987,7 +1997,7 @@ metadata.</li>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>This method is based in Egerton&#8217;s Matlab code <a class="reference internal" href="#id4" id="id3">[Egerton2011]</a> with some
+<p>This method is based in Egerton&#8217;s Matlab code <a class="reference internal" href="#id8" id="id7">[Egerton2011]</a> with some
 minor differences:</p>
 <ul class="simple">
 <li>The integrals are performed using the simpsom rule instead of using
@@ -1995,7 +2005,7 @@ a summation.</li>
 <li>The wrap-around problem when computing the ffts is workarounded by
 padding the signal instead of substracting the reflected tail.</li>
 </ul>
-<table class="docutils citation" frame="void" id="id4" rules="none">
+<table class="docutils citation" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[Egerton2011]</td><td>Ray Egerton, &#8220;Electron Energy-Loss
@@ -2820,10 +2830,10 @@ interpolation.</li>
 </table>
 <p class="rubric">Notes</p>
 <p>The statistical analysis approach to the translation estimation
-when using <a href="#id5"><span class="problematic" id="id6">`</span></a>reference`=&#8217;stat&#8217; roughly follows <a href="#id15"><span class="problematic" id="id16"><span id="id7"></span>[1]_</span></a> . If you use
+when using <a href="#id9"><span class="problematic" id="id10">`</span></a>reference`=&#8217;stat&#8217; roughly follows <a href="#id19"><span class="problematic" id="id20"><span id="id11"></span>[1]_</span></a> . If you use
 it please cite their article.</p>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>Schaffer, Bernhard, Werner Grogger, and Gerald</td></tr>
@@ -2891,7 +2901,7 @@ value lower than the given value are not used to compute
 the estimated shifts. If &#8216;auto&#8217; the threshold is calculated
 automatically as the minimum maximum correlation value
 of the automatically selected reference image.</li>
-<li><strong>chunk_size</strong> (<em>{None, int}</em>) &#8211; If int and <a href="#id9"><span class="problematic" id="id10">`</span></a>reference`==&#8217;stat&#8217; the number of images used
+<li><strong>chunk_size</strong> (<em>{None, int}</em>) &#8211; If int and <a href="#id13"><span class="problematic" id="id14">`</span></a>reference`==&#8217;stat&#8217; the number of images used
 as reference are limited to the given value.</li>
 <li><strong>roi</strong> (<em>tuple of ints or floats (left, right, top bottom)</em>) &#8211; Define the region of interest. If int(float) the position
 is given axis index(value).</li>
@@ -2917,10 +2927,10 @@ performed.</li>
 </table>
 <p class="rubric">Notes</p>
 <p>The statistical analysis approach to the translation estimation
-when using <a href="#id11"><span class="problematic" id="id12">`</span></a>reference`=&#8217;stat&#8217; roughly follows <a href="#id17"><span class="problematic" id="id18"><span id="id13"></span>[1]_</span></a> . If you use
+when using <a href="#id15"><span class="problematic" id="id16">`</span></a>reference`=&#8217;stat&#8217; roughly follows <a href="#id21"><span class="problematic" id="id22"><span id="id17"></span>[1]_</span></a> . If you use
 it please cite their article.</p>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
+<table class="docutils footnote" frame="void" id="id18" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>Schaffer, Bernhard, Werner Grogger, and Gerald</td></tr>
@@ -2989,9 +2999,7 @@ are never plotted.</li>
 <li><strong>saturated_pixels</strong> (<em>scalar</em>) &#8211; The percentage of pixels that are left out of the bounds.
 For example, the low and high bounds of a value of 1 are the 0.5%
 and 99.5% percentiles. It must be in the [0, 100] range.</li>
-<li><strong>vmax</strong> (<em>vmin,</em>) &#8211; <cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data. If at
-least one of them is given <cite>auto_contrast</cite> is set to False and any
-missing values are calculated automatically.</li>
+<li><strong>vmax</strong> (<em>vmin,</em>) &#8211; <cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data.</li>
 <li><strong>no_nans</strong> (<em>bool, optional</em>) &#8211; If True, set nans to zero for plotting.</li>
 <li><strong>centre_colormap</strong> (<em>{&quot;auto&quot;, True, False}</em>) &#8211; If True the centre of the color scheme is set to zero. This is
 specially useful when using diverging color schemes. If &#8220;auto&#8221;
@@ -3143,7 +3151,7 @@ excluding its diagonal</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0',
+            VERSION:'1.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
