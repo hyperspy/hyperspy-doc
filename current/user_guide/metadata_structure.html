@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Metadata structure &mdash; HyperSpy 1.1 documentation</title>
+  <title>Metadata structure &mdash; HyperSpy 1.1.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.1.1 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Bibliography" href="bibliography.html"/>
         <link rel="prev" title="Events" href="events.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                1.1
+                1.1.1
               </div>
             
           
@@ -215,6 +215,7 @@ in the following sections of this chapter.</p>
 │   │   ├── beam_current (nA)
 │   │   ├── beam_energy (keV)
 │   │   ├── convergence_angle (mrad)
+│       ├── magnification
 │   │   ├── microscope
 │   │   └── tilt_stage (º)
 │   └── TEM
@@ -226,19 +227,26 @@ in the following sections of this chapter.</p>
 │       │   │   ├── live_time (s)
 │       │   │   └── real_time (s)
 │       │   └── EELS
+│       │       ├── aperture (mm)
 │       │       ├── collection_angle (mrad)
 │       │       ├── dwell_time (s)
 │       │       ├── exposure (s)
+│       │       ├── frame_number
 │       │       └── spectrometer
 │       ├── acquisition_mode
 │       ├── beam_current (nA)
 │       ├── beam_energy (keV)
+│       ├── camera_length (mm)
 │       ├── convergence_angle (mrad)
+│       ├── magnification
 │       ├── microscope
 │       └── tilt_stage (º)
 ├── General
+│   ├── authors
 │   ├── date
+│   ├── doi
 │   ├── original_filename
+│   ├── notes
 │   ├── time
 │   └── title
 ├── Sample
@@ -255,6 +263,7 @@ in the following sections of this chapter.</p>
     │   │   └── parameters_estimation_method
     │   └── variance
     ├── binned
+    ├── quantity
     ├── signal_type
     └── signal_origin
 </pre></div>
@@ -272,12 +281,24 @@ in the following sections of this chapter.</p>
 original file.</p>
 </dd>
 <dt>time</dt>
-<dd><p class="first">type: datetime.time</p>
-<p class="last">The acquistion or creation time.</p>
+<dd><p class="first">type: Str</p>
+<p class="last">The acquisition or creation time in ISO 8601 time format.</p>
 </dd>
 <dt>date</dt>
-<dd><p class="first">type: datetime.time</p>
-<p class="last">The acquistion or creation date.</p>
+<dd><p class="first">type: Str</p>
+<p class="last">The acquisition or creation date in ISO 8601 date format</p>
+</dd>
+<dt>authors</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The authors of the data, in Latex format: Surname1, Name1 and Surname2, Name2, etc.</p>
+</dd>
+<dt>doi</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Digital object identifier of the data, e. g. doi:10.5281/zenodo.58841.</p>
+</dd>
+<dt>notes</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Notes about the data.</p>
 </dd>
 </dl>
 </div>
@@ -294,6 +315,10 @@ original file.</p>
 <dt>acquisition_mode</dt>
 <dd><p class="first">type: Str</p>
 <p class="last">Either &#8216;TEM&#8217; or &#8216;STEM&#8217;</p>
+</dd>
+<dt>camera_length</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The camera length in mm.</p>
 </dd>
 <dt>convergence_angle</dt>
 <dd><p class="first">type: Float</p>
@@ -313,7 +338,11 @@ original file.</p>
 </dd>
 <dt>exposure</dt>
 <dd><p class="first">type: Float</p>
-<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquisition.</p>
+</dd>
+<dt>magnification</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The magnification.</p>
 </dd>
 <dt>tilt_stage</dt>
 <dd><p class="first">type: Float</p>
@@ -341,6 +370,10 @@ original file.</p>
 <dd><p class="first">type: Float</p>
 <p class="last">The beam current in nA.</p>
 </dd>
+<dt>magnification</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The magnification.</p>
+</dd>
 <dt>tilt_stage</dt>
 <dd><p class="first">type: Float</p>
 <p class="last">The tilt of the stage in degree.</p>
@@ -357,9 +390,9 @@ following structure:</p>
 <p>This node stores parameters relevant to electron energy loss spectroscopy
 signals.</p>
 <dl class="docutils">
-<dt>spectrometer</dt>
-<dd><p class="first">type: Str</p>
-<p class="last">The spectrometer model, e.g. Gatan 666</p>
+<dt>aperture_size</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The entrance aperture size of the spectrometer in mm.</p>
 </dd>
 <dt>collection_angle</dt>
 <dd><p class="first">type: Float</p>
@@ -371,7 +404,15 @@ signals.</p>
 </dd>
 <dt>exposure</dt>
 <dd><p class="first">type: Float</p>
-<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquisition.</p>
+</dd>
+<dt>frame_number</dt>
+<dd><p class="first">type: int</p>
+<p class="last">The number of frames/spectra integrated during the acquisition.</p>
+</dd>
+<dt>spectrometer</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The spectrometer model, e.g. Gatan Enfinium ER (Model 977).</p>
 </dd>
 </dl>
 </div>
@@ -454,6 +495,10 @@ PES, EELS and EDS_TEM (EDS_SEM).</p>
 .. deprecated:: 2.1 (HyperSpy v1.0)</p>
 <p class="last">One of &#8216;spectrum&#8217; or &#8216;image&#8217;. It describes how the data is stored in memory.
 If &#8216;spectrum&#8217; the spectral data is stored in the faster index.</p>
+</dd>
+<dt>quantity</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The name of the quantity of the &#8220;intensity axis&#8221; with the units in round brackets if required, for example Temperature (K).</p>
 </dd>
 </dl>
 <div class="section" id="noise-properties">
@@ -552,7 +597,7 @@ should be accompanied by an &#8220;energy_units&#8221; leaf.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1',
+            VERSION:'1.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
