@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dielectric function tools &mdash; HyperSpy 0.8.5 documentation</title>
+  <title>Dielectric function tools &mdash; HyperSpy 1.2+dev documentation</title>
   
 
   
@@ -32,10 +32,10 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.2+dev documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Loading and saving data" href="io.html"/>
-        <link rel="prev" title="Energy-Dispersive X-Rays Spectrometry (EDS)" href="eds.html"/>
+        <link rel="prev" title="Energy-Dispersive X-ray Spectrometry (EDS)" href="eds.html"/>
  
 <script type="text/javascript">
 
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.5
+                1.2+dev
               </div>
             
           
@@ -113,19 +113,22 @@
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-Rays Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Dielectric function tools</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#number-of-effective-electrons">Number of effective electrons</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#compute-the-electron-energy-loss-signal">Compute the electron energy-loss signal</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -179,13 +182,25 @@
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.7.</span></p>
 </div>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code> class inherits from
+<code class="xref py py-class docutils literal"><span class="pre">ComplexSignal</span></code> and can thus access complex properties.
+To convert a <code class="xref py py-class docutils literal"><span class="pre">ComplexSignal</span></code> to a
+<code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code>, make sure that the signal dimension
+and signal type are properly set:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s1">&#39;DielectricFunction&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.dielectric_function.DielectricFunction" title="hyperspy._signals.dielectric_function.DielectricFunction"><code class="xref py py-class docutils literal"><span class="pre">DielectricFunction</span></code></a> is complex and therefore
+is a subclass of <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.complex_signal1d.ComplexSignal1D" title="hyperspy._signals.complex_signal1d.ComplexSignal1D"><code class="xref py py-class docutils literal"><span class="pre">ComplexSignal1D</span></code></a>.</p>
 <div class="section" id="number-of-effective-electrons">
 <h2>Number of effective electrons<a class="headerlink" href="#number-of-effective-electrons" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.7.</span></p>
 </div>
 <p>The Bethe f-sum rule gives rise to two definitions of the effective number (see
-<a class="reference internal" href="bibliography.html#egerton2011" id="id1">[Egerton2011]</a>):</p>
+<a class="reference internal" href="../api/hyperspy._signals.html#id8" id="id1">[Egerton2011]</a>):</p>
 <div class="math">
 <p><img src="../_images/math/48824fef1b709ae984071a5fb40f91e684bdb6e9.png" alt="n_{\mathrm{eff1}}\left(-\Im\left(\epsilon^{-1}\right)\right)=\frac{2\epsilon_{0}m_{0}}{\pi\hbar^{2}e^{2}n_{a}}\int_{0}^{E}E'\Im\left(\frac{-1}{\epsilon}\right)dE'
 
@@ -226,7 +241,7 @@ characteristic scattering angle.</p>
         <a href="io.html" class="btn btn-neutral float-right" title="Loading and saving data" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="eds.html" class="btn btn-neutral" title="Energy-Dispersive X-Rays Spectrometry (EDS)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="eds.html" class="btn btn-neutral" title="Energy-Dispersive X-ray Spectrometry (EDS)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -257,7 +272,7 @@ characteristic scattering angle.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.5',
+            VERSION:'1.2+dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

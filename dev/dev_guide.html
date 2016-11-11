@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Developer Guide &mdash; HyperSpy 0.8.4 documentation</title>
+  <title>Developer Guide &mdash; HyperSpy 1.2+dev documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.4 documentation" href="index.html"/>
+    <link rel="top" title="HyperSpy 1.2+dev documentation" href="index.html"/>
         <link rel="next" title="Credits" href="credits.html"/>
         <link rel="prev" title="hyperspy.utils package" href="api/hyperspy.utils.html"/>
  
@@ -80,7 +80,7 @@
             
             
               <div class="version">
-                0.8.4
+                1.2+dev
               </div>
             
           
@@ -115,6 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#make-your-contribution">5. Make your contribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing-cython-code">6. Contributing cython code</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
@@ -164,8 +165,8 @@
            <div itemprop="articleBody">
             
   <div class="section" id="developer-guide">
-<h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
-<p>This 5-step guide is intended to give people who want to start contributing their
+<span id="dev-guide-label"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
+<p>This 6-step guide is intended to give people who want to start contributing their
 own tools to HyperSpy a foothold to kick-start the process. This is also the way
 to start if you ultimately hope to become a member of the developer team.</p>
 <p>We anticipate that many potential contributors and developers will be scientists
@@ -297,6 +298,35 @@ to use it with examples and links to the relevant code.</p>
 HyperSpy &#8211; make a pull request on GitHub and wait for it to be reviewed and
 discussed.</p>
 </div>
+<div class="section" id="contributing-cython-code">
+<h2>6. Contributing cython code<a class="headerlink" href="#contributing-cython-code" title="Permalink to this headline">¶</a></h2>
+<p>Python is not the fastest language, and can be particularly slow in loops.
+Performance can sometimes be significantly improved by implementing optional cython
+code alongside the pure Python versions. While developing cython code, make use of
+the official cython recommendations (<a class="reference external" href="http://docs.cython.org/">http://docs.cython.org/</a>).
+Add your cython extensions to the setup.py, in the existing list of <code class="docutils literal"><span class="pre">raw_extensions</span></code>.</p>
+<p>Unlike the cython recommendation, the cythonized .c or .cpp files are not welcome
+in the git source repository (except original c or c++ files), since they are typically
+quite large. Cythonization will take place during Travis CI and Appveyor building.
+The cythonized code will be generated and included in source or binary distributions
+for end users. To help troubleshoot potential deprecation with future cython releases,
+add a comment with in the header of your .pyx files with the cython version.
+If cython is present in the build environment and any cythonized c/c++ file is missing,
+then setup.py tries to cythonize all extensions automatically.</p>
+<p>To make the development easier the new command <code class="docutils literal"><span class="pre">recythonize</span></code> has been added to setup.py.
+It can be used in conjunction with other default commands.
+For example <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">recythonize</span> <span class="pre">build_ext</span> <span class="pre">--inplace</span></code>
+will recythonize all changed (and described in setup.py!) cython code and compile.</p>
+<p>When developing on git branches, the first time you call setup.py in conjunction with
+or without any other command - it will generate a post-checkout hook, which will include
+a potential cythonization and compilation product list (.c/.cpp/.so/.pyd). With your next
+<code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span></code> the hook will remove them and automatically run <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build_ext</span> <span class="pre">--inplace</span></code>
+to cythonize and compile the code if available. If an older version of HyperSpy (&lt;= 0.8.4.x)
+is checked out this should have no side effects.</p>
+<p>If another custom post-checkout hook is detected on PR, then setup.py tries to append
+or update the relevant part. To prevent unwanted hook generation or update you can create
+the empty file <code class="docutils literal"><span class="pre">.hook_ignore</span></code> in source directory (same level as setup.py).</p>
+</div>
 </div>
 
 
@@ -340,7 +370,7 @@ discussed.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.8.4',
+            VERSION:'1.2+dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

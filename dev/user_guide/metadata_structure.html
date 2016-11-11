@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Metadata structure &mdash; HyperSpy 0.8.5 documentation</title>
+  <title>Metadata structure &mdash; HyperSpy 1.2+dev documentation</title>
   
 
   
@@ -32,10 +32,10 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.2+dev documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Bibliography" href="bibliography.html"/>
-        <link rel="prev" title="Loading and saving data" href="io.html"/>
+        <link rel="prev" title="Events" href="events.html"/>
  
 <script type="text/javascript">
 
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.5
+                1.2+dev
               </div>
             
           
@@ -113,11 +113,12 @@
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-Rays Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Metadata structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#general">General</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acquisition-instrument">Acquisition_instrument</a><ul>
@@ -141,6 +142,8 @@
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -212,6 +215,7 @@ in the following sections of this chapter.</p>
 │   │   ├── beam_current (nA)
 │   │   ├── beam_energy (keV)
 │   │   ├── convergence_angle (mrad)
+│       ├── magnification
 │   │   ├── microscope
 │   │   └── tilt_stage (º)
 │   └── TEM
@@ -223,19 +227,26 @@ in the following sections of this chapter.</p>
 │       │   │   ├── live_time (s)
 │       │   │   └── real_time (s)
 │       │   └── EELS
+│       │       ├── aperture (mm)
 │       │       ├── collection_angle (mrad)
 │       │       ├── dwell_time (s)
 │       │       ├── exposure (s)
+│       │       ├── frame_number
 │       │       └── spectrometer
 │       ├── acquisition_mode
 │       ├── beam_current (nA)
 │       ├── beam_energy (keV)
+│       ├── camera_length (mm)
 │       ├── convergence_angle (mrad)
+│       ├── magnification
 │       ├── microscope
 │       └── tilt_stage (º)
 ├── General
+│   ├── authors
 │   ├── date
+│   ├── doi
 │   ├── original_filename
+│   ├── notes
 │   ├── time
 │   └── title
 ├── Sample
@@ -252,7 +263,7 @@ in the following sections of this chapter.</p>
     │   │   └── parameters_estimation_method
     │   └── variance
     ├── binned
-    ├── record_by
+    ├── quantity
     ├── signal_type
     └── signal_origin
 </pre></div>
@@ -270,12 +281,24 @@ in the following sections of this chapter.</p>
 original file.</p>
 </dd>
 <dt>time</dt>
-<dd><p class="first">type: datetime.time</p>
-<p class="last">The acquistion or creation time.</p>
+<dd><p class="first">type: Str</p>
+<p class="last">The acquisition or creation time in ISO 8601 time format.</p>
 </dd>
 <dt>date</dt>
-<dd><p class="first">type: datetime.time</p>
-<p class="last">The acquistion or creation date.</p>
+<dd><p class="first">type: Str</p>
+<p class="last">The acquisition or creation date in ISO 8601 date format</p>
+</dd>
+<dt>authors</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The authors of the data, in Latex format: Surname1, Name1 and Surname2, Name2, etc.</p>
+</dd>
+<dt>doi</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Digital object identifier of the data, e. g. doi:10.5281/zenodo.58841.</p>
+</dd>
+<dt>notes</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">Notes about the data.</p>
 </dd>
 </dl>
 </div>
@@ -292,6 +315,10 @@ original file.</p>
 <dt>acquisition_mode</dt>
 <dd><p class="first">type: Str</p>
 <p class="last">Either &#8216;TEM&#8217; or &#8216;STEM&#8217;</p>
+</dd>
+<dt>camera_length</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The camera length in mm.</p>
 </dd>
 <dt>convergence_angle</dt>
 <dd><p class="first">type: Float</p>
@@ -311,7 +338,11 @@ original file.</p>
 </dd>
 <dt>exposure</dt>
 <dd><p class="first">type: Float</p>
-<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquisition.</p>
+</dd>
+<dt>magnification</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The magnification.</p>
 </dd>
 <dt>tilt_stage</dt>
 <dd><p class="first">type: Float</p>
@@ -339,6 +370,10 @@ original file.</p>
 <dd><p class="first">type: Float</p>
 <p class="last">The beam current in nA.</p>
 </dd>
+<dt>magnification</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The magnification.</p>
+</dd>
 <dt>tilt_stage</dt>
 <dd><p class="first">type: Float</p>
 <p class="last">The tilt of the stage in degree.</p>
@@ -349,15 +384,15 @@ original file.</p>
 <h3>Detector<a class="headerlink" href="#detector" title="Permalink to this headline">¶</a></h3>
 <p>All instruments can contain a &#8220;Detector&#8221; node with information about the
 detector used to acquire the signal. EDX and EELS detectors should follow the
-following strcture:</p>
+following structure:</p>
 <div class="section" id="eels">
 <h4>EELS<a class="headerlink" href="#eels" title="Permalink to this headline">¶</a></h4>
 <p>This node stores parameters relevant to electron energy loss spectroscopy
 signals.</p>
 <dl class="docutils">
-<dt>spectrometer</dt>
-<dd><p class="first">type: Str</p>
-<p class="last">The spectrometer model, e.g. Gatan 666</p>
+<dt>aperture_size</dt>
+<dd><p class="first">type: Float</p>
+<p class="last">The entrance aperture size of the spectrometer in mm.</p>
 </dd>
 <dt>collection_angle</dt>
 <dd><p class="first">type: Float</p>
@@ -369,7 +404,15 @@ signals.</p>
 </dd>
 <dt>exposure</dt>
 <dd><p class="first">type: Float</p>
-<p class="last">The exposure time in seconds. This is relevant for TEM acquistion.</p>
+<p class="last">The exposure time in seconds. This is relevant for TEM acquisition.</p>
+</dd>
+<dt>frame_number</dt>
+<dd><p class="first">type: int</p>
+<p class="last">The number of frames/spectra integrated during the acquisition.</p>
+</dd>
+<dt>spectrometer</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The spectrometer model, e.g. Gatan Enfinium ER (Model 977).</p>
 </dd>
 </dl>
 </div>
@@ -445,22 +488,27 @@ PES, EELS and EDS_TEM (EDS_SEM).</p>
 </dd>
 <dt>signal_origin</dt>
 <dd><p class="first">type: Str</p>
-<p class="last">Either &#8216;simulation&#8217; or &#8216;experiment&#8217;.</p>
+<p class="last">Describes the origin of the signal e.g. &#8216;simulation&#8217; or &#8216;experiment&#8217;.</p>
 </dd>
 <dt>record_by</dt>
-<dd><p class="first">type: Str</p>
+<dd><p class="first">type: Str
+.. deprecated:: 2.1 (HyperSpy v1.0)</p>
 <p class="last">One of &#8216;spectrum&#8217; or &#8216;image&#8217;. It describes how the data is stored in memory.
 If &#8216;spectrum&#8217; the spectral data is stored in the faster index.</p>
+</dd>
+<dt>quantity</dt>
+<dd><p class="first">type: Str</p>
+<p class="last">The name of the quantity of the &#8220;intensity axis&#8221; with the units in round brackets if required, for example Temperature (K).</p>
 </dd>
 </dl>
 <div class="section" id="noise-properties">
 <h3>Noise_properties<a class="headerlink" href="#noise-properties" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt>variance</dt>
-<dd><p class="first">type: float or Signal instance.</p>
+<dd><p class="first">type: float or BaseSignal instance.</p>
 <p class="last">The variance of the data. It can be a float when the noise is Gaussian or a
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> instance if the noise is heteroscedastic, in which
-case it must have the same dimensions as <code class="xref py py-attr docutils literal"><span class="pre">data</span></code>.</p>
+case it must have the same dimensions as <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal"><span class="pre">data</span></code></a>.</p>
 </dd>
 </dl>
 <div class="section" id="variance-linear-model">
@@ -518,7 +566,7 @@ should be accompanied by an &#8220;energy_units&#8221; leaf.</p>
         <a href="bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="io.html" class="btn btn-neutral" title="Loading and saving data" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="events.html" class="btn btn-neutral" title="Events" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -549,7 +597,7 @@ should be accompanied by an &#8220;energy_units&#8221; leaf.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.5',
+            VERSION:'1.2+dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

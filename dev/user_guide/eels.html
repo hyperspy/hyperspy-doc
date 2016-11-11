@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Electron Energy Loss Spectroscopy &mdash; HyperSpy 0.8.5 documentation</title>
+  <title>Electron Energy Loss Spectroscopy &mdash; HyperSpy 1.2+dev documentation</title>
   
 
   
@@ -32,10 +32,10 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.2+dev documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
-        <link rel="next" title="Energy-Dispersive X-Rays Spectrometry (EDS)" href="eds.html"/>
-        <link rel="prev" title="Curve fitting" href="model.html"/>
+        <link rel="next" title="Energy-Dispersive X-ray Spectrometry (EDS)" href="eds.html"/>
+        <link rel="prev" title="Model fitting" href="model.html"/>
  
 <script type="text/javascript">
 
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.5
+                1.2+dev
               </div>
             
           
@@ -113,7 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Electron Energy Loss Spectroscopy</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tools-for-eels-data-analysis">Tools for EELS data analysis</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#elemental-composition-of-the-sample">Elemental composition of the sample</a></li>
@@ -127,13 +127,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#eels-curve-fitting">EELS curve fitting</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-Rays Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -217,7 +220,12 @@ thickness from a low-loss EELS spectrum using the Log-Ratio method.</p>
 <p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre" title="hyperspy._signals.eels.EELSSpectrum.estimate_zero_loss_peak_centre"><code class="xref py py-meth docutils literal"><span class="pre">estimate_zero_loss_peak_centre()</span></code></a> can be used to estimate the position of the zero-loss peak. The method assumes that the ZLP is the most intense feature in the spectra. For a more general approach see <code class="xref py py-meth docutils literal"><span class="pre">find_peaks1D_ohaver()</span></code>.</p>
 <p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum.align_zero_loss_peak"><code class="xref py py-meth docutils literal"><span class="pre">align_zero_loss_peak()</span></code></a> can
 align the ZLP with subpixel accuracy. It is more robust and easy to use than
-<code class="xref py py-meth docutils literal"><span class="pre">align1D()</span></code> for the task. Note that it is possible to apply the same alignment to other spectra using the <cite>also_align</cite> argument. This can be useful e.g. to align core-loss spectra acquired quasi-simultaneously.</p>
+<code class="xref py py-meth docutils literal"><span class="pre">align1D()</span></code> for the task. Note that it is
+possible to apply the same alignment to other spectra using the <cite>also_align</cite>
+argument. This can be useful e.g. to align core-loss spectra acquired quasi-simultaneously.
+If there are other features in the low loss signal which are more intense than the
+ZLP, the <cite>signal_range</cite> argument can narrow down the energy range for searching for the
+ZLP.</p>
 </div>
 <div class="section" id="deconvolutions">
 <h3>Deconvolutions<a class="headerlink" href="#deconvolutions" title="Permalink to this headline">¶</a></h3>
@@ -255,7 +263,7 @@ the npoints keyword.</p>
 <p>The single-scattering EEL spectrum is approximately related to the complex
 permittivity of the sample and can be estimated by Kramers-Kronig analysis.
 The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis" title="hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis"><code class="xref py py-meth docutils literal"><span class="pre">kramers_kronig_analysis()</span></code></a> method
-inplements the Kramers-Kronig FFT method as in <a class="reference internal" href="bibliography.html#egerton2011" id="id1">[Egerton2011]</a> to estimate the
+inplements the Kramers-Kronig FFT method as in <a class="reference internal" href="../api/hyperspy._signals.html#id8" id="id1">[Egerton2011]</a> to estimate the
 complex dielectric funtion from a low-loss EELS spectrum. In addition, it can
 estimate the thickness if the refractive index is known and approximately
 correct for surface plasmon excitations in layers.</p>
@@ -293,53 +301,16 @@ given in mrad. <cite>beam_energy</cite> is in keV.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span>
 <span class="go">   # |            Attribute Name |            Component Name |            Component Type</span>
 <span class="go">---- | ------------------------- | ------------------------- | -------------------------</span>
-<span class="go">   0 |                background |                background |                  PowerLaw</span>
+<span class="go">   0 |                  PowerLaw |                  PowerLaw |                  PowerLaw</span>
 <span class="go">   1 |                       N_K |                       N_K |                EELSCLEdge</span>
 <span class="go">   2 |                       B_K |                       B_K |                EELSCLEdge</span>
 </pre></div>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Notice that the PowerLaw component has been automatically renamed to
-&#8220;background&#8221;. This behaviour is deprecated and will be removed in
-Hyperspy 1.0. From them on this component will keep its original name,
-&#8220;PowerLaw&#8221;.</p>
-</div>
-<p>Furthermore, the components are available in the user namespace</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N_K</span>
-<span class="go">&lt;N_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">B_K</span>
-<span class="go">&lt;B_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">background</span>
-<span class="go">&lt;background (PowerLaw component)&gt;</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>This feature is deprecated and will be removed in Hyperspy 1.0. To access
-the automatically created component use the following equivalent syntax:</p>
-<blockquote class="last">
-<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">N_K</span>
-<span class="go">&lt;N_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">B_K</span>
-<span class="go">&lt;B_K (EELSCLEdge component)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">background</span>
-<span class="go">&lt;background (PowerLaw component)&gt;</span>
-</pre></div>
-</div>
-</div></blockquote>
-</div>
-<p>Conveniently, variables named as the element symbol contain all the eels
-core-loss components of the element to facilitate applying some methods to all
-of them at once. Although in this example the list contains just one component
-this is not generally the case.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span>
-<span class="go">[&lt;N_K (EELSCLEdge component)&gt;]</span>
-</pre></div>
-</div>
-<p>By default the fine structure features are disabled (although the default value
-can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>Configuring HyperSpy</span></a>). We must enable them
-to accurately fit this spectrum.</p>
+<p>Conveniently, all the EELS core-loss components of the added elements are added
+automatically, names after its element symbol.</p>
+<p>By default the fine structure features are disabled (although
+the default value can be configured (see <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span>Configuring HyperSpy</span></a>).
+We must enable them to accurately fit this spectrum.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">enable_fine_structure</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -426,10 +397,10 @@ To resume it use
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="eds.html" class="btn btn-neutral float-right" title="Energy-Dispersive X-Rays Spectrometry (EDS)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="eds.html" class="btn btn-neutral float-right" title="Energy-Dispersive X-ray Spectrometry (EDS)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="model.html" class="btn btn-neutral" title="Curve fitting" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral" title="Model fitting" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -460,7 +431,7 @@ To resume it use
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.5',
+            VERSION:'1.2+dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

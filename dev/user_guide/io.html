@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading and saving data &mdash; HyperSpy 0.8.5 documentation</title>
+  <title>Loading and saving data &mdash; HyperSpy 1.2+dev documentation</title>
   
 
   
@@ -32,9 +32,9 @@
   
 
   
-    <link rel="top" title="HyperSpy 0.8.5 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.2+dev documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
-        <link rel="next" title="Metadata structure" href="metadata_structure.html"/>
+        <link rel="next" title="Events" href="events.html"/>
         <link rel="prev" title="Dielectric function tools" href="dielectric_function.html"/>
  
 <script type="text/javascript">
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                0.8.5
+                1.2+dev
               </div>
             
           
@@ -113,9 +113,9 @@
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Curve fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-Rays Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Loading and saving data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#loading-files-the-load-function">Loading files: the load function</a><ul>
@@ -133,14 +133,23 @@
 <li class="toctree-l4"><a class="reference internal" href="#tiff">TIFF</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gatan-digital-micrograph">Gatan Digital Micrograph</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#fei-tia-ser-and-emi">FEI TIA ser and emi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#semper-unf-binary-format">SEMPER unf binary format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blockfile">Blockfile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dens-heater-log">DENS heater log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bruker-composite-file">Bruker composite file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emd-electron-microscopy-datasets-hdf5">EMD Electron Microscopy Datasets (HDF5)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#protochips-log">Protochips log</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -190,32 +199,41 @@
            <div itemprop="articleBody">
             
   <div class="section" id="loading-and-saving-data">
-<span id="io"></span><h1><a class="toc-backref" href="#id6">Loading and saving data</a><a class="headerlink" href="#loading-and-saving-data" title="Permalink to this headline">¶</a></h1>
+<span id="io"></span><h1><a class="toc-backref" href="#id8">Loading and saving data</a><a class="headerlink" href="#loading-and-saving-data" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#loading-and-saving-data" id="id6">Loading and saving data</a><ul>
-<li><a class="reference internal" href="#loading-files-the-load-function" id="id7">Loading files: the load function</a><ul>
-<li><a class="reference internal" href="#loading-multiple-files" id="id8">Loading multiple files</a></li>
+<li><a class="reference internal" href="#loading-and-saving-data" id="id8">Loading and saving data</a><ul>
+<li><a class="reference internal" href="#loading-files-the-load-function" id="id9">Loading files: the load function</a><ul>
+<li><a class="reference internal" href="#loading-multiple-files" id="id10">Loading multiple files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#saving-data-to-files" id="id9">Saving data to files</a></li>
-<li><a class="reference internal" href="#supported-formats" id="id10">Supported formats</a><ul>
-<li><a class="reference internal" href="#hdf5" id="id11">HDF5</a><ul>
-<li><a class="reference internal" href="#extra-saving-arguments" id="id12">Extra saving arguments</a></li>
+<li><a class="reference internal" href="#saving-data-to-files" id="id11">Saving data to files</a></li>
+<li><a class="reference internal" href="#supported-formats" id="id12">Supported formats</a><ul>
+<li><a class="reference internal" href="#hdf5" id="id13">HDF5</a><ul>
+<li><a class="reference internal" href="#extra-saving-arguments" id="id14">Extra saving arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#netcdf" id="id13">NetCDF</a></li>
-<li><a class="reference internal" href="#mrc" id="id14">MRC</a></li>
-<li><a class="reference internal" href="#emsa-msa" id="id15">EMSA/MSA</a><ul>
-<li><a class="reference internal" href="#id2" id="id16">Extra saving arguments</a></li>
+<li><a class="reference internal" href="#netcdf" id="id15">NetCDF</a></li>
+<li><a class="reference internal" href="#mrc" id="id16">MRC</a></li>
+<li><a class="reference internal" href="#emsa-msa" id="id17">EMSA/MSA</a><ul>
+<li><a class="reference internal" href="#id2" id="id18">Extra saving arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ripple" id="id17">Ripple</a></li>
-<li><a class="reference internal" href="#images" id="id18">Images</a></li>
-<li><a class="reference internal" href="#tiff" id="id19">TIFF</a></li>
-<li><a class="reference internal" href="#gatan-digital-micrograph" id="id20">Gatan Digital Micrograph</a></li>
-<li><a class="reference internal" href="#fei-tia-ser-and-emi" id="id21">FEI TIA ser and emi</a></li>
+<li><a class="reference internal" href="#ripple" id="id19">Ripple</a></li>
+<li><a class="reference internal" href="#images" id="id20">Images</a></li>
+<li><a class="reference internal" href="#tiff" id="id21">TIFF</a></li>
+<li><a class="reference internal" href="#gatan-digital-micrograph" id="id22">Gatan Digital Micrograph</a></li>
+<li><a class="reference internal" href="#fei-tia-ser-and-emi" id="id23">FEI TIA ser and emi</a></li>
+<li><a class="reference internal" href="#semper-unf-binary-format" id="id24">SEMPER unf binary format</a></li>
+<li><a class="reference internal" href="#blockfile" id="id25">Blockfile</a></li>
+<li><a class="reference internal" href="#dens-heater-log" id="id26">DENS heater log</a></li>
+<li><a class="reference internal" href="#bruker-composite-file" id="id27">Bruker composite file</a><ul>
+<li><a class="reference internal" href="#extra-loading-arguments" id="id28">Extra loading arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#emd-electron-microscopy-datasets-hdf5" id="id29">EMD Electron Microscopy Datasets (HDF5)</a></li>
+<li><a class="reference internal" href="#protochips-log" id="id30">Protochips log</a></li>
 </ul>
 </li>
 </ul>
@@ -223,7 +241,7 @@
 </ul>
 </div>
 <div class="section" id="loading-files-the-load-function">
-<span id="loading-files"></span><h2><a class="toc-backref" href="#id7">Loading files: the load function</a><a class="headerlink" href="#loading-files-the-load-function" title="Permalink to this headline">¶</a></h2>
+<span id="loading-files"></span><h2><a class="toc-backref" href="#id9">Loading files: the load function</a><a class="headerlink" href="#loading-files-the-load-function" title="Permalink to this headline">¶</a></h2>
 <p>HyperSpy can read and write to multiple formats (see <a class="reference internal" href="#supported-formats"><span>Supported formats</span></a>).
 To load data use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> command. For example, to load the
 image lena.jpg you can type:</p>
@@ -236,7 +254,7 @@ image lena.jpg you can type:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Note for python programmers: the data is stored in a numpy array
-in the <code class="xref py py-attr docutils literal"><span class="pre">data</span></code> attribute, but you will not
+in the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal"><span class="pre">data</span></code></a> attribute, but you will not
 normally need to access it there.)</p>
 </div>
 <p>HyperSpy will try to guess the most likely data type for the corresponding
@@ -248,7 +266,7 @@ providing the <code class="docutils literal"><span class="pre">signal</span></co
 </div>
 <p>Some file formats store some extra information about the data, which can be
 stored in &#8220;attributes&#8221;. If HyperSpy manages to read some extra information
-about the data it stores it in <code class="xref py py-attr docutils literal"><span class="pre">original_metadata</span></code>
+about the data it stores it in <cite>~.signal.BaseSignal.original_metadata</cite>
 attribute. Also, it is possible that other information will be mapped by
 HyperSpy to a standard location where it can be used by some standard routines,
 the <code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> attribute.</p>
@@ -256,14 +274,27 @@ the <code class="xref py py-attr docutils literal"><span class="pre">metadata</s
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
 </pre></div>
 </div>
-<p>The <code class="xref py py-attr docutils literal"><span class="pre">original_metadata</span></code> and
+<p>::
+Th <code class="xref py py-attr docutils literal"><span class="pre">original_metadata</span></code> and
 <code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> can be exported to  text files
 using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="hyperspy.misc.utils.DictionaryTreeBrowser.export"><code class="xref py py-meth docutils literal"><span class="pre">export()</span></code></a> method, e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_metadata</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="versionadded" id="load-to-memory-label">
+<p><span class="versionmodified">New in version 1.0: </span><cite>load_to_memory</cite> argument.</p>
+</div>
+<p>Some file readers support accessing the data without reading it to memory. This
+feature can be useful when analysing large files. To load a file without loading
+it to memory simply set <cite>load_to_memory</cite> to <cite>False</cite> e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.hdf5&quot;</span><span class="p">,</span> <span class="n">load_to_memory</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, note that as of v1.0 HyperSpy cannot efficiently use this feature to
+operate on big data files. Only hdf5, blockfile and EMD currently support not
+reading to memory.</p>
 <div class="section" id="loading-multiple-files">
-<h3><a class="toc-backref" href="#id8">Loading multiple files</a><a class="headerlink" href="#loading-multiple-files" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">Loading multiple files</a><a class="headerlink" href="#loading-multiple-files" title="Permalink to this headline">¶</a></h3>
 <p>Rather than loading files individually, several files can be loaded with a
 single command. This can be done by passing a list of filenames to the load
 functions, e.g.:</p>
@@ -273,7 +304,9 @@ functions, e.g.:</p>
 <p>or by using <a class="reference external" href="http://docs.python.org/library/glob.html">shell-style wildcards</a></p>
 <p>By default HyperSpy will return a list of all the files loaded. Alternatively,
 HyperSpy can stack the data of the files contain data with exactly the same
-dimensions. If this is not the case an error is raised.</p>
+dimensions. If this is not the case an error is raised. If each file contains
+multiple (N) signals, N stacks will be created. Here, the numbers of signals
+per file must also match, or an error will be raised.</p>
 <p>It is also possible to load multiple files with a single command without
 stacking them by passing the <cite>stack=False</cite> argument to the load function, in
 which case the function will return a list of objects, e.g.:</p>
@@ -295,7 +328,7 @@ which case the function will return a list of objects, e.g.:</p>
 </div>
 </div>
 <div class="section" id="saving-data-to-files">
-<span id="saving-files"></span><h2><a class="toc-backref" href="#id9">Saving data to files</a><a class="headerlink" href="#saving-data-to-files" title="Permalink to this headline">¶</a></h2>
+<span id="saving-files"></span><h2><a class="toc-backref" href="#id11">Saving data to files</a><a class="headerlink" href="#saving-data-to-files" title="Permalink to this headline">¶</a></h2>
 <p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.save" title="hyperspy.signal.BaseSignal.save"><code class="xref py py-meth docutils literal"><span class="pre">save()</span></code></a> method. The
 first argument is the filename and the format is defined by the filename
 extension. If the filename does not contain the extension the default format
@@ -314,11 +347,11 @@ default <a class="reference internal" href="#hdf5-format"><span>HDF5</span></a> 
 <a class="reference internal" href="#supported-formats"><span>Supported formats</span></a> for more information.</p>
 </div>
 <div class="section" id="supported-formats">
-<span id="id1"></span><h2><a class="toc-backref" href="#id10">Supported formats</a><a class="headerlink" href="#supported-formats" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id12">Supported formats</a><a class="headerlink" href="#supported-formats" title="Permalink to this headline">¶</a></h2>
 <p>Here is a summary of the different formats that are currently supported by
 HyperSpy.</p>
-<table border="1" class="docutils" id="id5">
-<caption><span class="caption-text">Supported file formats</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">Supported file formats</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="49%" />
 <col width="27%" />
@@ -371,10 +404,34 @@ HyperSpy.</p>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
+<tr class="row-even"><td>SEMPER unf</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>Blockfile</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>DENS heater log</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>Bruker&#8217;s bcf</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-even"><td>EMD (Berkley Labs)</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>Protochips log</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
 </tbody>
 </table>
 <div class="section" id="hdf5">
-<span id="hdf5-format"></span><h3><a class="toc-backref" href="#id11">HDF5</a><a class="headerlink" href="#hdf5" title="Permalink to this headline">¶</a></h3>
+<span id="hdf5-format"></span><h3><a class="toc-backref" href="#id13">HDF5</a><a class="headerlink" href="#hdf5" title="Permalink to this headline">¶</a></h3>
 <p>This is the default format and it is the only one that guarantees that no
 information will be lost in the writing process and that supports saving data
 of arbitrary dimensions. It is based on the <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 open standard</a>. The HDF5 file format is supported by <a class="reference external" href="http://www.hdfgroup.org/products/hdf5_tools/SWSummarybyName.htm">many
@@ -384,7 +441,7 @@ applications</a>.</p>
 <p><span class="versionmodified">New in version 0.8.</span></p>
 </div>
 <p>It is also possible to save more complex structures (i.e. lists, tuples and signals) in
-<code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> of the signal. Please note that in order to increase
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.samfire.Samfire.metadata" title="hyperspy.samfire.Samfire.metadata"><code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code></a> of the signal. Please note that in order to increase
 saving efficiency and speed, if possible, the inner-most structures are
 converted to numpy arrays when saved. This procedure homogenizes any types of
 the objects inside, most notably casting numbers as strings if any other
@@ -407,21 +464,21 @@ intensity</span></a>):</p>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s_new</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;EDS_spectrum.hdf5&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s_new</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span><span class="o">.</span><span class="n">intensities</span>
-<span class="go">[&lt;Signal, title: X-ray line intensity of EDS SEM Spectrum: Al_Ka at 1.49 keV, dimensions: (|)&gt;,</span>
-<span class="go"> &lt;Signal, title: X-ray line intensity of EDS SEM Spectrum: C_Ka at 0.28 keV, dimensions: (|)&gt;,</span>
-<span class="go"> &lt;Signal, title: X-ray line intensity of EDS SEM Spectrum: Cu_La at 0.93 keV, dimensions: (|)&gt;,</span>
-<span class="go"> &lt;Signal, title: X-ray line intensity of EDS SEM Spectrum: Mn_La at 0.63 keV, dimensions: (|)&gt;,</span>
-<span class="go"> &lt;Signal, title: X-ray line intensity of EDS SEM Spectrum: Zr_La at 2.04 keV, dimensions: (|)&gt;]</span>
+<span class="go">[&lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Al_Ka at 1.49 keV, dimensions: (|)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: C_Ka at 0.28 keV, dimensions: (|)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Cu_La at 0.93 keV, dimensions: (|)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Mn_La at 0.63 keV, dimensions: (|)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Zr_La at 2.04 keV, dimensions: (|)&gt;]</span>
 </pre></div>
 </div>
 <div class="section" id="extra-saving-arguments">
-<h4><a class="toc-backref" href="#id12">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
 <p>compression: One of None, &#8216;gzip&#8217;, &#8216;szip&#8217;, &#8216;lzf&#8217;.</p>
 <p>&#8216;gzip&#8217; is the default</p>
 </div>
 </div>
 <div class="section" id="netcdf">
-<span id="netcdf-format"></span><h3><a class="toc-backref" href="#id13">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
+<span id="netcdf-format"></span><h3><a class="toc-backref" href="#id15">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
 <p>This was the default format in HyperSpy&#8217;s predecessor, EELSLab, but it has been
 superseeded by <span class="xref std std-ref">HDF5</span> in HyperSpy. We provide only reading capabilities
 but we do not support writing to this format.</p>
@@ -430,7 +487,7 @@ but we do not support writing to this format.</p>
 it is not installed by default when using the automatic installers.</p>
 </div>
 <div class="section" id="mrc">
-<span id="mrc-format"></span><h3><a class="toc-backref" href="#id14">MRC</a><a class="headerlink" href="#mrc" title="Permalink to this headline">¶</a></h3>
+<span id="mrc-format"></span><h3><a class="toc-backref" href="#id16">MRC</a><a class="headerlink" href="#mrc" title="Permalink to this headline">¶</a></h3>
 <p>This is a format widely used for tomographic data. Our implementation is based
 on <a class="reference external" href="http://ami.scripps.edu/software/mrctools/mrc_specification.php">this specification</a>. We also
 partly support FEI&#8217;s custom header. We do not provide writing features for this
@@ -438,13 +495,13 @@ format, but, as it is an an open format, we may implement this feature in the
 future on demand.</p>
 </div>
 <div class="section" id="emsa-msa">
-<span id="msa-format"></span><h3><a class="toc-backref" href="#id15">EMSA/MSA</a><a class="headerlink" href="#emsa-msa" title="Permalink to this headline">¶</a></h3>
+<span id="msa-format"></span><h3><a class="toc-backref" href="#id17">EMSA/MSA</a><a class="headerlink" href="#emsa-msa" title="Permalink to this headline">¶</a></h3>
 <p>This <a class="reference external" href="http://www.amc.anl.gov/ANLSoftwareLibrary/02-MMSLib/XEDS/EMMFF/EMMFF.IBM/Emmff.Total">open standard format</a>
 is widely used to exchange single spectrum data, but it does not support
 multidimensional data. It can be used to exchange single spectra with Gatan&#8217;s
 Digital Micrograph.</p>
 <div class="section" id="id2">
-<h4><a class="toc-backref" href="#id16">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id18">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>For the MSA format the msa_format argument is used to specify whether the
 energy axis should also be saved with the data.  The default, &#8216;Y&#8217; omits the
 energy axis in the file.  The alternative, &#8216;XY&#8217;, saves a second column with the
@@ -464,7 +521,7 @@ using the <cite>encoding</cite> argument, e.g.:</p>
 </div>
 </div>
 <div class="section" id="ripple">
-<span id="ripple-format"></span><h3><a class="toc-backref" href="#id17">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
+<span id="ripple-format"></span><h3><a class="toc-backref" href="#id19">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
 <p>This <a class="reference external" href="http://www.nist.gov/lispix/doc/image-file-formats/raw-file-format.htm">open standard format</a> is
 widely used to exchange multidimensional data. However, it only supports data of
 up to three dimensions. It can be used to exchange data with Bruker and <a class="reference external" href="http://www.nist.gov/lispix/">Lispix</a>. Used in combination with the <a class="reference external" href="http://hyperspy.org/download.html#import-rpl" title="(in HyperSpy v)"><span>ImportRPL Digital Micrograph plugin</span></a>
@@ -476,7 +533,7 @@ using the encoding argument, e.g.:</p>
 </div>
 </div>
 <div class="section" id="images">
-<span id="image-format"></span><h3><a class="toc-backref" href="#id18">Images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<span id="image-format"></span><h3><a class="toc-backref" href="#id20">Images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy is able to read and write data too all the image formats supported by
 <a class="reference external" href="http://www.pythonware.com/products/pil/">the Python Image Library</a> (PIL).
 This includes png, pdf, gif etc.</p>
@@ -487,17 +544,39 @@ exception of <a class="reference internal" href="#tiff-format"><span>TIFF</span>
 analysis purposes.</p>
 </div>
 <div class="section" id="tiff">
-<span id="tiff-format"></span><h3><a class="toc-backref" href="#id19">TIFF</a><a class="headerlink" href="#tiff" title="Permalink to this headline">¶</a></h3>
-<p>Since version 4.1 HyperSpy can read and write 2D and 3D TIFF files using using
+<span id="tiff-format"></span><h3><a class="toc-backref" href="#id21">TIFF</a><a class="headerlink" href="#tiff" title="Permalink to this headline">¶</a></h3>
+<p>HyperSpy can read and write 2D and 3D TIFF files using using
 Christoph Gohlke&#8217;s tifffile library. In particular it supports reading and
 writing of TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH, and FluoView files. Most of
 these are uncompressed or losslessly compressed 2**(0 to 6) bit integer,16, 32
 and 64-bit float, grayscale and RGB(A) images, which are commonly used in
 bio-scientific imaging. See <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html">the library webpage</a> for more details.</p>
-<p>Currently HyperSpy cannot read the TIFF tags.</p>
+<p>Currently HyperSpy has limited support for reading and saving the TIFF tags.
+However, the way that HyperSpy reads and saves the scale and the units of tiff
+files is compatible with ImageJ/Fiji and Gatan Digital Micrograph softwares.
+HyperSpy can also import the scale and the units from tiff files saved using
+FEI and Zeiss SEM softwares.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Force read image resolution using the x_resolution, y_resolution and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># the resolution_unit of the tiff tags. Be aware, that most of the</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># software doesn&#39;t (properly) use these tags when saving tiff files.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.tif&#39;</span><span class="p">,</span> <span class="n">force_read_resolution</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>HyperSpy can also read and save custom tags through Christoph Gohlke&#8217;s tifffile
+library. See <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html">the library webpage</a> for more details.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Saving the string &#39;Random metadata&#39; in a custom tag (ID 65000)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extratag</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">65000</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Random metadata&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;file.tif&#39;</span><span class="p">,</span> <span class="n">extratags</span><span class="o">=</span><span class="n">extratag</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Saving the string &#39;Random metadata&#39; from a custom tag (ID 65000)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.tif&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">&#39;Number_65000&#39;</span><span class="p">]</span>
+<span class="go">b&#39;Random metadata&#39;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="gatan-digital-micrograph">
-<span id="dm3-format"></span><h3><a class="toc-backref" href="#id20">Gatan Digital Micrograph</a><a class="headerlink" href="#gatan-digital-micrograph" title="Permalink to this headline">¶</a></h3>
+<span id="dm3-format"></span><h3><a class="toc-backref" href="#id22">Gatan Digital Micrograph</a><a class="headerlink" href="#gatan-digital-micrograph" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read both dm3 and dm4 files but the reading features are not
 complete (and probably they will be unless Gatan releases the specifications of
 the format). That said, we understand that this is an important feature and if
@@ -506,7 +585,7 @@ an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy
 us aware of the problem.</p>
 </div>
 <div class="section" id="fei-tia-ser-and-emi">
-<span id="fei-format"></span><h3><a class="toc-backref" href="#id21">FEI TIA ser and emi</a><a class="headerlink" href="#fei-tia-ser-and-emi" title="Permalink to this headline">¶</a></h3>
+<span id="fei-format"></span><h3><a class="toc-backref" href="#id23">FEI TIA ser and emi</a><a class="headerlink" href="#fei-tia-ser-and-emi" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read <code class="docutils literal"><span class="pre">ser</span></code> and <code class="docutils literal"><span class="pre">emi</span></code> files but the reading features are not
 complete (and probably they will be unless FEI releases the specifications of
 the format). That said we know that this is an important feature and if loading
@@ -519,6 +598,122 @@ Therefore strongly reccommend to load using the <code class="docutils literal"><
 <p>When reading an <code class="docutils literal"><span class="pre">.emi</span></code> file if there are several <code class="docutils literal"><span class="pre">.ser</span></code> files associated
 with it, all of them will be read and returned as a list.</p>
 </div>
+<div class="section" id="semper-unf-binary-format">
+<span id="unf-format"></span><h3><a class="toc-backref" href="#id24">SEMPER unf binary format</a><a class="headerlink" href="#semper-unf-binary-format" title="Permalink to this headline">¶</a></h3>
+<p>SEMPER is a fully portable system of programs for image processing, particularly
+suitable for applications in electron microscopy developed by Owen Saxton (see
+DOI: 10.1016/S0304-3991(79)80044-3 for more information).The unf format is a
+binary format with an extensive header for up to 3 dimensional data.
+HyperSpy can read and write unf-files and will try to convert the data into a
+fitting BaseSignal subclass, based on the information stored in the label.
+Currently version 7 of the format should be fully supported.</p>
+</div>
+<div class="section" id="blockfile">
+<span id="blockfile-format"></span><h3><a class="toc-backref" href="#id25">Blockfile</a><a class="headerlink" href="#blockfile" title="Permalink to this headline">¶</a></h3>
+<p>HyperSpy can read and write the blockfile format from NanoMegas ASTAR software.
+It is used to store a series of diffraction patterns from scanning precession
+electron difraction (SPED) measurements, with a limited set of metadata. The
+header of the blockfile contains information about centering and distortions
+of the diffraction patterns, but is not applied to the signal during reading.
+Blockfiles only support data values of type
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">np.uint8</a> (integers
+in range 0-255).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">While Blockfiles are supported, it is a proprietary format, and future
+versions of the format might therefore not be readable. Complete
+interoperability with the official software can neither be guaranteed.</p>
+</div>
+<p>Blockfiles are by default loaded into memory, but can instead be loaded in a
+&#8220;copy-on-write&#8221; manner using
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.memmap.html">numpy.memmap</a>
+. This behavior can be controlled by the arguments <cite>load_to_memory</cite> and
+<cite>mmap_mode</cite>. For valid values for <cite>mmap_mode</cite>, see the documentation for
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.memmap.html">numpy.memmap</a>.</p>
+<p>Examples of ways of loading:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.blo&#39;</span><span class="p">)</span>     <span class="c1"># Default loading, equivalent to the next line</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.blo&#39;</span><span class="p">,</span> <span class="n">load_to_memory</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    <span class="c1"># Load directly to memory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Default memmap loading:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.blo&#39;</span><span class="p">,</span> <span class="n">load_to_memory</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Loads data read only:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.blo&#39;</span><span class="p">,</span> <span class="n">load_to_memory</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Loads data read/write:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.blo&#39;</span><span class="p">,</span> <span class="n">load_to_memory</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By loading the data read/write, any changes to the original data array will be
+written to disk. The data is written when the original data array is deleted,
+or when <code class="xref py py-meth docutils literal"><span class="pre">BaseSignal.data.flush()</span></code> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.memmap.flush.html">numpy.memmap.flush</a>)
+is called.</p>
+</div>
+<div class="section" id="dens-heater-log">
+<span id="dens-format"></span><h3><a class="toc-backref" href="#id26">DENS heater log</a><a class="headerlink" href="#dens-heater-log" title="Permalink to this headline">¶</a></h3>
+<p>HyperSpy can read heater log format for DENS solution&#8217;s heating holder. The
+format stores all the captured data for each timestamp, together with a small
+header in a plain-text format. The reader extracts the measured temperature
+along the time axis, as well as the date and calibration constants stored in
+the header.</p>
+</div>
+<div class="section" id="bruker-composite-file">
+<span id="bcf-format"></span><h3><a class="toc-backref" href="#id27">Bruker composite file</a><a class="headerlink" href="#bruker-composite-file" title="Permalink to this headline">¶</a></h3>
+<p>HyperSpy can read &#8220;hypermaps&#8221; saved with Bruker&#8217;s Esprit v1.x or v2.x in bcf
+hybrid (virtual file system/container with xml and binary data, optionally compressed) format.
+Most bcf import functionality is implemented. Both high-resolution 16-bit SEM images
+and hyperspectral EDX data can be retrieved simultaneously.</p>
+<p>Note that Bruker Esprit uses a similar format for EBSD data, but it is not currently
+supported by HyperSpy.</p>
+<div class="section" id="extra-loading-arguments">
+<h4><a class="toc-backref" href="#id28">Extra loading arguments</a><a class="headerlink" href="#extra-loading-arguments" title="Permalink to this headline">¶</a></h4>
+<p>select_type: One of (&#8216;spectrum&#8217;, &#8216;image&#8217;). If specified just selected type of data
+is returned. (default None)</p>
+<p>index: index of dataset in bcf v2 files, which can hold few datasets (delaut 0)</p>
+<p>downsample: the downsample ratio of hyperspectral array (hight and width only),
+can be integer &gt;=1, where &#8216;1&#8217; results in no downsampling (default 1). The underlying
+method of downsampling is unchangable: sum. Differently than block_reduce from skimage.measure
+it is memory efficient (does not creates intermediate arrays, works inplace).</p>
+<p>cutoff_at_kV: if set (can be int of float &gt;= 0) can be used either to
+crop or enlarge energy (or channels) range at max values. (default None)</p>
+<p>Example of loading reduced (downsampled, and with energy range cropped) &#8220;spectrum only&#8221;
+data from bcf (original shape: 80keV EDS range (4096 channels), 100x75 pixels):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample80kv.bcf&quot;</span><span class="p">,</span> <span class="n">select_type</span><span class="o">=</span><span class="s1">&#39;spectrum&#39;</span><span class="p">,</span> <span class="n">downsample</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoff_at_kV</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDX, dimensions: (50, 38|595)&gt;</span>
+</pre></div>
+</div>
+<p>load the same file without extra arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample80kv.bcf&quot;</span><span class="p">)</span>
+<span class="go">[&lt;Image, title: BSE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;Image, title: SE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDX, dimensions: (100, 75|1095)&gt;]</span>
+</pre></div>
+</div>
+<p>The loaded array energy dimention can by forced to be larger than the data recorded
+by setting the &#8216;cutoff_at_kV&#8217; kwarg to higher value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample80kv.bcf&quot;</span><span class="p">,</span> <span class="n">cutoff_at_kV</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="go">[&lt;Image, title: BSE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;Image, title: SE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDX, dimensions: (100, 75|4096)&gt;]</span>
+</pre></div>
+</div>
+<p>Note that setting downsample to &gt;1 currently locks out using sem imagery
+as navigator in the plotting.</p>
+</div>
+</div>
+<div class="section" id="emd-electron-microscopy-datasets-hdf5">
+<span id="emd-format"></span><h3><a class="toc-backref" href="#id29">EMD Electron Microscopy Datasets (HDF5)</a><a class="headerlink" href="#emd-electron-microscopy-datasets-hdf5" title="Permalink to this headline">¶</a></h3>
+<p>EMD stands for “Electron Microscopy Dataset.” It is a subset of the open source
+HDF5 wrapper format. N-dimensional data arrays of any standard type can be stored
+in an HDF5 file, as well as tags and other metadata.
+The EMD format was developed at Lawrence Berkeley National Lab
+(see <a class="reference external" href="http://emdatasets.lbl.gov/">http://emdatasets.lbl.gov/</a> for more information).
+NOT to be confused with the FEI EMD format which was developed later and has a
+different structure.</p>
+</div>
+<div class="section" id="protochips-log">
+<span id="protochips-format"></span><h3><a class="toc-backref" href="#id30">Protochips log</a><a class="headerlink" href="#protochips-log" title="Permalink to this headline">¶</a></h3>
+<p>HyperSpy can read heater, biasing and gas cell log files for Protochips holder.
+The format stores all the captured data together with a small header in a csv file. The reader extracts the measured quantity (e. g. temperature, pressure, current, voltage) along the time axis, as well as the notes saved during the experiment. The reader returns a list of signal with each signal corresponding to a quantity. Since there is a small fluctuation in the step of the time axis, the reader assumes that the step is constant and takes its mean, which is a good approximation. Further realase of HyperSpy will read the time axis more precisely by supporting non-linear axis.</p>
+</div>
 </div>
 </div>
 
@@ -529,7 +724,7 @@ with it, all of them will be read and returned as a list.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata_structure.html" class="btn btn-neutral float-right" title="Metadata structure" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="dielectric_function.html" class="btn btn-neutral" title="Dielectric function tools" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -563,7 +758,7 @@ with it, all of them will be read and returned as a list.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.8.5',
+            VERSION:'1.2+dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
