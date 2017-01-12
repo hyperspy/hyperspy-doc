@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tools: the Signal class &mdash; HyperSpy 1.1.1 documentation</title>
+  <title>Tools: the Signal class &mdash; HyperSpy 1.1.2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1.1 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.1.2 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Signal1D Tools" href="signal1d.html"/>
         <link rel="prev" title="Getting started" href="getting_started.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.1.2
               </div>
             
           
@@ -108,8 +108,9 @@
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Tools: the Signal class</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tools: the Signal class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-signal-class-and-its-subclasses">The Signal class and its subclasses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signal-initialization">Signal initialization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#the-navigation-and-signal-dimensions">The navigation and signal dimensions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#transforming-between-signal-subclasses">Transforming between signal subclasses</a></li>
 </ul>
@@ -185,7 +186,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -230,7 +231,7 @@ common functionality to deal with one-dimensional (e.g. spectral) data and
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal"><span class="pre">Signal1D</span></code></a>) adds extra functionality to the
 <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal"><span class="pre">Signal1D</span></code></a> class for electron energy-loss
 spectroscopy data analysis.</p>
-<p>The <a class="reference internal" href="#signal-subclasses-table-label"><span>table below</span></a> summarises all the
+<p>The <a class="reference internal" href="#signal-subclasses-table-label"><span class="std std-ref">table below</span></a> summarises all the
 currently available specialised <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> subclasses.</p>
 <div class="versionchanged">
 <p><span class="versionmodified">Changed in version 1.0: </span>The <code class="xref py py-class docutils literal"><span class="pre">Signal1D</span></code>,
@@ -258,6 +259,36 @@ examples, the data is stored in a numpy array in the
 in the <code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code> attribute and the axes
 information (including calibration) can be accessed (and modified) in the
 <code class="xref py py-attr docutils literal"><span class="pre">axes_manager</span></code> attribute.</p>
+</div>
+<div class="section" id="signal-initialization">
+<h2>Signal initialization<a class="headerlink" href="#signal-initialization" title="Permalink to this headline">¶</a></h2>
+<p>Many of the values in the <code class="xref py py-attr docutils literal"><span class="pre">axes_manager</span></code> can be
+set when making the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Ax0&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;offset&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Ax1&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;offset&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">,</span> <span class="n">dict1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt;Axes manager, axes: (|20, 10)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">           Axes1 |     20 |        |       2 |     0.1 |      B</span>
+<span class="go">           Axes0 |     10 |        |       1 |     0.2 |      A</span>
+</pre></div>
+</div>
+<p>This also applies to the <code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;General&#39;</span><span class="p">:{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;A BaseSignal&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_dict</span><span class="p">[</span><span class="s1">&#39;General&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;A BaseSignal title&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
+<span class="go">├── General</span>
+<span class="go">│   ├── name = A BaseSignal</span>
+<span class="go">│   └── title = A BaseSignal title</span>
+<span class="go">└── Signal</span>
+<span class="go">    ├── binned = False</span>
+<span class="go">    └── signal_type =</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="the-navigation-and-signal-dimensions">
 <h2>The navigation and signal dimensions<a class="headerlink" href="#the-navigation-and-signal-dimensions" title="Permalink to this headline">¶</a></h2>
@@ -292,7 +323,7 @@ have used a <code class="xref py py-class docutils literal"><span class="pre">Si
 one may like to operate with an image stack as if it was a set of spectra or
 viceversa. One can easily switch between these two alternative ways of
 classifiying the dimensions of a three-dimensional dataset by
-<a class="reference internal" href="#transforming-signal"><span>transforming between BaseSignal subclasses</span></a>.</p>
+<a class="reference internal" href="#transforming-signal"><span class="std std-ref">transforming between BaseSignal subclasses</span></a>.</p>
 <p>The same dataset could be seen as a three-dimensional signal:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">td</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">td</span>
@@ -311,7 +342,7 @@ array of scalars by changing the default <em>view</em> of
 </pre></div>
 </div>
 <p>For more examples of manipulating signal axes in the &#8220;signal-navigation&#8221; space
-can be found in <a class="reference internal" href="#signal-transpose"><span>Transposing (changing signal spaces)</span></a>.</p>
+can be found in <a class="reference internal" href="#signal-transpose"><span class="std std-ref">Transposing (changing signal spaces)</span></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Although each dimension can be arbitrarily classified as &#8220;navigation
@@ -965,8 +996,8 @@ arguments for each image in the stack.</span></p>
 <div class="section" id="cropping">
 <h3>Cropping<a class="headerlink" href="#cropping" title="Permalink to this headline">¶</a></h3>
 <p>Cropping can be performed in a very compact and powerful way using
-<a class="reference internal" href="#signal-indexing"><span>Indexing</span></a> . In addition it can be performed using the following
-method or GUIs if cropping <a class="reference internal" href="signal1d.html#signal1d-crop"><span>signal1D</span></a> or <span class="xref std std-ref">signal2D</span>. There is also a general <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.crop" title="hyperspy.signal.BaseSignal.crop"><code class="xref py py-meth docutils literal"><span class="pre">crop()</span></code></a>
+<a class="reference internal" href="#signal-indexing"><span class="std std-ref">Indexing</span></a> . In addition it can be performed using the following
+method or GUIs if cropping <a class="reference internal" href="signal1d.html#signal1d-crop"><span class="std std-ref">signal1D</span></a> or <span class="xref std std-ref">signal2D</span>. There is also a general <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.crop" title="hyperspy.signal.BaseSignal.crop"><code class="xref py py-meth docutils literal"><span class="pre">crop()</span></code></a>
 method that operates <em>in place</em>.</p>
 </div>
 <div class="section" id="rebinning">
@@ -1158,7 +1189,7 @@ the five-number summary statistics of the data.</p>
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.get_current_signal" title="hyperspy.signal.BaseSignal.get_current_signal"><code class="xref py py-meth docutils literal"><span class="pre">get_current_signal()</span></code></a> to compute the histogram or
 print the summary statistics of the signal at the current coordinates, e.g:
 .. code-block:: python</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EELSSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EELSSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">print_summary_statistics</span><span class="p">()</span>
 <span class="go">Summary statistics</span>
 <span class="go">------------------</span>
@@ -1171,7 +1202,7 @@ print the summary statistics of the signal at the current coordinates, e.g:
 <span class="go">max:        2.751</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_current_signal</span><span class="p">()</span><span class="o">.</span><span class="n">print_summary_statistics</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_current_signal</span><span class="p">()</span><span class="o">.</span><span class="n">print_summary_statistics</span><span class="p">()</span>
 <span class="go">Summary statistics</span>
 <span class="go">------------------</span>
 <span class="go">mean:   -0.019</span>
@@ -1185,7 +1216,7 @@ print the summary statistics of the signal at the current coordinates, e.g:
 </div>
 <p>Histogram of different objects can be compared with the functions
 <a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_histograms" title="hyperspy.drawing.utils.plot_histograms"><code class="xref py py-func docutils literal"><span class="pre">plot_histograms()</span></code></a> (see
-<a class="reference internal" href="visualisation.html#plot-spectra"><span>visualisation</span></a> for the plotting options). For example,
+<a class="reference internal" href="visualisation.html#plot-spectra"><span class="std std-ref">visualisation</span></a> for the plotting options). For example,
 with histograms of several random chi-square distributions:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,[</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
@@ -1218,7 +1249,7 @@ to the expected value. Moreover, when the noise is a mixture of white
 linear model:</p>
 <blockquote>
 <div><div class="math">
-<p><img src="../_images/math/253a5ef181fafd515121a05c0026c74d23f6f8a5.png" alt="\mathrm{Var}[X] = (a * \mathrm{E}[X] + b) * c"/></p>
+<p><img src="../_images/math/b14143c9596684bac12ba73265096758aacac6d7.png" alt="\mathrm{Var}[X] = (a * \mathrm{E}[X] + b) * c"/></p>
 </div></div></blockquote>
 <p>Where <cite>a</cite> is the <code class="docutils literal"><span class="pre">gain_factor</span></code>, <cite>b</cite> is the <code class="docutils literal"><span class="pre">gain_offset</span></code> (the Gaussian
 noise variance) and <cite>c</cite> the <code class="docutils literal"><span class="pre">correlation_factor</span></code>. The correlation
@@ -1355,7 +1386,7 @@ signal changes.</p>
 <span class="go">&lt;Signal2D, title: , dimensions: (|4, 3)&gt;</span>
 </pre></div>
 </div>
-<p>ROIs can also be used <a class="reference internal" href="#interactive-label"><span>interactively</span></a> with widgets. The
+<p>ROIs can also be used <a class="reference internal" href="#interactive-label"><span class="std std-ref">interactively</span></a> with widgets. The
 following examples shows how to interactively apply ROIs to an image. Note
 that <em>it is necessary</em> to plot the signal onto which the widgets will be
 added before calling <a class="reference internal" href="../api/hyperspy.html#hyperspy.roi.BaseInteractiveROI.interactive" title="hyperspy.roi.BaseInteractiveROI.interactive"><code class="xref py py-meth docutils literal"><span class="pre">interactive()</span></code></a>.</p>
@@ -1518,7 +1549,7 @@ Both are available via the <a class="reference internal" href="../api/hyperspy.h
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.1',
+            VERSION:'1.1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Model fitting &mdash; HyperSpy 1.1.1 documentation</title>
+  <title>Model fitting &mdash; HyperSpy 1.1.2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1.1 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.1.2 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Electron Energy Loss Spectroscopy" href="eels.html"/>
         <link rel="prev" title="Machine learning" href="mva.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.1.2
               </div>
             
           
@@ -113,7 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Model fitting</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Model fitting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#specifying-custom-components">Specifying custom components</a></li>
@@ -181,7 +181,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -230,7 +230,7 @@ provided for the <code class="xref py py-class docutils literal"><span class="pr
 </div>
 <p>Before creating a model verify that the <code class="docutils literal"><span class="pre">Signal.binned</span></code> metadata
 attribute of the signal is set to the correct value because the resulting
-model depends on this parameter. See <a class="reference internal" href="tools.html#signal-binned"><span>Binned and unbinned signals</span></a> for more details.</p>
+model depends on this parameter. See <a class="reference internal" href="tools.html#signal-binned"><span class="std std-ref">Binned and unbinned signals</span></a> for more details.</p>
 <div class="section" id="creating-a-model">
 <h2>Creating a model<a class="headerlink" href="#creating-a-model" title="Permalink to this headline">¶</a></h2>
 <p>A <code class="xref py py-class docutils literal"><span class="pre">Model1D</span></code> can be created for data in the
@@ -401,11 +401,11 @@ data that can be modelled using gaussians we might proceed as follows:</p>
 <span class="go">   # |            Attribute Name |            Component Name |            Component Type</span>
 <span class="go">---- | ------------------------- | ------------------------- | -------------------------</span>
 <span class="go">   0 |                  Gaussian |                  Gaussian |                  Gaussian</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span> <span class="c1"># Create another gaussian components</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span> <span class="c1"># Create a third gaussian components</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span> <span class="c1"># Create another gaussian component</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span> <span class="c1"># Create a third gaussian component</span>
 </pre></div>
 </div>
-<p>We could use the append method two times to add the two gaussians, but when
+<p>We could use the append method twice to add the two gaussians, but when
 adding multiple components it is handier to use the extend method that enables
 adding a list of components at once.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">gaussian2</span><span class="p">,</span> <span class="n">gaussian3</span><span class="p">))</span> <span class="c1"># note the double brackets!</span>
@@ -514,7 +514,7 @@ To enable this feature for a given component set the
 <p>Often it is useful to consider only part of the model - for example at
 a particular location (i.e. a slice in the navigation space) or energy range
 (i.e. a slice in the signal space). This can be done using exactly the same
-syntax that we use for signal indexing (<a class="reference internal" href="tools.html#signal-indexing"><span>Indexing</span></a>).
+syntax that we use for signal indexing (<a class="reference internal" href="tools.html#signal-indexing"><span class="std std-ref">Indexing</span></a>).
 <code class="xref py py-attr docutils literal"><span class="pre">red_chisq</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">dof</span></code> are automatically
 recomputed for the resulting slices.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
@@ -665,7 +665,7 @@ possible to set a different coupling function by setting the
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.twin_function" title="hyperspy.component.Parameter.twin_function"><code class="xref py py-attr docutils literal"><span class="pre">twin_function</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.html#hyperspy.component.Parameter.twin_inverse_function" title="hyperspy.component.Parameter.twin_inverse_function"><code class="xref py py-attr docutils literal"><span class="pre">twin_inverse_function</span></code></a> attributes.  For
 example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_inverse_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
@@ -684,7 +684,7 @@ example:</p>
 <span class="go">        centre      0.000000</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
 <span class="go">Components  Parameter       Value</span>
 <span class="go">Carbon</span>
@@ -836,7 +836,7 @@ the parameters are still computed and stored in the
 <code class="xref py py-attr docutils literal"><span class="pre">std</span></code> attribute by setting variance equal 1.
 However, the value won&#8217;t be correct unless an accurate value of the variance is
 defined in <code class="docutils literal"><span class="pre">metadata.Signal.Noise_properties.variance</span></code>. See
-<a class="reference internal" href="tools.html#signal-noise-properties"><span>Setting the noise properties</span></a> for more information.</p>
+<a class="reference internal" href="tools.html#signal-noise-properties"><span class="std std-ref">Setting the noise properties</span></a> for more information.</p>
 <p>In the following example, we add poissonian noise to the data instead of
 gaussian noise and proceed to fit as in the previous example.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">SpectrumSimulation</span><span class="p">(</span>
@@ -1288,7 +1288,7 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.1',
+            VERSION:'1.1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

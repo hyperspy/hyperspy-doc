@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.external package &mdash; HyperSpy 1.1.1 documentation</title>
+  <title>hyperspy.external package &mdash; HyperSpy 1.1.2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1.1 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.1.2 documentation" href="../index.html"/>
         <link rel="up" title="hyperspy package" href="hyperspy.html"/>
         <link rel="next" title="hyperspy.external.astroML package" href="hyperspy.external.astroML.html"/>
         <link rel="prev" title="hyperspy.drawing._widgets package" href="hyperspy.drawing._widgets.html"/>
@@ -81,7 +81,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.1.2
               </div>
             
           
@@ -112,7 +112,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="">hyperspy.external package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.external package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.gui.html">hyperspy.gui package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
@@ -172,7 +172,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -241,75 +241,83 @@ like the original iterable, but prints a dynamically updating
 progressbar every time a value is requested.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>iterable <span class="classifier-delimiter">:</span> <span class="classifier">iterable, optional</span></dt>
-<dd>Iterable to decorate with a progressbar.
+<dt>iterable</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">iterable, optional</span><dd>Iterable to decorate with a progressbar.
 Leave blank to manually manage the updates.</dd>
-<dt>desc <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
-<dd>Prefix for the progressbar.</dd>
-<dt>total <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
-<dd>The number of expected iterations. If unspecified,
+<dt>desc</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span><dd>Prefix for the progressbar.</dd>
+<dt>total</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span><dd>The number of expected iterations. If unspecified,
 len(iterable) is used if possible. As a last resort, only basic
 progress statistics are displayed (no ETA, no progressbar).
 If <cite>gui</cite> is True and this parameter needs subsequent updating,
 specify an initial arbitrary large positive integer,
 e.g. int(9e9).</dd>
-<dt>leave <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>If [default: True], keeps all traces of the progressbar
+<dt>leave</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span><dd>If [default: True], keeps all traces of the progressbar
 upon termination of iteration.</dd>
-<dt>file <span class="classifier-delimiter">:</span> <span class="classifier"><cite>io.TextIOWrapper</cite> or <cite>io.StringIO</cite>, optional</span></dt>
-<dd>Specifies where to output the progress messages
+<dt>file</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier"><cite>io.TextIOWrapper</cite> or <cite>io.StringIO</cite>, optional</span><dd>Specifies where to output the progress messages
 [default: sys.stderr]. Uses <cite>file.write(str)</cite> and <cite>file.flush()</cite>
 methods.</dd>
-<dt>ncols <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
-<dd>The width of the entire output message. If specified,
+<dt>ncols</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span><dd>The width of the entire output message. If specified,
 dynamically resizes the progressbar to stay within this bound.
 If unspecified, attempts to use environment width. The
 fallback is a meter width of 10 and no limit for the counter and
 statistics. If 0, will not print any meter (only stats).</dd>
-<dt>mininterval <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
-<dd>Minimum progress update interval, in seconds [default: 0.1].</dd>
-<dt>maxinterval <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
-<dd>Maximum progress update interval, in seconds [default: 10.0].</dd>
-<dt>miniters <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
-<dd>Minimum progress update interval, in iterations.
-If specified, will set <cite>mininterval</cite> to 0.</dd>
-<dt>ascii <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>If unspecified or False, use unicode (smooth blocks) to fill
+<dt>mininterval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span><dd>Minimum progress display update interval, in seconds [default: 0.1].</dd>
+<dt>maxinterval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span><dd>Maximum progress display update interval, in seconds [default: 10].
+Automatically adjusts <cite>miniters</cite> to correspond to <cite>mininterval</cite>
+after long display update lag. Only works if <cite>dynamic_miniters</cite>
+or monitor thread is enabled.</dd>
+<dt>miniters</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span><dd>Minimum progress display update interval, in iterations.
+If 0 and <cite>dynamic_miniters</cite>, will automatically adjust to equal
+<cite>mininterval</cite> (more CPU efficient, good for tight loops).
+If &gt; 0, will skip display of specified number of iterations.
+Tweak this and <cite>mininterval</cite> to get very efficient loops.
+If your progress is erratic with both fast and slow iterations
+(network, skipping items, etc) you should set miniters=1.</dd>
+<dt>ascii</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span><dd>If unspecified or False, use unicode (smooth blocks) to fill
 the meter. The fallback is to use ASCII characters <cite>1-9 #</cite>.</dd>
-<dt>disable <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>Whether to disable the entire progressbar wrapper
-[default: False].</dd>
-<dt>unit <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
-<dd>String that will be used to define the unit of each iteration
+<dt>disable</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool or None, optional</span><dd>Whether to disable the entire progressbar wrapper
+[default: False]. If set to None, disable on non-TTY.</dd>
+<dt>unit</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span><dd>String that will be used to define the unit of each iteration
 [default: it].</dd>
-<dt>unit_scale <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>If set, the number of iterations will be reduced/scaled
+<dt>unit_scale</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span><dd>If set, the number of iterations will be reduced/scaled
 automatically and a metric prefix following the
 International System of Units standard will be added
 (kilo, mega, etc.) [default: False].</dd>
-<dt>dynamic_ncols <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>If set, constantly alters <cite>ncols</cite> to the environment (allowing
+<dt>dynamic_ncols</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span><dd>If set, constantly alters <cite>ncols</cite> to the environment (allowing
 for window resizes) [default: False].</dd>
-<dt>smoothing <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
-<dd>Exponential moving average smoothing factor for speed estimates
+<dt>smoothing</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span><dd>Exponential moving average smoothing factor for speed estimates
 (ignored in GUI mode). Ranges from 0 (average speed) to 1
 (current/instantaneous speed) [default: 0.3].</dd>
-<dt>bar_format <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
-<dd>Specify a custom bar string formatting. May impact performance.
+<dt>bar_format</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span><dd>Specify a custom bar string formatting. May impact performance.
 If unspecified, will use &#8216;{l_bar}{bar}{r_bar}&#8217;, where l_bar is
 &#8216;{desc}{percentage:3.0f}%|&#8217; and r_bar is
 &#8216;| {n_fmt}/{total_fmt} [{elapsed_str}&lt;{remaining_str}, {rate_fmt}]&#8217;
 Possible vars: bar, n, n_fmt, total, total_fmt, percentage,
 rate, rate_fmt, elapsed, remaining, l_bar, r_bar, desc.</dd>
-<dt>initial <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
-<dd>The initial counter value. Useful when restarting a progress
+<dt>initial</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span><dd>The initial counter value. Useful when restarting a progress
 bar [default: 0].</dd>
-<dt>position <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
-<dd>Specify the line offset to print this bar (starting from 0)
+<dt>position</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span><dd>Specify the line offset to print this bar (starting from 0)
 Automatic if unspecified.
 Useful to manage multiple bars at once (eg, from threads).</dd>
-<dt>gui <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
-<dd>WARNING: internal parameter - do not use.
+<dt>gui</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span><dd>WARNING: internal parameter - do not use.
 Use tqdm_gui(...) instead. If set, will attempt to use
 matplotlib animations for a graphical output [default: False].</dd>
 </dl>
@@ -514,15 +522,15 @@ Carl Zeiss MicroImaging GmbH. BioSciences. May 10, 2011</li>
 <a class="reference external" href="http://www.digitalpreservation.gov/formats/content/tiff_tags.shtml">http://www.digitalpreservation.gov/formats/content/tiff_tags.shtml</a></li>
 </ol>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffFile</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffFile</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">images</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">tif</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -554,7 +562,7 @@ and &#8216;extratags&#8217; are passed to the TiffWriter.save function.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="s1">&#39;TZCYX&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
@@ -585,7 +593,7 @@ function.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imsave</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(4, 301, 219)</span>
@@ -652,7 +660,7 @@ automatically called when using the &#8216;with&#8217; context manager.</p>
 <dd></dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffFile</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffFile</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(5, 301, 219)</span>
@@ -805,20 +813,20 @@ file is created.</li>
 <p>TiffWriter instances must be closed using the &#8216;close&#8217; method, which is
 automatically called when using the &#8216;with&#8217; context manager.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffWriter</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">bigtiff</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="mi">219</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TiffWriter</span><span class="p">(</span><span class="s1">&#39;temp.tif&#39;</span><span class="p">,</span> <span class="n">bigtiff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
 <span class="gp">... </span>        <span class="n">tif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">compress</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="attribute">
 <dt id="hyperspy.external.tifffile.TiffWriter.TAGS">
-<code class="descname">TAGS</code><em class="property"> = {'samples_per_pixel': 277, 'image_length': 257, 'image_width': 256, 'subfile_type': 255, 'page_name': 285, 'resolution_unit': 296, 'rows_per_strip': 278, 'new_subfile_type': 254, 'strip_offsets': 273, 'predictor': 317, 'photometric': 262, 'tile_depth': 32998, 'y_resolution': 283, 'extra_samples': 338, 'document_name': 269, 'compression': 259, 'image_depth': 32997, 'orientation': 274, 'strip_byte_counts': 279, 'image_description': 270, 'tile_length': 323, 'tile_offsets': 324, 'tile_byte_counts': 325, 'sample_format': 339, 'tile_width': 322, 'bits_per_sample': 258, 'x_resolution': 282, 'datetime': 306, 'planar_configuration': 284, 'smin_sample_value': 340, 'smax_sample_value': 341, 'color_map': 320, 'software': 305}</em><a class="headerlink" href="#hyperspy.external.tifffile.TiffWriter.TAGS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">TAGS</code><em class="property"> = {'extra_samples': 338, 'tile_byte_counts': 325, 'new_subfile_type': 254, 'tile_offsets': 324, 'x_resolution': 282, 'image_length': 257, 'sample_format': 339, 'resolution_unit': 296, 'bits_per_sample': 258, 'tile_depth': 32998, 'strip_byte_counts': 279, 'samples_per_pixel': 277, 'tile_width': 322, 'planar_configuration': 284, 'image_depth': 32997, 'software': 305, 'y_resolution': 283, 'tile_length': 323, 'orientation': 274, 'subfile_type': 255, 'smin_sample_value': 340, 'photometric': 262, 'image_description': 270, 'page_name': 285, 'predictor': 317, 'rows_per_strip': 278, 'document_name': 269, 'compression': 259, 'image_width': 256, 'strip_offsets': 273, 'color_map': 320, 'datetime': 306, 'smax_sample_value': 341}</em><a class="headerlink" href="#hyperspy.external.tifffile.TiffWriter.TAGS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyperspy.external.tifffile.TiffWriter.TYPES">
-<code class="descname">TYPES</code><em class="property"> = {'H': 3, 'b': 6, 'i': 9, 'B': 1, 'h': 8, 'I': 4, 'Q': 16, 'f': 11, 'd': 12, '2I': 5, 'q': 17, 's': 2}</em><a class="headerlink" href="#hyperspy.external.tifffile.TiffWriter.TYPES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">TYPES</code><em class="property"> = {'H': 3, 'b': 6, 'Q': 16, 'q': 17, 'h': 8, 'f': 11, 'd': 12, '2I': 5, 's': 2, 'B': 1, 'I': 4, 'i': 9}</em><a class="headerlink" href="#hyperspy.external.tifffile.TiffWriter.TYPES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -885,17 +893,17 @@ in JSON or ImageJ formats in an image_description tag.
 If None, do not write a second image_description tag.</li>
 <li><strong>extratags</strong> (<em>sequence of tuples</em>) &#8211; <p>Additional tags as [(code, dtype, count, value, writeonce)].</p>
 <dl class="docutils">
-<dt>code <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>The TIFF tag Id.</dd>
-<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>Data type of items in &#8216;value&#8217; in Python struct format.
+<dt>code</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>The TIFF tag Id.</dd>
+<dt>dtype</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>Data type of items in &#8216;value&#8217; in Python struct format.
 One of B, s, H, I, 2I, b, h, i, f, d, Q, or q.</dd>
-<dt>count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of data values. Not used for string values.</dd>
-<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">sequence</span></dt>
-<dd>&#8216;Count&#8217; values compatible with &#8216;dtype&#8217;.</dd>
-<dt>writeonce <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
-<dd>If True, the tag is written to the first page only.</dd>
+<dt>count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of data values. Not used for string values.</dd>
+<dt>value</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">sequence</span><dd>&#8216;Count&#8217; values compatible with &#8216;dtype&#8217;.</dd>
+<dt>writeonce</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bool</span><dd>If True, the tag is written to the first page only.</dd>
 </dl>
 </li>
 </ul>
@@ -932,7 +940,7 @@ One of B, s, H, I, 2I, b, h, i, f, d, Q, or q.</dd>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tifs</span> <span class="o">=</span> <span class="n">TiffSequence</span><span class="p">(</span><span class="s2">&quot;test.oif.files/*.tif&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tifs</span> <span class="o">=</span> <span class="n">TiffSequence</span><span class="p">(</span><span class="s2">&quot;test.oif.files/*.tif&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tifs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">tifs</span><span class="o">.</span><span class="n">axes</span>
 <span class="go">((2, 100), &#39;CT&#39;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tifs</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
@@ -1123,7 +1131,7 @@ StringIO object&#8221; <a class="reference external" href="https://github.com/nu
 <code class="descclassname">hyperspy.external.tifffile.</code><code class="descname">natural_sorted</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.external.tifffile.natural_sorted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return human sorted list of strings.</p>
 <p>E.g. for sorting file names.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">natural_sorted</span><span class="p">([</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;f2&#39;</span><span class="p">,</span> <span class="s1">&#39;f10&#39;</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">natural_sorted</span><span class="p">([</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;f2&#39;</span><span class="p">,</span> <span class="s1">&#39;f10&#39;</span><span class="p">])</span>
 <span class="go">[&#39;f1&#39;, &#39;f2&#39;, &#39;f10&#39;]</span>
 </pre></div>
 </div>
@@ -1143,7 +1151,7 @@ It is not compatible with old style LZW compressed files like quad-lzw.tif.</p>
 <code class="descclassname">hyperspy.external.tifffile.</code><code class="descname">stripnull</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.external.tifffile.stripnull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return string truncated at first null character.</p>
 <p>Clean NULL terminated C strings.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stripnull</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;string</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stripnull</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;string</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="go">b&#39;string&#39;</span>
 </pre></div>
 </div>
@@ -1197,7 +1205,7 @@ It is not compatible with old style LZW compressed files like quad-lzw.tif.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.1',
+            VERSION:'1.1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
