@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Machine learning &mdash; HyperSpy 1.1.2 documentation</title>
+  <title>Machine learning &mdash; HyperSpy 1.2 documentation</title>
   
 
   
@@ -32,7 +32,10 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="HyperSpy 1.2 documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Model fitting" href="model.html"/>
         <link rel="prev" title="Data visualization" href="visualisation.html"/>
@@ -81,7 +84,7 @@
             
             
               <div class="version">
-                1.1.2
+                1.2
               </div>
             
           
@@ -137,8 +140,10 @@
 <li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_data.html">Working with big data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
@@ -183,7 +188,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/user_guide/mva.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/user_guide/mva.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -251,16 +256,42 @@ of the data (or equivalently, the number of components that should be retained -
 see below).</p>
 <p>To obtain a scree plot for your dataset, run the
 <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><code class="xref py py-meth docutils literal"><span class="pre">plot_explained_variance_ratio()</span></code></a> method:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/screeplot.png"><img alt="../_images/screeplot.png" src="../_images/screeplot.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">PCA scree plot</span></p>
 </div>
-<p>Note that in the figure, the first component has index 0. This is because
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.2.0: </span><code class="docutils literal"><span class="pre">log</span></code>, <code class="docutils literal"><span class="pre">threshold</span></code>, <code class="docutils literal"><span class="pre">hline</span></code>, <code class="docutils literal"><span class="pre">xaxis_type</span></code>, <code class="docutils literal"><span class="pre">xaxis_labeling</span></code>,
+<code class="docutils literal"><span class="pre">signal_fmt</span></code>, <code class="docutils literal"><span class="pre">noise_fmt</span></code>, <code class="docutils literal"><span class="pre">threshold</span></code>, <code class="docutils literal"><span class="pre">xaxis_type</span></code> keyword
+arguments.</p>
+</div>
+<p>The default options for this method will plot a bare scree plot, but the
+method&#8217;s arguments allow for a great deal of customization. For
+example, by specifying a <code class="docutils literal"><span class="pre">threshold</span></code> value, a cutoff line will be drawn at
+the total variance specified, and the components above this value will be
+styled distinctly from the remaining components to show which are considered
+signal, as opposed to noise. Alternatively, by providing an integer value
+for <code class="docutils literal"><span class="pre">threshold</span></code>, the line will be drawn at the specified component (see
+below). These options (together with many others), can be customized to
+develop a figure of your liking. See the documentation of
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><code class="xref py py-meth docutils literal"><span class="pre">plot_explained_variance_ratio()</span></code></a> for more details.</p>
+<p>Note that in the above figure, the first component has index 0. This is because
 Python uses zero based indexing i.e. the initial element of a sequence is found
-at index 0.</p>
+at index 0. To switch to a &#8220;number-based&#8221; (rather than &#8220;index-based&#8221;)
+notation, specify the <code class="docutils literal"><span class="pre">xaxis_type</span></code> parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                     <span class="n">threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                     <span class="n">xaxis_type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/screeplot2.png"><img alt="../_images/screeplot2.png" src="../_images/screeplot2.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">PCA scree plot with number-based axis labeling and a threshold value
+specified</span></p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.7.</span></p>
 </div>
@@ -345,24 +376,39 @@ usually suitable for most datasets. However, to improve the convergence you can
 &#8220;train&#8221; the algorithm with the first few samples of your dataset. For example,
 the following code will train ORPCA using the first 32 samples of the data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
-<span class="go">                    output_dimension=3</span>
+<span class="go">                    output_dimension=3,</span>
 <span class="go">                    training_samples=32)</span>
 </pre></div>
 </div>
-<p>Finally, online RPCA includes two alternative methods to the default solver,
-which can again improve the convergence and speed of the algorithm. The first
-is block-coordinate descent (BCD), and the second is based on stochastic gradient
-descent (SGD), which takes an additional parameter to set the learning rate.</p>
+<p>Finally, online RPCA includes three alternative methods to the default
+closed-form solver, which can again improve both the convergence and speed
+of the algorithm. These are particularly useful for very large datasets.</p>
+<p>The first method is block-coordinate descent (BCD), and takes no
+additional parameters:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
-<span class="go">                    output_dimension=3</span>
-<span class="go">                    method=&#39;BCD&#39;,</span>
-<span class="go">                    training_samples=32)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
-<span class="go">                    output_dimension=3</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    method=&#39;BCD&#39;)</span>
+</pre></div>
+</div>
+<p>The second is based on stochastic gradient descent (SGD), and takes an
+additional parameter to set the learning rate. The learning rate dictates
+the size of the steps taken by the gradient descent algorithm, and setting
+it too large can lead to oscillations that prevent the algorithm from
+finding the correct minima. Usually a value between 1 and 2 works well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
 <span class="go">                    method=&#39;SGD&#39;,</span>
+<span class="go">                    learning_rate=1.1)</span>
+</pre></div>
+</div>
+<p>The third method is MomentumSGD, which typically improves the convergence
+properties of stochastic gradient descent. This takes the further parameter
+&#8220;momentum&#8221;, which should be a fraction between 0 and 1.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    method=&#39;MomentumSGD&#39;,</span>
 <span class="go">                    learning_rate=1.1,</span>
-<span class="go">                    training_samples=32)</span>
+<span class="go">                    momentum=0.5)</span>
 </pre></div>
 </div>
 </div>
@@ -409,7 +455,7 @@ inspecting the <a class="reference internal" href="#scree-plot"><span class="std
 <div class="section" id="visualizing-results">
 <span id="mva-visualization"></span><h2>Visualizing results<a class="headerlink" href="#visualizing-results" title="Permalink to this headline">¶</a></h2>
 <p>HyperSpy includes a number of plotting methods for the results of decomposition
-and blind source separation. All the methods begin with &#8220;<a href="#id9"><span class="problematic" id="id10">plot_</span></a>&#8221;:</p>
+and blind source separation. All the methods begin with &#8220;<a href="#id10"><span class="problematic" id="id11">plot_</span></a>&#8221;:</p>
 <ol class="arabic simple">
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_decomposition_results" title="hyperspy.signal.MVATools.plot_decomposition_results"><code class="xref py py-meth docutils literal"><span class="pre">plot_decomposition_results()</span></code></a>.</li>
 <li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_decomposition_factors" title="hyperspy.signal.MVATools.plot_decomposition_factors"><code class="xref py py-meth docutils literal"><span class="pre">plot_decomposition_factors()</span></code></a>.</li>
@@ -532,7 +578,7 @@ machine learning structure.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.2',
+            VERSION:'1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

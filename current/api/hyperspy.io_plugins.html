@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.io_plugins package &mdash; HyperSpy 1.1.2 documentation</title>
+  <title>hyperspy.io_plugins package &mdash; HyperSpy 1.2 documentation</title>
   
 
   
@@ -32,7 +32,10 @@
   
 
   
-    <link rel="top" title="HyperSpy 1.1.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="HyperSpy 1.2 documentation" href="../index.html"/>
         <link rel="up" title="hyperspy package" href="hyperspy.html"/>
         <link rel="next" title="hyperspy.learn package" href="hyperspy.learn.html"/>
         <link rel="prev" title="hyperspy.gui package" href="hyperspy.gui.html"/>
@@ -81,7 +84,7 @@
             
             
               <div class="version">
-                1.1.2
+                1.2
               </div>
             
           
@@ -188,7 +191,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/api/hyperspy.io_plugins.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/hyperspy.io_plugins.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -224,7 +227,7 @@ as instance of HyperMap inside the self.hypermap dictionary,
 where index of the hypermap (default 0) is the key to the instance.</p>
 <dl class="method">
 <dt id="hyperspy.io_plugins.bcf.BCF_reader.parse_hypermap">
-<code class="descname">parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_kV=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.parse_hypermap" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_kV=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.parse_hypermap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unpack the Delphi/Bruker binary spectral map and return
 numpy array in memory efficient way.</p>
 <p>Pure python/numpy implimentation &#8211; slow, or
@@ -242,13 +245,14 @@ memory requiriments. (default 1)</dd>
 <dt>cutoff_at_kV &#8211; value in keV to truncate the array at. Helps reducing</dt>
 <dd>size of array. (default None)</dd>
 </dl>
+<p>lazy &#8211; return dask.array (True) or numpy.array (False) (default False)</p>
 <p>Returns:
-numpy array of bruker hypermap, with (y,x,E) shape.</p>
+numpy or dask array of bruker hypermap, with (y,x,E) shape.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.io_plugins.bcf.BCF_reader.persistent_parse_hypermap">
-<code class="descname">persistent_parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=None</em>, <em>cutoff_at_kV=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.persistent_parse_hypermap" title="Permalink to this definition">¶</a></dt>
+<code class="descname">persistent_parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=None</em>, <em>cutoff_at_kV=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.persistent_parse_hypermap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse and assign the hypermap to the HyperMap instance.</p>
 <p>Arguments:
 index &#8211; index of hypermap in bcf if v2 (default 0)
@@ -262,7 +266,7 @@ HyperMap, parse_hypermap</p>
 
 <dl class="method">
 <dt id="hyperspy.io_plugins.bcf.BCF_reader.py_parse_hypermap">
-<code class="descname">py_parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_channel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.py_parse_hypermap" title="Permalink to this definition">¶</a></dt>
+<code class="descname">py_parse_hypermap</code><span class="sig-paren">(</span><em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_channel=None</em>, <em>description=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.BCF_reader.py_parse_hypermap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unpack the Delphi/Bruker binary spectral map and return
 numpy array in memory efficient way using pure python implementation.
 (Slow!)</p>
@@ -503,7 +507,7 @@ SFSTreeItem</p>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.bcf.bcf_hyperspectra">
-<code class="descclassname">hyperspy.io_plugins.bcf.</code><code class="descname">bcf_hyperspectra</code><span class="sig-paren">(</span><em>obj_bcf</em>, <em>index=0</em>, <em>downsample=None</em>, <em>cutoff_at_kV=None</em>, <em>instrument=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.bcf_hyperspectra" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.bcf.</code><code class="descname">bcf_hyperspectra</code><span class="sig-paren">(</span><em>obj_bcf</em>, <em>index=0</em>, <em>downsample=None</em>, <em>cutoff_at_kV=None</em>, <em>instrument=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.bcf_hyperspectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return hyperspy required list of dict with eds
 hyperspectra and metadata.</p>
 </dd></dl>
@@ -517,7 +521,7 @@ imagery and metadata.</p>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.bcf.file_reader">
-<code class="descclassname">hyperspy.io_plugins.bcf.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>select_type=None</em>, <em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_kV=None</em>, <em>instrument=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.file_reader" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.bcf.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>select_type=None</em>, <em>index=0</em>, <em>downsample=1</em>, <em>cutoff_at_kV=None</em>, <em>instrument=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bcf.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a bruker bcf file and loads the data into the appropriate class,
 then wraps it into appropriate hyperspy required list of dictionaries
 used by hyperspy.api.load() method.</p>
@@ -564,7 +568,7 @@ using alfa</p>
 <span id="hyperspy-io-plugins-blockfile-module"></span><h2>hyperspy.io_plugins.blockfile module<a class="headerlink" href="#module-hyperspy.io_plugins.blockfile" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="hyperspy.io_plugins.blockfile.file_reader">
-<code class="descclassname">hyperspy.io_plugins.blockfile.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>endianess='&lt;'</em>, <em>load_to_memory=True</em>, <em>mmap_mode='c'</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.blockfile.file_reader" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.blockfile.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>endianess='&lt;'</em>, <em>mmap_mode=None</em>, <em>lazy=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.blockfile.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -862,7 +866,7 @@ endian can be either &#8216;big&#8217; or &#8216;little&#8217;.</p>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.digital_micrograph.file_reader">
-<code class="descclassname">hyperspy.io_plugins.digital_micrograph.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>record_by=None</em>, <em>order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.digital_micrograph.file_reader" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.digital_micrograph.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>record_by=None</em>, <em>order=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.digital_micrograph.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a DM3 file and loads the data into the appropriate class.
 data_id can be specified to load a given image within a DM3 file that
 contains more than one dataset.</p>
@@ -881,6 +885,367 @@ contains more than one dataset.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hyperspy.io_plugins.edax">
+<span id="hyperspy-io-plugins-edax-module"></span><h2>hyperspy.io_plugins.edax module<a class="headerlink" href="#module-hyperspy.io_plugins.edax" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.file_reader">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>record_by='spectrum'</em>, <em>endianess='&lt;'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.file_reader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) &#8211; Name of file to read</li>
+<li><strong>record_by</strong> (<em>str</em>) &#8211; EDAX EDS data is always recorded by &#8216;spectrum&#8217;, so this parameter
+is not used</li>
+<li><strong>endianess</strong> (<em>char</em>) &#8211; Byte-order of data to read</li>
+<li><strong>**kwargs</strong> &#8211; Additional keyword arguments supplied to the readers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.get_ipr_dtype_list">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">get_ipr_dtype_list</code><span class="sig-paren">(</span><em>endianess='&lt;'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.get_ipr_dtype_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data type list for an IPR image description file.
+Further information about the file format is available <a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29507/ImageIPR.pdf">here</a>.</p>
+<dl class="docutils">
+<dt>Table of header tags:</dt>
+<dd><ul class="first last simple">
+<li>version: 2 byte unsigned short; <em>Current version number: 334</em></li>
+<li>imageType: 2 byte unsigned short; <em>0=empty; 1=electron; 2=xmap; 3=disk; 4=overlay</em></li>
+<li>label: 8 byte char array; <em>Image label</em></li>
+<li>sMin: 2 byte unsigned short; <em>Min collected signal</em></li>
+<li>sMax: 2 byte unsigned short; <em>Max collected signal</em></li>
+<li>color: 2 byte unsigned short; <em>color: 0=gray; 1=R; 2=G; 3=B; 4=Y; 5=M; 6=C; 8=overlay</em></li>
+<li>presetMode: 2 byte unsigned short; <em>0=clock; 1=live</em></li>
+<li>presetTime: 4 byte unsigned long; <em>Dwell time for x-ray (millisec)</em></li>
+<li>dataType: 2 byte unsigned short; <em>0=ROI;  1=Net intensity; 2=K ratio; 3=Wt%;  4=Mthin2</em></li>
+<li>timeConstantOld: 2 byte unsigned short; <em>Amplifier pulse processing time [usec]</em></li>
+<li>reserved1: 2 byte short; <em>Not used</em></li>
+<li>roiStartChan: 2 byte unsigned short; <em>ROI starting channel</em></li>
+<li>roiEndChan: 2 byte unsigned short; <em>ROI ending channel</em></li>
+<li>userMin: 2 byte short; <em>User Defined Min signal range</em></li>
+<li>userMax: 2 byte short; <em>User Defined Max signal range</em></li>
+<li>iADC: 2 byte unsigned short; <em>Electron detector number: 1; 2; 3; 4</em></li>
+<li>reserved2: 2 byte short; <em>Not used</em></li>
+<li>iBits: 2 byte unsigned short; <em>conversion type: 8; 12 (not used)</em></li>
+<li>nReads: 2 byte unsigned short; <em>No. of reads per point</em></li>
+<li>nFrames: 2 byte unsigned short; <em>No. of frames averaged (not used)</em></li>
+<li>fDwell: 4 byte float; <em>Dwell time (not used)</em></li>
+<li>accV: 2 byte unsigned short; <em>V_acc in units of 100V</em></li>
+<li>tilt: 2 byte short; <em>Sample tilt [deg]</em></li>
+<li>takeoff: 2 byte short; <em>Takeoff angle [deg]</em></li>
+<li>mag: 4 byte unsigned long; <em>Magnification</em></li>
+<li>wd: 2 byte unsigned short; <em>Working distance [mm]</em></li>
+<li>mppX: 4 byte float; <em>Microns per pixel in X direction</em></li>
+<li>mppY: 4 byte float; <em>Microns per pixel in Y direction</em></li>
+<li>nTextLines: 2 byte unsigned short; <a href="#id1"><span class="problematic" id="id2">*</span></a>No. of comment lines *</li>
+<li>charText: (4 x 32) byte character array; <em>Comment text</em></li>
+<li>reserved3: 4 byte float; <em>Not used</em></li>
+<li>nOverlayElements: 2 byte unsigned short; <em>No. of overlay elements</em></li>
+<li>overlayColors: 16 array of 2 byte unsigned short; <em>Overlay colors</em></li>
+<li>timeConstantNew: 4 byte float; <em>Amplifier time constant [usec]</em></li>
+<li>reserved4: 2 array of 4 byte float; <em>Not used</em></li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>endianess</strong> (<em>byte-order used to read the data</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dtype_list</strong> &#8211; List of the data tags and data types that will be used by numpy to
+read an IPR file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.get_spc_dtype_list">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">get_spc_dtype_list</code><span class="sig-paren">(</span><em>load_all=False</em>, <em>endianess='&lt;'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.get_spc_dtype_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data type list for an SPC spectrum.
+Further information about the file format is available <a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29506/SPECTRUM-V70.pdf">here</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>load_all</strong> (<em>bool</em>) &#8211; Switch to control if all the data is loaded, or if just the
+important pieces of the signal will be read (speeds up loading time)</li>
+<li><strong>of header tags</strong> (<em>Table</em>) &#8211; <ul>
+<li>fVersion: 4 byte float; <em>File format Version</em></li>
+<li>aVersion: 4 byte float; <em>Application Version</em></li>
+<li>fileName: 8 array of 1 byte char; <em>File name w/o &#8216;.spc&#8217; extension (OLD)</em></li>
+<li>collectDateYear: 2 byte short; <em>Year the spectrum was collected</em></li>
+<li>collectDateDay: 1 byte char; <em>Day the spectrum was collected</em></li>
+<li>collectDateMon: 1 byte char; <em>Month the spectrum was collected</em></li>
+<li>collectTimeMin: 1 byte char; <em>Minute the spectrum was collected</em></li>
+<li>collectTimeHour: 1 byte char; <em>Hour the spectrum was collected</em></li>
+<li>collectTimeHund: 1 byte char; <em>Hundredth second the spectrum was collected</em></li>
+<li>collectTimeSec: 1 byte char; <em>Second the spectrum was collected</em></li>
+<li>fileSize: 4 byte long; <em>Size of spectrum file in bytes</em></li>
+<li>dataStart: 4 byte long; <em>Start of spectrum data in bytes offset from 0 of file</em></li>
+<li>numPts: 2 byte short; <em>Number of spectrum pts</em></li>
+<li>intersectingDist: 2 byte short; <em>Intersecting distance * 100 (mm)</em></li>
+<li>workingDist: 2 byte short; <em>Working distance * 100</em></li>
+<li>scaleSetting: 2 byte short; <em>Scale setting distance * 100</em></li>
+<li>filler1: 24 byte;</li>
+<li>spectrumLabel: 256 array of 1 byte char; <em>Type label for spectrum, 0-39=material type, 40-255=sample</em></li>
+<li>imageFilename: 8 array of 1 byte char; <em>Parent Image filename</em></li>
+<li>spotX: 2 byte short; <em>Spot X  in parent image file</em></li>
+<li>spotY: 2 byte short; <em>Spot Y in parent image file</em></li>
+<li>imageADC: 2 byte short; <em>Image ADC value 0-4095</em></li>
+<li>discrValues: 5 array of 4 byte long; <em>Analyzer Discriminator Values</em></li>
+<li>discrEnabled: 5 array of 1 byte unsigned char; <em>Discriminator Flags (0=Disabled,1=Enabled)</em></li>
+<li>pileupProcessed: 1 byte char; <em>Pileup Processed Flag (0=No PU,1=Static PU, 2=Dynamic PU,...)</em></li>
+<li>fpgaVersion: 4 byte long; <em>Firmware Version.</em></li>
+<li>pileupProcVersion: 4 byte long; <em>Pileup Processing Software Version</em></li>
+<li>NB5000CFG: 4 byte long; <em>Defines Hitachi NB5000 Dual Stage Cfg 0=None, 10=Eucentric Crossx,11= Eucentric Surface 12= Side Entry - Side 13 = Side Entry - Top</em></li>
+<li>filler2: 12 byte;</li>
+<li>evPerChan: 4 byte long; <em>EV/channel</em></li>
+<li>ADCTimeConstant: 2 byte short; <em>ADC Time constant</em></li>
+<li>analysisType: 2 byte short; <em>Preset mode 1=clock, 2=count, 3=none, 4=live, 5=resume</em></li>
+<li>preset: 4 byte float; <em>Analysis Time Preset value</em></li>
+<li>maxp: 4 byte long; <em>Maximum counts of the spectrum</em></li>
+<li>maxPeakCh: 4 byte long; <em>Max peak channel number</em></li>
+<li>xRayTubeZ: 2 byte short; <em>XRF</em></li>
+<li>filterZ: 2 byte short; <em>XRF</em></li>
+<li>current: 4 byte float; <em>XRF</em></li>
+<li>sampleCond: 2 byte short; <em>XRF Air= 0, Vacuum= 1, Helium= 2</em></li>
+<li>sampleType: 2 byte short; <em>Bulk or thin</em></li>
+<li>xrayCollimator: 2 byte unsigned short; <em>0=None, 1=Installed</em></li>
+<li>xrayCapilaryType: 2 byte unsigned short; <em>0=Mono, 1=Poly</em></li>
+<li>xrayCapilarySize: 2 byte unsigned short; <em>Range : 20 – 5000 Microns</em></li>
+<li>xrayFilterThickness: 2 byte unsigned short; <em>Range : 0 – 10000 Microns</em></li>
+<li>spectrumSmoothed: 2 byte unsigned short; <em>1= Spectrum Smoothed, Else 0</em></li>
+<li>detector_Size_SiLi: 2 byte unsigned short; <em>Eagle Detector 0=30mm, 1=80mm</em></li>
+<li>spectrumReCalib: 2 byte unsigned short; <em>1= Peaks Recalibrated, Else 0</em></li>
+<li>eagleSystem: 2 byte unsigned short; <em>0=None, 2=Eagle2, 3=Eagle3, 4-Xscope</em></li>
+<li>sumPeakRemoved: 2 byte unsigned short; <em>1= Sum Peaks Removed, Else 0</em></li>
+<li>edaxSoftwareType: 2 byte unsigned short; <em>1= Team Spectrum, Else 0</em></li>
+<li>filler3: 6 byte;</li>
+<li>escapePeakRemoved: 2 byte unsigned short; <em>1=Escape Peak Was Removed, Else 0</em></li>
+<li>analyzerType: 4 byte unsigned long; <em>Hardware type 1=EDI1, 2=EDI2, 3=DPP2, 31=DPP-FR, 32=DPP-FR2, 4=DPP3, 5= APOLLO XLT/XLS/DPP-4 (EDPP)</em></li>
+<li>startEnergy: 4 byte float; <em>Starting energy of spectrum</em></li>
+<li>endEnergy: 4 byte float; <em>Ending energy of spectrum</em></li>
+<li>liveTime: 4 byte float; <em>LiveTime</em></li>
+<li>tilt: 4 byte float; <em>Tilt angle</em></li>
+<li>takeoff: 4 byte float; <em>Take off angle</em></li>
+<li>beamCurFact: 4 byte float; <em>Beam current factor</em></li>
+<li>detReso: 4 byte float; <em>Detector resolution</em></li>
+<li>detectType: 4 byte unsigned long; <em>Detector Type: 1=Std-BE, 2=UTW, 3=Super UTW, 4=ECON 3/4 Open, 5=ECON 3/4 Closed, 6=ECON 5/6 Open, 7=ECON 5/6 Closed, 8=TEMECON; Add + 10 For Sapphire SiLi Detectors, (11-18), which started shipping in 1996. 30 = APOLLO 10 SDD, 31=APOLLO XV, 32 = APOLLO 10+, 40 = APOLLO 40 SDD ,50 = APOLLO-X, 51=APOLLO-XP, 52 = APOLLO-XL, 53 = APOLLO XL-XRF, 60 =APOLLO-XLT-LS, 61 =APOLLO-XLT-NW, 62 =APOLLO-XLT-SUTW</em></li>
+<li>parThick: 4 byte float; <em>Parlodion light shield thickness</em></li>
+<li>alThick: 4 byte float; <em>Aluminum light shield thickness</em></li>
+<li>beWinThick: 4 byte float; <em>Be window thickness</em></li>
+<li>auThick: 4 byte float; <em>Gold light shield thickness</em></li>
+<li>siDead: 4 byte float; <em>Si dead layer thickness</em></li>
+<li>siLive: 4 byte float; <em>Si live layer thickness</em></li>
+<li>xrayInc: 4 byte float; <em>X-ray incidence angle</em></li>
+<li>azimuth: 4 byte float; <em>Azimuth angle of detector</em></li>
+<li>elevation: 4 byte float; <em>Elevation angle of detector</em></li>
+<li>bCoeff: 4 byte float; <em>K-line B coefficient</em></li>
+<li>cCoeff: 4 byte float; <em>K-line C coefficient</em></li>
+<li>tailMax: 4 byte float; <em>Tail function maximum channel</em></li>
+<li>tailHeight: 4 byte float; <em>Tail height adjustment percentage</em></li>
+<li>kV: 4 byte float; <em>Acc voltage</em></li>
+<li>apThick: 4 byte float; <em>Ap window thickness</em></li>
+<li>xTilt: 4 byte float; <em>x tilt angle for mDX</em></li>
+<li>yTilt: 4 byte float; <em>y tilt angle for mDX</em></li>
+<li>yagStatus: 4 byte unsigned long; <em>0 = N/A, 1 = YAG OUT, 2 = YAG IN</em></li>
+<li>filler4: 24 byte;</li>
+<li>rawDataType: 2 byte unsigned short; <em>TEM or SEM data</em></li>
+<li>totalBkgdCount: 4 byte float; <em>Accumulated background counts</em></li>
+<li>totalSpectralCount: 4 byte unsigned long; <em>Accumulated spectrum counts</em></li>
+<li>avginputCount: 4 byte float; <em>Average spectral counts</em></li>
+<li>stdDevInputCount: 4 byte float; <em>Standard deviation of spectral counts</em></li>
+<li>peakToBack: 2 byte unsigned short; <em>Peak to background setting. 0 = off, 1 = low, 2 = medium, 3 = high, 4 = user selected</em></li>
+<li>peakToBackValue: 4 byte float; <em>Peak to back value</em></li>
+<li>filler5: 38 byte;</li>
+<li>numElem: 2 byte short; <em>Number of peak id elements 0-48</em></li>
+<li>at: 48 array of 2 byte unsigned short; <em>atomic numbers for peak id elems</em></li>
+<li>line: 48 array of 2 byte unsigned short; <em>line numbers for peak id elems</em></li>
+<li>energy: 48 array of 4 byte float; <em>float energy of identified peaks</em></li>
+<li>height: 48 array of 4 byte unsigned long; <em>height in counts of id&#8217; ed peaks</em></li>
+<li>spkht: 48 array of 2 byte short; <em>sorted peak height of id&#8217; ed peaks</em></li>
+<li>filler5_1: 30 byte;</li>
+<li>numRois: 2 byte short; <em>Number of ROI&#8217;s defined 0-48</em></li>
+<li>st: 48 array of 2 byte short; <em>Start channel # for each ROI</em></li>
+<li>end: 48 array of 2 byte short; <em>End channel # for each ROI</em></li>
+<li>roiEnable: 48 array of 2 byte short; <em>ROI enable/disable flags</em></li>
+<li>roiNames: (24 x 8) array of 1 byte char; <em>8 char name for eah ROI</em></li>
+<li>filler5_2: 1 byte;</li>
+<li>userID: 80 array of 1 byte char; <em>User ID (Vision S/W) - Overlapping</em></li>
+<li>filler5_3: 111 byte;</li>
+<li>sRoi: 48 array of 2 byte short; <em>sorted ROI heights</em></li>
+<li>scaNum: 48 array of 2 byte short; <em>SCA number assigned for each ROI</em></li>
+<li>filler6: 12 byte;</li>
+<li>backgrdWidth: 2 byte short; <em>Background width</em></li>
+<li>manBkgrdPerc: 4 byte float; <em>Percentage to move manual background down</em></li>
+<li>numBkgrdPts: 2 byte short; <em>Number of background points (2-64)</em></li>
+<li>backMethod: 4 byte unsigned long; <em>Background method 1=auto, 2=manual</em></li>
+<li>backStEng: 4 byte float; <em>Starting energy of background</em></li>
+<li>backEndEng: 4 byte float; <em>Ending energy of background</em></li>
+<li>bg: 64 array of 2 byte short; <em>Channel # of background point</em></li>
+<li>bgType: 4 byte unsigned long; <em>Background type. 1 = curve, 2 = linear.</em></li>
+<li>concenKev1: 4 byte float; <em>First concentration background point</em></li>
+<li>concenKev2: 4 byte float; <em>Second concentration background point</em></li>
+<li>concenMethod: 2 byte short; <em>0 = Off, 1 = On</em></li>
+<li>jobFilename: 32 array of 1 byte char; <em>Vision Job Filename</em></li>
+<li>filler7: 16 byte;</li>
+<li>numLabels: 2 byte short; <em>Number of displayed labels</em></li>
+<li>label: (10 x 32) array 1 byte char; <em>32 character labels on the spectrum</em></li>
+<li>labelx: 10 array of 2 byte short; <em>x position of label in terms of channel #</em></li>
+<li>labely: 10 array of 4 byte long; <em>y position of label in terms of counts</em></li>
+<li>zListFlag: 4 byte long; <em>Flag to indicate if Z List was written</em></li>
+<li>bgPercents: 64 array of 4 byte float; <em>Percentage to move background point up and down.</em></li>
+<li>IswGBg: 2 byte short; <em>= 1 if new backgrd pts exist</em></li>
+<li>BgPoints: 5 array of 4 byte float; <em>Background points</em></li>
+<li>IswGConc: 2 byte short; <em>= 1 if given concentrations exist</em></li>
+<li>numConcen: 2 byte short; <em>Number of elements (up to 24)</em></li>
+<li>ZList: 24 array of 2 byte short; <em>Element list for which given concentrations exist</em></li>
+<li>GivenConc: 24 array of 4 byte float; <em>Given concentrations for each element in Zlist</em></li>
+<li>filler8: 598 byte;</li>
+<li>s: 4096 array of 4 byte long; <em>counts for each channel</em></li>
+<li>longFileName: 256 array of 1 byte char; <em>Long filename for 32 bit version</em></li>
+<li>longImageFileName: 256 array of 1 byte char; <em>Associated long image file name</em></li>
+<li>ADCTimeConstantNew: 4 byte float; <em>Time constant: 2.5… 100 OR 1.6… 102.4 us</em></li>
+<li>filler9: 60 byte;</li>
+<li>numZElements: 2 byte short; <em>number of Z List elements for quant</em></li>
+<li>zAtoms: 48 array of 2 byte short; <em>Z List Atomic numbers</em></li>
+<li>zShells: 48 array of 2 byte short; <em>Z List Shell numbers</em></li>
+</ul>
+</li>
+<li><strong>endianess</strong> (<em>byte-order used to read the data</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dtype_list</strong> &#8211; List of the data tags and data types that will be used by numpy to
+read an SPC file header.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.get_spd_dtype_list">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">get_spd_dtype_list</code><span class="sig-paren">(</span><em>endianess='&lt;'</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.get_spd_dtype_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data type list for an SPD map.
+Further information about the file format is available <a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29505/SpcMap-spd.file.format.pdf">here</a>.</p>
+<dl class="docutils">
+<dt>Table of header tags:</dt>
+<dd><ul class="first last simple">
+<li>tag: 16 byte char array;    <em>File ID tag (&#8220;MAPSPECTRA_DATA&#8221;)</em></li>
+<li>version: 4 byte long;       <em>File version</em></li>
+<li>nSpectra: 4 byte long;      <em>Number of spectra in file</em></li>
+<li>nPoints: 4 byte long;       <em>Number of map pixels in X direction</em></li>
+<li>nLines: 4 byte long;        <em>Number of map pixels in Y direction</em></li>
+<li>nChannels: 4 byte long;     <em>Number of channels per spectrum</em></li>
+<li>countBytes: 4 byte long;    <em>Number of count bytes per channel</em></li>
+<li>dataOffset: 4 byte long;    <em>File offset in bytes for data start</em></li>
+<li>nFrames: 4 byte long;       <em>Number of frames in live spectrum mapping</em></li>
+<li>fName: 120 byte char array; <em>File name of electron image acquired during mapping</em></li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>endianess</strong> (<em>byte-order used to read the data</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dtype_list</strong> &#8211; List of the data tags and data types that will be used by numpy to
+read an SPD file header.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.spc_reader">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">spc_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>endianess='&lt;'</em>, <em>load_all_spc=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.spc_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from an SPC spectrum specified by filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>str</em>) &#8211; Name of SPC file to read</li>
+<li><strong>endianess</strong> (<em>char</em>) &#8211; Byte-order of data to read</li>
+<li><strong>load_all_spc</strong> (<em>bool</em>) &#8211; Switch to control if all of the .spc header is read, or just the
+important parts for import into HyperSpy</li>
+<li><strong>**kwargs</strong> &#8211; Remaining arguments are passed to the Numpy <code class="docutils literal"><span class="pre">memmap</span></code> function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list with dictionary of signal information to be passed back to
+hyperspy.io.load_with_reader</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.edax.spd_reader">
+<code class="descclassname">hyperspy.io_plugins.edax.</code><code class="descname">spd_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>endianess='&lt;'</em>, <em>nav_units=None</em>, <em>spc_fname=None</em>, <em>ipr_fname=None</em>, <em>load_all_spc=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.edax.spd_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from an SPD spectral map specified by filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>str</em>) &#8211; Name of SPD file to read</li>
+<li><strong>endianess</strong> (<em>char</em>) &#8211; Byte-order of data to read</li>
+<li><strong>nav_units</strong> (<em>'nm'</em><em>, </em><em>'um'</em><em>, or </em><em>None</em>) &#8211; Default navigation units for EDAX data is in microns, so this is the
+default unit to save in the signal. Can also be specified as &#8216;nm&#8217;,
+which will output a signal with nm scale instead.</li>
+<li><strong>spc_fname</strong> (<em>None</em><em> or </em><em>str</em>) &#8211; Name of file from which to read the spectral calibration. If data
+was exported fully from EDAX TEAM software, an .spc file with the
+same name as the .spd should be present.
+If <cite>None</cite>, the default filename will be searched for.
+Otherwise, the name of the .spc file to use for calibration can
+be explicitly given as a string.</li>
+<li><strong>ipr_fname</strong> (<em>None</em><em> or </em><em>str</em>) &#8211; Name of file from which to read the spatial calibration. If data
+was exported fully from EDAX TEAM software, an .ipr file with the
+same name as the .spd (plus a &#8220;_Img&#8221; suffix) should be present.
+If <cite>None</cite>, the default filename will be searched for.
+Otherwise, the name of the .ipr file to use for spatial calibration
+can be explicitly given as a string.</li>
+<li><strong>load_all_spc</strong> (<em>bool</em>) &#8211; Switch to control if all of the .spc header is read, or just the
+important parts for import into HyperSpy</li>
+<li><strong>kwargs**</strong> &#8211; Remaining arguments are passed to the Numpy <code class="docutils literal"><span class="pre">memmap</span></code> function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list with dictionary of signal information to be passed back to
+hyperspy.io.load_with_reader</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="module-hyperspy.io_plugins.emd">
 <span id="hyperspy-io-plugins-emd-module"></span><h2>hyperspy.io_plugins.emd module<a class="headerlink" href="#module-hyperspy.io_plugins.emd" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -888,16 +1253,19 @@ contains more than one dataset.</p>
 <em class="property">class </em><code class="descclassname">hyperspy.io_plugins.emd.</code><code class="descname">EMD</code><span class="sig-paren">(</span><em>signals=None</em>, <em>user=None</em>, <em>microscope=None</em>, <em>sample=None</em>, <em>comments=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.EMD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Class for storing electron microscopy datasets.</p>
-<p>The <a class="reference internal" href="#hyperspy.io_plugins.emd.EMD" title="hyperspy.io_plugins.emd.EMD"><code class="xref py py-class docutils literal"><span class="pre">EMD</span></code></a> class can hold an arbitrary amount of datasets in the <cite>signals</cite> dictionary.
-These are saved as HyperSpy <code class="xref py py-class docutils literal"><span class="pre">Signal</span></code> instances. Global metadata
-are saved in four dictionaries (<cite>user</cite>, <cite>microscope</cite>, <cite>sample</cite>, <cite>comments</cite>). To print
-relevant information about the EMD instance use the <code class="xref py py-func docutils literal"><span class="pre">log_info()</span></code> function. EMD
-instances can be loaded from and saved to emd-files, an hdf5 standard developed at Lawrence
-Berkeley National Lab (<a class="reference external" href="http://emdatasets.lbl.gov/">http://emdatasets.lbl.gov/</a>).</p>
+<p>The <a class="reference internal" href="#hyperspy.io_plugins.emd.EMD" title="hyperspy.io_plugins.emd.EMD"><code class="xref py py-class docutils literal"><span class="pre">EMD</span></code></a> class can hold an arbitrary amount of datasets in the
+<cite>signals</cite> dictionary. These are saved as HyperSpy
+<code class="xref py py-class docutils literal"><span class="pre">Signal</span></code> instances. Global metadata are saved in
+four dictionaries (<cite>user</cite>, <cite>microscope</cite>, <cite>sample</cite>, <cite>comments</cite>). To print
+relevant information about the EMD instance use the <code class="xref py py-func docutils literal"><span class="pre">log_info()</span></code>
+function. EMD instances can be loaded from and saved to emd-files, an
+hdf5 standard developed at Lawrence
+Berkeley National Lab (<a class="reference external" href="https://emdatasets.com/">https://emdatasets.com/</a>).</p>
 <dl class="attribute">
 <dt id="hyperspy.io_plugins.emd.EMD.signals">
 <code class="descname">signals</code><a class="headerlink" href="#hyperspy.io_plugins.emd.EMD.signals" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dictionary</em> &#8211; Dictionary which contains all datasets as <code class="xref py py-class docutils literal"><span class="pre">Signal</span></code> instances.</p>
+<dd><p><em>dictionary</em> &#8211; Dictionary which contains all datasets as
+<code class="xref py py-class docutils literal"><span class="pre">Signal</span></code> instances.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -927,18 +1295,21 @@ Berkeley National Lab (<a class="reference external" href="http://emdatasets.lbl
 <dl class="method">
 <dt id="hyperspy.io_plugins.emd.EMD.add_signal">
 <code class="descname">add_signal</code><span class="sig-paren">(</span><em>signal</em>, <em>name=None</em>, <em>metadata=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.EMD.add_signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a hyperspy signal to the EMD instance and make sure all metadata is present.</p>
+<dd><p>Add a HyperSpy signal to the EMD instance and make sure all
+metadata is present.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>signal</strong> (<code class="xref py py-class docutils literal"><span class="pre">Signal</span></code>) &#8211; HyperSpy signal which should be added to the EMD instance.</li>
-<li><strong>name</strong> (<em>string, optional</em>) &#8211; Name of the (used as a key for the <cite>signals</cite> dictionary). If not specified,
-<cite>signal.metadata.General.title</cite> will be used. If this is an empty string, both name
-and signal title are set to &#8216;dataset&#8217; per default. If specified, <cite>name</cite> overwrites the
+<li><strong>name</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a><em>, </em><em>optional</em>) &#8211; Name of the (used as a key for the <cite>signals</cite> dictionary). If not
+specified, <cite>signal.metadata.General.title</cite> will be used. If this
+is an empty string, both name and signal title are set to &#8216;dataset&#8217;
+per default. If specified, <cite>name</cite> overwrites the
 signal title.</li>
-<li><strong>metadata</strong> (<em>dictionary</em>) &#8211; Dictionary which holds signal specific metadata which will be added to the signal.</li>
+<li><strong>metadata</strong> (<em>dictionary</em>) &#8211; Dictionary which holds signal specific metadata which will
+be added to the signal.</li>
 </ul>
 </td>
 </tr>
@@ -951,23 +1322,25 @@ signal title.</li>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>This is the preferred way to add signals to the EMD instance. Directly adding to the
-<cite>signals</cite> dictionary is possible but does not make sure all metadata are correct. This
-method is also called in the standard constructor on all entries in the <cite>signals</cite>
-dictionary!</p>
+<p>This is the preferred way to add signals to the EMD instance.
+Directly adding to the <cite>signals</cite> dictionary is possible but does not
+make sure all metadata are correct. This method is also called in
+the standard constructor on all entries in the <cite>signals</cite> dictionary!</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="hyperspy.io_plugins.emd.EMD.load_from_emd">
-<em class="property">classmethod </em><code class="descname">load_from_emd</code><span class="sig-paren">(</span><em>filename</em>, <em>load_to_memory=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.EMD.load_from_emd" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_from_emd</code><span class="sig-paren">(</span><em>filename</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.EMD.load_from_emd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct <a class="reference internal" href="#hyperspy.io_plugins.emd.EMD" title="hyperspy.io_plugins.emd.EMD"><code class="xref py py-class docutils literal"><span class="pre">EMD</span></code></a> object from an emd-file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filename</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a>) &#8211; The name of the emd-file from which to load the signals. Standard format is &#8216;<a href="#id1"><span class="problematic" id="id2">*</span></a>.emd&#8217;.</li>
-<li><strong>load_to_memory</strong> (<em>bool, optional</em>) &#8211; If True (default) loads data to memory. If False, enables loading only if requested.</li>
+<li><strong>filename</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a>) &#8211; The name of the emd-file from which to load the signals. Standard
+format is &#8216;<a href="#id3"><span class="problematic" id="id4">*</span></a>.emd&#8217;.</li>
+<li><strong>False</strong> (<em>bool</em><em>, </em><em>optional</em>) &#8211; If False (default) loads data to memory. If True, enables loading
+only if requested.</li>
 </ul>
 </td>
 </tr>
@@ -995,7 +1368,7 @@ dictionary!</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>string, optional</em>) &#8211; The name of the emd-file in which to store the signals.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a><em>, </em><em>optional</em>) &#8211; The name of the emd-file in which to store the signals.
 The default is &#8216;datacollection.emd&#8217;.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
@@ -1010,7 +1383,7 @@ The default is &#8216;datacollection.emd&#8217;.</td>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.emd.file_reader">
-<code class="descclassname">hyperspy.io_plugins.emd.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>load_to_memory=True</em>, <em>log_info=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.file_reader" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.emd.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>log_info=False</em>, <em>lazy=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.emd.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1104,6 +1477,11 @@ ser file.</td>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="hyperspy.io_plugins.fei.load_only_data">
+<code class="descclassname">hyperspy.io_plugins.fei.</code><code class="descname">load_only_data</code><span class="sig-paren">(</span><em>filename</em>, <em>array_shape</em>, <em>record_by</em>, <em>num_axes</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.fei.load_only_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="hyperspy.io_plugins.fei.load_ser_file">
 <code class="descclassname">hyperspy.io_plugins.fei.</code><code class="descname">load_ser_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.fei.load_ser_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1158,7 +1536,7 @@ required format.</p>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.hdf5.file_reader">
-<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='r'</em>, <em>driver='core'</em>, <em>backing_store=False</em>, <em>load_to_memory=True</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.file_reader" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">file_reader</code><span class="sig-paren">(</span><em>filename</em>, <em>backing_store=False</em>, <em>lazy=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.file_reader" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1172,13 +1550,39 @@ required format.</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="hyperspy.io_plugins.hdf5.get_signal_chunks">
+<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">get_signal_chunks</code><span class="sig-paren">(</span><em>shape</em>, <em>dtype</em>, <em>signal_axes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.get_signal_chunks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that claculates chunks for the signal, preferably at least one
+chunk per signal space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shape</strong> (<em>tuple</em>) &#8211; the shape of the dataset to be sored / chunked</li>
+<li><strong>dtype</strong> (<em>{dtype</em><em>, </em><em>string}</em>) &#8211; the numpy dtype of the data</li>
+<li><strong>signal_axes</strong> (<em>{None</em><em>, </em><em>iterable of ints}</em>) &#8211; the axes defining &#8220;signal space&#8221; of the dataset. If None, the default
+h5py chunking is performed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hyperspy.io_plugins.hdf5.hdfgroup2dict">
-<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">hdfgroup2dict</code><span class="sig-paren">(</span><em>group</em>, <em>dictionary=None</em>, <em>load_to_memory=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.hdfgroup2dict" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">hdfgroup2dict</code><span class="sig-paren">(</span><em>group</em>, <em>dictionary=None</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.hdfgroup2dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyperspy.io_plugins.hdf5.hdfgroup2signaldict">
-<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">hdfgroup2signaldict</code><span class="sig-paren">(</span><em>group</em>, <em>load_to_memory=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.hdfgroup2signaldict" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">hdfgroup2signaldict</code><span class="sig-paren">(</span><em>group</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.hdfgroup2signaldict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyperspy.io_plugins.hdf5.overwrite_dataset">
+<code class="descclassname">hyperspy.io_plugins.hdf5.</code><code class="descname">overwrite_dataset</code><span class="sig-paren">(</span><em>group</em>, <em>data</em>, <em>key</em>, <em>signal_axes=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hdf5.overwrite_dataset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1268,8 +1672,8 @@ PIL.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>string</strong> (<em>string or file object</em>) &#8211; It must complain with the EMSA/MSA standard.</li>
-<li><strong>filename</strong> (<em>string or None</em>) &#8211; The filename.</li>
+<li><strong>string</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a><em> or </em><em>file object</em>) &#8211; It must complain with the EMSA/MSA standard.</li>
+<li><strong>filename</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a><em> or </em><em>None</em>) &#8211; The filename.</li>
 <li><strong>Returns</strong> &#8211; </li>
 <li><strong>--------</strong> &#8211; </li>
 <li><strong>file_data_list</strong> (<em>list</em>) &#8211; The list containts a dictionary that contains the parsed
@@ -1376,7 +1780,7 @@ height-origin         int      # row offset in pixels
 height-scale          float    # row scaling (units per pixel)
 height-units          str      # row units, usually nm
 height-name      str           # Name of the magnitude stored as height
-signal            str        # Name of the signal stored, e.g. HAADF
+signal            str        # Type of the signal stored, e.g. EDS_SEM
 convergence-angle float   # TEM convergence angle in mrad
 collection-angle  float   # EELS spectrometer collection semi-angle in mrad
 beam-energy       float   # TEM beam energy in keV
@@ -1386,7 +1790,8 @@ live-time         float   # Live time per spectrum
 energy-resolution float   # Resolution of the EDS (FHWM of MnKa)
 tilt-stage        float   # The tilt of the stage
 date              str     # date in ISO 8601
-time              str     # time in ISO 8601</p>
+time              str     # time in ISO 8601
+title              str    # title of the signal to be stored</p>
 </div></blockquote>
 <p>NOTES</p>
 <p>When &#8216;data-length&#8217; is 1, the &#8216;byte order&#8217; is not relevant as there is only
@@ -1434,12 +1839,12 @@ Accepts file object &#8216;fp. Returns dictionary rpl_info.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>rpl_info</strong> (<em>dict</em>) &#8211; A dictionary containing the keywords as parsed by read_rpl</li>
 <li><strong>fp</strong> &#8211; </li>
-<li><strong>mmap_mode</strong> (<em>{None, 'r+', 'r', 'w+', 'c'}, optional</em>) &#8211; </li>
-<li><strong>not None, then memory-map the file, using the given mode</strong> (<em>If</em>) &#8211; </li>
-<li><strong>numpy.memmap).  The mode has no effect for pickled or</strong> (<em>(see</em>) &#8211; </li>
+<li><strong>mmap_mode</strong> (<em>{None</em><em>, </em><em>'r+'</em><em>, </em><em>'r'</em><em>, </em><em>'w+'</em><em>, </em><em>'c'}</em><em>, </em><em>optional</em>) &#8211; </li>
+<li><strong>not None</strong><strong>, </strong><strong>then memory-map the file</strong><strong>, </strong><strong>using the given mode</strong> (<em>If</em>) &#8211; </li>
+<li><strong>numpy.memmap</strong><strong>)</strong><strong>  The mode has no effect for pickled or</strong> (<em></em><em>(</em><em>see</em>) &#8211; </li>
 <li><strong>files.</strong> (<em>zipped</em>) &#8211; </li>
-<li><strong>memory-mapped array is stored on disk, and not directly loaded</strong> (<a class="reference internal" href="hyperspy._components.html#hyperspy._components.error_function.Erf.A" title="hyperspy._components.error_function.Erf.A"><em>A</em></a>) &#8211; </li>
-<li><strong>memory.  However, it can be accessed and sliced like any</strong> (<em>into</em>) &#8211; </li>
+<li><strong>memory-mapped array is stored on disk</strong><strong>, </strong><strong>and not directly loaded</strong> (<a class="reference internal" href="hyperspy._components.html#hyperspy._components.error_function.Erf.A" title="hyperspy._components.error_function.Erf.A"><em>A</em></a>) &#8211; </li>
+<li><strong>memory.  However</strong><strong>, </strong><strong>it can be accessed and sliced like any</strong> (<em>into</em>) &#8211; </li>
 <li><strong>Memory mapping is especially useful for accessing</strong> (<em>ndarray.</em>) &#8211; </li>
 <li><strong>fragments of large files without reading the entire file</strong> (<em>small</em>) &#8211; </li>
 <li><strong>memory.</strong> (<em>into</em>) &#8211; </li>
@@ -1528,7 +1933,7 @@ in x, y, z.</p>
 
 <dl class="attribute">
 <dt id="hyperspy.io_plugins.semper_unf.SemperFormat.ICLASS_DICT_INV">
-<code class="descname">ICLASS_DICT_INV</code><em class="property"> = {'display look-up table': 10, 'macro': 2, &lt;undefined&gt;: 6, 'position list': 8, 'image': 1, 'spectrum': 4, 'histogram': 9, 'walsh': 7, 'correlation': 5, 'fourier': 3}</em><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.ICLASS_DICT_INV" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ICLASS_DICT_INV</code><em class="property"> = {'position list': 8, 'image': 1, 'correlation': 5, &lt;undefined&gt;: 6, 'fourier': 3, 'histogram': 9, 'macro': 2, 'spectrum': 4, 'walsh': 7, 'display look-up table': 10}</em><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.ICLASS_DICT_INV" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1538,7 +1943,7 @@ in x, y, z.</p>
 
 <dl class="attribute">
 <dt id="hyperspy.io_plugins.semper_unf.SemperFormat.IFORM_DICT_INV">
-<code class="descname">IFORM_DICT_INV</code><em class="property"> = {&lt;class 'numpy.int8'&gt;: 0, &lt;class 'numpy.complex64'&gt;: 3, &lt;class 'numpy.int16'&gt;: 1, &lt;class 'numpy.int32'&gt;: 4, &lt;class 'numpy.float32'&gt;: 2}</em><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.IFORM_DICT_INV" title="Permalink to this definition">¶</a></dt>
+<code class="descname">IFORM_DICT_INV</code><em class="property"> = {&lt;class 'numpy.int16'&gt;: 1, &lt;class 'numpy.complex64'&gt;: 3, &lt;class 'numpy.int8'&gt;: 0, &lt;class 'numpy.float32'&gt;: 2, &lt;class 'numpy.int32'&gt;: 4}</em><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.IFORM_DICT_INV" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1567,7 +1972,7 @@ in x, y, z.</p>
 
 <dl class="classmethod">
 <dt id="hyperspy.io_plugins.semper_unf.SemperFormat.load_from_unf">
-<em class="property">classmethod </em><code class="descname">load_from_unf</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.load_from_unf" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_from_unf</code><span class="sig-paren">(</span><em>filename</em>, <em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.load_from_unf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a <cite>.unf</cite>-file into a <a class="reference internal" href="#hyperspy.io_plugins.semper_unf.SemperFormat" title="hyperspy.io_plugins.semper_unf.SemperFormat"><code class="xref py py-class docutils literal"><span class="pre">SemperFormat</span></code></a> object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1612,8 +2017,8 @@ object.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filename</strong> (<em>string, optional</em>) &#8211; The name of the unf-file to which the data should be written.</li>
-<li><strong>skip_header</strong> (<em>boolean, optional</em>) &#8211; Determines if the header, title and label should be skipped (useful
+<li><strong>filename</strong> (<a class="reference internal" href="hyperspy.drawing._widgets.html#hyperspy.drawing._widgets.label.LabelWidget.string" title="hyperspy.drawing._widgets.label.LabelWidget.string"><em>string</em></a><em>, </em><em>optional</em>) &#8211; The name of the unf-file to which the data should be written.</li>
+<li><strong>skip_header</strong> (<em>boolean</em><em>, </em><em>optional</em>) &#8211; Determines if the header, title and label should be skipped (useful
 for some other programs). Default is False.</li>
 </ul>
 </td>
@@ -1630,7 +2035,7 @@ for some other programs). Default is False.</li>
 
 <dl class="method">
 <dt id="hyperspy.io_plugins.semper_unf.SemperFormat.to_signal">
-<code class="descname">to_signal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.to_signal" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_signal</code><span class="sig-paren">(</span><em>lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.semper_unf.SemperFormat.to_signal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export a <a class="reference internal" href="#hyperspy.io_plugins.semper_unf.SemperFormat" title="hyperspy.io_plugins.semper_unf.SemperFormat"><code class="xref py py-class docutils literal"><span class="pre">SemperFormat</span></code></a> object to a
 <code class="xref py py-class docutils literal"><span class="pre">Signal</span></code> object.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1695,7 +2100,7 @@ image.</li>
 Force reading the x_resolution, y_resolution and the resolution_unit
 of the tiff tags.
 See <a class="reference external" href="http://www.awaresystems.be/imaging/tiff/tifftags/resolutionunit.html">http://www.awaresystems.be/imaging/tiff/tifftags/resolutionunit.html</a></li>
-<li><strong>optional</strong> (<em>**kwds,</em>) &#8211; </li>
+<li><strong>optional</strong> (<em>**kwds</em><em>,</em><em></em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -1776,7 +2181,7 @@ tifffile library to allow exporting the scale and the unit.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.2',
+            VERSION:'1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
