@@ -8,12 +8,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading and saving data &mdash; HyperSpy 1.2 documentation</title>
+  <title>Loading and saving data &mdash; HyperSpy 1.3.1.dev documentation</title>
   
 
   
   
     <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+  
   
 
   
@@ -35,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="HyperSpy 1.2 documentation" href="../index.html"/>
+    <link rel="top" title="HyperSpy 1.3.1.dev documentation" href="../index.html"/>
         <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
         <link rel="next" title="Events" href="events.html"/>
         <link rel="prev" title="Electron Holography" href="electron_holography.html"/>
@@ -62,6 +64,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -84,7 +87,7 @@
             
             
               <div class="version">
-                1.2
+                1.3.1.dev
               </div>
             
           
@@ -105,7 +108,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
@@ -128,7 +134,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#saving-data-to-files">Saving data to files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#supported-formats">Supported formats</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#hdf5">HDF5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hspy-hyperspy-s-hdf5-specification">HSpy - HyperSpy&#8217;s HDF5 Specification</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#netcdf">NetCDF</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mrc">MRC</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#emsa-msa">EMSA/MSA</a></li>
@@ -170,8 +176,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">HyperSpy</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
       </nav>
 
 
@@ -180,25 +188,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
-      
-    <li>Loading and saving data</li>
+        
+      <li>Loading and saving data</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/user_guide/io.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -216,7 +241,7 @@
 </li>
 <li><a class="reference internal" href="#saving-data-to-files" id="id11">Saving data to files</a></li>
 <li><a class="reference internal" href="#supported-formats" id="id12">Supported formats</a><ul>
-<li><a class="reference internal" href="#hdf5" id="id13">HDF5</a><ul>
+<li><a class="reference internal" href="#hspy-hyperspy-s-hdf5-specification" id="id13">HSpy - HyperSpy&#8217;s HDF5 Specification</a><ul>
 <li><a class="reference internal" href="#extra-saving-arguments" id="id14">Extra saving arguments</a></li>
 </ul>
 </li>
@@ -297,7 +322,7 @@ arguments. Use <code class="docutils literal"><span class="pre">lazy</span></cod
 (see <a class="reference internal" href="#supported-formats"><span class="std std-ref">Supported formats</span></a> for a list). This feature can be useful when
 analysing large files. To load a file without loading it to memory simply set
 <code class="docutils literal"><span class="pre">lazy</span></code> to <code class="docutils literal"><span class="pre">True</span></code> e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>More details on lazy evaluation support in <a class="reference internal" href="big_data.html#big-data-label"><span class="std std-ref">Working with big data</span></a>.</p>
@@ -306,7 +331,7 @@ analysing large files. To load a file without loading it to memory simply set
 <p>Rather than loading files individually, several files can be loaded with a
 single command. This can be done by passing a list of filenames to the load
 functions, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">([</span><span class="s2">&quot;file1.hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;file2.hdf5&quot;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">([</span><span class="s2">&quot;file1.hspy&quot;</span><span class="p">,</span> <span class="s2">&quot;file2.hspy&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>or by using <a class="reference external" href="http://docs.python.org/library/glob.html">shell-style wildcards</a></p>
@@ -343,10 +368,10 @@ which case the function will return a list of objects, e.g.:</p>
 <p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.save" title="hyperspy.signal.BaseSignal.save"><code class="xref py py-meth docutils literal"><span class="pre">save()</span></code></a> method. The
 first argument is the filename and the format is defined by the filename
 extension. If the filename does not contain the extension the default format
-(<a class="reference internal" href="#hdf5-format"><span class="std std-ref">HDF5</span></a>) is used. For example, if the <code class="xref py py-const docutils literal"><span class="pre">s</span></code> variable
+(<a class="reference internal" href="#hspy-format"><span class="std std-ref">HSpy - HyperSpy&#8217;s HDF5 Specification</span></a>) is used. For example, if the <code class="xref py py-const docutils literal"><span class="pre">s</span></code> variable
 contains the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> that you want to write to a file,
-the following will write the data to a file called <code class="file docutils literal"><span class="pre">spectrum.hdf5</span></code> in the
-default <a class="reference internal" href="#hdf5-format"><span class="std std-ref">HDF5</span></a> format:</p>
+the following will write the data to a file called <code class="file docutils literal"><span class="pre">spectrum.hspy</span></code> in the
+default <a class="reference internal" href="#hspy-format"><span class="std std-ref">HSpy - HyperSpy&#8217;s HDF5 Specification</span></a> format:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;spectrum&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -464,39 +489,43 @@ HyperSpy. The &#8220;lazy&#8221; column specifies if lazy evaluation is supporte
 </tr>
 </tbody>
 </table>
-<div class="section" id="hdf5">
-<span id="hdf5-format"></span><h3><a class="toc-backref" href="#id13">HDF5</a><a class="headerlink" href="#hdf5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="hspy-hyperspy-s-hdf5-specification">
+<span id="hspy-format"></span><h3><a class="toc-backref" href="#id13">HSpy - HyperSpy&#8217;s HDF5 Specification</a><a class="headerlink" href="#hspy-hyperspy-s-hdf5-specification" title="Permalink to this headline">¶</a></h3>
 <p>This is the default format and it is the only one that guarantees that no
 information will be lost in the writing process and that supports saving data
 of arbitrary dimensions. It is based on the <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 open standard</a>. The HDF5 file format is supported by <a class="reference external" href="http://www.hdfgroup.org/products/hdf5_tools/SWSummarybyName.htm">many
-applications</a>.</p>
-<p>Only loading of HDF5 files following the HyperSpy specification are supported.</p>
+applications</a>.
+Part of the specification is documented in <a class="reference internal" href="metadata_structure.html#metadata-structure"><span class="std std-ref">Metadata structure</span></a>.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.2: </span>Saving hdf5 files with extension <code class="docutils literal"><span class="pre">.hspy</span></code>.</p>
+<p><span class="versionmodified">New in version 1.2: </span>Enable saving HSpy files with the <code class="docutils literal"><span class="pre">.hspy</span></code> extension. Preveously only the
+<code class="docutils literal"><span class="pre">.hdf5</span></code> extension was recognised.</p>
 </div>
-<p>The default extension is <code class="docutils literal"><span class="pre">.hdf5</span></code> but, in order to make it explicit that the
-HDF5 follows the HyperSpy specification, it is possible to save it with the
-<code class="docutils literal"><span class="pre">.hspy</span></code> extension as follows.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 1.3: </span>The default extension for the HyperSpy HDF5 specification is now <code class="docutils literal"><span class="pre">.hspy</span></code>.
+The option to change the default is no longer present in <code class="docutils literal"><span class="pre">preferences</span></code>.</p>
+</div>
+<p>Only loading of HDF5 files following the HyperSpy specification are supported.
+Usually their extension is <code class="docutils literal"><span class="pre">.hspy</span></code> extension, but older versions of HyperSpy
+would save them with the <code class="docutils literal"><span class="pre">.hdf5</span></code> extension. Both extensions are recognised
+by HyperSpy since version 1.2. However, HyperSpy versions older than 1.2
+won&#8217;t recognise the <code class="docutils literal"><span class="pre">.hspy</span></code> extension. To
+workaround the issue when using old HyperSpy installations simply change the
+extension manually to <code class="docutils literal"><span class="pre">.hdf5</span></code> or
+save directly the file using this extension by explicitly adding it to the
+filename e.g.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.hspy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.hdf5&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>It is possible to use the <code class="docutils literal"><span class="pre">.hspy</span></code> extension by default by changing the
-value is <code class="xref py py-obj docutils literal"><span class="pre">hs.preferences</span></code> using the GUI or programatically:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">preferences</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">hspy_extension</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1"># make the changes permanent</span>
-</pre></div>
-</div>
-<p>From HyperSpy 1.3 <code class="docutils literal"><span class="pre">.hspy</span></code> will be the default extension.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.8: </span>Saving list, tuples and signals present in <a class="reference internal" href="../api/hyperspy.io_plugins.html#hyperspy.io_plugins.semper_unf.SemperFormat.metadata" title="hyperspy.io_plugins.semper_unf.SemperFormat.metadata"><code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code></a>.</p>
+<p><span class="versionmodified">New in version 0.8: </span>Saving list, tuples and signals present in <a class="reference internal" href="../api/hyperspy.html#hyperspy.samfire.Samfire.metadata" title="hyperspy.samfire.Samfire.metadata"><code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code></a>.</p>
 </div>
-<p>When saving to hdf5, all supported objects in the signal&#8217;s <a class="reference internal" href="../api/hyperspy.io_plugins.html#hyperspy.io_plugins.semper_unf.SemperFormat.metadata" title="hyperspy.io_plugins.semper_unf.SemperFormat.metadata"><code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code></a>
-is stored. This includes  lists, tuples and signals. Please note
-that in order to increase saving efficiency and speed, if possible, the
-inner-most structures are converted to numpy arrays when saved. This procedure
-homogenizes any types of the objects inside, most notably casting numbers as
-strings if any other strings are present:</p>
+<p>When saving to <code class="docutils literal"><span class="pre">hspy</span></code>, all supported objects in the signal&#8217;s
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.samfire.Samfire.metadata" title="hyperspy.samfire.Samfire.metadata"><code class="xref py py-attr docutils literal"><span class="pre">metadata</span></code></a> is stored. This includes  lists, tuples and signals.
+Please note that in order to increase saving efficiency and speed, if possible,
+the inner-most structures are converted to numpy arrays when saved. This
+procedure homogenizes any types of the objects inside, most notably casting
+numbers as strings if any other strings are present:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># before saving:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">somelist</span>
 <span class="go">[1, 2.0, &#39;a name&#39;]</span>
@@ -511,9 +540,9 @@ as numbers are represented to full machine precision.</p>
 intensity</span></a>):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span><span class="o">.</span><span class="n">intensities</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;EDS_spectrum.hdf5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;EDS_spectrum.hspy&#39;</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s_new</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;EDS_spectrum.hdf5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_new</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;EDS_spectrum.hspy&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s_new</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Sample</span><span class="o">.</span><span class="n">intensities</span>
 <span class="go">[&lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Al_Ka at 1.49 keV, dimensions: (|)&gt;,</span>
 <span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: C_Ka at 0.28 keV, dimensions: (|)&gt;,</span>
@@ -555,6 +584,11 @@ the &#8220;r+&#8221; mode are incompatible).</p>
 is widely used to exchange single spectrum data, but it does not support
 multidimensional data. It can be used to exchange single spectra with Gatan&#8217;s
 Digital Micrograph.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If several spectra are loaded and stacked (<code class="docutils literal"><span class="pre">hs.load('pattern',</span> <span class="pre">stack_signals=True</span></code>)
+the calibration read from the first spectrum and applied to all other spectra.</p>
+</div>
 <div class="section" id="id2">
 <h4><a class="toc-backref" href="#id18">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>For the MSA format the msa_format argument is used to specify whether the
@@ -579,7 +613,7 @@ using the <cite>encoding</cite> argument, e.g.:</p>
 <span id="ripple-format"></span><h3><a class="toc-backref" href="#id19">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
 <p>This <a class="reference external" href="http://www.nist.gov/lispix/doc/image-file-formats/raw-file-format.htm">open standard format</a> is
 widely used to exchange multidimensional data. However, it only supports data of
-up to three dimensions. It can be used to exchange data with Bruker and <a class="reference external" href="http://www.nist.gov/lispix/">Lispix</a>. Used in combination with the <a class="reference external" href="http://hyperspy.org/download.html#import-rpl" title="(in HyperSpy v)"><span class="xref std std-ref">import-rpl</span></a>
+up to three dimensions. It can be used to exchange data with Bruker and <a class="reference external" href="http://www.nist.gov/lispix/">Lispix</a>. Used in combination with the <a class="reference external" href="http://hyperspy.org/download.html#import-rpl" title="(in HyperSpy v)"><span>ImportRPL Digital Micrograph plugin</span></a>
 it is very useful for exporting data to Gatan&#8217;s Digital Micrograph.</p>
 <p>The default encoding is latin-1. It is possible to set a different encoding
 using the encoding argument, e.g.:</p>
@@ -796,15 +830,18 @@ precisely by supporting non-linear axis.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="electron_holography.html" class="btn btn-neutral" title="Electron Holography" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="electron_holography.html" class="btn btn-neutral" title="Electron Holography" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -835,10 +872,11 @@ precisely by supporting non-linear axis.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.2',
+            VERSION:'1.3.1.dev',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
