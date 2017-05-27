@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Machine learning &mdash; HyperSpy 1.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="HyperSpy 1.3 documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Model fitting" href="model.html"/>
+        <link rel="prev" title="Data visualization" href="visualisation.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Machine learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nomenclature">Nomenclature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decomposition">Decomposition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#principal-component-analysis">Principal component analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#poissonian-noise">Poissonian noise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#robust-principal-component-analysis">Robust principal component analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-negative-matrix-factorization">Non-negative matrix factorization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#blind-source-separation">Blind Source Separation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualizing-results">Visualizing results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-the-results-as-basesignal-instances">Obtaining the results as BaseSignal instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saving-and-loading-results">Saving and loading results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#saving-in-the-main-file">Saving in the main file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#saving-to-an-external-file">Saving to an external file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exporting-in-different-formats">Exporting in different formats</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_data.html">Working with big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+        
+      <li>Machine learning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user_guide/mva.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="machine-learning">
+<span id="ml-label"></span><h1>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>HyperSpy provides easy access to several &#8220;machine learning&#8221; algorithms that
+can be useful when analysing multi-dimensional data. In particular, decomposition
+algorithms, such as principal component analysis (PCA), or blind source
+separation (BSS) algorithms, such as independent component analysis (ICA), are
+available through the methods described in this section.</p>
+<p>The behaviour of some machine learning operations can be customised
+<a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span class="std std-ref">customised</span></a> in the Machine Learning section
+Preferences.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently the BSS algorithms operate on the result of a previous
+decomposition analysis. Therefore, it is necessary to perform a
+decomposition before attempting to perform a BSS.</p>
+</div>
+</div>
+<div class="section" id="nomenclature">
+<span id="decomposition-nomenclature"></span><h2>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h2>
+<p>HyperSpy will decompose a dataset into two new datasets: one
+with the dimension of the signal space known as <cite>factors</cite>, and the
+other with the dimension of the navigation space known as <cite>loadings</cite>.</p>
+</div>
+<div class="section" id="decomposition">
+<span id="id1"></span><h2>Decomposition<a class="headerlink" href="#decomposition" title="Permalink to this headline">¶</a></h2>
+<p>Decomposition techniques are most commonly applied as a means of noise reduction (or <cite>denoising</cite>)
+and dimensionality reduction.</p>
+<div class="section" id="principal-component-analysis">
+<h3>Principal component analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">¶</a></h3>
+<p>One of the most popular decomposition methods is principal component analysis (PCA). To perform PCA on your dataset, run the
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.decomposition" title="hyperspy.learn.mva.MVA.decomposition"><code class="xref py py-meth docutils literal"><span class="pre">decomposition()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that the <cite>s</cite> variable must contain either a <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a>  class
+or its subclasses, which will most likely have been loaded with the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal"><span class="pre">load()</span></code></a> function, e.g. <code class="docutils literal"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">hs.load('my_file.hspy')</span></code>. Also, the signal must be
+multi-dimensional, that is <code class="docutils literal"><span class="pre">s.axes_manager.navigation_size</span></code> must be greater than
+one.</p>
+<p>Several algorithms exist for performing PCA, and the default algorithm in
+HyperSpy is <code class="xref py py-const docutils literal"><span class="pre">SVD</span></code>, which uses an approach called
+&#8220;singular value decomposition&#8221;. This method has many options, and for more
+information please read the method documentation.</p>
+<div class="section" id="scree-plots">
+<span id="scree-plot"></span><h4>Scree plots<a class="headerlink" href="#scree-plots" title="Permalink to this headline">¶</a></h4>
+<p>PCA will sort the components in the dataset in order of decreasing
+variance. It is often useful to estimate the dimensionality of the data by
+plotting the explained variance against the component index. This plot is
+sometimes called a scree plot and it should drop quickly,
+eventually becoming a slowly descending line.</p>
+<p>The point at which the scree plot becomes linear (often referred to as
+the <cite>elbow</cite>) is generally judged to be a good estimation of the dimensionality
+of the data (or equivalently, the number of components that should be retained -
+see below).</p>
+<p>To obtain a scree plot for your dataset, run the
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><code class="xref py py-meth docutils literal"><span class="pre">plot_explained_variance_ratio()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/screeplot.png"><img alt="../_images/screeplot.png" src="../_images/screeplot.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">PCA scree plot</span></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.2.0: </span><code class="docutils literal"><span class="pre">log</span></code>, <code class="docutils literal"><span class="pre">threshold</span></code>, <code class="docutils literal"><span class="pre">hline</span></code>, <code class="docutils literal"><span class="pre">xaxis_type</span></code>, <code class="docutils literal"><span class="pre">xaxis_labeling</span></code>,
+<code class="docutils literal"><span class="pre">signal_fmt</span></code>, <code class="docutils literal"><span class="pre">noise_fmt</span></code>, <code class="docutils literal"><span class="pre">threshold</span></code>, <code class="docutils literal"><span class="pre">xaxis_type</span></code> keyword
+arguments.</p>
+</div>
+<p>The default options for this method will plot a bare scree plot, but the
+method&#8217;s arguments allow for a great deal of customization. For
+example, by specifying a <code class="docutils literal"><span class="pre">threshold</span></code> value, a cutoff line will be drawn at
+the total variance specified, and the components above this value will be
+styled distinctly from the remaining components to show which are considered
+signal, as opposed to noise. Alternatively, by providing an integer value
+for <code class="docutils literal"><span class="pre">threshold</span></code>, the line will be drawn at the specified component (see
+below). These options (together with many others), can be customized to
+develop a figure of your liking. See the documentation of
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><code class="xref py py-meth docutils literal"><span class="pre">plot_explained_variance_ratio()</span></code></a> for more details.</p>
+<p>Note that in the above figure, the first component has index 0. This is because
+Python uses zero based indexing i.e. the initial element of a sequence is found
+at index 0. To switch to a &#8220;number-based&#8221; (rather than &#8220;index-based&#8221;)
+notation, specify the <code class="docutils literal"><span class="pre">xaxis_type</span></code> parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                     <span class="n">threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                     <span class="n">xaxis_type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/screeplot2.png"><img alt="../_images/screeplot2.png" src="../_images/screeplot2.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">PCA scree plot with number-based axis labeling and a threshold value
+specified</span></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>Sometimes it can be useful to get the explained variance ratio as a spectrum,
+for example to plot several scree plots obtained using
+different data pre-treatmentd in the same figure using
+<a class="reference internal" href="../api/hyperspy.drawing.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal"><span class="pre">plot_spectra()</span></code></a>. This can be achieved using
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.get_explained_variance_ratio" title="hyperspy.learn.mva.MVA.get_explained_variance_ratio"><code class="xref py py-meth docutils literal"><span class="pre">get_explained_variance_ratio()</span></code></a></p>
+</div>
+<div class="section" id="denoising">
+<h4>Denoising<a class="headerlink" href="#denoising" title="Permalink to this headline">¶</a></h4>
+<p>One of the most popular uses of PCA is data denoising. This is achieved by
+using a limited set of components to make a model of the original, omitting
+the later components that ideally contain only noise. This
+is also known as <em>dimensionality reduction</em>.</p>
+<p>To perform this operation with HyperSpy, run the
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.get_decomposition_model" title="hyperspy.learn.mva.MVA.get_decomposition_model"><code class="xref py py-meth docutils literal"><span class="pre">get_decomposition_model()</span></code></a> method, usually after
+estimating the dimension of your data using a scree plot. For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_decomposition_model</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The components argument can be one of several things (None, int,
+or list of ints):</p>
+<ul class="last simple">
+<li>if None, all the components are used to construct the model.</li>
+<li>if int, only the given number of components (starting from index 0) are
+used to construct the model.</li>
+<li>if list of ints, only the components in the given list are used to
+construct the model.</li>
+</ul>
+</div>
+<p>Sometimes, it is useful to examine the residuals between your original data and
+the decomposition model. You can easily calculate and display the residuals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">sc</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Unlike most of the analysis functions, this function returns a new
+object, which in the example above we have called &#8216;sc&#8217;.
+You can perform operations on this new object later. It is a copy of the
+original <code class="xref py py-const docutils literal"><span class="pre">s</span></code> object, except that the data has been replaced by
+the model constructed using the chosen components.</p>
+</div>
+</div>
+</div>
+<div class="section" id="poissonian-noise">
+<h3>Poissonian noise<a class="headerlink" href="#poissonian-noise" title="Permalink to this headline">¶</a></h3>
+<p>Many decomposition methods such as PCA assume that the noise of the data follows a
+Gaussian distribution. In cases where your data is instead corrupted by Poisson noise,
+HyperSpy can &#8220;normalize&#8221; the data by performing a scaling operation, which
+can greatly enhance the result.</p>
+<p>To perform Poissonian noise normalization:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="nb">long</span> <span class="n">way</span><span class="p">:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">normalize_poissonian_noise</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">Because</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">first</span> <span class="n">argument</span> <span class="n">we</span> <span class="n">could</span> <span class="n">have</span> <span class="n">simply</span> <span class="n">written</span><span class="p">:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More details about the scaling procedure can be found in <a class="reference internal" href="bibliography.html#keenan2004" id="id2">[Keenan2004]</a>.</p>
+</div>
+<div class="section" id="robust-principal-component-analysis">
+<span id="rpca-label"></span><h3>Robust principal component analysis<a class="headerlink" href="#robust-principal-component-analysis" title="Permalink to this headline">¶</a></h3>
+<p>PCA is known to be very sensitive to the presence of outliers in data. These outliers
+can be the result of missing or dead pixels, X-ray spikes, or very low count data.
+If one assumes a dataset to consist of a low-rank component <strong>L</strong> corrupted by
+a sparse error component <strong>S</strong>, then Robust PCA (RPCA) can be used to recover the
+low-rank component for subsequent processing <a class="reference internal" href="bibliography.html#candes2011" id="id3">[Candes2011]</a>.</p>
+<p>The default RPCA algorithm is GoDec <a class="reference internal" href="bibliography.html#zhou2011" id="id4">[Zhou2011]</a>. In HyperSpy it returns the factors
+and loadings of <strong>L</strong>, and can be accessed with the following code. You must set the
+&#8220;output_dimension&#8221; when using RPCA.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RPCA_GoDec&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3)</span>
+</pre></div>
+</div>
+<p>HyperSpy also implements an <em>online</em> algorithm for RPCA developed by Feng et al. <a class="reference internal" href="bibliography.html#feng2013" id="id5">[Feng2013]</a>.
+This minimizes memory usage, making it suitable for large datasets, and can often
+be faster than the default algorithm.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3)</span>
+</pre></div>
+</div>
+<p>The online RPCA implementation sets several default parameters that are
+usually suitable for most datasets. However, to improve the convergence you can
+&#8220;train&#8221; the algorithm with the first few samples of your dataset. For example,
+the following code will train ORPCA using the first 32 samples of the data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    training_samples=32)</span>
+</pre></div>
+</div>
+<p>Finally, online RPCA includes three alternative methods to the default
+closed-form solver, which can again improve both the convergence and speed
+of the algorithm. These are particularly useful for very large datasets.</p>
+<p>The first method is block-coordinate descent (BCD), and takes no
+additional parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    method=&#39;BCD&#39;)</span>
+</pre></div>
+</div>
+<p>The second is based on stochastic gradient descent (SGD), and takes an
+additional parameter to set the learning rate. The learning rate dictates
+the size of the steps taken by the gradient descent algorithm, and setting
+it too large can lead to oscillations that prevent the algorithm from
+finding the correct minima. Usually a value between 1 and 2 works well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    method=&#39;SGD&#39;,</span>
+<span class="go">                    learning_rate=1.1)</span>
+</pre></div>
+</div>
+<p>The third method is MomentumSGD, which typically improves the convergence
+properties of stochastic gradient descent. This takes the further parameter
+&#8220;momentum&#8221;, which should be a fraction between 0 and 1.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ORPCA&#39;</span><span class="p">,</span>
+<span class="go">                    output_dimension=3,</span>
+<span class="go">                    method=&#39;MomentumSGD&#39;,</span>
+<span class="go">                    learning_rate=1.1,</span>
+<span class="go">                    momentum=0.5)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-negative-matrix-factorization">
+<h3>Non-negative matrix factorization<a class="headerlink" href="#non-negative-matrix-factorization" title="Permalink to this headline">¶</a></h3>
+<p>Another popular decomposition method is non-negative matrix factorization (NMF), which
+can be accessed in HyperSpy with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;nmf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unlike PCA, NMF forces the components to be strictly non-negative, which can aid
+the physical interpretation of components for count data such as images, EELS or EDS.</p>
+<p>NMF takes the optional argument &#8220;output_dimension&#8221;, which determines the number
+of components to keep. Setting this to a small number is recommended to keep
+the computation time small. Often it is useful to run a PCA decomposition first
+and use the scree plot to determine a value for &#8220;output_dimension&#8221;.</p>
+</div>
+</div>
+<div class="section" id="blind-source-separation">
+<h2>Blind Source Separation<a class="headerlink" href="#blind-source-separation" title="Permalink to this headline">¶</a></h2>
+<p>In some cases (it largely depends on the particular application) it is possible
+to obtain more physically interpretable set of components using a process
+called Blind Source Separation (BSS). For more information about blind source separation
+please see <a class="reference internal" href="bibliography.html#hyvarinen2000" id="id6">[Hyvarinen2000]</a>, and for an example application to EELS analysis, see
+<a class="reference internal" href="bibliography.html#pena2010" id="id7">[Pena2010]</a>.</p>
+<p>To perform BSS on the result of a decomposition, run the
+<a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.blind_source_separation" title="hyperspy.learn.mva.MVA.blind_source_separation"><code class="xref py py-meth docutils literal"><span class="pre">blind_source_separation()</span></code></a> method, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">blind_source_separation</span><span class="p">(</span><span class="n">number_of_components</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently the BSS algorithms operate on the result of a previous
+decomposition analysis. Therefore, it is necessary to perform a
+<a class="reference internal" href="#decomposition"><span class="std std-ref">Decomposition</span></a> first.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must pass an integer number of components to ICA.  The best
+way to estimate this number in the case of a PCA decomposition is by
+inspecting the <a class="reference internal" href="#scree-plot"><span class="std std-ref">Scree plots</span></a>.</p>
+</div>
+</div>
+<div class="section" id="visualizing-results">
+<span id="mva-visualization"></span><h2>Visualizing results<a class="headerlink" href="#visualizing-results" title="Permalink to this headline">¶</a></h2>
+<p>HyperSpy includes a number of plotting methods for the results of decomposition
+and blind source separation. All the methods begin with &#8220;<a href="#id10"><span class="problematic" id="id11">plot_</span></a>&#8221;:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_decomposition_results" title="hyperspy.signal.MVATools.plot_decomposition_results"><code class="xref py py-meth docutils literal"><span class="pre">plot_decomposition_results()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_decomposition_factors" title="hyperspy.signal.MVATools.plot_decomposition_factors"><code class="xref py py-meth docutils literal"><span class="pre">plot_decomposition_factors()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_decomposition_loadings" title="hyperspy.signal.MVATools.plot_decomposition_loadings"><code class="xref py py-meth docutils literal"><span class="pre">plot_decomposition_loadings()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_bss_results" title="hyperspy.signal.MVATools.plot_bss_results"><code class="xref py py-meth docutils literal"><span class="pre">plot_bss_results()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_bss_factors" title="hyperspy.signal.MVATools.plot_bss_factors"><code class="xref py py-meth docutils literal"><span class="pre">plot_bss_factors()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.plot_bss_loadings" title="hyperspy.signal.MVATools.plot_bss_loadings"><code class="xref py py-meth docutils literal"><span class="pre">plot_bss_loadings()</span></code></a>.</li>
+</ol>
+<p>1 and 4 (new in version 0.7) provide a more compact way of displaying the
+results. All the other methods display each component in its own window. For 2
+and 3 it is wise to provide the number of factors or loadings you wish to
+visualise, since the default is to plot all of them. For BSS, the default is
+the number you included when running the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.MVA.blind_source_separation" title="hyperspy.learn.mva.MVA.blind_source_separation"><code class="xref py py-meth docutils literal"><span class="pre">blind_source_separation()</span></code></a>
+method. In case of one dimensional factors or loadings, the latters can be toggled on and off by clicking on their corresponding line in the legend.</p>
+</div>
+<div class="section" id="obtaining-the-results-as-basesignal-instances">
+<span id="mva-get-results"></span><h2>Obtaining the results as BaseSignal instances<a class="headerlink" href="#obtaining-the-results-as-basesignal-instances" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.</span></p>
+</div>
+<p>The decomposition and BSS results are internally stored as numpy arrays in the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal"><span class="pre">BaseSignal</span></code></a> class. Frequently it is useful to obtain the
+decomposition/BSS factors and loadings as HyperSpy signals, and HyperSpy
+provides the following methods for that purpose:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_decomposition_loadings" title="hyperspy.signal.MVATools.get_decomposition_loadings"><code class="xref py py-meth docutils literal"><span class="pre">get_decomposition_loadings()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_decomposition_factors" title="hyperspy.signal.MVATools.get_decomposition_factors"><code class="xref py py-meth docutils literal"><span class="pre">get_decomposition_factors()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_bss_loadings" title="hyperspy.signal.MVATools.get_bss_loadings"><code class="xref py py-meth docutils literal"><span class="pre">get_bss_loadings()</span></code></a>.</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.get_bss_factors" title="hyperspy.signal.MVATools.get_bss_factors"><code class="xref py py-meth docutils literal"><span class="pre">get_bss_factors()</span></code></a>.</li>
+</ul>
+</div>
+<div class="section" id="saving-and-loading-results">
+<h2>Saving and loading results<a class="headerlink" href="#saving-and-loading-results" title="Permalink to this headline">¶</a></h2>
+<p>There are several methods for storing the result of a machine learning
+analysis.</p>
+<div class="section" id="saving-in-the-main-file">
+<h3>Saving in the main file<a class="headerlink" href="#saving-in-the-main-file" title="Permalink to this headline">¶</a></h3>
+<p>If you save the dataset on which you&#8217;ve performed machine learning analysis in
+the <a class="reference internal" href="io.html#hspy-format"><span class="std std-ref">HSpy - HyperSpy&#8217;s HDF5 Specification</span></a> format (the default in HyperSpy) (see
+<a class="reference internal" href="io.html#saving-files"><span class="std std-ref">Saving data to files</span></a>), the result of the analysis is also saved in the same
+file automatically, and it is loaded along with the rest of the data when you
+next open the file.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This approach currently supports storing one decomposition and one BSS result,
+which may not be enough for your purposes.</p>
+</div>
+</div>
+<div class="section" id="saving-to-an-external-file">
+<h3>Saving to an external file<a class="headerlink" href="#saving-to-an-external-file" title="Permalink to this headline">¶</a></h3>
+<p>Alternatively, you can save the results of the current machine learning analysis to
+a separate file with the <a class="reference internal" href="../api/hyperspy.learn.html#hyperspy.learn.mva.LearningResults.save" title="hyperspy.learn.mva.LearningResults.save"><code class="xref py py-meth docutils literal"><span class="pre">save()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Save</span> <span class="n">the</span> <span class="n">result</span> <span class="n">of</span> <span class="n">the</span> <span class="n">analysis</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my_results&#39;</span><span class="p">)</span>
+
+<span class="n">Load</span> <span class="n">back</span> <span class="n">the</span> <span class="n">results</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my_results.npz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exporting-in-different-formats">
+<h3>Exporting in different formats<a class="headerlink" href="#exporting-in-different-formats" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible to export the results of machine learning to any format
+supported by HyperSpy with:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.export_decomposition_results" title="hyperspy.signal.MVATools.export_decomposition_results"><code class="xref py py-meth docutils literal"><span class="pre">export_decomposition_results()</span></code></a> or</li>
+<li><a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.MVATools.export_bss_results" title="hyperspy.signal.MVATools.export_bss_results"><code class="xref py py-meth docutils literal"><span class="pre">export_bss_results()</span></code></a>.</li>
+</ul>
+<p>These methods accept many arguments to customise the way in which the
+data is exported, so please consult the method documentation. The options
+include the choice of file format, the prefixes for loadings and factors,
+saving figures instead of data and more.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Data exported in this way cannot be easily  loaded into HyperSpy&#8217;s
+machine learning structure.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="model.html" class="btn btn-neutral float-right" title="Model fitting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="visualisation.html" class="btn btn-neutral" title="Data visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

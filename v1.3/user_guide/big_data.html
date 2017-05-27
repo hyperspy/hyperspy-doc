@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working with big data &mdash; HyperSpy 1.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="HyperSpy 1.3 documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Metadata structure" href="metadata_structure.html"/>
+        <link rel="prev" title="Events" href="events.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with big data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-lazy-signals">Creating Lazy Signals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lazy-signals-from-external-data">Lazy Signals from external data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loading-lazily">Loading lazily</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lazy-stacking">Lazy stacking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#casting-signals-as-lazy">Casting signals as lazy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#practical-tips">Practical tips</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#computing-lazy-signals">Computing lazy signals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#navigator-plot">Navigator plot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immutable-signals">Immutable signals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#machine-learning-decomposition">Machine learning (decomposition)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-minor-differences">Other minor differences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#behind-the-scenes-technical-details">Behind the scenes &#8211;technical details</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+        
+      <li>Working with big data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user_guide/big_data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-big-data">
+<span id="big-data-label"></span><h1>Working with big data<a class="headerlink" href="#working-with-big-data" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.2.</span></p>
+</div>
+<p>HyperSpy makes it possible to analyse data larger than the available memory by
+providing &#8220;lazy&#8221; versions of most of its signals and functions. In most cases
+the syntax remains the same. This chapter describes how to work with data
+larger than memory using the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal"><span class="pre">LazySignal</span></code></a> class and
+its derivatives.</p>
+<div class="section" id="creating-lazy-signals">
+<h2>Creating Lazy Signals<a class="headerlink" href="#creating-lazy-signals" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="lazy-signals-from-external-data">
+<h3>Lazy Signals from external data<a class="headerlink" href="#lazy-signals-from-external-data" title="Permalink to this headline">¶</a></h3>
+<p>If the data is large and not loaded by HyperSpy (for example a <code class="docutils literal"><span class="pre">hdf5.Dataset</span></code>
+or similar), first wrap it in <code class="docutils literal"><span class="pre">dask.array.Array</span></code> as shown <a class="reference external" href="https://dask.readthedocs.io/en/latest/array-creation.html">here</a> and then pass it
+as normal and call <code class="docutils literal"><span class="pre">as_lazy()</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;myfile.hdf5&quot;</span><span class="p">)</span>           <span class="c1"># Load the file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;/data/path&#39;</span><span class="p">]</span>                 <span class="c1"># Get the data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="kn">as</span> <span class="nn">da</span>                <span class="c1"># Import dask to wrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chunks</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>                    <span class="c1"># Chunk as appropriate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span> <span class="c1"># Wrap the data in dask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span> <span class="c1"># Create the lazy signal</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loading-lazily">
+<h3>Loading lazily<a class="headerlink" href="#loading-lazily" title="Permalink to this headline">¶</a></h3>
+<p>To load the data lazily, pass the keyword <code class="docutils literal"><span class="pre">lazy=True</span></code>.  As an example,
+loading a 34.9 GB <code class="docutils literal"><span class="pre">.blo</span></code> file on a regular laptop might look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;shish26.02-6.blo&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (400, 333|512, 512)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
+<span class="go">dask.array&lt;array-e..., shape=(333, 400, 512, 512), dtype=uint8, chunksize=(20, 12, 512, 512)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+<span class="go">uint8 34.9175808</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span> <span class="c1"># To be able to perform decomposition, etc.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+<span class="go">float64 279.3406464</span>
+</pre></div>
+</div>
+<p>Loading the dataset in the original unsigned integer format would require
+around 35GB of memory. To store it in a floating-point format one would need
+almost 280GB of memory. However, with the lazy processing both of these steps
+are near-instantaneous and require very little computational resources.</p>
+</div>
+<div class="section" id="lazy-stacking">
+<h3>Lazy stacking<a class="headerlink" href="#lazy-stacking" title="Permalink to this headline">¶</a></h3>
+<p>Occasionally the full dataset consists of many smaller files. To combine them
+into a one large <code class="docutils literal"><span class="pre">LazySignal</span></code>, we can <a class="reference internal" href="tools.html#signal-stack-split"><span class="std std-ref">stack</span></a> them
+lazily (both when loading or afterwards):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">siglist</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">siglist</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or load lazily and stack afterwards:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">siglist</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">siglist</span><span class="p">)</span> <span class="c1"># no need to pass &#39;lazy&#39;, as signals already lazy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or do everything in one go:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="casting-signals-as-lazy">
+<h3>Casting signals as lazy<a class="headerlink" href="#casting-signals-as-lazy" title="Permalink to this headline">¶</a></h3>
+<p>To convert a regular HyperSpy signal to a lazy one such that any future
+operations are only performed lazily, use the
+<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.as_lazy" title="hyperspy.signal.BaseSignal.as_lazy"><code class="xref py py-meth docutils literal"><span class="pre">as_lazy()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">150.</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (3|50)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sl</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sl</span>
+<span class="go">&lt;LazySignal1D, title: , dimensions: (3|50)&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="practical-tips">
+<h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this headline">¶</a></h2>
+<p>Despite the limitations detailed below, most HyperSpy operations can be
+performed lazily. Important points of note are:</p>
+<div class="section" id="computing-lazy-signals">
+<h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Permalink to this headline">¶</a></h3>
+<p>Upon saving lazy signals, the result of computations is stored on disk.</p>
+<p>In order to store the lazy signal in memory (i.e. make it a normal HyperSpy
+signal) it has a <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.lazy.LazySignal.compute" title="hyperspy._signals.lazy.LazySignal.compute"><code class="xref py py-meth docutils literal"><span class="pre">compute()</span></code></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (|512, 512)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="go">[########################################] | 100% Completed |  0.1s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (|512, 512)&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="navigator-plot">
+<h3>Navigator plot<a class="headerlink" href="#navigator-plot" title="Permalink to this headline">¶</a></h3>
+<p>The default signal navigator is the sum of the signal across all signal
+dimensions and all but 1 or 2 navigation dimensions. If the dataset is large,
+this can take a significant amount of time to perform with every plot. A more
+convenient alternative is to calculate the summed navigation signal manually
+once, and only pass it for all other plots. Pay attention to the transpose
+(<code class="docutils literal"><span class="pre">.T</span></code>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (200, 200|512, 512)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># for fastest results, just pick one signal space pixel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Alternatively, sum as per default behaviour</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (|200, 200)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Compute the result</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="go">[########################################] | 100% Completed | 13.1s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">navigator</span><span class="o">=</span><span class="n">nav</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, it is possible to not have a navigator, and use sliders
+instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (200, 200|512, 512)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">navigator</span><span class="o">=</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>Most operations can be performed lazily. However, lazy operations come with
+a few limitations and constraints that we detail below.</p>
+<div class="section" id="immutable-signals">
+<h3>Immutable signals<a class="headerlink" href="#immutable-signals" title="Permalink to this headline">¶</a></h3>
+<p>An important limitation when using <code class="docutils literal"><span class="pre">LazySignal</span></code> is the inability to modify
+existing data (immutability). This is a logical consequence of the DAG (tree
+structure, explained in <a class="reference internal" href="#lazy-details"><span class="std std-ref">Behind the scenes &#8211;technical details</span></a>), where a complete history of the
+processing has to be stored to traverse later.</p>
+<p>In fact, lazy evaluation removes the need for such operation, since only
+additional tree branches are added, requiring very little resources. In
+practical terms the following fails with lazy signals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;ipython-input-6-1bd1db4187be&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="mi">1</span>
+  File <span class="nb">&quot;&lt;string&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">__iadd__</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy3/hyperspy/signal.py&quot;</span>, line <span class="m">1591</span>, in <span class="n">_binary_operator_ruler</span>
+    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">op_name</span><span class="p">)(</span><span class="n">other</span><span class="p">)</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;Array&#39; object has no attribute &#39;__iadd__&#39;</span>
+</pre></div>
+</div>
+<p>However, when operating lazily there is no clear benefit to using in-place
+operations. So, the operation above could be rewritten as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Or even better:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="machine-learning-decomposition">
+<h3>Machine learning (decomposition)<a class="headerlink" href="#machine-learning-decomposition" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="mva.html#decomposition"><span class="std std-ref">Decomposition</span></a> algorithms often performs large matrix manipulations,
+requiring significantly more memory than the data size. To perform
+decomposition operation lazily HyperSpy provides several &#8220;online&#8221; algorithms.
+These algorithms perform the decomposition by operating serially on chunks of
+data, enabling the lazy decomposition of large datasets.</p>
+<p>In line with the standard HyperSpy signals,
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.lazy.LazySignal.decomposition" title="hyperspy._signals.lazy.LazySignal.decomposition"><code class="xref py py-meth docutils literal"><span class="pre">decomposition()</span></code></a> offers  the following
+implementations:</p>
+<ul class="simple">
+<li><strong>PCA</strong> (<code class="docutils literal"><span class="pre">algorithm='PCA'</span></code>): performs <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA">IncrementalPCA</a>
+from <code class="docutils literal"><span class="pre">scikit-learn</span></code>.</li>
+<li><strong>ORPCA</strong> (<code class="docutils literal"><span class="pre">algorithm='ORPCA'</span></code>): performs Online Robust PCA. (It is also available
+for regular signals.)</li>
+<li><strong>NMF</strong> (<code class="docutils literal"><span class="pre">algorithm='ONMF'</span></code>): performs Online Robust NMF, as per &#8220;OPGD&#8221;
+algorithm in <a class="reference internal" href="bibliography.html#zhao2016" id="id1">[Zhao2016]</a>.</li>
+</ul>
+</div>
+<div class="section" id="other-minor-differences">
+<h3>Other minor differences<a class="headerlink" href="#other-minor-differences" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Histograms</strong> for a <code class="docutils literal"><span class="pre">LazySignal</span></code> do not support <code class="docutils literal"><span class="pre">knuth</span></code> and <code class="docutils literal"><span class="pre">blocks</span></code>
+binning algorithms.</li>
+<li><strong>CircleROI</strong> sets the elements outside the ROI to <code class="docutils literal"><span class="pre">np.nan</span></code> instead of
+using a masked array, because <code class="docutils literal"><span class="pre">dask</span></code> does not support masking. As a
+convenience, <code class="docutils literal"><span class="pre">nansum</span></code>, <code class="docutils literal"><span class="pre">nanmean</span></code> and other <code class="docutils literal"><span class="pre">nan*</span></code> signal methods were
+added to mimic the workflow as closely as possible.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="behind-the-scenes-technical-details">
+<span id="lazy-details"></span><h2>Behind the scenes &#8211;technical details<a class="headerlink" href="#behind-the-scenes-technical-details" title="Permalink to this headline">¶</a></h2>
+<p>Standard HyperSpy signals load the data into memory for fast access and
+processing. While this behaviour gives good performance in terms of speed, it
+obviously requires at least as much computer memory as the dataset, and often
+twice that to store the results of subsequent computations. This can become a
+significant problem when processing very large datasets on consumer-oriented
+hardware.</p>
+<p>HyperSpy offers a solution for this problem by including
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal"><span class="pre">LazySignal</span></code></a> and its derivatives. The main idea of
+these classes is to perform any operation (as the name suggests)
+<a class="reference external" href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazily</a> (delaying the
+execution until the result is requested (e.g. saved, plotted)) and in a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Block_matrix">blocked fashion</a>. This is
+achieved by building a &#8220;history tree&#8221; (formally called a Directed Acyclic Graph
+(DAG)) of the computations, where the original data is at the root, and any
+further operations branch from it. Only when a certain branch result is
+requested, the way to the root is found and evaluated in the correct sequence
+on the correct blocks.</p>
+<p>The &#8220;magic&#8221; is performed by (for the sake of simplicity) storing the data not
+as <code class="docutils literal"><span class="pre">numpy.ndarray</span></code>, but <code class="docutils literal"><span class="pre">dask.array.Array</span></code> (more information <a class="reference external" href="https://dask.readthedocs.io/en/latest/">here</a>). <code class="docutils literal"><span class="pre">dask</span></code> offers a couple of
+advantages:</p>
+<ul class="simple">
+<li><strong>Arbitrary-sized data processing is possible</strong>. By only loading a couple of
+chunks at a time, theoretically any signal can be processed, albeit slower.
+In practice, this may be limited: (i) some operations may require certain
+chunking pattern, which may still saturate memory; (ii) many chunks should
+fit into the computer memory comfortably at the same time.</li>
+<li><strong>Loading only the required data</strong>. If a certain part (chunk) of the data is
+not required for the final result, it will not be loaded at all, saving time
+and resources.</li>
+<li><strong>Able to extend to a distributed computing environment (clusters)</strong>.
+<code class="docutils literal"><span class="pre">dask.distributed</span></code> (documentation <a class="reference external" href="https://distributed.readthedocs.io/en/latest/">here</a>) offers a straightforward
+way to expand the effective memory for computations to that of a cluster,
+which allows performing the operations significantly faster than on a single
+machine.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metadata_structure.html" class="btn btn-neutral float-right" title="Metadata structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="events.html" class="btn btn-neutral" title="Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

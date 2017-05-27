@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Electron Holography &mdash; HyperSpy 1.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy_logo.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="HyperSpy 1.3 documentation" href="../index.html"/>
+        <link rel="up" title="HyperSpy User Guide (DRAFT)" href="index.html"/>
+        <link rel="next" title="Loading and saving data" href="io.html"/>
+        <link rel="prev" title="Dielectric function tools" href="dielectric_function.html"/>
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What&#8217;s new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Electron Holography</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-hologramimage-class">The HologramImage class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reconstruction-of-holograms">Reconstruction of holograms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_data.html">Working with big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+        
+      <li>Electron Holography</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user_guide/electron_holography.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="electron-holography">
+<span id="electron-holography-label"></span><h1>Electron Holography<a class="headerlink" href="#electron-holography" title="Permalink to this headline">¶</a></h1>
+<p>HyperSpy provides the user with a signal class which can be used to process electron holography data:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage" title="hyperspy._signals.hologram_image.HologramImage"><code class="xref py py-class docutils literal"><span class="pre">HologramImage</span></code></a></li>
+</ul>
+<p>It inherits from <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal"><span class="pre">Signal2D</span></code></a> class and thus can use all of its functionality.
+The usage of the class is explained in the following sections.</p>
+<div class="section" id="the-hologramimage-class">
+<h2>The HologramImage class<a class="headerlink" href="#the-hologramimage-class" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage" title="hyperspy._signals.hologram_image.HologramImage"><code class="xref py py-class docutils literal"><span class="pre">HologramImage</span></code></a> class is designed to contain images acquired via
+electron holography.</p>
+<p>To transform a <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal"><span class="pre">Signal2D</span></code></a> (or subclass) into a
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage" title="hyperspy._signals.hologram_image.HologramImage"><code class="xref py py-class docutils literal"><span class="pre">HologramImage</span></code></a> use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">set_signal_type</span><span class="p">(</span><span class="s1">&#39;hologram&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="reconstruction-of-holograms">
+<h3>Reconstruction of holograms<a class="headerlink" href="#reconstruction-of-holograms" title="Permalink to this headline">¶</a></h3>
+<p>The detailed description of electron holography and reconstruction of holograms can be found in literature
+<a class="reference internal" href="bibliography.html#gabor1948" id="id1">[Gabor1948]</a>, <a class="reference internal" href="bibliography.html#tonomura1999" id="id2">[Tonomura1999]</a>, <a class="reference internal" href="bibliography.html#mccartney2007" id="id3">[McCartney2007]</a> and <a class="reference internal" href="bibliography.html#joy1993" id="id4">[Joy1993]</a>. Fourier based
+reconstruction of off-axis holograms (includes finding a side band in FFT,
+isolating and filtering it, recenter and calculate inverse Fourier transform)
+can be performed using
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.reconstruct_phase" title="hyperspy._signals.hologram_image.HologramImage.reconstruct_phase"><code class="xref py py-meth docutils literal"><span class="pre">reconstruct_phase()</span></code></a> method
+which returns a <code class="xref py py-class docutils literal"><span class="pre">Complex2D</span></code> class, containing
+the reconstructed electron wave. The <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.reconstruct_phase" title="hyperspy._signals.hologram_image.HologramImage.reconstruct_phase"><code class="xref py py-meth docutils literal"><span class="pre">reconstruct_phase()</span></code></a> method takes sideband
+position and size as parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="kn">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span>  <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wave_image</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reconstruct_phase</span><span class="p">(</span><span class="n">sb_position</span><span class="o">=</span><span class="p">(</span><span class="o">&lt;</span><span class="n">y</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">x</span><span class="o">&gt;</span><span class="p">),</span> <span class="n">sb_size</span><span class="o">=</span><span class="n">sb_radius</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The parameters can be found automatically by calling following methods:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sb_position</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">estimate_sideband_position</span><span class="p">(</span><span class="n">ap_cb_radius</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sb</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sb_size</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">estimate_sideband_size</span><span class="p">(</span><span class="n">sb_position</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.estimate_sideband_position" title="hyperspy._signals.hologram_image.HologramImage.estimate_sideband_position"><code class="xref py py-meth docutils literal"><span class="pre">estimate_sideband_position()</span></code></a> method searches for maximum of intensity in upper or lower part of FFT pattern (parameter <code class="docutils literal"><span class="pre">sb</span></code>)
+excluding the middle area defined by <code class="docutils literal"><span class="pre">ap_cb_radius</span></code>. <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.estimate_sideband_size" title="hyperspy._signals.hologram_image.HologramImage.estimate_sideband_size"><code class="xref py py-meth docutils literal"><span class="pre">estimate_sideband_size()</span></code></a> method calculates the radius of the sideband
+filter as half of the distance to the central band which is commonly used for strong phase objects. Alternatively,
+the sideband filter radius can be recalculate as 1/3 of the distance (often used for weak phase objects) for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sb_size</span> <span class="o">=</span> <span class="n">sb_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>To reconstruct the hologram with a vacuum reference wave, the reference hologram should be provided to the method either as Hyperspy&#8217;s
+<a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage" title="hyperspy._signals.hologram_image.HologramImage"><code class="xref py py-class docutils literal"><span class="pre">HologramImage</span></code></a> or as a nparray:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reference_hologram</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wave_image</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reconstruct_phase</span><span class="p">(</span><span class="n">reference_hologram</span><span class="p">,</span> <span class="n">sb_position</span><span class="o">=</span><span class="n">sb_position</span><span class="p">,</span> <span class="n">sb_size</span><span class="o">=</span><span class="n">sb_sb_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Using reconstructed wave one can access its amplitude and phase (also unwrapped phase) using <code class="xref py py-meth docutils literal"><span class="pre">amplitude()</span></code> and</dt>
+<dd><code class="xref py py-meth docutils literal"><span class="pre">phase()</span></code> properties (also <code class="xref py py-meth docutils literal"><span class="pre">unwrapped_phase()</span></code> method):</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wave_image</span><span class="o">.</span><span class="n">unwrapped_phase</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="../_images/holography_unwrapped_phase.png" src="../_images/holography_unwrapped_phase.png" />
+</div>
+<p>Unwrapped phase image.</p>
+<p>Additionally, it is possible to change the smoothness of the sideband filter edge (which is by default set to 5% of the
+filter radius) using parameter <cite>sb_smoothness</cite>.</p>
+<p>Both <code class="docutils literal"><span class="pre">sb_size</span></code> and <code class="docutils literal"><span class="pre">sb_smoothness</span></code> can be provided in desired units rather than pixels (by default) by setting <code class="docutils literal"><span class="pre">sb_unit</span></code>
+value either to <code class="docutils literal"><span class="pre">mrad</span></code> or <code class="docutils literal"><span class="pre">nm</span></code> for milliradians or inverse nanometers respectively. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wave_image</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reconstruct_phase</span><span class="p">(</span><span class="n">reference_hologram</span><span class="p">,</span> <span class="n">sb_position</span><span class="o">=</span><span class="n">sb_position</span><span class="p">,</span> <span class="n">sb_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+<span class="go">                                      sb_smoothness=0.05*30,sb_unit=&#39;mrad&#39;)</span>
+</pre></div>
+</div>
+<p>Also the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.reconstruct_phase" title="hyperspy._signals.hologram_image.HologramImage.reconstruct_phase"><code class="xref py py-meth docutils literal"><span class="pre">reconstruct_phase()</span></code></a>
+method can output wave images with desired size (shape). By default the shape
+of the original hologram is preserved. Though this leads to oversampling of the
+output wave images, since the information is limited by the size of the
+sideband filter. To avoid oversampling the output shape can be set to the
+diameter of the sideband as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wave_image</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reconstruct_phase</span><span class="p">(</span><span class="n">reference_hologram</span><span class="p">,</span> <span class="n">sb_position</span><span class="o">=</span><span class="n">sb_position</span><span class="p">,</span>
+<span class="go">                                      sb_size=sb_sb_size, output_shape=(2*sb_size, 2*sb_size))</span>
+</pre></div>
+</div>
+<p>Note that the <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.reconstruct_phase" title="hyperspy._signals.hologram_image.HologramImage.reconstruct_phase"><code class="xref py py-meth docutils literal"><span class="pre">reconstruct_phase()</span></code></a> method can be called without parameters, which will cause their automatic assignment
+by <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.estimate_sideband_position" title="hyperspy._signals.hologram_image.HologramImage.estimate_sideband_position"><code class="xref py py-meth docutils literal"><span class="pre">estimate_sideband_position()</span></code></a>
+and <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.hologram_image.HologramImage.estimate_sideband_size" title="hyperspy._signals.hologram_image.HologramImage.estimate_sideband_size"><code class="xref py py-meth docutils literal"><span class="pre">estimate_sideband_size()</span></code></a>
+methods. This, however, is not recommended for not experienced users.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="io.html" class="btn btn-neutral float-right" title="Loading and saving data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dielectric_function.html" class="btn btn-neutral" title="Dielectric function tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
