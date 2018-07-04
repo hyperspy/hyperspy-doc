@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working with big data &mdash; HyperSpy 1.3.1 documentation</title>
+  <title>Working with big data &mdash; HyperSpy 1.3.2 documentation</title>
   
 
   
@@ -79,7 +79,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.3.2
               </div>
             
           
@@ -104,7 +104,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What’s new</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
@@ -131,6 +131,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#practical-tips">Practical tips</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chunking">Chunking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#computing-lazy-signals">Computing lazy signals</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#navigator-plot">Navigator plot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lazy-operations-that-affect-the-axes">Lazy operations that affect the axes</a></li>
@@ -198,7 +199,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+          <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
       <li>Working with big data</li>
     
@@ -311,6 +312,16 @@ operations are only performed lazily, use the
 <h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this headline">¶</a></h2>
 <p>Despite the limitations detailed below, most HyperSpy operations can be
 performed lazily. Important points of note are:</p>
+<div class="section" id="chunking">
+<h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.2.</span></p>
+</div>
+<p>By default, HyperSpy tries to optimize the chunking for most operations. However,
+it is sometimes possible to manually set a more optimal chunking manually. Therefore,
+many operations take a <code class="docutils literal notranslate"><span class="pre">rechunk</span></code> or <code class="docutils literal notranslate"><span class="pre">optimize</span></code> keyword argument to disable
+automatic rechunking.</p>
+</div>
 <div class="section" id="computing-lazy-signals">
 <h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Permalink to this headline">¶</a></h3>
 <p>Upon saving lazy signals, the result of computations is stored on disk.</p>
@@ -336,7 +347,7 @@ once, and only pass it for all other plots. Pay attention to the transpose
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">&lt;LazySignal2D, title: , dimensions: (200, 200|512, 512)&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># for fastest results, just pick one signal space pixel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">optimize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Alternatively, sum as per default behaviour</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span>
@@ -523,7 +534,7 @@ machine.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.3.1',
+            VERSION:'1.3.2',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading and saving data &mdash; HyperSpy 1.3.1 documentation</title>
+  <title>Loading and saving data &mdash; HyperSpy 1.3.2 documentation</title>
   
 
   
@@ -79,7 +79,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.3.2
               </div>
             
           
@@ -104,7 +104,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide (DRAFT)</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What’s new</a></li>
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
@@ -207,7 +207,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">HyperSpy User Guide (DRAFT)</a> &raquo;</li>
+          <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
       <li>Loading and saving data</li>
     
@@ -558,6 +558,19 @@ intensity</span></a>):</p>
 <span class="go"> &lt;BaseSignal, title: X-ray line intensity of EDS SEM Signal1D: Zr_La at 2.04 keV, dimensions: (|)&gt;]</span>
 </pre></div>
 </div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.1: </span><code class="docutils literal notranslate"><span class="pre">chunks</span></code> keyword argument</p>
+</div>
+<p>By default, the data is saved in chunks that are optimised to contain at least one full signal. It is
+possible to customise the chunk shape using the <code class="docutils literal notranslate"><span class="pre">chunks</span></code> keyword. For example, to save the data with
+<code class="docutils literal notranslate"><span class="pre">(20,</span> <span class="pre">20,</span> <span class="pre">256)</span></code> chunks instead of the default <code class="docutils literal notranslate"><span class="pre">(7,</span> <span class="pre">7,</span> <span class="pre">2048)</span></code> chunks for this signal:</p>
+<p>Note that currently it is not possible to pass different customised chunk shapes to all signals and
+arrays contained in a signal and its metadata. Therefore, the value of <code class="docutils literal notranslate"><span class="pre">chunks</span></code> provided on saving
+will be applied to all arrays contained in the signal.</p>
+<p>By passing <code class="docutils literal notranslate"><span class="pre">True</span></code> to <code class="docutils literal notranslate"><span class="pre">chunks</span></code> the chunk shape is guessed using <code class="docutils literal notranslate"><span class="pre">h5py</span></code>’s <code class="docutils literal notranslate"><span class="pre">guess_chunks</span></code> function
+what, for large signal spaces usually leads to smaller chunks as <code class="docutils literal notranslate"><span class="pre">guess_chunks</span></code> does not impose the
+constrain of storing at least one signal per chunks. For example, for the signal in the example above
+passing <code class="docutils literal notranslate"><span class="pre">chunks=True</span></code> results in <code class="docutils literal notranslate"><span class="pre">(7,</span> <span class="pre">7,</span> <span class="pre">256)</span></code> chunks.</p>
 <div class="section" id="extra-saving-arguments">
 <h4><a class="toc-backref" href="#id15">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
 <p>compression: One of None, ‘gzip’, ‘szip’, ‘lzf’.</p>
@@ -567,7 +580,7 @@ intensity</span></a>):</p>
 <div class="section" id="netcdf">
 <span id="netcdf-format"></span><h3><a class="toc-backref" href="#id16">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
 <p>This was the default format in HyperSpy’s predecessor, EELSLab, but it has been
-superseeded by <span class="xref std std-ref">HDF5</span> in HyperSpy. We provide only reading capabilities
+superseded by <span class="xref std std-ref">HDF5</span> in HyperSpy. We provide only reading capabilities
 but we do not support writing to this format.</p>
 <p>Note that only NetCDF files written by EELSLab are supported.</p>
 <p>To use this format a python netcdf interface must be installed manually because
@@ -653,9 +666,9 @@ and 64-bit float, grayscale and RGB(A) images, which are commonly used in
 bio-scientific imaging. See <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html">the library webpage</a> for more details.</p>
 <p>Currently HyperSpy has limited support for reading and saving the TIFF tags.
 However, the way that HyperSpy reads and saves the scale and the units of tiff
-files is compatible with ImageJ/Fiji and Gatan Digital Micrograph softwares.
+files is compatible with ImageJ/Fiji and Gatan Digital Micrograph software.
 HyperSpy can also import the scale and the units from tiff files saved using
-FEI and Zeiss SEM softwares.</p>
+FEI and Zeiss SEM software.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Force read image resolution using the x_resolution, y_resolution and</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># the resolution_unit of the tiff tags. Be aware, that most of the</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># software doesn&#39;t (properly) use these tags when saving tiff files.</span>
@@ -913,7 +926,7 @@ from HyperSpy to MATLAB, while retaining spatial calibration information.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.3.1',
+            VERSION:'1.3.2',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
