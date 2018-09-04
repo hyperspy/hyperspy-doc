@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Metadata structure &mdash; HyperSpy 1.4.dev documentation</title>
+  <title>Metadata structure &mdash; HyperSpy 1.4 documentation</title>
   
 
   
@@ -79,7 +79,7 @@
             
             
               <div class="version">
-                1.4.dev
+                1.4
               </div>
             
           
@@ -135,6 +135,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sample">Sample</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#signal">Signal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fft">FFT</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#noise-properties">Noise_properties</a></li>
 </ul>
 </li>
@@ -220,7 +221,7 @@
             
   <div class="section" id="metadata-structure">
 <span id="id1"></span><h1>Metadata structure<a class="headerlink" href="#metadata-structure" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> class stores metadata in the
+<p>The <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> class stores metadata in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> attribute that has a tree structure. By
 convention, the nodes labels are capitalized and the leaves are not
 capitalized.</p>
@@ -302,6 +303,8 @@ in the following sections of this chapter.</p>
 │   ├── thickness
 │   └── xray_lines
 └── Signal
+    ├── FFT
+    │   └── shifted
     ├── Noise_properties
     │   ├── Variance_linear_model
     │   │   ├── correlation_factor
@@ -335,11 +338,12 @@ original file.</p>
 </dd>
 <dt>time</dt>
 <dd><p class="first">type: Str</p>
-<p class="last">The acquisition or creation time in ISO 8601 time format.</p>
+<p class="last">The acquisition or creation time in ISO 8601 time format, e.g. ‘13:29:10’.</p>
 </dd>
 <dt>date</dt>
 <dd><p class="first">type: Str</p>
-<p class="last">The acquisition or creation date in ISO 8601 date format</p>
+<p class="last">The acquisition or creation date in ISO 8601 date format, e.g.
+‘2018-01-28’.</p>
 </dd>
 <dt>authors</dt>
 <dd><p class="first">type: Str</p>
@@ -614,15 +618,25 @@ If ‘spectrum’ the spectral data is stored in the faster index.</p>
 brackets if required, for example Temperature (K).</p>
 </dd>
 </dl>
+<div class="section" id="fft">
+<h3>FFT<a class="headerlink" href="#fft" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>shifted</dt>
+<dd><p class="first">type: bool.</p>
+<p class="last">Specify if the FFT has the zero-frequency component shifted to the center of
+the signal.</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="noise-properties">
 <h3>Noise_properties<a class="headerlink" href="#noise-properties" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt>variance</dt>
 <dd><p class="first">type: float or BaseSignal instance.</p>
 <p class="last">The variance of the data. It can be a float when the noise is Gaussian or a
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> instance if the noise is heteroscedastic,
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> instance if the noise is heteroscedastic,
 in which case it must have the same dimensions as
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
 </dd>
 </dl>
 <div class="section" id="variance-linear-model">
@@ -651,7 +665,7 @@ should be accompanied by an “energy_units” leaf.</p>
 <div class="section" id="stacking-history">
 <h3>Stacking_history<a class="headerlink" href="#stacking-history" title="Permalink to this headline">¶</a></h3>
 <p>Generated when using <code class="xref py py-meth docutils literal notranslate"><span class="pre">stack()</span></code>. Used by
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.split" title="hyperspy.signal.BaseSignal.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a>, to retrieve the former list of signal.</p>
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.split" title="hyperspy.signal.BaseSignal.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a>, to retrieve the former list of signal.</p>
 <dl class="docutils">
 <dt>step_sizes</dt>
 <dd><p class="first">type: list of int</p>
@@ -713,7 +727,7 @@ should be accompanied by an “energy_units” leaf.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.4.dev',
+            VERSION:'1.4',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

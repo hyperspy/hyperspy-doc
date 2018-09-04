@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading and saving data &mdash; HyperSpy 1.4.dev documentation</title>
+  <title>Loading and saving data &mdash; HyperSpy 1.4 documentation</title>
   
 
   
@@ -79,7 +79,7 @@
             
             
               <div class="version">
-                1.4.dev
+                1.4
               </div>
             
           
@@ -130,6 +130,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#hspy-hyperspy-s-hdf5-specification">HSpy - HyperSpy’s HDF5 Specification</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#netcdf">NetCDF</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mrc">MRC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mrcz">MRCZ</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#emsa-msa">EMSA/MSA</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ripple">Ripple</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#images">Images</a></li>
@@ -140,8 +141,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#semper-unf-binary-format">SEMPER unf binary format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#blockfile">Blockfile</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dens-heater-log">DENS heater log</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#bruker-composite-file">Bruker composite file</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#emd-electron-microscopy-datasets-hdf5">EMD Electron Microscopy Datasets (HDF5)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bruker-s-formats">Bruker’s formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emd">EMD</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#protochips-log">Protochips log</a></li>
 </ul>
 </li>
@@ -229,50 +230,70 @@
            <div itemprop="articleBody">
             
   <div class="section" id="loading-and-saving-data">
-<span id="io"></span><h1><a class="toc-backref" href="#id9">Loading and saving data</a><a class="headerlink" href="#loading-and-saving-data" title="Permalink to this headline">¶</a></h1>
+<span id="io"></span><h1><a class="toc-backref" href="#id14">Loading and saving data</a><a class="headerlink" href="#loading-and-saving-data" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#loading-and-saving-data" id="id9">Loading and saving data</a><ul>
-<li><a class="reference internal" href="#loading-files-the-load-function" id="id10">Loading files: the load function</a><ul>
-<li><a class="reference internal" href="#loading-multiple-files" id="id11">Loading multiple files</a></li>
+<li><a class="reference internal" href="#loading-and-saving-data" id="id14">Loading and saving data</a><ul>
+<li><a class="reference internal" href="#loading-files-the-load-function" id="id15">Loading files: the load function</a><ul>
+<li><a class="reference internal" href="#loading-multiple-files" id="id16">Loading multiple files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#saving-data-to-files" id="id12">Saving data to files</a></li>
-<li><a class="reference internal" href="#supported-formats" id="id13">Supported formats</a><ul>
-<li><a class="reference internal" href="#hspy-hyperspy-s-hdf5-specification" id="id14">HSpy - HyperSpy’s HDF5 Specification</a><ul>
-<li><a class="reference internal" href="#extra-saving-arguments" id="id15">Extra saving arguments</a></li>
+<li><a class="reference internal" href="#saving-data-to-files" id="id17">Saving data to files</a></li>
+<li><a class="reference internal" href="#supported-formats" id="id18">Supported formats</a><ul>
+<li><a class="reference internal" href="#hspy-hyperspy-s-hdf5-specification" id="id19">HSpy - HyperSpy’s HDF5 Specification</a><ul>
+<li><a class="reference internal" href="#extra-saving-arguments" id="id20">Extra saving arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#netcdf" id="id16">NetCDF</a></li>
-<li><a class="reference internal" href="#mrc" id="id17">MRC</a></li>
-<li><a class="reference internal" href="#emsa-msa" id="id18">EMSA/MSA</a><ul>
-<li><a class="reference internal" href="#id2" id="id19">Extra saving arguments</a></li>
+<li><a class="reference internal" href="#netcdf" id="id21">NetCDF</a></li>
+<li><a class="reference internal" href="#mrc" id="id22">MRC</a></li>
+<li><a class="reference internal" href="#mrcz" id="id23">MRCZ</a><ul>
+<li><a class="reference internal" href="#id2" id="id24">Extra saving arguments</a></li>
+<li><a class="reference internal" href="#example-usage" id="id25">Example Usage</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ripple" id="id20">Ripple</a></li>
-<li><a class="reference internal" href="#images" id="id21">Images</a></li>
-<li><a class="reference internal" href="#tiff" id="id22">TIFF</a></li>
-<li><a class="reference internal" href="#gatan-digital-micrograph" id="id23">Gatan Digital Micrograph</a><ul>
-<li><a class="reference internal" href="#extra-loading-arguments" id="id24">Extra loading arguments</a></li>
+<li><a class="reference internal" href="#emsa-msa" id="id26">EMSA/MSA</a><ul>
+<li><a class="reference internal" href="#id3" id="id27">Extra saving arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#edax-team-spd-and-spc" id="id25">EDAX TEAM SPD and SPC</a></li>
-<li><a class="reference internal" href="#fei-tia-ser-and-emi" id="id26">FEI TIA ser and emi</a></li>
-<li><a class="reference internal" href="#semper-unf-binary-format" id="id27">SEMPER unf binary format</a></li>
-<li><a class="reference internal" href="#blockfile" id="id28">Blockfile</a></li>
-<li><a class="reference internal" href="#dens-heater-log" id="id29">DENS heater log</a></li>
-<li><a class="reference internal" href="#bruker-composite-file" id="id30">Bruker composite file</a><ul>
-<li><a class="reference internal" href="#id7" id="id31">Extra loading arguments</a></li>
+<li><a class="reference internal" href="#ripple" id="id28">Ripple</a></li>
+<li><a class="reference internal" href="#images" id="id29">Images</a></li>
+<li><a class="reference internal" href="#tiff" id="id30">TIFF</a></li>
+<li><a class="reference internal" href="#gatan-digital-micrograph" id="id31">Gatan Digital Micrograph</a><ul>
+<li><a class="reference internal" href="#extra-loading-arguments" id="id32">Extra loading arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#emd-electron-microscopy-datasets-hdf5" id="id32">EMD Electron Microscopy Datasets (HDF5)</a></li>
-<li><a class="reference internal" href="#protochips-log" id="id33">Protochips log</a></li>
+<li><a class="reference internal" href="#edax-team-spd-and-spc" id="id33">EDAX TEAM SPD and SPC</a><ul>
+<li><a class="reference internal" href="#extra-loading-arguments-for-spd-file" id="id34">Extra loading arguments for <code class="docutils literal notranslate"><span class="pre">.spd</span></code> file</a></li>
+<li><a class="reference internal" href="#extra-loading-arguments-for-spd-and-spc-files" id="id35">Extra loading arguments for <code class="docutils literal notranslate"><span class="pre">.spd</span></code> and <code class="docutils literal notranslate"><span class="pre">.spc</span></code> files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#reading-data-generated-by-hyperspy-using-other-software-packages" id="id34">Reading data generated by HyperSpy using other software packages</a><ul>
-<li><a class="reference internal" href="#importrpl-digital-micrograph-plugin" id="id35">ImportRPL Digital Micrograph plugin</a></li>
-<li><a class="reference internal" href="#readhyperspyh5-matlab-plugin" id="id36">readHyperSpyH5 MATLAB Plugin</a></li>
+<li><a class="reference internal" href="#fei-tia-ser-and-emi" id="id36">FEI TIA ser and emi</a></li>
+<li><a class="reference internal" href="#semper-unf-binary-format" id="id37">SEMPER unf binary format</a></li>
+<li><a class="reference internal" href="#blockfile" id="id38">Blockfile</a></li>
+<li><a class="reference internal" href="#dens-heater-log" id="id39">DENS heater log</a></li>
+<li><a class="reference internal" href="#bruker-s-formats" id="id40">Bruker’s formats</a><ul>
+<li><a class="reference internal" href="#bruker-composite-file" id="id41">Bruker composite file</a><ul>
+<li><a class="reference internal" href="#id10" id="id42">Extra loading arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spx-format" id="id43">SPX format</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#emd" id="id44">EMD</a><ul>
+<li><a class="reference internal" href="#emd-ncem" id="id45">EMD (NCEM)</a></li>
+<li><a class="reference internal" href="#emd-fei" id="id46">EMD (FEI)</a><ul>
+<li><a class="reference internal" href="#extra-loading-arguments-fei-emd" id="id47">Extra loading arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#protochips-log" id="id48">Protochips log</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reading-data-generated-by-hyperspy-using-other-software-packages" id="id49">Reading data generated by HyperSpy using other software packages</a><ul>
+<li><a class="reference internal" href="#importrpl-digital-micrograph-plugin" id="id50">ImportRPL Digital Micrograph plugin</a></li>
+<li><a class="reference internal" href="#readhyperspyh5-matlab-plugin" id="id51">readHyperSpyH5 MATLAB Plugin</a></li>
 </ul>
 </li>
 </ul>
@@ -280,20 +301,20 @@
 </ul>
 </div>
 <div class="section" id="loading-files-the-load-function">
-<span id="loading-files"></span><h2><a class="toc-backref" href="#id10">Loading files: the load function</a><a class="headerlink" href="#loading-files-the-load-function" title="Permalink to this headline">¶</a></h2>
+<span id="loading-files"></span><h2><a class="toc-backref" href="#id15">Loading files: the load function</a><a class="headerlink" href="#loading-files-the-load-function" title="Permalink to this headline">¶</a></h2>
 <p>HyperSpy can read and write to multiple formats (see <a class="reference internal" href="#supported-formats"><span class="std std-ref">Supported formats</span></a>).
-To load data use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> command. For example, to load the
+To load data use the <a class="reference internal" href="../api/hyperspy.io.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> command. For example, to load the
 image ascent.jpg you can type:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;ascent.jpg&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If the loading was successful, the variable <code class="docutils literal notranslate"><span class="pre">s</span></code> contains a generic
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>, a <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal1D</span></code></a> or
-an <a class="reference internal" href="../api/hyperspy._signals.html#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal2D</span></code></a>.</p>
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>, a <a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal1D</span></code></a> or
+an <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal2D</span></code></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Note for python programmers: the data is stored in a numpy array
-in the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute, but you will not
+in the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.data" title="hyperspy.signal.BaseSignal.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute, but you will not
 normally need to access it there.)</p>
 </div>
 <p>HyperSpy will try to guess the most likely data type for the corresponding
@@ -316,12 +337,12 @@ location where it can be used by some standard routines, the
 </div>
 <p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code> and
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> can be exported to  text files
-using the <a class="reference internal" href="../api/hyperspy.misc.html#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="hyperspy.misc.utils.DictionaryTreeBrowser.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a> method, e.g.:</p>
+using the <a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="hyperspy.misc.utils.DictionaryTreeBrowser.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a> method, e.g.:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_metadata</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="deprecated" id="load-to-memory-label">
-<p><span class="versionmodified">Deprecated since version 1.2: </span><code class="docutils literal notranslate"><span class="pre">memmap_dir</span></code> and <code class="docutils literal notranslate"><span class="pre">load_to_memory</span></code> <a class="reference internal" href="../api/hyperspy.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> keyword
+<p><span class="versionmodified">Deprecated since version 1.2: </span><code class="docutils literal notranslate"><span class="pre">memmap_dir</span></code> and <code class="docutils literal notranslate"><span class="pre">load_to_memory</span></code> <a class="reference internal" href="../api/hyperspy.io.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> keyword
 arguments. Use <code class="docutils literal notranslate"><span class="pre">lazy</span></code> instead of <code class="docutils literal notranslate"><span class="pre">load_to_memory</span></code>. <code class="docutils literal notranslate"><span class="pre">lazy</span></code> makes
 <code class="docutils literal notranslate"><span class="pre">memmap_dir</span></code> unnecessary.</p>
 </div>
@@ -329,12 +350,16 @@ arguments. Use <code class="docutils literal notranslate"><span class="pre">lazy
 (see <a class="reference internal" href="#supported-formats"><span class="std std-ref">Supported formats</span></a> for a list). This feature can be useful when
 analysing large files. To load a file without loading it to memory simply set
 <code class="docutils literal notranslate"><span class="pre">lazy</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> e.g.:</p>
+<p>The units of the navigation and signal axes can be converted automatically
+during loading using the <code class="docutils literal notranslate"><span class="pre">convert_units</span></code> parameter. If <cite>True</cite>, the
+<code class="docutils literal notranslate"><span class="pre">convert_to_units</span></code> method of the <code class="docutils literal notranslate"><span class="pre">axes_manager</span></code> will be used for the conversion
+and if set to <cite>False</cite>, the units will not be converted. The default is <cite>False</cite>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>More details on lazy evaluation support in <a class="reference internal" href="big_data.html#big-data-label"><span class="std std-ref">Working with big data</span></a>.</p>
 <div class="section" id="loading-multiple-files">
-<h3><a class="toc-backref" href="#id11">Loading multiple files</a><a class="headerlink" href="#loading-multiple-files" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Loading multiple files</a><a class="headerlink" href="#loading-multiple-files" title="Permalink to this headline">¶</a></h3>
 <p>Rather than loading files individually, several files can be loaded with a
 single command. This can be done by passing a list of filenames to the load
 functions, e.g.:</p>
@@ -371,12 +396,12 @@ which case the function will return a list of objects, e.g.:</p>
 </div>
 </div>
 <div class="section" id="saving-data-to-files">
-<span id="saving-files"></span><h2><a class="toc-backref" href="#id12">Saving data to files</a><a class="headerlink" href="#saving-data-to-files" title="Permalink to this headline">¶</a></h2>
-<p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal.save" title="hyperspy.signal.BaseSignal.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> method. The
+<span id="saving-files"></span><h2><a class="toc-backref" href="#id17">Saving data to files</a><a class="headerlink" href="#saving-data-to-files" title="Permalink to this headline">¶</a></h2>
+<p>To save data to a file use the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.save" title="hyperspy.signal.BaseSignal.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> method. The
 first argument is the filename and the format is defined by the filename
 extension. If the filename does not contain the extension the default format
 (<a class="reference internal" href="#hspy-format"><span class="std std-ref">HSpy - HyperSpy’s HDF5 Specification</span></a>) is used. For example, if the <code class="xref py py-const docutils literal notranslate"><span class="pre">s</span></code> variable
-contains the <a class="reference internal" href="../api/hyperspy.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> that you want to write to a file,
+contains the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> that you want to write to a file,
 the following will write the data to a file called <code class="file docutils literal notranslate"><span class="pre">spectrum.hspy</span></code> in the
 default <a class="reference internal" href="#hspy-format"><span class="std std-ref">HSpy - HyperSpy’s HDF5 Specification</span></a> format:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;spectrum&#39;</span><span class="p">)</span>
@@ -390,11 +415,11 @@ default <a class="reference internal" href="#hspy-format"><span class="std std-r
 <a class="reference internal" href="#supported-formats"><span class="std std-ref">Supported formats</span></a> for more information.</p>
 </div>
 <div class="section" id="supported-formats">
-<span id="id1"></span><h2><a class="toc-backref" href="#id13">Supported formats</a><a class="headerlink" href="#supported-formats" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id18">Supported formats</a><a class="headerlink" href="#supported-formats" title="Permalink to this headline">¶</a></h2>
 <p>Here is a summary of the different formats that are currently supported by
 HyperSpy. The “lazy” column specifies if lazy evaluation is supported.</p>
-<table border="1" class="docutils" id="id8">
-<caption><span class="caption-text">Supported file formats</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id13">
+<caption><span class="caption-text">Supported file formats</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="45%" />
 <col width="18%" />
@@ -444,52 +469,67 @@ HyperSpy. The “lazy” column specifies if lazy evaluation is supported.</p>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="row-odd"><td>EMSA/MSA</td>
+<tr class="row-odd"><td>MRCZ</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>EMSA/MSA</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>No</td>
 </tr>
-<tr class="row-even"><td>NetCDF</td>
+<tr class="row-odd"><td>NetCDF</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="row-odd"><td>Ripple</td>
+<tr class="row-even"><td>Ripple</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
-<tr class="row-even"><td>SEMPER unf</td>
+<tr class="row-odd"><td>SEMPER unf</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
-<tr class="row-odd"><td>Blockfile</td>
+<tr class="row-even"><td>Blockfile</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
-<tr class="row-even"><td>DENS heater log</td>
+<tr class="row-odd"><td>DENS heater log</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="row-odd"><td>Bruker’s bcf</td>
+<tr class="row-even"><td>Bruker’s bcf</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="row-even"><td>EMD (Berkley Labs)</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr class="row-odd"><td>Protochips log</td>
+<tr class="row-odd"><td>Bruker’s spx</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="row-even"><td>EDAX .spc and .spd</td>
+<tr class="row-even"><td>EMD (NCEM)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>EMD (FEI)</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>Protochips log</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>EDAX .spc and .spd</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
@@ -497,7 +537,7 @@ HyperSpy. The “lazy” column specifies if lazy evaluation is supported.</p>
 </tbody>
 </table>
 <div class="section" id="hspy-hyperspy-s-hdf5-specification">
-<span id="hspy-format"></span><h3><a class="toc-backref" href="#id14">HSpy - HyperSpy’s HDF5 Specification</a><a class="headerlink" href="#hspy-hyperspy-s-hdf5-specification" title="Permalink to this headline">¶</a></h3>
+<span id="hspy-format"></span><h3><a class="toc-backref" href="#id19">HSpy - HyperSpy’s HDF5 Specification</a><a class="headerlink" href="#hspy-hyperspy-s-hdf5-specification" title="Permalink to this headline">¶</a></h3>
 <p>This is the default format and it is the only one that guarantees that no
 information will be lost in the writing process and that supports saving data
 of arbitrary dimensions. It is based on the <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 open standard</a>. The HDF5 file format is supported by <a class="reference external" href="http://www.hdfgroup.org/products/hdf5_tools/SWSummarybyName.htm">many
@@ -525,10 +565,10 @@ filename e.g.:</p>
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.8: </span>Saving list, tuples and signals present in <a class="reference internal" href="../api/hyperspy.html#hyperspy.samfire.Samfire.metadata" title="hyperspy.samfire.Samfire.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a>.</p>
+<p><span class="versionmodified">New in version 0.8: </span>Saving list, tuples and signals present in <a class="reference internal" href="../api/hyperspy.io_plugins.semper_unf.html#hyperspy.io_plugins.semper_unf.SemperFormat.metadata" title="hyperspy.io_plugins.semper_unf.SemperFormat.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a>.</p>
 </div>
 <p>When saving to <code class="docutils literal notranslate"><span class="pre">hspy</span></code>, all supported objects in the signal’s
-<a class="reference internal" href="../api/hyperspy.html#hyperspy.samfire.Samfire.metadata" title="hyperspy.samfire.Samfire.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> is stored. This includes  lists, tuples and signals.
+<a class="reference internal" href="../api/hyperspy.io_plugins.semper_unf.html#hyperspy.io_plugins.semper_unf.SemperFormat.metadata" title="hyperspy.io_plugins.semper_unf.SemperFormat.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> is stored. This includes  lists, tuples and signals.
 Please note that in order to increase saving efficiency and speed, if possible,
 the inner-most structures are converted to numpy arrays when saved. This
 procedure homogenizes any types of the objects inside, most notably casting
@@ -572,13 +612,14 @@ what, for large signal spaces usually leads to smaller chunks as <code class="do
 constrain of storing at least one signal per chunks. For example, for the signal in the example above
 passing <code class="docutils literal notranslate"><span class="pre">chunks=True</span></code> results in <code class="docutils literal notranslate"><span class="pre">(7,</span> <span class="pre">7,</span> <span class="pre">256)</span></code> chunks.</p>
 <div class="section" id="extra-saving-arguments">
-<h4><a class="toc-backref" href="#id15">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
-<p>compression: One of None, ‘gzip’, ‘szip’, ‘lzf’.</p>
-<p>‘gzip’ is the default</p>
+<h4><a class="toc-backref" href="#id20">Extra saving arguments</a><a class="headerlink" href="#extra-saving-arguments" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><cite>compression</cite> : One of None, ‘gzip’, ‘szip’, ‘lzf’ (default is ‘gzip’).</li>
+</ul>
 </div>
 </div>
 <div class="section" id="netcdf">
-<span id="netcdf-format"></span><h3><a class="toc-backref" href="#id16">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
+<span id="netcdf-format"></span><h3><a class="toc-backref" href="#id21">NetCDF</a><a class="headerlink" href="#netcdf" title="Permalink to this headline">¶</a></h3>
 <p>This was the default format in HyperSpy’s predecessor, EELSLab, but it has been
 superseded by <span class="xref std std-ref">HDF5</span> in HyperSpy. We provide only reading capabilities
 but we do not support writing to this format.</p>
@@ -587,7 +628,7 @@ but we do not support writing to this format.</p>
 it is not installed by default when using the automatic installers.</p>
 </div>
 <div class="section" id="mrc">
-<span id="mrc-format"></span><h3><a class="toc-backref" href="#id17">MRC</a><a class="headerlink" href="#mrc" title="Permalink to this headline">¶</a></h3>
+<span id="mrc-format"></span><h3><a class="toc-backref" href="#id22">MRC</a><a class="headerlink" href="#mrc" title="Permalink to this headline">¶</a></h3>
 <p>This is a format widely used for tomographic data. Our implementation is based
 on <a class="reference external" href="http://ami.scripps.edu/software/mrctools/mrc_specification.php">this specification</a>. We also
 partly support FEI’s custom header. We do not provide writing features for this
@@ -598,8 +639,62 @@ loading the file using a different mode (default is copy-on-write) . However,
 note that lazy loading does not support in-place writing (i.e lazy loading and
 the “r+” mode are incompatible).</p>
 </div>
+<div class="section" id="mrcz">
+<span id="mrcz-format"></span><h3><a class="toc-backref" href="#id23">MRCZ</a><a class="headerlink" href="#mrcz" title="Permalink to this headline">¶</a></h3>
+<p>MRCZ is an extension of the CCP-EM MRC2014 file format. <a class="reference external" href="http://www.ccpem.ac.uk/mrc_format/mrc2014.php">CCP-EM MRC2014</a> file format.  It uses the
+<cite>blosc</cite> meta-compression library to bitshuffle and compress files in a blocked,
+multi-threaded environment. The supported data types are:</p>
+<p>[<cite>float32</cite>,`int8`,`uint16`,`int16`,`complex64`]</p>
+<p>It supports arbitrary meta-data, which is serialized into JSON.</p>
+<p>MRCZ also supports asychronous reads and writes.</p>
+<p>Repository: <a class="reference external" href="https://github.com/em-MRCZ">https://github.com/em-MRCZ</a>
+PyPI:       <a class="reference external" href="https://pypi.python.org/pypi/mrcz">https://pypi.python.org/pypi/mrcz</a>
+Citation:   Submitted.
+Preprint:   <a class="reference external" href="http://www.biorxiv.org/content/early/2017/03/13/116533">http://www.biorxiv.org/content/early/2017/03/13/116533</a></p>
+<p>Support for this format is not enabled by default. In order to enable it
+install the <cite>mrcz</cite> and optionally the <cite>blosc</cite> Python packages.</p>
+<div class="section" id="id2">
+<h4><a class="toc-backref" href="#id24">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt><cite>do_async</cite>:   currently supported within Hyperspy for writing only, this will save</dt>
+<dd>the file in a background thread and return immediately. Defaults
+to <cite>False</cite>.</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There is no method currently implemented within Hyperspy to tell if an
+asychronous write has finished.</p>
+</div>
+<dl class="docutils">
+<dt><cite>compressor</cite>: The compression codec, one of [<cite>None</cite>,`’zlib`’,`’zstd’<cite>, `’lz4’</cite>].</dt>
+<dd>Defaults to <cite>None</cite>.</dd>
+</dl>
+<p><cite>clevel</cite>:     The compression level, an <cite>int</cite> from 1 to 9. Defaults to 1.
+<cite>n_threads</cite>:  The number of threads to use for <cite>blosc</cite> compression. Defaults to</p>
+<blockquote>
+<div>the maximum number of virtual cores (including Intel Hyperthreading)
+on your system, which is recommended for best performance. If <cite>do_asyc = True</cite> you may wish to leave one thread free for the
+Python GIL.</div></blockquote>
+<p>The recommended compression codec is ‘zstd’ (zStandard) with <cite>clevel=1</cite> for
+general use. If speed is critical, use ‘lz4’ (LZ4) with <cite>clevel=9</cite>. Integer data
+compresses more redably than floating-point data, and in general the histogram
+of values in the data reflects how compressible it is.</p>
+<p>To save files that are compatible with other programs that can use MRC such as
+GMS, IMOD, Relion, MotionCorr, etc. save with <cite>compressor=None</cite>, extension <cite>.mrc</cite>.
+JSON metadata will not be recognized by other MRC-supporting software but should
+not cause crashes.</p>
+</div>
+<div class="section" id="example-usage">
+<h4><a class="toc-backref" href="#id25">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;file.mrcz&#39;</span><span class="p">,</span> <span class="n">do_async</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">compressor</span><span class="o">=</span><span class="s1">&#39;zstd&#39;</span><span class="p">,</span> <span class="n">clevel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_signal</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.mrcz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="emsa-msa">
-<span id="msa-format"></span><h3><a class="toc-backref" href="#id18">EMSA/MSA</a><a class="headerlink" href="#emsa-msa" title="Permalink to this headline">¶</a></h3>
+<span id="msa-format"></span><h3><a class="toc-backref" href="#id26">EMSA/MSA</a><a class="headerlink" href="#emsa-msa" title="Permalink to this headline">¶</a></h3>
 <p>This <a class="reference external" href="http://www.amc.anl.gov/ANLSoftwareLibrary/02-MMSLib/XEDS/EMMFF/EMMFF.IBM/Emmff.Total">open standard format</a>
 is widely used to exchange single spectrum data, but it does not support
 multidimensional data. It can be used to exchange single spectra with Gatan’s
@@ -609,8 +704,8 @@ Digital Micrograph.</p>
 <p class="last">If several spectra are loaded and stacked (<code class="docutils literal notranslate"><span class="pre">hs.load('pattern',</span> <span class="pre">stack_signals=True</span></code>)
 the calibration read from the first spectrum and applied to all other spectra.</p>
 </div>
-<div class="section" id="id2">
-<h4><a class="toc-backref" href="#id19">Extra saving arguments</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4><a class="toc-backref" href="#id27">Extra saving arguments</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>For the MSA format the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument is used to specify whether the
 energy axis should also be saved with the data.  The default, ‘Y’ omits the
 energy axis in the file.  The alternative, ‘XY’, saves a second column with the
@@ -630,7 +725,7 @@ using the <cite>encoding</cite> argument, e.g.:</p>
 </div>
 </div>
 <div class="section" id="ripple">
-<span id="ripple-format"></span><h3><a class="toc-backref" href="#id20">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
+<span id="ripple-format"></span><h3><a class="toc-backref" href="#id28">Ripple</a><a class="headerlink" href="#ripple" title="Permalink to this headline">¶</a></h3>
 <p>This <a class="reference external" href="http://www.nist.gov/lispix/doc/image-file-formats/raw-file-format.htm">open standard format</a> is
 widely used to exchange multidimensional data. However, it only supports data of
 up to three dimensions. It can be used to exchange data with Bruker and <a class="reference external" href="http://www.nist.gov/lispix/">Lispix</a>. Used in combination with the <a class="reference internal" href="#import-rpl"><span class="std std-ref">ImportRPL Digital Micrograph plugin</span></a>
@@ -646,7 +741,7 @@ note that lazy loading does not support in-place writing (i.e lazy loading and
 the “r+” mode are incompatible).</p>
 </div>
 <div class="section" id="images">
-<span id="image-format"></span><h3><a class="toc-backref" href="#id21">Images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<span id="image-format"></span><h3><a class="toc-backref" href="#id29">Images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy is able to read and write data too all the image formats supported by
 <a class="reference external" href="http://www.pythonware.com/products/pil/">the Python Image Library</a> (PIL).
 This includes png, pdf, gif etc.</p>
@@ -657,7 +752,7 @@ exception of <a class="reference internal" href="#tiff-format"><span class="std 
 analysis purposes.</p>
 </div>
 <div class="section" id="tiff">
-<span id="tiff-format"></span><h3><a class="toc-backref" href="#id22">TIFF</a><a class="headerlink" href="#tiff" title="Permalink to this headline">¶</a></h3>
+<span id="tiff-format"></span><h3><a class="toc-backref" href="#id30">TIFF</a><a class="headerlink" href="#tiff" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read and write 2D and 3D TIFF files using using
 Christoph Gohlke’s tifffile library. In particular it supports reading and
 writing of TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH, and FluoView files. Most of
@@ -689,7 +784,7 @@ library. See <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/
 </div>
 </div>
 <div class="section" id="gatan-digital-micrograph">
-<span id="dm3-format"></span><h3><a class="toc-backref" href="#id23">Gatan Digital Micrograph</a><a class="headerlink" href="#gatan-digital-micrograph" title="Permalink to this headline">¶</a></h3>
+<span id="dm3-format"></span><h3><a class="toc-backref" href="#id31">Gatan Digital Micrograph</a><a class="headerlink" href="#gatan-digital-micrograph" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read both dm3 and dm4 files but the reading features are not
 complete (and probably they will be unless Gatan releases the specifications of
 the format). That said, we understand that this is an important feature and if
@@ -697,7 +792,7 @@ loading a particular Digital Micrograph file fails for you, please report it as
 an issue in the <a class="reference external" href="github.com/hyperspy/hyperspy/issues">issues tracker</a> to make
 us aware of the problem.</p>
 <div class="section" id="extra-loading-arguments">
-<h4><a class="toc-backref" href="#id24">Extra loading arguments</a><a class="headerlink" href="#extra-loading-arguments" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id32">Extra loading arguments</a><a class="headerlink" href="#extra-loading-arguments" title="Permalink to this headline">¶</a></h4>
 <p>optimize: bool, default is True. During loading, the data is replaced by its
 <a class="reference internal" href="tools.html#signal-transpose-optimize"><span class="std std-ref">optimized copy</span></a> to speed up operations,
 e. g. iteration over navigation axes. The cost of this speed improvement is to
@@ -705,7 +800,7 @@ double the memory requirement during data loading.</p>
 </div>
 </div>
 <div class="section" id="edax-team-spd-and-spc">
-<span id="edax-format"></span><h3><a class="toc-backref" href="#id25">EDAX TEAM SPD and SPC</a><a class="headerlink" href="#edax-team-spd-and-spc" title="Permalink to this headline">¶</a></h3>
+<span id="edax-format"></span><h3><a class="toc-backref" href="#id33">EDAX TEAM SPD and SPC</a><a class="headerlink" href="#edax-team-spd-and-spc" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read both <code class="docutils literal notranslate"><span class="pre">.spd</span></code> (spectrum image) and <code class="docutils literal notranslate"><span class="pre">.spc</span></code> (single spectra)
 files from the EDAX TEAM software.
 If reading an <code class="docutils literal notranslate"><span class="pre">.spd</span></code> file, the calibration of the
@@ -724,9 +819,23 @@ available publicly available from EDAX and are on Github
 (<a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29506/SPECTRUM-V70.pdf">.spc</a>,
 <a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29505/SpcMap-spd.file.format.pdf">.spd</a>, and
 <a class="reference external" href="https://github.com/hyperspy/hyperspy/files/29507/ImageIPR.pdf">.ipr</a>).</p>
+<div class="section" id="extra-loading-arguments-for-spd-file">
+<h4><a class="toc-backref" href="#id34">Extra loading arguments for <code class="docutils literal notranslate"><span class="pre">.spd</span></code> file</a><a class="headerlink" href="#extra-loading-arguments-for-spd-file" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><cite>spc_fname</cite> : {None, str}, name of file from which to read the spectral calibration. If data was exported fully from EDAX TEAM software, an .spc file with the same name as the .spd should be present. If <cite>None</cite>, the default filename will be searched for. Otherwise, the name of the <code class="docutils literal notranslate"><span class="pre">.spc</span></code> file to use for calibration can be explicitly given as a string.</li>
+<li><cite>ipr_fname</cite> : {None, str}, name of file from which to read the spatial calibration. If data was exported fully from EDAX TEAM software, an <code class="docutils literal notranslate"><span class="pre">.ipr</span></code> file with the same name as the <code class="docutils literal notranslate"><span class="pre">.spd</span></code> (plus a “_Img” suffix) should be present.  If <cite>None</cite>, the default filename will be searched for. Otherwise, the name of the <code class="docutils literal notranslate"><span class="pre">.ipr</span></code> file to use for spatial calibration can be explicitly given as a string.</li>
+<li><a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs: remaining arguments are passed to the Numpy <code class="docutils literal notranslate"><span class="pre">memmap</span></code> function.</li>
+</ul>
+</div>
+<div class="section" id="extra-loading-arguments-for-spd-and-spc-files">
+<h4><a class="toc-backref" href="#id35">Extra loading arguments for <code class="docutils literal notranslate"><span class="pre">.spd</span></code> and <code class="docutils literal notranslate"><span class="pre">.spc</span></code> files</a><a class="headerlink" href="#extra-loading-arguments-for-spd-and-spc-files" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><cite>load_all_spc</cite> : bool, switch to control if all of the <code class="docutils literal notranslate"><span class="pre">.spc</span></code> header is read, or just the important parts for import into HyperSpy.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="fei-tia-ser-and-emi">
-<span id="fei-format"></span><h3><a class="toc-backref" href="#id26">FEI TIA ser and emi</a><a class="headerlink" href="#fei-tia-ser-and-emi" title="Permalink to this headline">¶</a></h3>
+<span id="fei-format"></span><h3><a class="toc-backref" href="#id36">FEI TIA ser and emi</a><a class="headerlink" href="#fei-tia-ser-and-emi" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read <code class="docutils literal notranslate"><span class="pre">ser</span></code> and <code class="docutils literal notranslate"><span class="pre">emi</span></code> files but the reading features are not
 complete (and probably they will be unless FEI releases the specifications of
 the format). That said we know that this is an important feature and if loading
@@ -740,7 +849,7 @@ Therefore strongly recommend to load using the <code class="docutils literal not
 with it, all of them will be read and returned as a list.</p>
 </div>
 <div class="section" id="semper-unf-binary-format">
-<span id="unf-format"></span><h3><a class="toc-backref" href="#id27">SEMPER unf binary format</a><a class="headerlink" href="#semper-unf-binary-format" title="Permalink to this headline">¶</a></h3>
+<span id="unf-format"></span><h3><a class="toc-backref" href="#id37">SEMPER unf binary format</a><a class="headerlink" href="#semper-unf-binary-format" title="Permalink to this headline">¶</a></h3>
 <p>SEMPER is a fully portable system of programs for image processing, particularly
 suitable for applications in electron microscopy developed by Owen Saxton (see
 DOI: 10.1016/S0304-3991(79)80044-3 for more information).The unf format is a
@@ -750,7 +859,7 @@ fitting BaseSignal subclass, based on the information stored in the label.
 Currently version 7 of the format should be fully supported.</p>
 </div>
 <div class="section" id="blockfile">
-<span id="blockfile-format"></span><h3><a class="toc-backref" href="#id28">Blockfile</a><a class="headerlink" href="#blockfile" title="Permalink to this headline">¶</a></h3>
+<span id="blockfile-format"></span><h3><a class="toc-backref" href="#id38">Blockfile</a><a class="headerlink" href="#blockfile" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read and write the blockfile format from NanoMegas ASTAR software.
 It is used to store a series of diffraction patterns from scanning precession
 electron diffraction (SPED) measurements, with a limited set of metadata. The
@@ -773,15 +882,20 @@ does not support in-place writing (i.e lazy loading and the “r+” mode
 are incompatible).</p>
 </div>
 <div class="section" id="dens-heater-log">
-<span id="dens-format"></span><h3><a class="toc-backref" href="#id29">DENS heater log</a><a class="headerlink" href="#dens-heater-log" title="Permalink to this headline">¶</a></h3>
+<span id="dens-format"></span><h3><a class="toc-backref" href="#id39">DENS heater log</a><a class="headerlink" href="#dens-heater-log" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read heater log format for DENS solution’s heating holder. The
 format stores all the captured data for each timestamp, together with a small
 header in a plain-text format. The reader extracts the measured temperature
 along the time axis, as well as the date and calibration constants stored in
 the header.</p>
 </div>
+<div class="section" id="bruker-s-formats">
+<h3><a class="toc-backref" href="#id40">Bruker’s formats</a><a class="headerlink" href="#bruker-s-formats" title="Permalink to this headline">¶</a></h3>
+<p>Bruker’s Esprit(TM) software and hardware allows to acquire and save the data
+in different kind of formats. Hyperspy can read two main basic formats: bcf
+and spx.</p>
 <div class="section" id="bruker-composite-file">
-<span id="bcf-format"></span><h3><a class="toc-backref" href="#id30">Bruker composite file</a><a class="headerlink" href="#bruker-composite-file" title="Permalink to this headline">¶</a></h3>
+<span id="bcf-format"></span><h4><a class="toc-backref" href="#id41">Bruker composite file</a><a class="headerlink" href="#bruker-composite-file" title="Permalink to this headline">¶</a></h4>
 <p>HyperSpy can read “hypermaps” saved with Bruker’s Esprit v1.x or v2.x in bcf
 hybrid (virtual file system/container with xml and binary data, optionally
 compressed) format. Most bcf import functionality is implemented. Both
@@ -793,20 +907,14 @@ for whole map is calculated from pixelAverage, lineAverage, pixelTime,
 lineCounter and map height parameters.</p>
 <p>Note that Bruker Esprit uses a similar format for EBSD data, but it is not
 currently supported by HyperSpy.</p>
-<div class="section" id="id7">
-<h4><a class="toc-backref" href="#id31">Extra loading arguments</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<p>select_type: one of (None, ‘spectrum’, ‘image’). If specified, only the corresponding
-type of data, either spectrum or image, is returned. By default (None), all data are loaded.</p>
-<p>index: one of (None, int, “all”). Allow to select the index of the dataset in the bcf file,
-which can contains several datasets. Default None value result in loading the first dataset.
-When set to ‘all’, all available datasets will be loaded and returned as separate signals.</p>
-<p>downsample: the downsample ratio of hyperspectral array (height and width only),
-can be integer &gt;=1, where ‘1’ results in no downsampling (default 1). The
-underlying method of downsampling is unchangeable: sum. Differently than
-block_reduce from skimage.measure it is memory efficient (does not creates
-intermediate arrays, works inplace).</p>
-<p>cutoff_at_kV: if set (can be int or float &gt;= 0) can be used either to crop or
-enlarge energy (or channels) range at max values. (default None)</p>
+<div class="section" id="id10">
+<h5><a class="toc-backref" href="#id42">Extra loading arguments</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><cite>select_type</cite> : one of (None, ‘spectrum’, ‘image’). If specified, only the corresponding type of data, either spectrum or image, is returned. By default (None), all data are loaded.</li>
+<li><cite>index</cite> : one of (None, int, “all”). Allow to select the index of the dataset in the bcf file, which can contains several datasets. Default None value result in loading the first dataset. When set to ‘all’, all available datasets will be loaded and returned as separate signals.</li>
+<li><cite>downsample</cite> : the downsample ratio of hyperspectral array (height and width only), can be integer &gt;=1, where ‘1’ results in no downsampling (default 1). The underlying method of downsampling is unchangeable: sum. Differently than block_reduce from skimage.measure it is memory efficient (does not creates intermediate arrays, works inplace).</li>
+<li><cite>cutoff_at_kV</cite> : if set (can be int or float &gt;= 0) can be used either to crop or enlarge energy (or channels) range at max values (default None).</li>
+</ul>
 <p>Example of loading reduced (downsampled, and with energy range cropped)
 “spectrum only” data from bcf (original shape: 80keV EDS range (4096 channels),
 100x75 pixels):</p>
@@ -816,16 +924,16 @@ enlarge energy (or channels) range at max values. (default None)</p>
 </div>
 <p>load the same file without extra arguments:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample80kv.bcf&quot;</span><span class="p">)</span>
-<span class="go">[&lt;Image, title: BSE, dimensions: (|100, 75)&gt;,</span>
-<span class="go">&lt;Image, title: SE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">[&lt;Signal2D, title: BSE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;Signal2D, title: SE, dimensions: (|100, 75)&gt;,</span>
 <span class="go">&lt;EDSSEMSpectrum, title: EDX, dimensions: (100, 75|1095)&gt;]</span>
 </pre></div>
 </div>
 <p>The loaded array energy dimension can by forced to be larger than the data
 recorded by setting the ‘cutoff_at_kV’ kwarg to higher value:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample80kv.bcf&quot;</span><span class="p">,</span> <span class="n">cutoff_at_kV</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="go">[&lt;Image, title: BSE, dimensions: (|100, 75)&gt;,</span>
-<span class="go">&lt;Image, title: SE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">[&lt;Signal2D, title: BSE, dimensions: (|100, 75)&gt;,</span>
+<span class="go">&lt;Signal2D, title: SE, dimensions: (|100, 75)&gt;,</span>
 <span class="go">&lt;EDSSEMSpectrum, title: EDX, dimensions: (100, 75|4096)&gt;]</span>
 </pre></div>
 </div>
@@ -833,17 +941,117 @@ recorded by setting the ‘cutoff_at_kV’ kwarg to higher value:</p>
 as navigator in the plotting.</p>
 </div>
 </div>
-<div class="section" id="emd-electron-microscopy-datasets-hdf5">
-<span id="emd-format"></span><h3><a class="toc-backref" href="#id32">EMD Electron Microscopy Datasets (HDF5)</a><a class="headerlink" href="#emd-electron-microscopy-datasets-hdf5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="spx-format">
+<span id="id11"></span><h4><a class="toc-backref" href="#id43">SPX format</a><a class="headerlink" href="#spx-format" title="Permalink to this headline">¶</a></h4>
+<p>Hyperspy can read Bruker’s spx format (single spectra format based on XML).
+The format contains extensive list of details and parameters of EDS analyses
+which are mapped in hyperspy to metadata and original_metadata dictionaries.</p>
+</div>
+</div>
+<div class="section" id="emd">
+<span id="emd-format"></span><h3><a class="toc-backref" href="#id44">EMD</a><a class="headerlink" href="#emd" title="Permalink to this headline">¶</a></h3>
 <p>EMD stands for “Electron Microscopy Dataset.” It is a subset of the open source
 HDF5 wrapper format. N-dimensional data arrays of any standard type can be
-stored in an HDF5 file, as well as tags and other metadata. The EMD format was
-developed at Lawrence Berkeley National Lab (see <a class="reference external" href="http://emdatasets.com/">http://emdatasets.com/</a> for
-more information). NOT to be confused with the FEI EMD format which was
-developed later and has a different structure.</p>
+stored in an HDF5 file, as well as tags and other metadata.</p>
+<div class="section" id="emd-ncem">
+<h4><a class="toc-backref" href="#id45">EMD (NCEM)</a><a class="headerlink" href="#emd-ncem" title="Permalink to this headline">¶</a></h4>
+<p>This EMD format was developed by Colin Ophus at the National Center for
+Electron Microscopy (NCEM). See <a class="reference external" href="http://emdatasets.com/">http://emdatasets.com/</a> for more information.</p>
+<p>For files containing several datasets, the <cite>dataset_name</cite> argument can be
+used to select a specific one:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;adatafile.emd&quot;</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;/experimental/science_data_1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or several by using a list:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;adatafile.emd&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">dataset_name</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>                <span class="s2">&quot;/experimental/science_data_1&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="s2">&quot;/experimental/science_data_1&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>asdf</p>
+</div>
+<div class="section" id="emd-fei">
+<span id="emd-fei-format"></span><h4><a class="toc-backref" href="#id46">EMD (FEI)</a><a class="headerlink" href="#emd-fei" title="Permalink to this headline">¶</a></h4>
+<p>This is a non-compliant variant of the standard EMD format developed by FEI.
+HyperSpy supports importing images, EDS spectrum and EDS
+spectrum streams (spectrum images stored in a sparse format). For spectrum
+streams, there are several loading options (described below) to control the frames
+and detectors to load and if to sum them on loading.  The default is
+to import the sum over all frames and over all detectors in order to decrease
+the data size in memory.</p>
+<p>Note that pruned FEI EMD files only contain the spectrum image in a proprietary
+format that HyperSpy cannot read. Therefore,
+don’t prune FEI EMD files in you intend to read them with HyperSpy.
+Note also that loading a spectrum image can be slow if <a class="reference external" href="http://numba.pydata.org/">numba</a> is not installed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample.emd&quot;</span><span class="p">)</span>
+<span class="go">[&lt;Signal2D, title: HAADF, dimensions: (|179, 161)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS, dimensions: (179, 161|4096)&gt;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To enable lazy loading of EDX spectrum images in this format it may be
+necessary to install <a class="reference external" href="http://sparse.pydata.org/en/latest/">sparse</a>. See
+See also <a class="reference internal" href="install.html#install-with-python-installers"><span class="std std-ref">Install using Python installers</span></a>. Note also that currently
+only lazy uncompression rather than lazy loading is implemented. This
+means that it is not currently possible to read EDX SI FEI EMD files with
+size bigger than the available memory.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This format is still not stable and files generated with the most recent
+version of Velox may not be supported. If you experience issues loading
+a file, please report it  to the HyperSpy developers so that they can
+add support for newer versions of the format.</p>
+</div>
+<div class="section" id="extra-loading-arguments-fei-emd">
+<span id="id12"></span><h5><a class="toc-backref" href="#id47">Extra loading arguments</a><a class="headerlink" href="#extra-loading-arguments-fei-emd" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><cite>select_type</cite> : one of {None, ‘image’, ‘single_spectrum’, ‘spectrum_image’} (default is None).</li>
+<li><cite>first_frame</cite> : integer (default is 0).</li>
+<li><cite>last_frame</cite> : integer (default is None)</li>
+<li><cite>sum_frames</cite> : boolean (default is True)</li>
+<li><cite>sum_EDS_detectors</cite> : boolean (default is True)</li>
+<li><cite>rebin_energy</cite> : integer (default is 1)</li>
+<li><cite>SI_dtype</cite> : numpy dtype (default is None)</li>
+<li><cite>load_SI_image_stack</cite> : boolean (default is False)</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">select_type</span></code> parameter specifies the type of data to load: if <cite>image</cite> is selected,
+only images (including EDS maps) are loaded, if <cite>single_spectrum</cite> is selected, only
+single spectra are loaded and if <cite>spectrum_image</cite> is selected, only the spectrum
+image will be loaded. The <code class="docutils literal notranslate"><span class="pre">first_frame</span></code> and <code class="docutils literal notranslate"><span class="pre">last_frame</span></code> parameters can be used
+to select the frame range of the EDS spectrum image to load. To load each individual
+EDS frame, use <code class="docutils literal notranslate"><span class="pre">sum_frames=False</span></code> and the EDS spectrum image will be loaded
+with an an extra navigation dimension corresponding to the frame index
+(time axis). Use the <code class="docutils literal notranslate"><span class="pre">sum_EDS_detectors=True</span></code> parameter to load the signal of
+each individual EDS detector. In such a case, a corresponding number of distinct
+EDS signal is returned. The default is <code class="docutils literal notranslate"><span class="pre">sum_EDS_detectors=True</span></code>, which loads the
+EDS signal as a sum over the signals from each EDS detectors.  The <code class="docutils literal notranslate"><span class="pre">rebin_energy</span></code>
+and <code class="docutils literal notranslate"><span class="pre">SI_dtype</span></code> parameters are particularly useful in combination with
+<code class="docutils literal notranslate"><span class="pre">sum_frames=False</span></code> to reduce the data size when one want to read the
+individual frames of the spectrum image. If <code class="docutils literal notranslate"><span class="pre">SI_dtype=None</span></code> (default), the dtype
+of the data in the emd file is used. The <code class="docutils literal notranslate"><span class="pre">load_SI_image_stack</span></code> parameter allows
+loading the stack of STEM images acquired simultaneously as the EDS spectrum image.
+This can be useful to monitor any specimen changes during the acquisition or to
+correct the spatial drift in the spectrum image by using the STEM images.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample.emd&quot;</span><span class="p">,</span> <span class="n">sum_EDS_detectors</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">[&lt;Signal2D, title: HAADF, dimensions: (|179, 161)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS - SuperXG21, dimensions: (179, 161|4096)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS - SuperXG22, dimensions: (179, 161|4096)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS - SuperXG23, dimensions: (179, 161|4096)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS - SuperXG24, dimensions: (179, 161|4096)&gt;]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample.emd&quot;</span><span class="p">,</span> <span class="n">sum_frames</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">load_SI_image_stack</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">SI_dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="n">rebin_energy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">[&lt;Signal2D, title: HAADF, dimensions: (50|179, 161)&gt;,</span>
+<span class="go">&lt;EDSSEMSpectrum, title: EDS, dimensions: (50, 179, 161|1024)&gt;]</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="protochips-log">
-<span id="protochips-format"></span><h3><a class="toc-backref" href="#id33">Protochips log</a><a class="headerlink" href="#protochips-log" title="Permalink to this headline">¶</a></h3>
+<span id="protochips-format"></span><h3><a class="toc-backref" href="#id48">Protochips log</a><a class="headerlink" href="#protochips-log" title="Permalink to this headline">¶</a></h3>
 <p>HyperSpy can read heater, biasing and gas cell log files for Protochips holder.
 The format stores all the captured data together with a small header in a csv
 file. The reader extracts the measured quantity (e. g. temperature, pressure,
@@ -856,11 +1064,11 @@ precisely by supporting non-linear axis.</p>
 </div>
 </div>
 <div class="section" id="reading-data-generated-by-hyperspy-using-other-software-packages">
-<h2><a class="toc-backref" href="#id34">Reading data generated by HyperSpy using other software packages</a><a class="headerlink" href="#reading-data-generated-by-hyperspy-using-other-software-packages" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id49">Reading data generated by HyperSpy using other software packages</a><a class="headerlink" href="#reading-data-generated-by-hyperspy-using-other-software-packages" title="Permalink to this headline">¶</a></h2>
 <p>The following scripts may help reading data generated by HyperSpy using
 other software packages.</p>
 <div class="section" id="importrpl-digital-micrograph-plugin">
-<span id="import-rpl"></span><h3><a class="toc-backref" href="#id35">ImportRPL Digital Micrograph plugin</a><a class="headerlink" href="#importrpl-digital-micrograph-plugin" title="Permalink to this headline">¶</a></h3>
+<span id="import-rpl"></span><h3><a class="toc-backref" href="#id50">ImportRPL Digital Micrograph plugin</a><a class="headerlink" href="#importrpl-digital-micrograph-plugin" title="Permalink to this headline">¶</a></h3>
 <p>This Digital Micrograph plugin is designed to import Ripple files into Digital Micrograph.
 It is used to ease data transit between DigitalMicrograph and HyperSpy without losing
 the calibration using the extra keywords that HyperSpy adds to the standard format.</p>
@@ -875,7 +1083,7 @@ with raw or bin extension it is opened directly without prompting</p>
 <p><a class="reference external" href="https://github.com/downloads/hyperspy/ImportRPL/ImportRPL.s">Download ImportRPL</a></p>
 </div>
 <div class="section" id="readhyperspyh5-matlab-plugin">
-<span id="hyperspy-matlab"></span><h3><a class="toc-backref" href="#id36">readHyperSpyH5 MATLAB Plugin</a><a class="headerlink" href="#readhyperspyh5-matlab-plugin" title="Permalink to this headline">¶</a></h3>
+<span id="hyperspy-matlab"></span><h3><a class="toc-backref" href="#id51">readHyperSpyH5 MATLAB Plugin</a><a class="headerlink" href="#readhyperspyh5-matlab-plugin" title="Permalink to this headline">¶</a></h3>
 <p>This MATLAB script is designed to import HyperSpy’s saved HDF5 files (<code class="docutils literal notranslate"><span class="pre">.hspy</span></code> extension).
 Like the Digital Micrograph script above, it is used to easily transfer data
 from HyperSpy to MATLAB, while retaining spatial calibration information.</p>
@@ -926,7 +1134,7 @@ from HyperSpy to MATLAB, while retaining spatial calibration information.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.4.dev',
+            VERSION:'1.4',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
