@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy._signals.lazy module &mdash; HyperSpy 1.3.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>hyperspy._signals.lazy module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy._signals.lazy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy._signals.lazy">
+<span id="hyperspy-signals-lazy-module"></span><h1>hyperspy._signals.lazy module<a class="headerlink" href="#module-hyperspy._signals.lazy" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hyperspy._signals.lazy.LazySignal">
+<em class="property">class </em><code class="descclassname">hyperspy._signals.lazy.</code><code class="descname">LazySignal</code><span class="sig-paren">(</span><em>data</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a></p>
+<p>A Lazy Signal instance that delays computation until explicitly saved
+(assuming storing the full result of computation in memory is not feasible)</p>
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.change_dtype">
+<code class="descname">change_dtype</code><span class="sig-paren">(</span><em>dtype</em>, <em>rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.change_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dtype</strong> (<em>str</em><em> or </em><em>dtype</em>) – Typecode or data-type to which the array is cast. In addition to all
+standard numpy dtypes HyperSpy supports four extra dtypes for RGB
+images: “rgb8”, “rgba8”, “rgb16” and “rgba16”. Changing from and to
+any rgbx dtype is more constrained than most other dtype
+conversions. To change to a rgbx dtype the signal dimension must be
+1, its size 3(4) for rgb(rgba) dtypes, the dtype uint8(uint16) for
+rgbx8(rgbx16) and the navigation dimension at least 2. After
+conversion the signal dimension becomes 2. The dtype of images of
+dtype rgbx8(rgbx16) can only be changed to uint8(uint16) and the
+signal dimension becomes 1.</li>
+<li><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
+the data may be automatically rechunked before performing this operation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([1, 2, 3, 4, 5])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([ 1.,  2.,  3.,  4.,  5.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><em>progressbar=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempt to store the full signal in memory..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.decomposition">
+<code class="descname">decomposition</code><span class="sig-paren">(</span><em>normalize_poissonian_noise=False</em>, <em>algorithm='svd'</em>, <em>output_dimension=None</em>, <em>signal_mask=None</em>, <em>navigation_mask=None</em>, <em>get=&lt;function get&gt;</em>, <em>num_chunks=None</em>, <em>reproject=True</em>, <em>bounds=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.decomposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Incremental (Batch) decomposition on the data, keeping n
+significant components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>normalize_poissonian_noise</strong> (<em>bool</em>) – If True, scale the SI to normalize Poissonian noise</li>
+<li><strong>algorithm</strong> (<em>str</em>) – One of (‘svd’, ‘PCA’, ‘ORPCA’, ‘ONMF’). By default ‘svd’,
+lazy SVD decomposition from dask.</li>
+<li><strong>output_dimension</strong> (<em>int</em>) – the number of significant components to keep. If None, keep all
+(only valid for SVD)</li>
+<li><strong>get</strong> (<em>dask scheduler</em>) – the dask scheduler to use for computations;
+default <cite>dask.threaded.get</cite></li>
+<li><strong>num_chunks</strong> (<em>int</em>) – the number of dask chunks to pass to the decomposition model.
+More chunks require more memory, but should run faster. Will be
+increased to contain atleast output_dimension signals.</li>
+<li><strong>navigation_mask</strong> (<em>{BaseSignal</em><em>, </em><em>numpy array</em><em>, </em><em>dask array}</em>) – The navigation locations marked as True are not used in the
+decompostion.</li>
+<li><strong>signal_mask</strong> (<em>{BaseSignal</em><em>, </em><em>numpy array</em><em>, </em><em>dask array}</em>) – The signal locations marked as True are not used in the
+decomposition.</li>
+<li><strong>reproject</strong> (<em>bool</em>) – Reproject data on the learnt components (factors) after learning.</li>
+<li><strong>**kwargs</strong> – passed to the partial_fit/fit functions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<dl class="docutils">
+<dt>Various algorithm parameters and their default values:</dt>
+<dd><dl class="first last docutils">
+<dt>ONMF:</dt>
+<dd>lambda1=1,
+kappa=1,
+robust=False,
+store_r=False
+batch_size=None</dd>
+<dt>ORPCA:</dt>
+<dd>fast=True,
+lambda1=None,
+lambda2=None,
+method=None,
+learning_rate=None,
+init=None,
+training_samples=None,
+momentum=None</dd>
+<dt>PCA:</dt>
+<dd>batch_size=None,
+copy=True,
+white=False</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.diff">
+<code class="descname">diff</code><span class="sig-paren">(</span><em>axis</em>, <em>order=1</em>, <em>out=None</em>, <em>rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a signal with the n-th order discrete difference along
+given axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<em>{int | string | axis}</em>) – The axis can be passed directly, or specified using the index of
+the axis in <cite>axes_manager</cite> or the axis name.</li>
+<li><strong>order</strong> (<em>int</em>) – the order of the derivative</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+<li><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
+the data may be automatically rechunked before performing this operation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="hyperspy._signals.lazy.LazySignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64,1024)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64,1023)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.get_histogram">
+<code class="descname">get_histogram</code><span class="sig-paren">(</span><em>bins='freedman'</em>, <em>out=None</em>, <em>rechunk=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.get_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a histogram of the signal data.</p>
+<p>More sophisticated algorithms for determining bins can be used.
+Aside from the <cite>bins</cite> argument allowing a string specified how bins
+are computed, the parameters are the same as numpy.histogram().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bins</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – If bins is a string, then it must be one of:
+‘knuth’ : use Knuth’s rule to determine bins
+‘scotts’ : use Scott’s rule to determine bins
+‘freedman’ : use the Freedman-diaconis rule to determine bins
+‘blocks’ : use bayesian blocks for dynamic bin widths</li>
+<li><strong>range_bins</strong> (<em>tuple</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – the minimum and maximum range for the histogram. If not specified,
+it will be (x.min(), x.max())</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+<li><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
+the data may be automatically rechunked before performing this operation.</li>
+<li><strong>**kwargs</strong> – other keyword arguments (weight and density) are described in
+np.histogram().</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hist_spec</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">An 1D spectrum instance containing the histogram.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_summary_statistics()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">astroML.density_estimation.histogram()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The lazy version of the algorithm does not support ‘knuth’ and ‘blocks’
+bins arguments.
+The number of bins estimators are taken from AstroML. Read
+their documentation for more info.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+<span class="go">Plot the data histogram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="go">Plot the histogram of the signal at the current coordinates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_current_signal</span><span class="p">()</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.integrate_simpson">
+<code class="descname">integrate_simpson</code><span class="sig-paren">(</span><em>axis</em>, <em>out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.integrate_simpson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a signal with the result of calculating the integral
+of the signal along an axis using Simpson’s rule.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<em>{int | string | axis}</em>) – The axis can be passed directly, or specified using the index of
+the axis in <cite>axes_manager</cite> or the axis name.</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>s</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Signal</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="hyperspy._signals.lazy.LazySignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64,1024)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.rebin">
+<code class="descname">rebin</code><span class="sig-paren">(</span><em>new_shape=None</em>, <em>scale=None</em>, <em>crop=False</em>, <em>out=None</em>, <em>rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.rebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebin array.</p>
+<p>Rebin the signal into a smaller or larger shape, based on linear
+interpolation. Specify <strong>either</strong> new_shape or scale.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_shape</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new_shape. This will
+then be converted into a scale.</li>
+<li><strong>scale</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new:old pixel ratio, e.g. a ratio of 1
+is no binning and a ratio of 2 means that each pixel in the new
+spectrum is twice the size of the pixels in the old spectrum.
+The length of the list should match the dimension of the numpy array.
+<strong>*Note : Only one of scale or new_shape should be specified otherwise
+the function will not run*</strong></li>
+<li><strong>crop</strong> (<em>bool</em><em>, </em><em>default True</em>) – <p>When binning by a non-integer number of pixels it is likely that
+the final row in each dimension contains less than the full quota to
+fill one pixel.</p>
+<p>e.g. 5*5 array binned by 2.1 will produce two rows containing 2.1
+pixels and one row containing only 0.8 pixels worth. Selection of
+crop=’True’ or crop=’False’ determines whether or not this
+‘black’ line is cropped from the final binned array or not.</p>
+<p><em>Please note that if crop=False is used, the final row in each
+dimension may appear black, if a fractional number of pixels are left
+over. It can be removed but has been left to preserve total counts
+before and after binning.</em></p>
+</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>s</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Signal subclass</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EDSTEMSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+<span class="go">&lt;EDXTEMSpectrum, title: dimensions: (4, 4|10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Sum = &#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">))))</span>
+<span class="go">Sum = 164.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">&lt;EDSTEMSpectrum, title: dimensions (2, 2|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum = &#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">data</span><span class="p">))))</span>
+<span class="go">Sum =  164.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.valuemax">
+<code class="descname">valuemax</code><span class="sig-paren">(</span><em>axis</em>, <em>out=None</em>, <em>rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a signal with the value of coordinates of the maximum along an axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<em>{int | string | axis}</em>) – The axis can be passed directly, or specified using the index of
+the axis in <cite>axes_manager</cite> or the axis name.</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+<li><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
+the data may be automatically rechunked before performing this operation.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>s</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Signal</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>max, min, sum, mean, std, var, indexmax, amax</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64,1024)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">valuemax</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64,64)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.valuemin">
+<code class="descname">valuemin</code><span class="sig-paren">(</span><em>axis</em>, <em>out=None</em>, <em>rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.valuemin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a signal with the value of coordinates of the minimum along an axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<em>{int | string | axis}</em>) – The axis can be passed directly, or specified using the index of
+the axis in <cite>axes_manager</cite> or the axis name.</li>
+<li><strong>out</strong> (<em>{Signal</em><em>, </em><em>None}</em>) – If None, a new Signal is created with the result of the operation
+and returned (default). If a Signal is passed, it is used to
+receive the output of the operation, and nothing is returned.</li>
+<li><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
+the data may be automatically rechunked before performing this operation.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>s</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Signal</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="hyperspy._signals.lazy.to_array">
+<code class="descclassname">hyperspy._signals.lazy.</code><code class="descname">to_array</code><span class="sig-paren">(</span><em>thing</em>, <em>chunks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.to_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts BaseSignal, dask or numpy arrays and always produces either
+numpy or dask array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>thing</strong> (<em>{BaseSignal</em><em>, </em><em>dask.array.Array</em><em>, </em><em>numpy.ndarray}</em>) – the thing to be converted</li>
+<li><strong>chunks</strong> (<em>{None</em><em>, </em><em>tuple of tuples}</em>) – If None, the returned value is a numpy array. Otherwise returns dask
+array with the chunks as specified.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>res</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{numpy.ndarray, dask.array.Array}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2018, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.3.2',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
