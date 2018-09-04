@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy.samfire_utils.samfire_pool module &mdash; HyperSpy 1.4 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.samfire_utils.samfire_worker module" href="hyperspy.samfire_utils.samfire_worker.html" />
+    <link rel="prev" title="hyperspy.samfire_utils.samfire_kernel module" href="hyperspy.samfire_utils.samfire_kernel.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.external.html">hyperspy.external package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.html">hyperspy.tests package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+        
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+        
+          <li><a href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a> &raquo;</li>
+        
+      <li>hyperspy.samfire_utils.samfire_pool module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy.samfire_utils.samfire_pool.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy.samfire_utils.samfire_pool">
+<span id="hyperspy-samfire-utils-samfire-pool-module"></span><h1>hyperspy.samfire_utils.samfire_pool module<a class="headerlink" href="#module-hyperspy.samfire_utils.samfire_pool" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool">
+<em class="property">class </em><code class="descclassname">hyperspy.samfire_utils.samfire_pool.</code><code class="descname">SamfirePool</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.utils.parallel_pool.html#hyperspy.utils.parallel_pool.ParallelPool" title="hyperspy.utils.parallel_pool.ParallelPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.utils.parallel_pool.ParallelPool</span></code></a></p>
+<p>Creates and manages a pool of SAMFire workers. For based on
+ParallelPool - either creates processes using multiprocessing, or connects
+and sets up ipyparallel load_balanced_view.</p>
+<p>Ipyparallel is managed directly, but multiprocessing pool is managed via
+three of Queues:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Shared by all (master and workers) for distributing “load-balanced”</li>
+</ul>
+<p>work.
+- Shared by all (master and workers) for sending results back to the
+master
+- Individual queues from master to each worker. For setting up and
+addressing individual workers in general. This one is checked with
+higher priority in workers.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.prepare_workers">
+<code class="descname">prepare_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.prepare_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>given SAMFire object, populates the workers with the required
+information. In case of multiprocessing, starts worker listening to the
+queues.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.update_parameters">
+<code class="descname">update_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.update_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>updates various worker parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.ping_workers">
+<code class="descname">ping_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.ping_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>pings all workers. Stores the one-way trip time and the process_id
+(pid) of each worker if available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.add_jobs">
+<code class="descname">add_jobs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.add_jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds the requested number of jobs to the queue</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>parses the messages, returned from the workers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.colect_results">
+<code class="descname">colect_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.colect_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>collects all currently available results and parses them</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>runs the full procedure until no more pixels are left to run in the
+SAMFire</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>stops the pool, (for ipyparallel) clears the memory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets up the ipyparallel or multiprocessing pool (collects to the
+client or creates the pool)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.sleep">
+<code class="descname">sleep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>sleeps for the specified time, by default timestep</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.has_pool">
+<code class="descname">has_pool</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.has_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Bool</em> – Boolean if the pool is available and active</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.pool">
+<code class="descname">pool</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.pool" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>{ipyparallel.load_balanced_view, multiprocessing.Pool}</em> – The pool object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.ipython_kwargs">
+<code class="descname">ipython_kwargs</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.ipython_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – The dictionary with Ipyparallel connection arguments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.timeout">
+<code class="descname">timeout</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Timeout for either pool when waiting for results</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.num_workers">
+<code class="descname">num_workers</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.num_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of workers actually created (may be less than requested, but
+can’t be more)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.timestep">
+<code class="descname">timestep</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.timestep" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The timestep between “ticks” that the result queues are checked. Higher
+timestep means less frequent checking, which may reduce CPU load for
+difficult fits that take a long time to finish.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.ping">
+<code class="descname">ping</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.ping" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – If recorded, stores one-way trip time of each worker</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.pid">
+<code class="descname">pid</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.pid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – If available, stores the process-id of each worker</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">add_jobs</code><span class="sig-paren">(</span><em>needed_number=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Adds jobs to the job queue that is consumed by the workers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>needed_number</strong> (<em>{None</em><em>, </em><em>int}</em>) – The number of jobs to add. If None (default), adds <cite>need_pixels</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.collect_results">
+<code class="descname">collect_results</code><span class="sig-paren">(</span><em>timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.collect_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects and parses all results, currently not processed due to
+being in the queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<em>{None</em><em>, </em><em>flaot}</em>) – the time to wait when collecting results. If None, the default
+timeout is used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.samfire_utils.samfire_pool.SamfirePool.need_pixels">
+<code class="descname">need_pixels</code><a class="headerlink" href="#hyperspy.samfire_utils.samfire_pool.SamfirePool.need_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of pixels that should be added to the processing
+queue. At most is equal to the number of workers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span></dt>
+<dd><p>Parses the value, returned from the workers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>tuple of the form</em><em> (</em><em>keyword</em><em>, </em><em>the_rest</em><em>)</em>) – <p>keyword currently can be one of [‘pong’, ‘Error’, ‘result’]. For
+each of the keywords, “the_rest” is a tuple of different elements,
+but generally the first one is always the worker_id that the result
+came from. In particular:</p>
+<blockquote>
+<div><ul class="simple">
+<li>(‘pong’, (worker_id, pid, pong_time, optional_message_str))</li>
+<li>(‘Error’, (worker_id, error_message_string))</li>
+<li><dl class="first docutils">
+<dt>(‘result’, (worker_id,</dt>
+<dd>pixel_index,
+result_dict,
+bool_if_result_converged))</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ping_workers</code><span class="sig-paren">(</span><em>timeout=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Pings the workers and records one-way trip time and (if available)
+pid of the worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<em>{None</em><em>, </em><em>flaot}</em>) – the time to wait when collecting results after sending out the
+ping. If None, the default timeout is used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">prepare_workers</code><span class="sig-paren">(</span><em>samfire</em><span class="sig-paren">)</span></dt>
+<dd><p>Prepares the workers for work, in case of multiprocessing starts
+listening</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>samfire</strong> (<em>samfire</em>) – the SAMFire object that will be using the pool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Runs the full process of adding jobs to the processing queue,
+listening to the results and updating SAMFire as needed. Stops when
+timed out or no pixels are left to run.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Stops the appropriate pool and (if ipyparallel) clears the memory
+and history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">update_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Updates various worker parameters.</p>
+<dl class="docutils">
+<dt>Currently updates:</dt>
+<dd><ul class="first last simple">
+<li>Optional components (that can be switched off by the worker)</li>
+<li>Parameter boundaries</li>
+<li>Goodness test</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hyperspy.samfire_utils.samfire_worker.html" class="btn btn-neutral float-right" title="hyperspy.samfire_utils.samfire_worker module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hyperspy.samfire_utils.samfire_kernel.html" class="btn btn-neutral" title="hyperspy.samfire_utils.samfire_kernel module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2018, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

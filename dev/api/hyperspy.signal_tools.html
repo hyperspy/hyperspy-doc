@@ -1,0 +1,886 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy.signal_tools module &mdash; HyperSpy 1.4 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.signals module" href="hyperspy.signals.html" />
+    <link rel="prev" title="hyperspy.signal module" href="hyperspy.signal.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.Release.html">hyperspy.Release module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._lazy_signals.html">hyperspy._lazy_signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api.html">hyperspy.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api_nogui.html">hyperspy.api_nogui module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.axes.html">hyperspy.axes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.component.html">hyperspy.component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components1d.html">hyperspy.components1d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components2d.html">hyperspy.components2d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.conftest.html">hyperspy.conftest module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.decorators.html">hyperspy.decorators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.events.html">hyperspy.events module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.interactive.html">hyperspy.interactive module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.logger.html">hyperspy.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.model.html">hyperspy.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.roi.html">hyperspy.roi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire.html">hyperspy.samfire module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal.html">hyperspy.signal module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.signal_tools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signals.html">hyperspy.signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.ui_registry.html">hyperspy.ui_registry module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+        
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+        
+      <li>hyperspy.signal_tools module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy.signal_tools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy.signal_tools">
+<span id="hyperspy-signal-tools-module"></span><h1>hyperspy.signal_tools module<a class="headerlink" href="#module-hyperspy.signal_tools" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hyperspy.signal_tools.BackgroundRemoval">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">BackgroundRemoval</code><span class="sig-paren">(</span><em>signal</em>, <em>background_type='Power Law'</em>, <em>polynomial_order=2</em>, <em>fast=True</em>, <em>plot_remainder=True</em>, <em>zero_fill=False</em>, <em>show_progressbar=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="hyperspy.signal_tools.SpanSelectorInSignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.SpanSelectorInSignal1D</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.bg_to_plot">
+<code class="descname">bg_to_plot</code><span class="sig-paren">(</span><em>axes_manager=None</em>, <em>fill_with=nan</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.bg_to_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.create_background_line">
+<code class="descname">create_background_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.create_background_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.create_remainder_line">
+<code class="descname">create_remainder_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.create_remainder_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.on_disabling_span_selector">
+<code class="descname">on_disabling_span_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.on_disabling_span_selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.rm_to_plot">
+<code class="descname">rm_to_plot</code><span class="sig-paren">(</span><em>axes_manager=None</em>, <em>fill_with=nan</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.rm_to_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.set_background_estimator">
+<code class="descname">set_background_estimator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.set_background_estimator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.BackgroundRemoval.span_selector_changed">
+<code class="descname">span_selector_changed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.BackgroundRemoval.span_selector_changed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.ButterworthFilter">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">ButterworthFilter</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ButterworthFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.Smoothing" title="hyperspy.signal_tools.Smoothing"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.Smoothing</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.ButterworthFilter.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ButterworthFilter.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ButterworthFilter.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ButterworthFilter.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ButterworthFilter.model2plot">
+<code class="descname">model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ButterworthFilter.model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.DerivativeTextHandler">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">DerivativeTextHandler</code><a class="headerlink" href="#hyperspy.signal_tools.DerivativeTextHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.DerivativeTextHandler.legend_artist">
+<code class="descname">legend_artist</code><span class="sig-paren">(</span><em>legend</em>, <em>orig_handle</em>, <em>fontsize</em>, <em>handlebox</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.DerivativeTextHandler.legend_artist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.DerivativeTextParameters">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">DerivativeTextParameters</code><span class="sig-paren">(</span><em>text</em>, <em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.DerivativeTextParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.ImageContrastEditor">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">ImageContrastEditor</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.on_disabling_span_selector">
+<code class="descname">on_disabling_span_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.on_disabling_span_selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.plot_histogram">
+<code class="descname">plot_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.plot_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.span_selector_switch">
+<code class="descname">span_selector_switch</code><span class="sig-paren">(</span><em>on</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.span_selector_switch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.update_histogram">
+<code class="descname">update_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.update_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.ImageContrastEditor.update_span_selector_traits">
+<code class="descname">update_span_selector_traits</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.ImageContrastEditor.update_span_selector_traits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.IntegrateArea">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">IntegrateArea</code><span class="sig-paren">(</span><em>signal</em>, <em>signal_range=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.IntegrateArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="hyperspy.signal_tools.SpanSelectorInSignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.SpanSelectorInSignal1D</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.IntegrateArea.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.IntegrateArea.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.IntegrateArea.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.IntegrateArea.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.LineInSignal1D">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">LineInSignal1D</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.LineInSignal1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Adds a vertical draggable line to a spectrum that reports its
+position to the position attribute of the class.</p>
+<dl class="docutils">
+<dt>position <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>The position of the vertical line in the one dimensional signal. Moving
+the line changes the position but the reverse is not true.</dd>
+<dt>on <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Turns on and off the line</dd>
+<dt>color <span class="classifier-delimiter">:</span> <span class="classifier">wx.Colour</span></dt>
+<dd>The color of the line. It automatically redraws the line.</dd>
+</dl>
+<dl class="method">
+<dt id="hyperspy.signal_tools.LineInSignal1D.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.LineInSignal1D.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.LineInSignal1D.switch_on_off">
+<code class="descname">switch_on_off</code><span class="sig-paren">(</span><em>obj</em>, <em>trait_name</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.LineInSignal1D.switch_on_off" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.LineInSignal1D.update_position">
+<code class="descname">update_position</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.LineInSignal1D.update_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.Load">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">Load</code><a class="headerlink" href="#hyperspy.signal_tools.Load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.Signal1DCalibration">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">Signal1DCalibration</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Signal1DCalibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="hyperspy.signal_tools.SpanSelectorInSignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.SpanSelectorInSignal1D</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.Signal1DCalibration.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Signal1DCalibration.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Signal1DCalibration.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Signal1DCalibration.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.Signal1DRangeSelector">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">Signal1DRangeSelector</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Signal1DRangeSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="hyperspy.signal_tools.SpanSelectorInSignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.SpanSelectorInSignal1D</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SimpleMessage">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SimpleMessage</code><span class="sig-paren">(</span><em>text=''</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SimpleMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SimpleMessage.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SimpleMessage.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.Smoothing">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">Smoothing</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.diff_model2plot">
+<code class="descname">diff_model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.diff_model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.signal_tools.Smoothing.line_color_rgb">
+<code class="descname">line_color_rgb</code><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.line_color_rgb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.turn_diff_line_off">
+<code class="descname">turn_diff_line_off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.turn_diff_line_off" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.turn_diff_line_on">
+<code class="descname">turn_diff_line_on</code><span class="sig-paren">(</span><em>diff_order</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.turn_diff_line_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.Smoothing.update_lines">
+<code class="descname">update_lines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.Smoothing.update_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SmoothingLowess">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SmoothingLowess</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingLowess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.Smoothing" title="hyperspy.signal_tools.Smoothing"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.Smoothing</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingLowess.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingLowess.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingLowess.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingLowess.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingLowess.model2plot">
+<code class="descname">model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingLowess.model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SmoothingSavitzkyGolay">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SmoothingSavitzkyGolay</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingSavitzkyGolay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.Smoothing" title="hyperspy.signal_tools.Smoothing"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.Smoothing</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingSavitzkyGolay.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingSavitzkyGolay.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingSavitzkyGolay.diff_model2plot">
+<code class="descname">diff_model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingSavitzkyGolay.diff_model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingSavitzkyGolay.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingSavitzkyGolay.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingSavitzkyGolay.model2plot">
+<code class="descname">model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingSavitzkyGolay.model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SmoothingTV">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SmoothingTV</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingTV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.Smoothing" title="hyperspy.signal_tools.Smoothing"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.Smoothing</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingTV.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingTV.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingTV.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingTV.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SmoothingTV.model2plot">
+<code class="descname">model2plot</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SmoothingTV.model2plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SpanSelectorInSignal1D">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SpanSelectorInSignal1D</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpanSelectorInSignal1D.on_disabling_span_selector">
+<code class="descname">on_disabling_span_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpanSelectorInSignal1D.on_disabling_span_selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpanSelectorInSignal1D.reset_span_selector">
+<code class="descname">reset_span_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpanSelectorInSignal1D.reset_span_selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpanSelectorInSignal1D.span_selector_switch">
+<code class="descname">span_selector_switch</code><span class="sig-paren">(</span><em>on</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpanSelectorInSignal1D.span_selector_switch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpanSelectorInSignal1D.update_span_selector_traits">
+<code class="descname">update_span_selector_traits</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpanSelectorInSignal1D.update_span_selector_traits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyperspy.signal_tools.SpikesRemoval">
+<em class="property">class </em><code class="descclassname">hyperspy.signal_tools.</code><code class="descname">SpikesRemoval</code><span class="sig-paren">(</span><em>signal</em>, <em>navigation_mask=None</em>, <em>signal_mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.signal_tools.SpanSelectorInSignal1D" title="hyperspy.signal_tools.SpanSelectorInSignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal_tools.SpanSelectorInSignal1D</span></code></a></p>
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.create_interpolation_line">
+<code class="descname">create_interpolation_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.create_interpolation_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.detect_spike">
+<code class="descname">detect_spike</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.detect_spike" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.find">
+<code class="descname">find</code><span class="sig-paren">(</span><em>back=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.get_interpolated_spectrum">
+<code class="descname">get_interpolated_spectrum</code><span class="sig-paren">(</span><em>axes_manager=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.get_interpolated_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.get_interpolation_range">
+<code class="descname">get_interpolation_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.get_interpolation_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.gui">
+<code class="descname">gui</code><span class="sig-paren">(</span><em>display=True</em>, <em>toolkit=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> (<em>bool</em>) – If True, display the user interface widgets. If False, return the widgets
+container in a dictionary, usually for customisation or testing.</li>
+<li><strong>toolkit</strong> (<em>str</em><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned. If
+string, only the widgets of the selected toolkit are displayed if available.
+If an interable of toolkit strings, the widgets of all listed toolkits are
+displayed or returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.signal_tools.SpikesRemoval.interpolator">
+<code class="descname">interpolator</code><em class="property"> = None</em><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.interpolator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.on_disabling_span_selector">
+<code class="descname">on_disabling_span_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.on_disabling_span_selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.span_selector_changed">
+<code class="descname">span_selector_changed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.span_selector_changed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.update_plot">
+<code class="descname">update_plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.update_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.signal_tools.SpikesRemoval.update_spectrum_line">
+<code class="descname">update_spectrum_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.signal_tools.SpikesRemoval.update_spectrum_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hyperspy.signals.html" class="btn btn-neutral float-right" title="hyperspy.signals module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hyperspy.signal.html" class="btn btn-neutral" title="hyperspy.signal module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2018, The HyperSpy development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/copybutton.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

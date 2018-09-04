@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Signal1D Tools &mdash; HyperSpy 1.3.2 documentation</title>
+  <title>Signal1D Tools &mdash; HyperSpy 1.4 documentation</title>
   
 
   
@@ -79,7 +79,7 @@
             
             
               <div class="version">
-                1.3.2
+                1.4
               </div>
             
           
@@ -241,12 +241,30 @@ to the 5 keV-15 keV region:</p>
 </div>
 </div>
 <div class="section" id="background-removal">
-<h2>Background removal<a class="headerlink" href="#background-removal" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_background()</span></code> method provides
-background removal capabilities through both a CLI and a GUI. Current
+<span id="signal1d-remove-background"></span><h2>Background removal<a class="headerlink" href="#background-removal" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.4: </span><code class="docutils literal notranslate"><span class="pre">zero_fill</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_remainder</span></code> keyword arguments and big speed
+improvements.</p>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.remove_background" title="hyperspy._signals.signal1d.Signal1D.remove_background"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_background()</span></code></a> method provides
+background removal capabilities through both a CLI and a GUI. The GUI displays
+an interactive preview of the remainder after background subtraction. Current
 background type supported are power law, offset, polynomial and gaussian.
-By default the background is estimated, but a full fit can also be used.
-The full fit is more accurate, but slower.</p>
+By default the background parameters are estimated using analytical approximations
+(keyword argument <code class="docutils literal notranslate"><span class="pre">fast=True</span></code>). For better accuracy, but higher processing
+time, the parameters can be estimated by curve fitting by setting <code class="docutils literal notranslate"><span class="pre">fast=False</span></code>.</p>
+<p>Example of usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">artificial_data</span><span class="o">.</span><span class="n">get_core_loss_eels_signal</span><span class="p">(</span><span class="n">add_powerlaw</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">remove_background</span><span class="p">(</span><span class="n">zero_fill</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id2">
+<img alt="../_images/signal_1d_remove_background.png" src="../_images/signal_1d_remove_background.png" />
+<p class="caption"><span class="caption-text">Interactive background removal. In order to select the region
+used to estimate the background parameters (red area in the
+figure) click inside the axes of the figure and drag to the right
+without releasing the button.</span></p>
+</div>
 </div>
 <div class="section" id="calibration">
 <h2>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">¶</a></h2>
@@ -259,15 +277,15 @@ interface to calibrate the spectral axis.</p>
 to align spectra. They support applying the same transformation to multiple
 files.</p>
 <ul class="simple">
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">align1D()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">shift1D()</span></code></li>
+<li><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.align1D" title="hyperspy._signals.signal1d.Signal1D.align1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">align1D()</span></code></a></li>
+<li><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.shift1D" title="hyperspy._signals.signal1d.Signal1D.shift1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shift1D()</span></code></a></li>
 </ul>
 </div>
 <div class="section" id="integration">
 <span id="integrate-1d-label"></span><h2>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h2>
 <div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 1.3: </span><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate_in_range()</span></code>.
-It will be removed in 2.0. Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code>
+<p><span class="versionmodified">Deprecated since version 1.3: </span><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.integrate_in_range" title="hyperspy._signals.signal1d.Signal1D.integrate_in_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate_in_range()</span></code></a>.
+It will be removed in 2.0. Use <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.integrate1D" title="hyperspy.signal.BaseSignal.integrate1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code></a>
 instead, possibly in combination with a <a class="reference internal" href="tools.html#roi-label"><span class="std std-ref">Region Of Interest (ROI)</span></a> if interactivity
 is required.</p>
 </div>
@@ -277,10 +295,10 @@ is required.</p>
 <p>The following methods (that include user interfaces when no arguments are
 passed) can perform data smoothing with different algorithms:</p>
 <ul class="simple">
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_lowess()</span></code>
+<li><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.smooth_lowess" title="hyperspy._signals.signal1d.Signal1D.smooth_lowess"><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_lowess()</span></code></a>
 (requires <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to be installed)</li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_tv()</span></code></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_savitzky_golay()</span></code></li>
+<li><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.smooth_tv" title="hyperspy._signals.signal1d.Signal1D.smooth_tv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_tv()</span></code></a></li>
+<li><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.smooth_savitzky_golay" title="hyperspy._signals.signal1d.Signal1D.smooth_savitzky_golay"><code class="xref py py-meth docutils literal notranslate"><span class="pre">smooth_savitzky_golay()</span></code></a></li>
 </ul>
 </div>
 <div class="section" id="spike-removal">
@@ -288,9 +306,9 @@ passed) can perform data smoothing with different algorithms:</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.5.</span></p>
 </div>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">spikes_removal_tool()</span></code> provides an user
+<p><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.spikes_removal_tool" title="hyperspy._signals.signal1d.Signal1D.spikes_removal_tool"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spikes_removal_tool()</span></code></a> provides an user
 interface to remove spikes from spectra.</p>
-<div class="figure align-center" id="id2">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/spikes_removal_tool.png"><img alt="../_images/spikes_removal_tool.png" src="../_images/spikes_removal_tool.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Spikes removal tool.</span></p>
 </div>
@@ -298,18 +316,18 @@ interface to remove spikes from spectra.</p>
 <div class="section" id="peak-finding">
 <h2>Peak finding<a class="headerlink" href="#peak-finding" title="Permalink to this headline">¶</a></h2>
 <p>A peak finding routine based on the work of T. O’Haver is available in HyperSpy
-through the <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_peaks1D_ohaver()</span></code>
+through the <a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.find_peaks1D_ohaver" title="hyperspy._signals.signal1d.Signal1D.find_peaks1D_ohaver"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_peaks1D_ohaver()</span></code></a>
 method.</p>
 </div>
 <div class="section" id="other-methods">
 <h2>Other methods<a class="headerlink" href="#other-methods" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Interpolate the spectra in between two positions
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">interpolate_in_between()</span></code></li>
+<a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.interpolate_in_between" title="hyperspy._signals.signal1d.Signal1D.interpolate_in_between"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interpolate_in_between()</span></code></a></li>
 <li>Convolve the spectra with a gaussian
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">gaussian_filter()</span></code></li>
+<a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.gaussian_filter" title="hyperspy._signals.signal1d.Signal1D.gaussian_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gaussian_filter()</span></code></a></li>
 <li>Apply a hanning taper to the spectra
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">hanning_taper()</span></code></li>
+<a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.hanning_taper" title="hyperspy._signals.signal1d.Signal1D.hanning_taper"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hanning_taper()</span></code></a></li>
 </ul>
 </div>
 </div>
@@ -356,7 +374,7 @@ method.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.3.2',
+            VERSION:'1.4',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
