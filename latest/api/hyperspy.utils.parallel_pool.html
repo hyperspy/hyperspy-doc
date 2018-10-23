@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy.utils.parallel_pool module &mdash; HyperSpy 1.4.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.utils.plot module" href="hyperspy.utils.plot.html" />
+    <link rel="prev" title="hyperspy.utils.model_selection module" href="hyperspy.utils.model_selection.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.external.html">hyperspy.external package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.html">hyperspy.tests package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+        
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+        
+          <li><a href="hyperspy.utils.html">hyperspy.utils package</a> &raquo;</li>
+        
+      <li>hyperspy.utils.parallel_pool module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy.utils.parallel_pool.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy.utils.parallel_pool">
+<span id="hyperspy-utils-parallel-pool-module"></span><h1>hyperspy.utils.parallel_pool module<a class="headerlink" href="#module-hyperspy.utils.parallel_pool" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool">
+<em class="property">class </em><code class="descclassname">hyperspy.utils.parallel_pool.</code><code class="descname">ParallelPool</code><span class="sig-paren">(</span><em>num_workers=None</em>, <em>ipython_kwargs=None</em>, <em>ipyparallel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates a ParallelPool by either looking for a ipyparallel client and
+then creating a load_balanced_view, or by creating a multiprocessing pool</p>
+<dl class="method">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets up the requested pool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.sleep">
+<code class="descname">sleep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>sleeps for the requested (or timeout) time</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.has_pool">
+<code class="descname">has_pool</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.has_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Bool</em> – Boolean if the pool is available and active.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.pool">
+<code class="descname">pool</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.pool" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>{ipyparallel.load_balanced_view, multiprocessing.Pool}</em> – The pool object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.ipython_kwargs">
+<code class="descname">ipython_kwargs</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.ipython_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – The dictionary with Ipyparallel connection arguments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.timeout">
+<code class="descname">timeout</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Timeout for either pool when waiting for results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.num_workers">
+<code class="descname">num_workers</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.num_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of workers actually created (may be less than requested, but
+can’t be more).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.timestep">
+<code class="descname">timestep</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.timestep" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – Can be used as “ticks” to adjust CPU load when building upon this
+class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.is_ipyparallel">
+<code class="descname">is_ipyparallel</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.is_ipyparallel" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – If the pool is ipyparallel-based</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyperspy.utils.parallel_pool.ParallelPool.is_multiprocessing">
+<code class="descname">is_multiprocessing</code><a class="headerlink" href="#hyperspy.utils.parallel_pool.ParallelPool.is_multiprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – If the pool is multiprocessing-based</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">has_pool</code></dt>
+<dd><p>Returns bool if the pool is ready and set-up</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">is_ipyparallel</code></dt>
+<dd><p>Returns bool if the pool is ipyparallel-based</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">is_multiprocessing</code></dt>
+<dd><p>Returns bool if the pool is multiprocessing-based</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">setup</code><span class="sig-paren">(</span><em>ipyparallel=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Sets up the pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ipyparallel</strong> (<em>{None</em><em>, </em><em>bool}</em>) – if True, only tries to set up the ipyparallel pool. If False - only
+the multiprocessing. If None, first tries ipyparallel, and it does
+not succeed, then multiprocessing.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">sleep</code><span class="sig-paren">(</span><em>howlong=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Sleeps for the required number of seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>howlong</strong> (<em>{None</em><em>, </em><em>float}</em>) – How long the pool should sleep for in seconds. If None (default),
+sleeps for “timestep”</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">timestep</code></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hyperspy.utils.plot.html" class="btn btn-neutral float-right" title="hyperspy.utils.plot module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hyperspy.utils.model_selection.html" class="btn btn-neutral" title="hyperspy.utils.model_selection module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2018, The HyperSpy development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.4.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
