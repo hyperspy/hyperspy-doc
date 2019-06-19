@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.misc.machine_learning.import_sklearn module &mdash; HyperSpy 1.4 documentation</title>
+  <title>hyperspy.misc.machine_learning.import_sklearn module &mdash; HyperSpy 1.5.dev documentation</title>
   
 
   
@@ -26,8 +26,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -79,7 +78,7 @@
             
             
               <div class="version">
-                1.4
+                1.5.dev
               </div>
             
           
@@ -208,6 +207,89 @@
 <span id="hyperspy-misc-machine-learning-import-sklearn-module"></span><h1>hyperspy.misc.machine_learning.import_sklearn module<a class="headerlink" href="#module-hyperspy.misc.machine_learning.import_sklearn" title="Permalink to this headline">¶</a></h1>
 <p>Import sklearn, fast_svd and randomized_svd from scikits-learn
 with support for multiple versions</p>
+<dl class="function">
+<dt id="hyperspy.misc.machine_learning.import_sklearn.fast_svd">
+<code class="sig-prename descclassname">hyperspy.misc.machine_learning.import_sklearn.</code><code class="sig-name descname">fast_svd</code><span class="sig-paren">(</span><em class="sig-param">M</em>, <em class="sig-param">n_components</em>, <em class="sig-param">n_oversamples=10</em>, <em class="sig-param">n_iter='auto'</em>, <em class="sig-param">power_iteration_normalizer='auto'</em>, <em class="sig-param">transpose='auto'</em>, <em class="sig-param">flip_sign=True</em>, <em class="sig-param">random_state=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.machine_learning.import_sklearn.fast_svd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes a truncated randomized SVD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M</strong> (<em>ndarray</em><em> or </em><em>sparse matrix</em>) – Matrix to decompose</p></li>
+<li><p><strong>n_components</strong> (<em>int</em>) – Number of singular values and vectors to extract.</p></li>
+<li><p><strong>n_oversamples</strong> (<em>int</em><em> (</em><em>default is 10</em><em>)</em>) – Additional number of random vectors to sample the range of M so as
+to ensure proper conditioning. The total number of random vectors
+used to find the range of M is n_components + n_oversamples. Smaller
+number can improve speed but can negatively impact the quality of
+approximation of singular vectors and singular values.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em><em> or </em><em>'auto'</em><em> (</em><em>default is 'auto'</em><em>)</em>) – <p>Number of power iterations. It can be used to deal with very noisy
+problems. When ‘auto’, it is set to 4, unless <cite>n_components</cite> is small
+(&lt; .1 * min(X.shape)) <cite>n_iter</cite> in which case is set to 7.
+This improves precision with few components.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.18.</span></p>
+</div>
+</p></li>
+<li><p><strong>power_iteration_normalizer</strong> (<em>'auto'</em><em> (</em><em>default</em><em>)</em><em>, </em><em>'QR'</em><em>, </em><em>'LU'</em><em>, </em><em>'none'</em>) – <p>Whether the power iterations are normalized with step-by-step
+QR factorization (the slowest but most accurate), ‘none’
+(the fastest but numerically unstable when <cite>n_iter</cite> is large, e.g.
+typically 5 or larger), or ‘LU’ factorization (numerically stable
+but can lose slightly in accuracy). The ‘auto’ mode applies no
+normalization if <cite>n_iter</cite> &lt;= 2 and switches to LU otherwise.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.18.</span></p>
+</div>
+</p></li>
+<li><p><strong>transpose</strong> (<em>True</em><em>, </em><em>False</em><em> or </em><em>'auto'</em><em> (</em><em>default</em><em>)</em>) – <p>Whether the algorithm should be applied to M.T instead of M. The
+result should approximately be the same. The ‘auto’ mode will
+trigger the transposition if M.shape[1] &gt; M.shape[0] since this
+implementation of randomized SVD tend to be a little faster in that
+case.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.18.</span></p>
+</div>
+</p></li>
+<li><p><strong>flip_sign</strong> (<em>boolean</em><em>, </em><em>(</em><em>True by default</em><em>)</em>) – The output of a singular value decomposition is only unique up to a
+permutation of the signs of the singular vectors. If <cite>flip_sign</cite> is
+set to <cite>True</cite>, the sign ambiguity is resolved by making the largest
+loadings for each component in the left singular vectors positive.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The seed of the pseudo random number generator to use when shuffling
+the data.  If int, random_state is the seed used by the random number
+generator; If RandomState instance, random_state is the random number
+generator; If None, the random number generator is the RandomState
+instance used by <cite>np.random</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This algorithm finds a (usually very good) approximate truncated
+singular value decomposition using randomization to speed up the
+computations. It is particularly fast on large matrices on which
+you wish to extract only a small number of components. In order to
+obtain further speed up, <cite>n_iter</cite> can be set &lt;=2 (at the cost of
+loss of precision).</p>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Finding structure with randomness: Stochastic algorithms for constructing
+approximate matrix decompositions
+Halko, et al., 2009 <a class="reference external" href="https://arxiv.org/abs/0909.4061">https://arxiv.org/abs/0909.4061</a></p></li>
+<li><p>A randomized algorithm for the decomposition of matrices
+Per-Gunnar Martinsson, Vladimir Rokhlin and Mark Tygert</p></li>
+<li><p>An implementation of a randomized algorithm for principal component
+analysis
+A. Szlam et al. 2014</p></li>
+</ul>
+</dd></dl>
+
+<dl class="data">
+<dt id="hyperspy.misc.machine_learning.import_sklearn.sklearn_installed">
+<code class="sig-prename descclassname">hyperspy.misc.machine_learning.import_sklearn.</code><code class="sig-name descname">sklearn_installed</code><em class="property"> = True</em><a class="headerlink" href="#hyperspy.misc.machine_learning.import_sklearn.sklearn_installed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="hyperspy.misc.machine_learning.import_sklearn.sklearn_version">
+<code class="sig-prename descclassname">hyperspy.misc.machine_learning.import_sklearn.</code><code class="sig-name descname">sklearn_version</code><em class="property"> = LooseVersion ('0.21.2')</em><a class="headerlink" href="#hyperspy.misc.machine_learning.import_sklearn.sklearn_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
@@ -230,7 +312,7 @@ with support for multiple versions</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team.
+        &copy; Copyright 2011-2018, The HyperSpy development team
 
     </p>
   </div>
@@ -249,34 +331,23 @@ with support for multiple versions</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.4',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Developer Guide &mdash; HyperSpy 1.4 documentation</title>
+  <title>Developer Guide &mdash; HyperSpy 1.5.dev documentation</title>
   
 
   
@@ -26,8 +26,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -79,7 +78,7 @@
             
             
               <div class="version">
-                1.4
+                1.5.dev
               </div>
             
           
@@ -189,8 +188,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="developer-guide">
-<span id="dev-guide-label"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
+  <p>﻿
+.. _dev_guide-label:</p>
+<div class="section" id="developer-guide">
+<h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
 <p>This 6-step guide is intended to give people who want to start contributing
 their own tools to HyperSpy a foothold to kick-start the process. This is
 also the way to start if you ultimately hope to become a member of the
@@ -207,7 +208,7 @@ it’s only the specifics that change.</p>
 <h2>1. Start using HyperSpy and understand it<a class="headerlink" href="#start-using-hyperspy-and-understand-it" title="Permalink to this headline">¶</a></h2>
 <p>The best way to start understanding how HyperSpy works and to build a broad
 overview of the code as it stands is to use it – so what are you waiting for?
-<a class="reference external" href="http://hyperspy.org/download.html">Download HyperSpy</a>.</p>
+<a class="reference external" href="http://hyperspy.org/hyperspy-doc/current/user_guide/install.html">Install HyperSpy</a>.</p>
 <p>The user-guide also provides a good overview of all the parts of the code that
 are currently implemented as well as much information about how everything
 works – so read it well:
@@ -222,12 +223,12 @@ and going through the <a class="reference external" href="https://help.github.co
 pattern is:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Setup git/github if you don’t have it.</li>
-<li>Fork HyperSpy on github.</li>
-<li>Checkout your fork on your local machine.</li>
-<li>Create a new branch locally where you will make your changes.</li>
-<li>Push the local changes to your own github fork.</li>
-<li>Create a pull request (PR) to the official HyperSpy repository.</li>
+<li><p>Setup git/github if you don’t have it.</p></li>
+<li><p>Fork HyperSpy on github.</p></li>
+<li><p>Checkout your fork on your local machine.</p></li>
+<li><p>Create a new branch locally where you will make your changes.</p></li>
+<li><p>Push the local changes to your own github fork.</p></li>
+<li><p>Create a pull request (PR) to the official HyperSpy repository.</p></li>
 </ol>
 </div></blockquote>
 <p>Note: You cannot mess up the main HyperSpy project unless you have been
@@ -294,7 +295,7 @@ may want to use a few branches together. You can do that but just make sure
 each new thing has it’s own branch! You can merge some together for your
 personal use.</p>
 <p>Diagrammatically you should be aiming for something like this:</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="_images/branching_schematic.png" src="_images/branching_schematic.png" />
 </div>
 </div>
@@ -318,42 +319,42 @@ soon find that they’re very important as they force you to sanity check all
 you do.</p>
 <p>HyperSpy uses the <a class="reference external" href="http://doc.pytest.org/">py.test</a> library for testing. The
 tests reside in the <code class="docutils literal notranslate"><span class="pre">hyperspy.tests</span></code> module. To run them:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py</span><span class="o">.</span><span class="n">test</span> <span class="o">--</span><span class="n">pyargs</span> <span class="n">hyperspy</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>py.test --pyargs hyperspy
 </pre></div>
 </div>
 <p>Or, from HyperSpy’s project folder simply:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py</span><span class="o">.</span><span class="n">test</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>py.test
 </pre></div>
 </div>
 <p>Useful hints on testing:</p>
 <ul class="simple">
-<li>When comparing integers, it’s fine to use <code class="docutils literal notranslate"><span class="pre">==</span></code>. When comparing floats, be
+<li><p>When comparing integers, it’s fine to use <code class="docutils literal notranslate"><span class="pre">==</span></code>. When comparing floats, be
 sure to use <code class="docutils literal notranslate"><span class="pre">numpy.testing.assert_almost_equal()</span></code> or
-<code class="docutils literal notranslate"><span class="pre">numpy.testing.assert_allclose()</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">numpy.testing.assert_equal()</span></code> is convenient to compare numpy arrays.</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">hyperspy.misc.test_utils.py</span></code> contains a few useful functions for
-testing.</li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize()</span></code> is a very convenient decorator to test several
+<code class="docutils literal notranslate"><span class="pre">numpy.testing.assert_allclose()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy.testing.assert_equal()</span></code> is convenient to compare numpy arrays.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">hyperspy.misc.test_utils.py</span></code> contains a few useful functions for
+testing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize()</span></code> is a very convenient decorator to test several
 parameters of the same function without having to write to much repetitive
-code, which is often error-prone. See <a class="reference external" href="http://doc.pytest.org/en/latest/parametrize.html">pytest documentation for more details</a>.</li>
-<li>It is good to check that the tests does not use too much of memory after
+code, which is often error-prone. See <a class="reference external" href="http://doc.pytest.org/en/latest/parametrize.html">pytest documentation for more details</a>.</p></li>
+<li><p>It is good to check that the tests does not use too much of memory after
 creating new tests. If you need to explicitly delete your objects and free
 memory, you can do the following to release the memory associated to the
-<code class="docutils literal notranslate"><span class="pre">s</span></code> object, for example:</li>
+<code class="docutils literal notranslate"><span class="pre">s</span></code> object, for example:</p></li>
 </ul>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">s</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">s</span>
 <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>Once, you have pushed your PR to the official HyperSpy repository, it can be
+<li><p>Once, you have pushed your PR to the official HyperSpy repository, it can be
 useful to check the coverage of your tests using the coveralls.io check of
 your PR. There should be a link to it at the bottom of your PR on the github
 PR page. This service can help you to find how well your code is being tested
-and exactly which part is not currently tested.</li>
-<li><a class="reference external" href="https://pypi.python.org/pypi/pytest-sugar">pytest-sugar</a> can be installed
+and exactly which part is not currently tested.</p></li>
+<li><p><a class="reference external" href="https://pypi.python.org/pypi/pytest-sugar">pytest-sugar</a> can be installed
 to have a nicer look and feel of py.test in the console (encoding issue have
-been reported in the Windows console).</li>
+been reported in the Windows console).</p></li>
 </ul>
 </div>
 <div class="section" id="plot-testing">
@@ -372,23 +373,22 @@ images will not be compared to the references images.</p>
 <p>If you need to add or change some plots, follow the workflow below:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Write the tests using appropriate decorator such as
-<code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.mpl_image_compare</span></code>.</li>
-<li>If you need to generate new reference image in the folder
+<li><p>Write the tests using appropriate decorator such as
+<code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.mpl_image_compare</span></code>.</p></li>
+<li><p>If you need to generate new reference image in the folder
 <code class="docutils literal notranslate"><span class="pre">plot_test_dir</span></code>, for example, run: <code class="docutils literal notranslate"><span class="pre">py.test</span>
-<span class="pre">--mpl-generate-path=plot_test_dir</span></code></li>
-<li>Run again the tests and this time they should pass.</li>
-<li>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> to put the new file in the git repository.</li>
+<span class="pre">--mpl-generate-path=plot_test_dir</span></code></p></li>
+<li><p>Run again the tests and this time they should pass.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> to put the new file in the git repository.</p></li>
 </ol>
 </div></blockquote>
-<p>During the execution of plot tests, the figures are created but not deleted
-after execution. It is necessary to delete the figure and this can be done
-by using mpl_cleanup fixture: you juste need to add <code class="docutils literal notranslate"><span class="pre">mpl_cleanup</span></code>
-as the first argument of the tests.</p>
-<p>When the plotting tests are failling, it is possible to download the figure comparison images generated by pytest-mpl in the <a class="reference external" href="https://ci.appveyor.com/project/hyperspy/hyperspy/build/1.0.2500/job/2c2qccaktd90po2q/artifacts">artifacts tabs</a> of the corresponding build.</p>
-<p>The plotting tests need matplotlib &gt; 2.0.0, since the matplotlib <a class="reference external" href="http://matplotlib.org/style_changes.html">style change</a> between matplotlib 1.x and 2.x is
-enough to make the test failed. Freetype&gt;=2.8 is also required to pass the
-plotting tests.</p>
+<p>When the plotting tests are failling, it is possible to download the figure
+comparison images generated by pytest-mpl in the <a class="reference external" href="https://ci.appveyor.com/project/hyperspy/hyperspy/build/1.0.2500/job/2c2qccaktd90po2q/artifacts">artifacts tabs</a>
+of the corresponding build.</p>
+<dl class="simple">
+<dt>The plotting tests need matplotlib &gt; 3.0.0, since small changes in the way</dt><dd><p>matplotlib generates the figure can make the tests fail.</p>
+</dd>
+</dl>
 <p>In travis and appveyor, the matplotlib backend is set to <code class="docutils literal notranslate"><span class="pre">agg</span></code> by setting
 the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">agg</span></code>. At the first import of
 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code>, matplotlib will look at the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment
@@ -397,21 +397,32 @@ variable and set accordingly the backend.</p>
 </div>
 <div class="section" id="write-documentation">
 <h3>Write documentation<a class="headerlink" href="#write-documentation" title="Permalink to this headline">¶</a></h3>
-<p>Documentation comes in two parts docstrings and user-guide documentation.</p>
+<p>Documentation comes in two parts: docstrings and user-guide documentation.</p>
 <p>Docstrings – written at the start of a function and give essential information
 about how it should be used, such as which arguments can be passed to it and
 what the syntax should be. The docstrings need to follow the <a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt">numpy
 specification</a>, as shown in <a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/example.py">this example</a>.</p>
-<p>User-guide Documentation – A description of the functionality of the code and
+<p>User-guide documentation – A description of the functionality of the code and
 how to use it with examples and links to the relevant code.</p>
 <p>When writing both the docstrings and user guide documentation, it is useful to
 have some kind of data which the users can use themselves. Artificial
 datasets for this purpose can be found in <cite>hyperspy.datasets.artificial_data</cite>.</p>
 <p>Build the documentation – To check the output of what you wrote, you can build
-the documentation, which requires python-sphinx and numpydoc to be installed.
-Run the make command in the <code class="docutils literal notranslate"><span class="pre">doc</span></code> to build the documentation. For example
-<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> will build the whole documentation in html format. See the make
-command documentation for more details.</p>
+the documentation by running the <code class="docutils literal notranslate"><span class="pre">make</span></code> command in the <code class="docutils literal notranslate"><span class="pre">hyperspy/doc</span></code>
+directory. For example <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> will build the whole documentation in
+html format. See the make command documentation for more details.</p>
+<p>To install the documentation dependencies, run either</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install hyperspy-dev
+</pre></div>
+</div>
+</div></blockquote>
+<p>or</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install hyperspy<span class="o">[</span>build-doc<span class="o">]</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="make-your-contribution">
@@ -466,13 +477,13 @@ the two arrays are indeed almost identical, the most important differences are
 (<code class="docutils literal notranslate"><span class="pre">da</span></code> being <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> in the examples):</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Dask arrays are immutable</strong>: <code class="docutils literal notranslate"><span class="pre">da[3]</span> <span class="pre">=</span> <span class="pre">2</span></code> does not work. <code class="docutils literal notranslate"><span class="pre">da</span> <span class="pre">+=</span> <span class="pre">2</span></code>
+<li><p><strong>Dask arrays are immutable</strong>: <code class="docutils literal notranslate"><span class="pre">da[3]</span> <span class="pre">=</span> <span class="pre">2</span></code> does not work. <code class="docutils literal notranslate"><span class="pre">da</span> <span class="pre">+=</span> <span class="pre">2</span></code>
 does, but it’s actually a new object – might as well use <code class="docutils literal notranslate"><span class="pre">da</span> <span class="pre">=</span> <span class="pre">da</span> <span class="pre">+</span> <span class="pre">2</span></code>
-for a better distinction.</li>
-<li><strong>Unknown shapes are problematic</strong>: <code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">da[da&gt;0.3]</span></code> works, but the
+for a better distinction.</p></li>
+<li><p><strong>Unknown shapes are problematic</strong>: <code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">da[da&gt;0.3]</span></code> works, but the
 shape of the result depends on the values and cannot be inferred without
 execution. Hence few operations can be run on <code class="docutils literal notranslate"><span class="pre">res</span></code> lazily, and it should
-be avoided if possible.</li>
+be avoided if possible.</p></li>
 </ul>
 </div></blockquote>
 <p>The easiest way to add new methods that work both with arbitrary navigation
@@ -516,7 +527,7 @@ documentation</a>.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team.
+        &copy; Copyright 2011-2018, The HyperSpy development team
 
     </p>
   </div>
@@ -535,34 +546,23 @@ documentation</a>.</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/copybutton.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 
