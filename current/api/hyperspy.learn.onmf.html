@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.learn.onmf module &mdash; HyperSpy 1.4.1 documentation</title>
+  <title>hyperspy.learn.onmf module &mdash; HyperSpy 1.5.dev documentation</title>
   
 
   
@@ -78,7 +78,7 @@
             
             
               <div class="version">
-                1.4.1
+                1.5.dev
               </div>
             
           
@@ -205,25 +205,25 @@
 <span id="hyperspy-learn-onmf-module"></span><h1>hyperspy.learn.onmf module<a class="headerlink" href="#module-hyperspy.learn.onmf" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hyperspy.learn.onmf.ONMF">
-<em class="property">class </em><code class="descclassname">hyperspy.learn.onmf.</code><code class="descname">ONMF</code><span class="sig-paren">(</span><em>rank</em>, <em>lambda1=1.0</em>, <em>kappa=1.0</em>, <em>store_r=False</em>, <em>robust=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy.learn.onmf.</code><code class="sig-name descname">ONMF</code><span class="sig-paren">(</span><em class="sig-param">rank</em>, <em class="sig-param">lambda1=1.0</em>, <em class="sig-param">kappa=1.0</em>, <em class="sig-param">store_r=False</em>, <em class="sig-param">robust=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class performs Online Robust NMF
 with missing or corrupted data.</p>
 <dl class="method">
 <dt id="hyperspy.learn.onmf.ONMF.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>learn factors from the given data</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.learn.onmf.ONMF.project">
-<code class="descname">project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.project" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.project" title="Permalink to this definition">¶</a></dt>
 <dd><p>project the learnt factors on the given data</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy.learn.onmf.ONMF.finish">
-<code class="descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.finish" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.ONMF.finish" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the learnt factors and loadings</p>
 </dd></dl>
 
@@ -231,63 +231,56 @@ with missing or corrupted data.</p>
 <p>The ONMF code is based on a transcription of the OPGD algorithm MATLAB code
 obtained from the authors of the following research paper:</p>
 <blockquote>
-<div>Zhao, Renbo, and Vincent YF Tan. “Online nonnegative matrix
+<div><p>Zhao, Renbo, and Vincent YF Tan. “Online nonnegative matrix
 factorization with outliers.” Acoustics, Speech and Signal Processing
-(ICASSP), 2016 IEEE International Conference on. IEEE, 2016.</div></blockquote>
+(ICASSP), 2016 IEEE International Conference on. IEEE, 2016.</p>
+</div></blockquote>
 <p>It has been updated to also include L2-normalization cost function that is
 able to deal with sparse corruptions and/or outliers slightly faster
 (please see ORPCA implementation for details).</p>
 <dl class="method">
 <dt>
-<code class="descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
 <dd><p>Return the learnt factors and loadings.</p>
 </dd></dl>
 
 <dl class="method">
 <dt>
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>batch_size=None</em><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">batch_size=None</em><span class="sig-paren">)</span></dt>
 <dd><p>Learn NMF components from the data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [nsamplex x nfeatures] matrix of observations
-or an iterator that yields samples, each with nfeatures elements.</li>
-<li><strong>batch_size</strong> (<em>{None</em><em>, </em><em>int}</em>) – If not None, learn the data in batches, each of batch_size samples
-or less.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [nsamplex x nfeatures] matrix of observations
+or an iterator that yields samples, each with nfeatures elements.</p></li>
+<li><p><strong>batch_size</strong> (<em>{None</em><em>, </em><em>int}</em>) – If not None, learn the data in batches, each of batch_size samples
+or less.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt>
-<code class="descname">project</code><span class="sig-paren">(</span><em>X</em>, <em>return_R=False</em><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">project</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">return_R=False</em><span class="sig-paren">)</span></dt>
 <dd><p>Project the learnt components on the data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [nsamplex x nfeatures] matrix of observations
-or an iterator that yields samples, each with nfeatures elements.</li>
-<li><strong>return_R</strong> (<em>bool</em>) – If True, returns the sparse error matrix as well. Otherwise only
-the weights (loadings)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [nsamplex x nfeatures] matrix of observations
+or an iterator that yields samples, each with nfeatures elements.</p></li>
+<li><p><strong>return_R</strong> (<em>bool</em>) – If True, returns the sparse error matrix as well. Otherwise only
+the weights (loadings)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="hyperspy.learn.onmf.onmf">
-<code class="descclassname">hyperspy.learn.onmf.</code><code class="descname">onmf</code><span class="sig-paren">(</span><em>X</em>, <em>rank</em>, <em>lambda1=1</em>, <em>kappa=1</em>, <em>store_r=False</em>, <em>project=False</em>, <em>robust=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.onmf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyperspy.learn.onmf.</code><code class="sig-name descname">onmf</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">rank</em>, <em class="sig-param">lambda1=1</em>, <em class="sig-param">kappa=1</em>, <em class="sig-param">store_r=False</em>, <em class="sig-param">project=False</em>, <em class="sig-param">robust=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.onmf.onmf" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -333,20 +326,11 @@ the weights (loadings)</li>
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.4.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/copybutton.js"></script>
     
 
