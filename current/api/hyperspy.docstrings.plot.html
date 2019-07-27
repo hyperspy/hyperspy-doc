@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.docstrings.plot module &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>hyperspy.docstrings.plot module &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +55,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +81,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -104,6 +107,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
@@ -128,7 +132,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -204,31 +207,6 @@
   <div class="section" id="module-hyperspy.docstrings.plot">
 <span id="hyperspy-docstrings-plot-module"></span><h1>hyperspy.docstrings.plot module<a class="headerlink" href="#module-hyperspy.docstrings.plot" title="Permalink to this headline">¶</a></h1>
 <p>Common docstring snippets for plot.</p>
-<dl class="data">
-<dt id="hyperspy.docstrings.plot.BASE_PLOT_DOCSTRING">
-<code class="sig-prename descclassname">hyperspy.docstrings.plot.</code><code class="sig-name descname">BASE_PLOT_DOCSTRING</code><em class="property"> = 'Plot the signal at the current coordinates.\n\n        For multidimensional datasets an optional figure,\n        the &quot;navigator&quot;, with a cursor to navigate that data is\n        raised. In any case it is possible to navigate the data using\n        the sliders. Currently only signals with signal_dimension equal to\n        0, 1 and 2 can be plotted.\n\n        Parameters\n        ----------\n        navigator : {&quot;auto&quot;, None, &quot;slider&quot;, &quot;spectrum&quot;, Signal}\n            If &quot;auto&quot;, if navigation_dimension &gt; 0, a navigator is\n            provided to explore the data.\n            If navigation_dimension is 1 and the signal is an image\n            the navigator is a spectrum obtained by integrating\n            over the signal axes (the image).\n            If navigation_dimension is 1 and the signal is a spectrum\n            the navigator is an image obtained by stacking horizontally\n            all the spectra in the dataset.\n            If navigation_dimension is &gt; 1, the navigator is an image\n            obtained by integrating the data over the signal axes.\n            Additionaly, if navigation_dimension &gt; 2 a window\n            with one slider per axis is raised to navigate the data.\n            For example,\n            if the dataset consists of 3 navigation axes X, Y, Z and one\n            signal axis, E, the default navigator will be an image\n            obtained by integrating the data over E at the current Z\n            index and a window with sliders for the X, Y and Z axes\n            will be raised. Notice that changing the Z-axis index\n            changes the navigator in this case.\n            If &quot;slider&quot; and the navigation dimension &gt; 0 a window\n            with one slider per axis is raised to navigate the data.\n            If &quot;spectrum&quot; and navigation_dimension &gt; 0 the navigator\n            is always a spectrum obtained by integrating the data\n            over all other axes.\n            If None, no navigator will be provided.\n            Alternatively a Signal instance can be provided. The signal\n            dimension must be 1 (for a spectrum navigator) or 2 (for a\n            image navigator) and navigation_shape must be 0 (for a static\n            navigator) or navigation_shape + signal_shape must be equal\n            to the navigator_shape of the current object (for a dynamic\n            navigator).\n            If the signal dtype is RGB or RGBA this parameters has no\n            effect and is always &quot;slider&quot;.\n        axes_manager : {None, axes_manager}\n            If None `axes_manager` is used.\n        plot_markers : bool, default True\n            Plot markers added using s.add_marker(marker, permanent=True).\n            Note, a large number of markers might lead to very slow plotting.\n        norm : {\'auto\', \'linear\', \'log\', mpl `Normalize` instance or subclass},\n            default is \'auto\'.\n            Plot the intensity scale on a linear or logarithmic scale. If\n            \'auto\', plot the intensity on a linear scale except when\n            `power_spectrum` is True, which can be used only for compatible\n            signal. For Signal2D, a matplotlib `Normalize` subclass or\n            instance can be provided.\n            '</em><a class="headerlink" href="#hyperspy.docstrings.plot.BASE_PLOT_DOCSTRING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="hyperspy.docstrings.plot.BASE_PLOT_DOCSTRING_PARAMETERS">
-<code class="sig-prename descclassname">hyperspy.docstrings.plot.</code><code class="sig-name descname">BASE_PLOT_DOCSTRING_PARAMETERS</code><em class="property"> = 'navigator : {&quot;auto&quot;, None, &quot;slider&quot;, &quot;spectrum&quot;, Signal}\n            If &quot;auto&quot;, if navigation_dimension &gt; 0, a navigator is\n            provided to explore the data.\n            If navigation_dimension is 1 and the signal is an image\n            the navigator is a spectrum obtained by integrating\n            over the signal axes (the image).\n            If navigation_dimension is 1 and the signal is a spectrum\n            the navigator is an image obtained by stacking horizontally\n            all the spectra in the dataset.\n            If navigation_dimension is &gt; 1, the navigator is an image\n            obtained by integrating the data over the signal axes.\n            Additionaly, if navigation_dimension &gt; 2 a window\n            with one slider per axis is raised to navigate the data.\n            For example,\n            if the dataset consists of 3 navigation axes X, Y, Z and one\n            signal axis, E, the default navigator will be an image\n            obtained by integrating the data over E at the current Z\n            index and a window with sliders for the X, Y and Z axes\n            will be raised. Notice that changing the Z-axis index\n            changes the navigator in this case.\n            If &quot;slider&quot; and the navigation dimension &gt; 0 a window\n            with one slider per axis is raised to navigate the data.\n            If &quot;spectrum&quot; and navigation_dimension &gt; 0 the navigator\n            is always a spectrum obtained by integrating the data\n            over all other axes.\n            If None, no navigator will be provided.\n            Alternatively a Signal instance can be provided. The signal\n            dimension must be 1 (for a spectrum navigator) or 2 (for a\n            image navigator) and navigation_shape must be 0 (for a static\n            navigator) or navigation_shape + signal_shape must be equal\n            to the navigator_shape of the current object (for a dynamic\n            navigator).\n            If the signal dtype is RGB or RGBA this parameters has no\n            effect and is always &quot;slider&quot;.\n        axes_manager : {None, axes_manager}\n            If None `axes_manager` is used.\n        plot_markers : bool, default True\n            Plot markers added using s.add_marker(marker, permanent=True).\n            Note, a large number of markers might lead to very slow plotting.\n        norm : {\'auto\', \'linear\', \'log\', mpl `Normalize` instance or subclass},\n            default is \'auto\'.\n            Plot the intensity scale on a linear or logarithmic scale. If\n            \'auto\', plot the intensity on a linear scale except when\n            `power_spectrum` is True, which can be used only for compatible\n            signal. For Signal2D, a matplotlib `Normalize` subclass or\n            instance can be provided.\n            '</em><a class="headerlink" href="#hyperspy.docstrings.plot.BASE_PLOT_DOCSTRING_PARAMETERS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="hyperspy.docstrings.plot.COMPLEX_DOCSTRING">
-<code class="sig-prename descclassname">hyperspy.docstrings.plot.</code><code class="sig-name descname">COMPLEX_DOCSTRING</code><em class="property"> = &quot;power_spectrum : bool, default is False.\n            If True, plot the power spectrum instead of the actual signal, if\n            False, plot the real and imaginary parts of the complex signal.\n        representation : {'cartesian' or 'polar'}\n            Determines if the real and imaginary part of the complex data is plotted ('cartesian',\n            default), or if the amplitude and phase should be used ('polar').\n        same_axes : bool, default True\n            If True (default) plot the real and\n            imaginary parts (or amplitude and phase) in the same figure if\n            the signal is one-dimensional.\n        fft_shift : bool, default False\n            If True, shift the zero-frequency component.\n            See `numpy.fft.fftshift` for more details.\n        &quot;</em><a class="headerlink" href="#hyperspy.docstrings.plot.COMPLEX_DOCSTRING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="hyperspy.docstrings.plot.KWARGS_DOCSTRING">
-<code class="sig-prename descclassname">hyperspy.docstrings.plot.</code><code class="sig-name descname">KWARGS_DOCSTRING</code><em class="property"> = '**kwargs, optional\n            Only for 2D signals: additional key word arguments for \n            `matplotlib.pyplot.imshow`.'</em><a class="headerlink" href="#hyperspy.docstrings.plot.KWARGS_DOCSTRING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="hyperspy.docstrings.plot.PLOT2D_DOCSTRING">
-<code class="sig-prename descclassname">hyperspy.docstrings.plot.</code><code class="sig-name descname">PLOT2D_DOCSTRING</code><em class="property"> = 'colorbar : bool, optional\n            If true, a colorbar is plotted for non-RGB images.\n        scalebar : bool, optional\n            If True and the units and scale of the x and y axes are the same a\n            scale bar is plotted.\n        scalebar_color : str, optional\n            A valid MPL color string; will be used as the scalebar color.\n        axes_ticks : {None, bool}, optional\n            If True, plot the axes ticks. If None axes_ticks are only\n            plotted when the scale bar is not plotted. If False the axes ticks\n            are never plotted.\n        saturated_pixels: scalar\n            The percentage of pixels that are left out of the bounds.\n            For example, the low and high bounds of a value of 1 are the 0.5%\n            and 99.5% percentiles. It must be in the [0, 100] range.\n        vmin, vmax : scalar, optional\n            `vmin` and `vmax` are used to normalize luminance data.\n        no_nans : bool, optional\n            If True, set nans to zero for plotting.\n        centre_colormap : {&quot;auto&quot;, True, False}\n            If True the centre of the color scheme is set to zero. This is\n            specially useful when using diverging color schemes. If &quot;auto&quot;\n            (default), diverging color schemes are automatically centred.\n        min_aspect : float\n            Set the minimum aspect ratio of the image and the figure. To\n            keep the image in the aspect limit the pixels are made\n            rectangular.'</em><a class="headerlink" href="#hyperspy.docstrings.plot.PLOT2D_DOCSTRING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 
 
@@ -242,7 +220,7 @@
         <a href="hyperspy.docstrings.signal.html" class="btn btn-neutral float-right" title="hyperspy.docstrings.signal module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy.docstrings.parameters.html" class="btn btn-neutral" title="hyperspy.docstrings.parameters module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy.docstrings.parameters.html" class="btn btn-neutral float-left" title="hyperspy.docstrings.parameters module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -251,7 +229,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -268,27 +246,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

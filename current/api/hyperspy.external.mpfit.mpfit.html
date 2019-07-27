@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.external.mpfit.mpfit module &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>hyperspy.external.mpfit.mpfit module &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +55,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +81,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -104,6 +107,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
@@ -128,7 +132,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -509,40 +512,40 @@ the function value can be taylor expanded about x0 as follows:</p>
 <blockquote>
 <div><blockquote>
 <div><dl class="simple">
-<dt>f(x) = f(x0) + f’(x0) . (x-x0) + (1/2) (x-x0) . f’‘(x0) . (x-x0)</dt><dd><p>—–   —————   ——————————-  (1)</p>
+<dt>f(x) = f(x0) + f’(x0) . (x-x0) + (1/2) (x-x0) . f’’(x0) . (x-x0)</dt><dd><p>—–   —————   ——————————-  (1)</p>
 </dd>
 </dl>
 </div></blockquote>
 <p>Order  0th               1st                                     2nd</p>
 </div></blockquote>
-<p>Here f’(x) is the gradient vector of f at x, and f’‘(x) is the
+<p>Here f’(x) is the gradient vector of f at x, and f’’(x) is the
 Hessian matrix of second derivatives of f at x.  The vector x is
 the set of function parameters, not the measured data vector.  One
 can find the minimum of f, f(xm) using Newton’s method, and
 arrives at the following linear equation:</p>
 <blockquote>
-<div><p>f’‘(x0) . (xm-x0) = - f’(x0)                                                  (2)</p>
+<div><p>f’’(x0) . (xm-x0) = - f’(x0)                                                  (2)</p>
 </div></blockquote>
-<p>If an inverse can be found for f’‘(x0) then one can solve for
+<p>If an inverse can be found for f’’(x0) then one can solve for
 (xm-x0), the step vector from the current position x0 to the new
 projected minimum.  Here the problem has been linearized (ie, the
-gradient information is known to first order).  f’‘(x0) is
+gradient information is known to first order).  f’’(x0) is
 symmetric n x n matrix, and should be positive definite.</p>
 <p>The Levenberg - Marquardt technique is a variation on this theme.
 It adds an additional diagonal term to the equation which may aid the
 convergence properties:</p>
 <blockquote>
-<div><p>(f’‘(x0) + nu I) . (xm-x0) = -f’(x0)                            (2a)</p>
+<div><p>(f’’(x0) + nu I) . (xm-x0) = -f’(x0)                            (2a)</p>
 </div></blockquote>
 <p>where I is the identity matrix.  When nu is large, the overall
 matrix is diagonally dominant, and the iterations follow steepest
 descent.  When nu is small, the iterations are quadratically
 convergent.</p>
-<p>In principle, if f’‘(x0) and f’(x0) are known then xm-x0 can be
+<p>In principle, if f’’(x0) and f’(x0) are known then xm-x0 can be
 determined.  However the Hessian matrix is often difficult or
 impossible to compute.  The gradient f’(x0) may be easier to
 compute, if even by finite difference techniques.  So-called
-quasi-Newton techniques attempt to successively estimate f’‘(x0)
+quasi-Newton techniques attempt to successively estimate f’’(x0)
 by building up gradient information as the iterations proceed.</p>
 <p>In the least squares problem there are further simplifications
 which assist in solving eqn (2).  The function to be minimized is
@@ -555,7 +558,7 @@ above.  This can be substituted back into eqn (2) after computing
 the derivatives:</p>
 <blockquote>
 <div><p>f’  = 2 Sum(hi  hi’)
-f’’ = 2 Sum(hi’ hj’) + 2 Sum(hi hi’‘)                                (4)</p>
+f’’ = 2 Sum(hi’ hj’) + 2 Sum(hi hi’’)                                (4)</p>
 </div></blockquote>
 <p>If one assumes that the parameters are already close enough to a
 minimum, then one typically finds that the second term in f’’ is
@@ -624,13 +627,244 @@ Fixed the analytic derivatives features (The HyperSpy Developers, 2011)</p>
 <dl class="class">
 <dt id="hyperspy.external.mpfit.mpfit.machar">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.external.mpfit.mpfit.</code><code class="sig-name descname">machar</code><span class="sig-paren">(</span><em class="sig-param">double=1</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.external.mpfit.mpfit.machar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="hyperspy.external.mpfit.mpfit.mpfit">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.external.mpfit.mpfit.</code><code class="sig-name descname">mpfit</code><span class="sig-paren">(</span><em class="sig-param">fcn</em>, <em class="sig-param">xall=None</em>, <em class="sig-param">functkw=None</em>, <em class="sig-param">parinfo=None</em>, <em class="sig-param">ftol=1e-10</em>, <em class="sig-param">xtol=1e-10</em>, <em class="sig-param">gtol=1e-10</em>, <em class="sig-param">damp=0.0</em>, <em class="sig-param">maxiter=200</em>, <em class="sig-param">factor=100.0</em>, <em class="sig-param">nprint=1</em>, <em class="sig-param">iterfunct='default'</em>, <em class="sig-param">iterkw={}</em>, <em class="sig-param">nocovar=0</em>, <em class="sig-param">rescale=0</em>, <em class="sig-param">autoderivative=1</em>, <em class="sig-param">quiet=0</em>, <em class="sig-param">diag=None</em>, <em class="sig-param">epsfcn=None</em>, <em class="sig-param">debug=0</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.external.mpfit.mpfit.mpfit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Inputs:
+fcn:</p>
+<blockquote>
+<div><p>The function to be minimized.  The function should return the weighted
+deviations between the model and the data, as described above.</p>
+</div></blockquote>
+<dl>
+<dt>xall:</dt><dd><p>An array of starting values for each of the parameters of the model.
+The number of parameters should be fewer than the number of measurements.</p>
+<p>This parameter is optional if the parinfo keyword is used (but see
+parinfo).  The parinfo keyword provides a mechanism to fix or constrain
+individual parameters.</p>
+</dd>
+</dl>
+<p>Keywords:</p>
+<blockquote>
+<div><dl>
+<dt>autoderivative:</dt><dd><p>If this is set, derivatives of the function will be computed
+automatically via a finite differencing procedure.  If not set, then
+fcn must provide the (analytical) derivatives.</p>
+<blockquote>
+<div><p>Default: set (=1)
+NOTE: to supply your own analytical derivatives,</p>
+<blockquote>
+<div><p>explicitly pass autoderivative=0</p>
+</div></blockquote>
+</div></blockquote>
+</dd>
+<dt>ftol:</dt><dd><p>A nonnegative input variable. Termination occurs when both the actual
+and predicted relative reductions in the sum of squares are at most
+ftol (and status is accordingly set to 1 or 3).  Therefore, ftol
+measures the relative error desired in the sum of squares.</p>
+<blockquote>
+<div><p>Default: 1E-10</p>
+</div></blockquote>
+</dd>
+<dt>functkw:</dt><dd><p>A dictionary which contains the parameters to be passed to the
+user-supplied function specified by fcn via the standard Python
+keyword dictionary mechanism.  This is the way you can pass additional
+data to your user-supplied function without using global variables.</p>
+<dl class="simple">
+<dt>Consider the following example:</dt><dd><dl class="simple">
+<dt>if functkw = {‘xval’:[1.,2.,3.], ‘yval’:[1.,4.,9.],</dt><dd><p>‘errval’:[1.,1.,1.] }</p>
+</dd>
+</dl>
+</dd>
+<dt>then the user supplied function should be declared like this:</dt><dd><p>def myfunct(p, fjac=None, xval=None, yval=None, errval=None):</p>
+</dd>
+<dt>Default: {}   No extra parameters are passed to the user-supplied</dt><dd><p>function.</p>
+</dd>
+</dl>
+</dd>
+<dt>gtol:</dt><dd><p>A nonnegative input variable. Termination occurs when the cosine of
+the angle between fvec and any column of the jacobian is at most gtol
+in absolute value (and status is accordingly set to 4). Therefore,
+gtol measures the orthogonality desired between the function vector
+and the columns of the jacobian.</p>
+<blockquote>
+<div><p>Default: 1e-10</p>
+</div></blockquote>
+</dd>
+<dt>iterkw:</dt><dd><p>The keyword arguments to be passed to iterfunct via the dictionary
+keyword mechanism.  This should be a dictionary and is similar in
+operation to FUNCTKW.</p>
+<blockquote>
+<div><p>Default: {}  No arguments are passed.</p>
+</div></blockquote>
+</dd>
+<dt>iterfunct:</dt><dd><p>The name of a function to be called upon each NPRINT iteration of the
+MPFIT routine.  It should be declared in the following way:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>def iterfunct(myfunct, p, iter, fnorm, functkw=None,</dt><dd><p>parinfo=None, quiet=0, dof=None, [iterkw keywords here])</p>
+</dd>
+</dl>
+<p># perform custom iteration update</p>
+</div></blockquote>
+<p>iterfunct must accept all three keyword parameters (FUNCTKW, PARINFO
+and QUIET).</p>
+<p>myfunct:  The user-supplied function to be minimized,
+p:              The current set of model parameters
+iter:    The iteration number
+functkw:  The arguments to be passed to myfunct.
+fnorm:  The chi-squared value.
+quiet:  Set when no textual output should be printed.
+dof:      The number of degrees of freedom, normally the number of points</p>
+<blockquote>
+<div><p>less the number of free parameters.</p>
+</div></blockquote>
+<p>See below for documentation of parinfo.</p>
+<p>In implementation, iterfunct can perform updates to the terminal or
+graphical user interface, to provide feedback while the fit proceeds.
+If the fit is to be stopped for any reason, then iterfunct should return a
+a status value between -15 and -1.  Otherwise it should return None
+(e.g. no return statement) or 0.
+In principle, iterfunct should probably not modify the parameter values,
+because it may interfere with the algorithm’s stability.  In practice it
+is allowed.</p>
+<p>Default: an internal routine is used to print the parameter values.</p>
+<p>Set iterfunct=None if there is no user-defined routine and you don’t
+want the internal default routine be called.</p>
+</dd>
+<dt>maxiter:</dt><dd><p>The maximum number of iterations to perform.  If the number is exceeded,
+then the status value is set to 5 and MPFIT returns.
+Default: 200 iterations</p>
+</dd>
+<dt>nocovar:</dt><dd><p>Set this keyword to prevent the calculation of the covariance matrix
+before returning (see COVAR)
+Default: clear (=0)  The covariance matrix is returned</p>
+</dd>
+<dt>nprint:</dt><dd><p>The frequency with which iterfunct is called.  A value of 1 indicates
+that iterfunct is called with every iteration, while 2 indicates every
+other iteration, etc.  Note that several Levenberg-Marquardt attempts
+can be made in a single iteration.
+Default value: 1</p>
+</dd>
+<dt>parinfo</dt><dd><p>Provides a mechanism for more sophisticated constraints to be placed on
+parameter values.  When parinfo is not passed, then it is assumed that
+all parameters are free and unconstrained.  Values in parinfo are never
+modified during a call to MPFIT.</p>
+<p>See description above for the structure of PARINFO.</p>
+<p>Default value: None  All parameters are free and unconstrained.</p>
+</dd>
+<dt>quiet:</dt><dd><p>Set this keyword when no textual output should be printed by MPFIT</p>
+</dd>
+<dt>damp:</dt><dd><p>A scalar number, indicating the cut-off value of residuals where
+“damping” will occur.  Residuals with magnitudes greater than this
+number will be replaced by their hyperbolic tangent.  This partially
+mitigates the so-called large residual problem inherent in
+least-squares solvers (as for the test problem CURVI,
+<a class="reference external" href="http://www.maxthis.com/curviex.htm">http://www.maxthis.com/curviex.htm</a>).
+A value of 0 indicates no damping.</p>
+<blockquote>
+<div><p>Default: 0</p>
+</div></blockquote>
+<p>Note: DAMP doesn’t work with autoderivative=0</p>
+</dd>
+<dt>xtol:</dt><dd><p>A nonnegative input variable. Termination occurs when the relative error
+between two consecutive iterates is at most xtol (and status is
+accordingly set to 2 or 3).  Therefore, xtol measures the relative error
+desired in the approximate solution.
+Default: 1E-10</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Outputs:</p>
+<blockquote>
+<div><p>Returns an object of type mpfit.  The results are attributes of this class,
+e.g. mpfit.status, mpfit.errmsg, mpfit.params, npfit.niter, mpfit.covar.</p>
+<dl>
+<dt>.status</dt><dd><p>An integer status code is returned.  All values greater than zero can
+represent success (however .status == 5 may indicate failure to
+converge). It can have one of the following values:</p>
+<dl class="simple">
+<dt>-16</dt><dd><p>A parameter or function value has become infinite or an undefined
+number.  This is usually a consequence of numerical overflow in the
+user’s model function, which must be avoided.</p>
+</dd>
+<dt>-15 to -1</dt><dd><p>These are error codes that either MYFUNCT or iterfunct may return to
+terminate the fitting process.  Values from -15 to -1 are reserved
+for the user functions and will not clash with MPFIT.</p>
+</dd>
+</dl>
+<p>0  Improper input parameters.</p>
+<dl class="simple">
+<dt>1  Both actual and predicted relative reductions in the sum of squares</dt><dd><p>are at most ftol.</p>
+</dd>
+</dl>
+<p>2  Relative error between two consecutive iterates is at most xtol</p>
+<p>3  Conditions for status = 1 and status = 2 both hold.</p>
+<dl class="simple">
+<dt>4  The cosine of the angle between fvec and any column of the jacobian</dt><dd><p>is at most gtol in absolute value.</p>
+</dd>
+</dl>
+<p>5  The maximum number of iterations has been reached.</p>
+<dl class="simple">
+<dt>6  ftol is too small. No further reduction in the sum of squares is</dt><dd><p>possible.</p>
+</dd>
+<dt>7  xtol is too small. No further improvement in the approximate solution</dt><dd><p>x is possible.</p>
+</dd>
+<dt>8  gtol is too small. fvec is orthogonal to the columns of the jacobian</dt><dd><p>to machine precision.</p>
+</dd>
+</dl>
+</dd>
+<dt>.fnorm</dt><dd><p>The value of the summed squared residuals for the returned parameter
+values.</p>
+</dd>
+<dt>.covar</dt><dd><p>The covariance matrix for the set of parameters returned by MPFIT.
+The matrix is NxN where N is the number of  parameters.  The square root
+of the diagonal elements gives the formal 1-sigma statistical errors on
+the parameters if errors were treated “properly” in fcn.
+Parameter errors are also returned in .perror.</p>
+<dl>
+<dt>To compute the correlation matrix, pcor, use this example:</dt><dd><p>cov = mpfit.covar
+pcor = cov * 0.
+for i in range(n):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>for j in range(n):</dt><dd><p>pcor[i,j] = cov[i,j]/sqrt(cov[i,i]*cov[j,j])</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+<p>If nocovar is set or MPFIT terminated abnormally, then .covar is set to
+a scalar with value None.</p>
+</dd>
+<dt>.errmsg</dt><dd><p>A string error or warning message is returned.</p>
+</dd>
+<dt>.nfev</dt><dd><p>The number of calls to MYFUNCT performed.</p>
+</dd>
+<dt>.niter</dt><dd><p>The number of iterations completed.</p>
+</dd>
+<dt>.perror</dt><dd><p>The formal 1-sigma errors in each parameter, computed from the
+covariance matrix.  If a parameter is held fixed, or if it touches a
+boundary, then the error is reported as zero.</p>
+<p>If the fit is unweighted (i.e. no errors were given, or the weights
+were uniformly set to unity), then .perror will probably not represent
+the true parameter uncertainties.</p>
+<p><em>If</em> you can assume that the true reduced chi-squared value is unity –
+meaning that the fit is implicitly assumed to be of good quality –
+then the estimated parameter uncertainties can be computed by scaling
+.perror by the measured chi-squared value.</p>
+<blockquote>
+<div><p>dof = len(x) - len(mpfit.params) # deg of freedom
+# scaled uncertainties
+pcerror = mpfit.perror * sqrt(mpfit.fnorm / dof)</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
 <dl class="attribute">
 <dt id="hyperspy.external.mpfit.mpfit.mpfit.blas_enorm32">
 <code class="sig-name descname">blas_enorm32</code><em class="property"> = &lt;fortran dnrm2&gt;</em><a class="headerlink" href="#hyperspy.external.mpfit.mpfit.mpfit.blas_enorm32" title="Permalink to this definition">¶</a></dt>
@@ -706,7 +940,7 @@ Fixed the analytic derivatives features (The HyperSpy Developers, 2011)</p>
         <a href="hyperspy.external.mpfit.mpfitexpr.html" class="btn btn-neutral float-right" title="hyperspy.external.mpfit.mpfitexpr module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy.external.mpfit.html" class="btn btn-neutral" title="hyperspy.external.mpfit package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy.external.mpfit.html" class="btn btn-neutral float-left" title="hyperspy.external.mpfit package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -715,7 +949,7 @@ Fixed the analytic derivatives features (The HyperSpy Developers, 2011)</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -732,27 +966,16 @@ Fixed the analytic derivatives features (The HyperSpy Developers, 2011)</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

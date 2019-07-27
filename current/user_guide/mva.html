@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Machine learning &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>Machine learning &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,22 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +56,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +82,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -146,8 +150,8 @@
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -283,9 +287,9 @@ of the data (or equivalently, the number of components that should be retained
 <p class="caption"><span class="caption-text">PCA scree plot</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.2.0: </span><code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">hline</span></code>, <code class="docutils literal notranslate"><span class="pre">xaxis_type</span></code>, <code class="docutils literal notranslate"><span class="pre">xaxis_labeling</span></code>,
-<code class="docutils literal notranslate"><span class="pre">signal_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">noise_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">xaxis_type</span></code> keyword
-arguments.</p>
+<p><span class="versionmodified added">New in version 1.2.0: </span><code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">hline</span></code>,``vline``, <code class="docutils literal notranslate"><span class="pre">xaxis_type</span></code>,
+<code class="docutils literal notranslate"><span class="pre">xaxis_labeling</span></code>, <code class="docutils literal notranslate"><span class="pre">signal_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">noise_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">threshold</span></code>,
+<code class="docutils literal notranslate"><span class="pre">xaxis_type</span></code> keyword arguments.</p>
 </div>
 <p>The default options for this method will plot a bare scree plot, but the
 method’s arguments allow for a great deal of customization. For
@@ -294,7 +298,20 @@ the total variance specified, and the components above this value will be
 styled distinctly from the remaining components to show which are considered
 signal, as opposed to noise. Alternatively, by providing an integer value
 for <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, the line will be drawn at the specified component (see
-below). These options (together with many others), can be customized to
+below).  The number of significant components can be estimated and a vertical
+line drawn to represent this by specifying <code class="docutils literal notranslate"><span class="pre">vline</span></code> as <code class="docutils literal notranslate"><span class="pre">True</span></code>. In this case,
+the elbow or knee is found in the variance plot by estimating the distance
+from each point in the variance plot to a line joining the first and last
+points of the plot and selecting the point where this distance is largest.
+In the case of multiple occurrences of a maximum value the index corresponding
+to the first occurrence is returned. As the index of the first component is zero,
+the number of significant PCA components is the elbow index position + 1.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/screeplot_elbow_method.png"><img alt="../_images/screeplot_elbow_method.png" src="../_images/screeplot_elbow_method.png" style="width: 500px;" /></a>
+</div>
+<p>More details about the elbow or knee finding technique can be found in
+<a class="reference internal" href="bibliography.html#satopaa2011"><span class="std std-ref">[Satopää2011]</span></a>.</p>
+<p>These options (together with many others), can be customized to
 develop a figure of your liking. See the documentation of
 <a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.plot_explained_variance_ratio" title="hyperspy.learn.mva.MVA.plot_explained_variance_ratio"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_explained_variance_ratio()</span></code></a> for more details.</p>
 <p>Note that in the above figure, the first component has index 0. This is because
@@ -310,6 +327,11 @@ notation, specify the <code class="docutils literal notranslate"><span class="pr
 <a class="reference internal image-reference" href="../_images/screeplot2.png"><img alt="../_images/screeplot2.png" src="../_images/screeplot2.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">PCA scree plot with number-based axis labeling and a threshold value
 specified</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/screeplot3.png"><img alt="../_images/screeplot3.png" src="../_images/screeplot3.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">PCA scree plot with number-based axis labeling and an estimate of the no of significant
+positions based on the “elbow” position</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>Sometimes it can be useful to get the explained variance ratio as a spectrum,
 for example to plot several scree plots obtained using
@@ -576,7 +598,7 @@ machine learning structure.</p>
         <a href="model.html" class="btn btn-neutral float-right" title="Model fitting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="visualisation.html" class="btn btn-neutral" title="Data visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="visualisation.html" class="btn btn-neutral float-left" title="Data visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -585,7 +607,7 @@ machine learning structure.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -602,27 +624,16 @@ machine learning structure.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

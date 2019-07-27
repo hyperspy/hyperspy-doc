@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tools: the Signal class &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>Tools: the Signal class &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,22 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +56,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +82,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -130,6 +134,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#fft-and-ifft">FFT and iFFT</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#changing-the-data-type">Changing the data type</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#transposing-changing-signal-spaces">Transposing (changing signal spaces)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#applying-apodization-window">Applying apodization window</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-statistical-analysis">Basic statistical analysis</a></li>
@@ -164,8 +169,8 @@
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -256,7 +261,8 @@ common functionality to deal with one-dimensional (e.g. spectral) data and
 <a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal1D</span></code></a> class for electron energy-loss
 spectroscopy data analysis.</p>
 <p>The <a class="reference internal" href="#signal-subclasses-table-label"><span class="std std-ref">table below</span></a> summarises all the
-currently available specialised <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclasses.</p>
+specialised <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclasses currently distributed
+with HyperSpy.</p>
 <p>The <a class="reference internal" href="../api/hyperspy.signals.html#module-hyperspy.signals" title="hyperspy.signals"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signals</span></code></a> module, which contains all available signal subclasses,
 is imported in the user namespace when loading HyperSpy. In the following
 example we create a Signal2D instance from a 2D numpy array:</p>
@@ -474,6 +480,36 @@ e.g. specialised signal subclasses to handle complex data (see the following dia
 </tr>
 </tbody>
 </table>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5: </span>External packages can register extra <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>
+subclasses.</p>
+</div>
+<p>Note that, if you have <a class="reference internal" href="intro.html#hyperspy-extensions-label"><span class="std std-ref">packages that extend HyperSpy</span></a> installed in your system, there may
+be more specialised signals available to you. To print all available specialised
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclasses installed in your system call the
+<a class="reference internal" href="../api/hyperspy.utils.html#hyperspy.utils.print_known_signal_types" title="hyperspy.utils.print_known_signal_types"><code class="xref py py-func docutils literal notranslate"><span class="pre">hyperspy.utils.print_known_signal_types()</span></code></a>
+function as in the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">print_known_signal_types</span><span class="p">()</span>
+<span class="go">+--------------------+---------------------+--------------------+----------+</span>
+<span class="go">|    signal_type     |       aliases       |     class name     | package  |</span>
+<span class="go">+--------------------+---------------------+--------------------+----------+</span>
+<span class="go">| DielectricFunction | dielectric function | DielectricFunction | hyperspy |</span>
+<span class="go">|      EDS_SEM       |                     |   EDSSEMSpectrum   | hyperspy |</span>
+<span class="go">|      EDS_TEM       |                     |   EDSTEMSpectrum   | hyperspy |</span>
+<span class="go">|        EELS        |       TEM EELS      |    EELSSpectrum    | hyperspy |</span>
+<span class="go">|      hologram      |                     |   HologramImage    | hyperspy |</span>
+<span class="go">|      MySignal      |                     |      MySignal      | hspy_ext |</span>
+<span class="go">+--------------------+---------------------+--------------------+----------+</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>From version 2.0 HyperSpy will no longer ship
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclasses that are specific to a
+particular type of data (i.e. with non-empty <code class="docutils literal notranslate"><span class="pre">signal_type</span></code>). All those
+signals currently distributed with HyperSpy will be moved to new
+packages.</p>
+</div>
 <p>The following example shows how to transform between different subclasses.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)))</span>
@@ -1196,23 +1232,26 @@ to reverse the <a class="reference internal" href="../api/hyperspy.misc.utils.ht
 </div>
 <div class="section" id="fft-and-ifft">
 <span id="signal-fft"></span><h3>FFT and iFFT<a class="headerlink" href="#fft-and-ifft" title="Permalink to this headline">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.4: </span><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> and <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.ifft" title="hyperspy.signal.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> method and <code class="docutils literal notranslate"><span class="pre">fft_shift</span></code> and <code class="docutils literal notranslate"><span class="pre">power_spectrum</span></code>
-<code class="docutils literal notranslate"><span class="pre">plot</span></code> keyword arguments.</p>
-</div>
-<p>The Fast Fourier transform and its inverse can be applied on a signal with the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> and the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.ifft" title="hyperspy.signal.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> methods.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<p>The Fast Fourier transform and its inverse can be applied on a signal with the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> and
+the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.ifft" title="hyperspy.signal.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> methods. In order to remove streaks in FFT
+(usually used only for presenting FFT patterns rather than for quantitative
+analyses) use <code class="docutils literal notranslate"><span class="pre">apodization</span></code> attribute as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_power_apodized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">apodization</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">([</span><span class="n">fft_power</span><span class="p">,</span> <span class="n">fft_power_apodized</span><span class="p">],</span> <span class="n">tight_layout</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-center">
-<a class="reference internal image-reference" href="../_images/hologram_fft.png"><img alt="../_images/hologram_fft.png" src="../_images/hologram_fft.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/ref_hologram_fft.png"><img alt="../_images/ref_hologram_fft.png" src="../_images/ref_hologram_fft.png" style="width: 800px;" /></a>
 </div>
-<p>Note that for visual inspection of FFT, it is common to plot the power spectrum (absolute value of the complex signal) on a logarithmic scale rather than the FFT itself as it is done in the example above.
-By default, in case of FFT, HyperSpy plots the power spectrum and shifts the zero frequency component to the center of the signal. This can be changed
-by setting <code class="docutils literal notranslate"><span class="pre">power_spectrum=False</span></code> and <code class="docutils literal notranslate"><span class="pre">fft_shift=False</span></code> parameters of the plot method.</p>
-<p>By default, both methods calculate FFT and IFFT with origin at (0, 0) (not in the centre of FFT). Use <code class="docutils literal notranslate"><span class="pre">fft_shift=True</span></code> option to
-calculate FFT and the inverse with origin shifted in the centre. ROIs doesn’t work when the FFT is plotted with <code class="docutils literal notranslate"><span class="pre">fft_shift=True</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">apodization</span></code> attribute can also take following values which correspond to types of apodization windows:
+<code class="docutils literal notranslate"><span class="pre">hann</span></code> (or <code class="docutils literal notranslate"><span class="pre">apodization=True</span></code>), <code class="docutils literal notranslate"><span class="pre">hamming</span></code>, <code class="docutils literal notranslate"><span class="pre">tukey</span></code>.</p>
+<p>Note that for visual inspection of FFT it is common to plot logarithm of amplitude
+rather than FFT itself as it is done in the example above.</p>
+<p>By default both methods calculate FFT and IFFT with origin at (0, 0) (not in the centre of FFT). Use <code class="docutils literal notranslate"><span class="pre">shift=True</span></code> option to
+calculate FFT and the inverse with origin shifted in the centre.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im_ifft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">fft_shift</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">fft_shift</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1353,6 +1392,43 @@ methods e.g.:</p>
 <span class="go">&lt;Signal2D, title: , dimensions: (6|4, 5)&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="applying-apodization-window">
+<h3>Applying apodization window<a class="headerlink" href="#applying-apodization-window" title="Permalink to this headline">¶</a></h3>
+<p>Apodization window (also known as apodization function) can be applied to a signal
+using <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.apply_apodization" title="hyperspy.signal.BaseSignal.apply_apodization"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply_apodization()</span></code></a> method. By default standard
+Hann window is used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">apply_apodization</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Hann window&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/hann_window.png"><img alt="../_images/hann_window.png" src="../_images/hann_window.png" style="width: 400px;" /></a>
+</div>
+<p>Higher order Hann window can be used in order to keep larger fraction of intensity of original signal.
+This can be done providing an integer number for the order of the window through
+keyword argument <code class="docutils literal notranslate"><span class="pre">hann_order</span></code>. (The last one works only together with default value of <code class="docutils literal notranslate"><span class="pre">window</span></code> argument
+or with <code class="docutils literal notranslate"><span class="pre">window='hann'</span></code>.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span><span class="o">.</span><span class="n">isig</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:</span><span class="mi">200</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ima</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">apply_apodization</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">,</span> <span class="n">hann_order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">([</span><span class="n">im</span><span class="p">,</span> <span class="n">ima</span><span class="p">],</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/hann_3d_order_ref_holo.png"><img alt="../_images/hann_3d_order_ref_holo.png" src="../_images/hann_3d_order_ref_holo.png" style="width: 800px;" /></a>
+</div>
+<p>In addition to Hann window also Hamming or Tukey windows can be applied using <code class="docutils literal notranslate"><span class="pre">window</span></code> attribute
+selecting <code class="docutils literal notranslate"><span class="pre">'hamming'</span></code> or <code class="docutils literal notranslate"><span class="pre">'tukey'</span></code> respectively.</p>
+<p>The shape of Tukey window can be adjusted using parameter alpha
+provided through <code class="docutils literal notranslate"><span class="pre">tukey_alpha</span></code> keyword argument (only used when <code class="docutils literal notranslate"><span class="pre">window='tukey'</span></code>).
+The parameter represents the fraction of the window inside the cosine tapered region,
+i.e. smaller is alpha larger is the middle flat region where the original signal
+is preserved. If alpha is one, the Tukey window is equivalent to a Hann window.
+(Default value is 0.5)</p>
+<p>Apodization can be applied in place by setting keyword argument <code class="docutils literal notranslate"><span class="pre">inplace</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+In this case method will not return anything.</p>
 </div>
 </div>
 <div class="section" id="basic-statistical-analysis">
@@ -1716,7 +1792,7 @@ calculate the angle, which is equivalent to using the <cite>phase</cite> propert
 argument is used. If the data is real, the angle will be 0 for positive
 values and 2$pi$ for negative values. If the <cite>deg</cite> parameter is set to
 <cite>True</cite>, the result will be given in degrees, otherwise in rad (default). The
-underlying function is the <code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code> function.
+underlying function is the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.angle.html#numpy.angle" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code></a> function.
 <code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code> will return an appropriate
 HyperSpy signal.</p>
 </div>
@@ -1752,7 +1828,7 @@ available via the <a class="reference internal" href="../api/hyperspy.axes.html#
         <a href="signal1d.html" class="btn btn-neutral float-right" title="Signal1D Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="getting_started.html" class="btn btn-neutral" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1761,7 +1837,7 @@ available via the <a class="reference internal" href="../api/hyperspy.axes.html#
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -1778,27 +1854,16 @@ available via the <a class="reference internal" href="../api/hyperspy.axes.html#
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

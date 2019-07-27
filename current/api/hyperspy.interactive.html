@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.interactive module &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>hyperspy.interactive module &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,19 +19,27 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyperspy.io module" href="hyperspy.io.html" />
-    <link rel="prev" title="hyperspy.exceptions module" href="hyperspy.exceptions.html" />
+    <link rel="prev" title="hyperspy.extensions module" href="hyperspy.extensions.html" />
  
 <script type="text/javascript">
 
@@ -47,21 +55,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +81,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -104,6 +107,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
@@ -121,6 +125,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.events.html">hyperspy.events module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.extensions.html">hyperspy.extensions module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.interactive module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.logger.html">hyperspy.logger module</a></li>
@@ -138,7 +143,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -214,8 +218,38 @@
 <dl class="class">
 <dt id="hyperspy.interactive.Interactive">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.interactive.</code><code class="sig-name descname">Interactive</code><span class="sig-paren">(</span><em class="sig-param">f</em>, <em class="sig-param">event='auto'</em>, <em class="sig-param">recompute_out_event='auto'</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.interactive.Interactive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Chainable operations on Signals that update on events.</p>
+<p>Update operation result when a given event is triggered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>function</em><em> or </em><em>method</em>) – A function that returns an object and that optionally can place the
+result in an object given through the <cite>out</cite> keyword.</p></li>
+<li><p><strong>event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>iterable of events}</em>) – Update the result of the operation when the event is triggered.
+If “auto” and <cite>f</cite> is a method of a Signal class instance its
+<cite>data_changed</cite> event is selected if the function takes an <cite>out</cite>
+argument. If None, <cite>update</cite> is not connected to any event. The
+default is “auto”. It is also possible to pass an iterable of
+events, in which case all the events are connected.</p></li>
+<li><p><strong>recompute_out_event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>iterable of events}</em>) – Optional argument. If supplied, this event causes a full
+recomputation of a new object. Both the data and axes of the new
+object are then copied over to the existing <cite>out</cite> object. Only
+useful for <cite>Signal</cite> or other objects that have an attribute
+<cite>axes_manager</cite>. If “auto” and <cite>f</cite> is a method of a Signal class
+instance its <cite>AxesManager</cite> <cite>any_axis_chaged</cite> event is selected.
+Otherwise the <cite>Signal</cite>
+<cite>data_changed</cite> event is selected. If None, <cite>recompute_out</cite> is not
+connected to any event. The default is “auto”. It is also possible
+to pass an iterable of events, in which case all the events are
+connected.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt><a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs</dt><dd><p>Arguments and keyword arguments to be passed to <cite>f</cite>.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="hyperspy.interactive.Interactive.recompute_out">
 <code class="sig-name descname">recompute_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.interactive.Interactive.recompute_out" title="Permalink to this definition">¶</a></dt>
@@ -237,13 +271,13 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>f</strong> (<em>function</em><em> or </em><em>method</em>) – A function that returns an object and that optionally can place the
 result in an object given through the <cite>out</cite> keyword.</p></li>
-<li><p><strong>event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><em>None</em><em>, </em><em>iterable of events}</em>) – Update the result of the operation when the event is triggered.
+<li><p><strong>event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>iterable of events}</em>) – Update the result of the operation when the event is triggered.
 If “auto” and <cite>f</cite> is a method of a Signal class instance its
 <cite>data_changed</cite> event is selected if the function takes an <cite>out</cite>
 argument. If None, <cite>update</cite> is not connected to any event. The
 default is “auto”. It is also possible to pass an iterable of
 events, in which case all the events are connected.</p></li>
-<li><p><strong>recompute_out_event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><em>None</em><em>, </em><em>iterable of events}</em>) – Optional argument. If supplied, this event causes a full
+<li><p><strong>recompute_out_event</strong> (<em>{Event</em><em>, </em><em>&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>iterable of events}</em>) – Optional argument. If supplied, this event causes a full
 recomputation of a new object. Both the data and axes of the new
 object are then copied over to the existing <cite>out</cite> object. Only
 useful for <cite>Signal</cite> or other objects that have an attribute
@@ -258,7 +292,7 @@ connected.</p></li>
 </dd>
 </dl>
 <dl class="simple">
-<dt><a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs</dt><dd><p>Arguments and keyword arguments to be passed to <cite>f</cite>.</p>
+<dt><a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs</dt><dd><p>Arguments and keyword arguments to be passed to <cite>f</cite>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -276,7 +310,7 @@ connected.</p></li>
         <a href="hyperspy.io.html" class="btn btn-neutral float-right" title="hyperspy.io module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy.exceptions.html" class="btn btn-neutral" title="hyperspy.exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy.extensions.html" class="btn btn-neutral float-left" title="hyperspy.extensions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -285,7 +319,7 @@ connected.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -302,27 +336,16 @@ connected.</p></li>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

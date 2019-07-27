@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy._signals.lazy module &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>hyperspy._signals.lazy module &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +55,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +81,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -104,6 +107,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
@@ -128,7 +132,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -209,25 +212,48 @@
 <dd><p>Bases: <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a></p>
 <p>A Lazy Signal instance that delays computation until explicitly saved
 (assuming storing the full result of computation in memory is not feasible)</p>
-<dl class="method">
-<dt id="hyperspy._signals.lazy.LazySignal.change_dtype">
-<code class="sig-name descname">change_dtype</code><span class="sig-paren">(</span><em class="sig-param">dtype</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.change_dtype" title="Permalink to this definition">¶</a></dt>
-<dd><p>Change the data type.</p>
+<p>Create a Signal from a numpy array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dtype</strong> (<em>str</em><em> or </em><em>dtype</em>) – Typecode or data-type to which the array is cast. In addition to all
-standard numpy dtypes HyperSpy supports four extra dtypes for RGB
-images: “rgb8”, “rgba8”, “rgb16” and “rgba16”. Changing from and to
-any rgbx dtype is more constrained than most other dtype
-conversions. To change to a rgbx dtype the signal dimension must be
-1, its size 3(4) for rgb(rgba) dtypes, the dtype uint8(uint16) for
-rgbx8(rgbx16) and the navigation dimension at least 2. After
-conversion the signal dimension becomes 2. The dtype of images of
-dtype rgbx8(rgbx16) can only be changed to uint8(uint16) and the
-signal dimension becomes 1.</p></li>
-<li><p><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
-the data may be automatically rechunked before performing this operation.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – The signal data. It can be an array of any dimensions.</p></li>
+<li><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary to define the axes (see the documentation of the
+<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> class for more details).</p></li>
+<li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary whose items are stored as attributes.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> attribute.
+Some parameters might be mandatory in some cases.</p></li>
+<li><p><strong>original_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> attribute. It
+typically contains all the parameters that has been
+imported from the original data file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="hyperspy._signals.lazy.LazySignal.change_dtype">
+<code class="sig-name descname">change_dtype</code><span class="sig-paren">(</span><em class="sig-param">dtype</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.change_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the data type of a Signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (str or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>) – Typecode string or data-type to which the Signal’s data array is
+cast. In addition to all the standard numpy <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html#arrays-dtypes" title="(in NumPy v1.16)"><span>Data type objects (dtype)</span></a>,
+HyperSpy supports four extra dtypes for RGB images: <code class="docutils literal notranslate"><span class="pre">'rgb8'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'rgba8'</span></code>, <code class="docutils literal notranslate"><span class="pre">'rgb16'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'rgba16'</span></code>. Changing from and to
+any <code class="docutils literal notranslate"><span class="pre">rgb(a)</span></code> <cite>dtype</cite> is more constrained than most other <cite>dtype</cite>
+conversions. To change to an <code class="docutils literal notranslate"><span class="pre">rgb(a)</span></code> <cite>dtype</cite>,
+the <cite>signal_dimension</cite> must be 1, and its size should be 3 (for
+<code class="docutils literal notranslate"><span class="pre">rgb</span></code>) or 4 (for <code class="docutils literal notranslate"><span class="pre">rgba</span></code>) <cite>dtypes</cite>. The original <cite>dtype</cite>
+should be <code class="docutils literal notranslate"><span class="pre">uint8</span></code> or <code class="docutils literal notranslate"><span class="pre">uint16</span></code> if  converting to <code class="docutils literal notranslate"><span class="pre">rgb(a)8</span></code>
+or <code class="docutils literal notranslate"><span class="pre">rgb(a))16</span></code>, and the <cite>navigation_dimension</cite> should be at
+least 2. After conversion, the <cite>signal_dimension</cite> becomes 2. The
+<cite>dtype</cite> of images with original <cite>dtype</cite> <code class="docutils literal notranslate"><span class="pre">rgb(a)8</span></code> or <code class="docutils literal notranslate"><span class="pre">rgb(a)16</span></code>
+can only be changed to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> or <code class="docutils literal notranslate"><span class="pre">uint16</span></code>, and the
+<cite>signal_dimension</cite> becomes 1.</p></li>
+<li><p><strong>rechunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Only has effect when operating on lazy signal. If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
+the data may be automatically rechunked before performing this
+operation.</p></li>
 </ul>
 </dd>
 </dl>
@@ -270,21 +296,21 @@ significant components.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>normalize_poissonian_noise</strong> (<em>bool</em>) – If True, scale the SI to normalize Poissonian noise</p></li>
-<li><p><strong>algorithm</strong> (<em>str</em>) – One of (‘svd’, ‘PCA’, ‘ORPCA’, ‘ONMF’). By default ‘svd’,
+<li><p><strong>normalize_poissonian_noise</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True, scale the SI to normalize Poissonian noise</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – One of (‘svd’, ‘PCA’, ‘ORPCA’, ‘ONMF’). By default ‘svd’,
 lazy SVD decomposition from dask.</p></li>
-<li><p><strong>output_dimension</strong> (<em>int</em>) – the number of significant components to keep. If None, keep all
+<li><p><strong>output_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of significant components to keep. If None, keep all
 (only valid for SVD)</p></li>
 <li><p><strong>get</strong> (<em>dask scheduler</em>) – the dask scheduler to use for computations;
 default <cite>dask.threaded.get</cite></p></li>
-<li><p><strong>num_chunks</strong> (<em>int</em>) – the number of dask chunks to pass to the decomposition model.
+<li><p><strong>num_chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of dask chunks to pass to the decomposition model.
 More chunks require more memory, but should run faster. Will be
 increased to contain atleast output_dimension signals.</p></li>
 <li><p><strong>navigation_mask</strong> (<em>{BaseSignal</em><em>, </em><em>numpy array</em><em>, </em><em>dask array}</em>) – The navigation locations marked as True are not used in the
 decompostion.</p></li>
 <li><p><strong>signal_mask</strong> (<em>{BaseSignal</em><em>, </em><em>numpy array</em><em>, </em><em>dask array}</em>) – The signal locations marked as True are not used in the
 decomposition.</p></li>
-<li><p><strong>reproject</strong> (<em>bool</em>) – Reproject data on the learnt components (factors) after learning.</p></li>
+<li><p><strong>reproject</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Reproject data on the learnt components (factors) after learning.</p></li>
 <li><p><strong>**kwargs</strong> – passed to the partial_fit/fit functions.</p></li>
 </ul>
 </dd>
@@ -319,25 +345,37 @@ white=False</p>
 <dl class="method">
 <dt id="hyperspy._signals.lazy.LazySignal.diff">
 <code class="sig-name descname">diff</code><span class="sig-paren">(</span><em class="sig-param">axis</em>, <em class="sig-param">order=1</em>, <em class="sig-param">out=None</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a signal with the n-th order discrete difference along
-given axis.</p>
+<dd><p>Returns a signal with the <cite>n</cite>-th order discrete difference along
+given axis. <cite>i.e.</cite> it calculates the difference between consecutive
+values in the given axis: <cite>out[n] = a[n+1] - a[n]</cite>. See
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.diff.html#numpy.diff" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.diff()</span></code></a> for more details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (int, str or <cite>axis</cite>) – The axis can be passed directly, or specified using the index of
-the axis in <cite>axes_manager</cite> or the axis name.</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – the order of the derivative</p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
-<li><p><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
-the data may be automatically rechunked before performing this operation.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The axis can be passed directly, or specified using the index of
+the axis in the Signal’s <cite>axes_manager</cite> or the axis name.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The order of the discrete difference.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
+<li><p><strong>rechunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Only has effect when operating on lazy signal. If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
+the data may be automatically rechunked before performing this
+operation.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>s</strong> – Note that the size of the data on the given <code class="docutils literal notranslate"><span class="pre">axis</span></code> decreases by
+the given <code class="docutils literal notranslate"><span class="pre">order</span></code>. <cite>i.e.</cite> if <code class="docutils literal notranslate"><span class="pre">axis</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">order</span></code> is
+2, the <cite>x</cite> dimension is N, <code class="docutils literal notranslate"><span class="pre">der</span></code>’s <cite>x</cite> dimension is N - 2.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or None</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="hyperspy._signals.lazy.LazySignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">derivative()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.integrate_simpson" title="hyperspy._signals.lazy.LazySignal.integrate_simpson"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate_simpson()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -356,47 +394,58 @@ the data may be automatically rechunked before performing this operation.</p></l
 <dd><p>Return a histogram of the signal data.</p>
 <p>More sophisticated algorithms for determining bins can be used.
 Aside from the <cite>bins</cite> argument allowing a string specified how bins
-are computed, the parameters are the same as numpy.histogram().</p>
+are computed, the parameters are the same as <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>bins</strong> (<em>int</em><em> or </em><em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – If bins is a string, then it must be one of:
-‘knuth’ : use Knuth’s rule to determine bins
-‘scotts’ : use Scott’s rule to determine bins
-‘freedman’ : use the Freedman-diaconis rule to determine bins
-‘blocks’ : use bayesian blocks for dynamic bin widths</p></li>
-<li><p><strong>range_bins</strong> (<em>tuple</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – the minimum and maximum range for the histogram. If not specified,
-it will be (x.min(), x.max())</p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
-<li><p><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
-the data may be automatically rechunked before performing this operation.</p></li>
+<li><p><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – <p>If <cite>bins</cite> is a string, then it must be one of:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'knuth'</span></code> : use Knuth’s rule to determine bins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'scotts'</span></code> : use Scott’s rule to determine bins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'freedman'</span></code> : use the Freedman-diaconis rule to
+determine bins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'blocks'</span></code> : use bayesian blocks for dynamic bin widths</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>range_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional</em>) – the minimum and maximum range for the histogram. If
+<cite>range_bins</cite> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, (<code class="docutils literal notranslate"><span class="pre">x.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">x.max()</span></code>) will be used.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
+<li><p><strong>rechunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Only has effect when operating on lazy signal. If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
+the data may be automatically rechunked before performing this
+operation.</p></li>
 <li><p><strong>**kwargs</strong> – other keyword arguments (weight and density) are described in
-np.histogram().</p></li>
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>hist_spec</strong></p>
+<dd class="field-even"><p><strong>hist_spec</strong> – A 1D spectrum instance containing the histogram.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>An 1D spectrum instance containing the histogram.</p>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal1D</span></code></a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_summary_statistics()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">astroML.density_estimation.histogram()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_summary_statistics()</span></code>, <a class="reference external" href="https://www.astroml.org/modules/generated/astroML.density_estimation.histogram.html#astroML.density_estimation.histogram" title="(in astroML v0.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">astroML.density_estimation.histogram()</span></code></a>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
-<p>The lazy version of the algorithm does not support ‘knuth’ and ‘blocks’
-bins arguments.
-The number of bins estimators are taken from AstroML. Read
-their documentation for more info.</p>
+<ul class="simple">
+<li><p>The lazy version of the algorithm does not support the
+<code class="docutils literal notranslate"><span class="pre">'knuth'</span></code> and <code class="docutils literal notranslate"><span class="pre">'blocks'</span></code> <cite>bins</cite> arguments.</p></li>
+<li><p>The estimators for <cite>bins</cite> are taken from the AstroML project.
+Read the documentation of
+<a class="reference external" href="https://www.astroml.org/modules/generated/astroML.density_estimation.histogram.html#astroML.density_estimation.histogram" title="(in astroML v0.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">astroML.density_estimation.histogram()</span></code></a> for more info.</p></li>
+</ul>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
-<span class="go">Plot the data histogram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Plot the data histogram</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="go">Plot the histogram of the signal at the current coordinates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Plot the histogram of the signal at the current coordinates</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_current_signal</span><span class="p">()</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -405,28 +454,30 @@ their documentation for more info.</p>
 <dl class="method">
 <dt id="hyperspy._signals.lazy.LazySignal.integrate_simpson">
 <code class="sig-name descname">integrate_simpson</code><span class="sig-paren">(</span><em class="sig-param">axis</em>, <em class="sig-param">out=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.integrate_simpson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a signal with the result of calculating the integral
-of the signal along an axis using Simpson’s rule.</p>
+<dd><p>Calculate the integral of a Signal along an axis using
+<a class="reference external" href="https://en.wikipedia.org/wiki/Simpson%27s_rule">Simpson’s rule</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (int, str or <cite>axis</cite>) – The axis can be passed directly, or specified using the index of
-the axis in <cite>axes_manager</cite> or the axis name.</p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The axis can be passed directly, or specified using the index of
+the axis in the Signal’s <cite>axes_manager</cite> or the axis name.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>s</strong></p>
+<dd class="field-even"><p><strong>s</strong> – A new Signal containing the integral of the provided Signal along
+the specified axis.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal</p>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses)</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="hyperspy._signals.lazy.LazySignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+<p><a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.diff" title="hyperspy._signals.lazy.LazySignal.diff"><code class="xref py py-meth docutils literal notranslate"><span class="pre">diff()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">derivative()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -442,42 +493,49 @@ receive the output of the operation, and nothing is returned.</p></li>
 <dl class="method">
 <dt id="hyperspy._signals.lazy.LazySignal.rebin">
 <code class="sig-name descname">rebin</code><span class="sig-paren">(</span><em class="sig-param">new_shape=None</em>, <em class="sig-param">scale=None</em>, <em class="sig-param">crop=False</em>, <em class="sig-param">out=None</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.rebin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rebin array.</p>
-<p>Rebin the signal into a smaller or larger shape, based on linear
-interpolation. Specify <strong>either</strong> new_shape or scale.</p>
+<dd><p>Rebin the signal into a smaller or larger shape, based on linear
+interpolation. Specify <strong>either</strong> <cite>new_shape</cite> or <cite>scale</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_shape</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new_shape. This will
-then be converted into a scale.</p></li>
-<li><p><strong>scale</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new:old pixel ratio, e.g. a ratio of 1
-is no binning and a ratio of 2 means that each pixel in the new
+<li><p><strong>new_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – For each dimension specify the new_shape. This will internally be
+converted into a <cite>scale</cite> parameter.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – For each dimension, specify the new:old pixel ratio, e.g. a ratio
+of 1 is no binning and a ratio of 2 means that each pixel in the new
 spectrum is twice the size of the pixels in the old spectrum.
-The length of the list should match the dimension of the numpy array.
-<strong>*Note : Only one of scale or new_shape should be specified otherwise
-the function will not run*</strong></p></li>
-<li><p><strong>crop</strong> (<em>bool</em><em>, </em><em>default True</em>) – <p>When binning by a non-integer number of pixels it is likely that
-the final row in each dimension contains less than the full quota to
-fill one pixel.</p>
-<p>e.g. 5*5 array binned by 2.1 will produce two rows containing 2.1
-pixels and one row containing only 0.8 pixels worth. Selection of
-crop=’True’ or crop=’False’ determines whether or not this
-‘black’ line is cropped from the final binned array or not.</p>
-<p><em>Please note that if crop=False is used, the final row in each
-dimension may appear black, if a fractional number of pixels are left
+The length of the list should match the dimension of the
+Signal’s underlying data array.
+<em>Note : Only one of `scale` or `new_shape` should be specified,
+otherwise the function will not run</em></p></li>
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – <p>Whether or not to crop the resulting rebinned data (default is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>). When binning by a non-integer number of
+pixels it is likely that the final row in each dimension will
+contain fewer than the full quota to fill one pixel.</p>
+<blockquote>
+<div><ul>
+<li><p>e.g. a 5*5 array binned by 2.1 will produce two rows
+containing 2.1 pixels and one row containing only 0.8
+pixels. Selection of <code class="docutils literal notranslate"><span class="pre">crop=True</span></code> or <code class="docutils literal notranslate"><span class="pre">crop=False</span></code>
+determines whether or not this <cite>“black”</cite> line is cropped
+from the final binned array or not.</p></li>
+</ul>
+</div></blockquote>
+<p>Please note that if <code class="docutils literal notranslate"><span class="pre">crop=False</span></code> is used, the final row in each
+dimension may appear black if a fractional number of pixels are left
 over. It can be removed but has been left to preserve total counts
-before and after binning.</em></p>
+before and after binning.</p>
 </p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>s</strong></p>
+<dd class="field-even"><p><strong>s</strong> – The resulting cropped signal.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal subclass</p>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclass)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -500,29 +558,35 @@ receive the output of the operation, and nothing is returned.</p></li>
 <dl class="method">
 <dt id="hyperspy._signals.lazy.LazySignal.valuemax">
 <code class="sig-name descname">valuemax</code><span class="sig-paren">(</span><em class="sig-param">axis</em>, <em class="sig-param">out=None</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a signal with the value of coordinates of the maximum along an axis.</p>
+<dd><p>Returns a signal with the value of coordinates of the maximum along
+an axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (int, str or <cite>axis</cite>) – The axis can be passed directly, or specified using the index of
-the axis in <cite>axes_manager</cite> or the axis name.</p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
-<li><p><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
-the data may be automatically rechunked before performing this operation.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The axis can be passed directly, or specified using the index of
+the axis in the Signal’s <cite>axes_manager</cite> or the axis name.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
+<li><p><strong>rechunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Only has effect when operating on lazy signal. If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
+the data may be automatically rechunked before performing this
+operation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>s</strong></p>
+<dd class="field-even"><p><strong>s</strong> – A new Signal containing the calibrated coordinate values of the
+maximum along the specified axis.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal</p>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses)</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>max, min, sum, mean, std, var, indexmax, amax</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmin()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemin" title="hyperspy._signals.lazy.LazySignal.valuemin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemin()</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
@@ -531,44 +595,42 @@ the data may be automatically rechunked before performing this operation.</p></l
 <span class="go">(64,64)</span>
 </pre></div>
 </div>
-</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyperspy._signals.lazy.LazySignal.valuemin">
 <code class="sig-name descname">valuemin</code><span class="sig-paren">(</span><em class="sig-param">axis</em>, <em class="sig-param">out=None</em>, <em class="sig-param">rechunk=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.lazy.LazySignal.valuemin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a signal with the value of coordinates of the minimum along an axis.</p>
+<dd><p>Returns a signal with the value of coordinates of the minimum along
+an axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (int, str or <cite>axis</cite>) – The axis can be passed directly, or specified using the index of
-the axis in <cite>axes_manager</cite> or the axis name.</p></li>
-<li><p><strong>out</strong> (<cite>Signal</cite> or None) – If None, a new Signal is created with the result of the operation
-and returned (default). If a Signal is passed, it is used to
-receive the output of the operation, and nothing is returned.</p></li>
-<li><p><strong>rechunk</strong> (<em>bool</em>) – Only has effect when operating on lazy signal. If <cite>True</cite> (default),
-the data may be automatically rechunked before performing this operation.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The axis can be passed directly, or specified using the index of
+the axis in the Signal’s <cite>axes_manager</cite> or the axis name.</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
+<li><p><strong>rechunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Only has effect when operating on lazy signal. If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
+the data may be automatically rechunked before performing this
+operation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>s</strong></p>
+<dd class="field-even"><p><strong>s</strong> – A new Signal containing the calibrated coordinate values of the
+minimum along the specified axis.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal</p>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses)</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">amax()</span></code></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmin()</span></code>, <a class="reference internal" href="#hyperspy._signals.lazy.LazySignal.valuemax" title="hyperspy._signals.lazy.LazySignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a></p>
 </div>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="data">
-<dt id="hyperspy._signals.lazy.lazyerror">
-<code class="sig-prename descclassname">hyperspy._signals.lazy.</code><code class="sig-name descname">lazyerror</code><em class="property"> = NotImplementedError('This method is not available in lazy signals')</em><a class="headerlink" href="#hyperspy._signals.lazy.lazyerror" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="function">
 <dt id="hyperspy._signals.lazy.to_array">
@@ -578,7 +640,7 @@ numpy or dask array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>thing</strong> (<em>{BaseSignal</em><em>, </em><em>dask.array.Array</em><em>, </em><em>numpy.ndarray}</em>) – the thing to be converted</p></li>
+<li><p><strong>thing</strong> (<em>{BaseSignal</em><em>, </em><a class="reference external" href="https://docs.dask.org/en/latest/array-api.html#dask.array.Array" title="(in Dask v2.1.0)"><em>dask.array.Array</em></a><em>, </em><em>numpy.ndarray}</em>) – the thing to be converted</p></li>
 <li><p><strong>chunks</strong> (<em>{None</em><em>, </em><em>tuple of tuples}</em>) – If None, the returned value is a numpy array. Otherwise returns dask
 array with the chunks as specified.</p></li>
 </ul>
@@ -605,7 +667,7 @@ array with the chunks as specified.</p></li>
         <a href="hyperspy._signals.signal1d.html" class="btn btn-neutral float-right" title="hyperspy._signals.signal1d module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy._signals.hologram_image.html" class="btn btn-neutral" title="hyperspy._signals.hologram_image module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy._signals.hologram_image.html" class="btn btn-neutral float-left" title="hyperspy._signals.hologram_image module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -614,7 +676,7 @@ array with the chunks as specified.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -631,27 +693,16 @@ array with the chunks as specified.</p></li>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

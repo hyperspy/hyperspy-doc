@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data visualization &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>Data visualization &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,22 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +56,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +82,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -139,8 +143,8 @@
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -613,6 +617,10 @@ below. Plots generated from another installation may look slightly different
 due to <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> GUI backends and default font sizes. To change the
 font size globally, use the command <code class="docutils literal notranslate"><span class="pre">matplotlib.rcParams.update({'font</span>
 <span class="pre">.size':</span> <span class="pre">8})</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5: </span>Add support for plotting <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> with navigation
+dimension 2 and signal dimension 0.</p>
+</div>
 <p>A common usage for <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_images()</span></code></a> is to view the
 different slices of a multidimensional image (a <em>hyperimage</em>):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
@@ -705,13 +713,13 @@ are described in <a class="reference internal" href="bibliography.html#rossouw20
 <a class="reference internal" href="eds.html#get-lines-intensity"><span class="std std-ref">EDS chapter</span></a>. One can use the following commands
 to get a representative figure of the X-ray line intensities of an EDS
 spectrum image. This example also demonstrates changing the colormap (with
-<cite>cmap</cite>),adding scalebars to the plots (with <cite>scalebar</cite>), and changing the
+<cite>cmap</cite>), adding scalebars to the plots (with <cite>scalebar</cite>), and changing the
 <cite>padding</cite> between the images. The padding is specified as a dictionary,
 which is used to call subplots_adjust method of matplotlib
 (see <a class="reference external" href="http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust">documentation</a>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;core_shell.hdf5&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">im</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">tight_layout</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">,</span> <span class="n">saturated_pixels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">scalebar_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">suptitle_fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
@@ -736,7 +744,7 @@ for the different images that are plotted by providing a list or other
 generator:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;core_shell.hdf5&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">im</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="n">tight_layout</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="s1">&#39;plasma&#39;</span><span class="p">],</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="n">saturated_pixels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="n">scalebar_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">suptitle_fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
@@ -807,6 +815,10 @@ instead set the <code class="docutils literal notranslate"><span class="pre">col
 <p><a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_spectra()</span></code></a> is used to plot several spectra in the
 same figure. It supports different styles, the default
 being “overlap”. The default style is configurable in <a class="reference internal" href="getting_started.html#configuring-hyperspy-label"><span class="std std-ref">preferences</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5: </span>Add support for plotting <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> with navigation
+dimension 1 and signal dimension 0.</p>
+</div>
 <p>In the following example we create a list of 9 single spectra (gaussian
 functions with different sigma values) and plot them in the same figure using
 <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_spectra()</span></code></a>. Note that, in this case, the legend
@@ -1245,7 +1257,7 @@ navigation index.</span><a class="headerlink" href="#id50" title="Permalink to t
         <a href="mva.html" class="btn btn-neutral float-right" title="Machine learning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="signal2d.html" class="btn btn-neutral" title="Signal2D Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="signal2d.html" class="btn btn-neutral float-left" title="Signal2D Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1254,7 +1266,7 @@ navigation index.</span><a class="headerlink" href="#id50" title="Permalink to t
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -1271,27 +1283,16 @@ navigation index.</span><a class="headerlink" href="#id50" title="Permalink to t
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

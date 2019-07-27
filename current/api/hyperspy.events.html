@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.events module &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>hyperspy.events module &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +55,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +81,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -104,6 +107,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
@@ -121,6 +125,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.events module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.extensions.html">hyperspy.extensions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.interactive.html">hyperspy.interactive module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.logger.html">hyperspy.logger module</a></li>
@@ -138,7 +143,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -214,7 +218,32 @@
 <dl class="class">
 <dt id="hyperspy.events.Event">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.events.</code><code class="sig-name descname">Event</code><span class="sig-paren">(</span><em class="sig-param">doc=''</em>, <em class="sig-param">arguments=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.events.Event" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Create an Event object.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>doc<span class="classifier">str</span></dt><dd><p>Optional docstring for the new Event.</p>
+</dd>
+<dt>arguments<span class="classifier">iterable</span></dt><dd><p>Pass to define the arguments of the trigger() function. Each
+element must either be an argument name, or a tuple containing
+the argument name and the argument’s default value.</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.events</span> <span class="k">import</span> <span class="n">Event</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Event</span><span class="p">()</span>
+<span class="go">&lt;hyperspy.events.Event: set()&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Event</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="s2">&quot;This event has a docstring!&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="go">&#39;This event has a docstring!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e1</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e2</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;arg1&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;arg2&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e1</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">arg1</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="mi">43</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="n">arg4</span><span class="o">=</span><span class="mf">4.3</span><span class="p">)</span>  <span class="c1"># Can trigger with whatever</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e2</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">arg1</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="mf">3.4</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">TypeError</span>: <span class="n">trigger() got an unexpected keyword argument &#39;arg3&#39;</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="hyperspy.events.Event.arguments">
 <em class="property">property </em><code class="sig-name descname">arguments</code><a class="headerlink" href="#hyperspy.events.Event.arguments" title="Permalink to this definition">¶</a></dt>
@@ -333,7 +362,7 @@ specified when connected.</p>
 <dl class="class">
 <dt id="hyperspy.events.EventSuppressor">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.events.</code><code class="sig-name descname">EventSuppressor</code><span class="sig-paren">(</span><em class="sig-param">*to_suppress</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.events.EventSuppressor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Object to enforce a variety of suppression types simultaneously</p>
 <p>Targets to be suppressed can be added by the function <cite>add()</cite>, or given
 in the constructor. Valid targets are:</p>
@@ -395,7 +424,7 @@ values will be restored.</p>
 <dl class="class">
 <dt id="hyperspy.events.Events">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.events.</code><code class="sig-name descname">Events</code><a class="headerlink" href="#hyperspy.events.Events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Events container.</p>
 <p>All available events are attributes of this class.</p>
 <dl class="method">
@@ -433,7 +462,7 @@ completes, the old suppression values will be restored.</p>
         <a href="hyperspy.exceptions.html" class="btn btn-neutral float-right" title="hyperspy.exceptions module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy.defaults_parser.html" class="btn btn-neutral" title="hyperspy.defaults_parser module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy.defaults_parser.html" class="btn btn-neutral float-left" title="hyperspy.defaults_parser module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -442,7 +471,7 @@ completes, the old suppression values will be restored.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -459,27 +488,16 @@ completes, the old suppression values will be restored.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

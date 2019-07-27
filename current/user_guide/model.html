@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Model fitting &mdash; HyperSpy 1.4.2 documentation</title>
+  <title>Model fitting &mdash; HyperSpy 1.5 documentation</title>
   
 
   
@@ -19,13 +19,22 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,21 +56,16 @@
 
 </script>
 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -78,7 +82,7 @@
             
             
               <div class="version">
-                1.4.2
+                1.5
               </div>
             
           
@@ -166,8 +170,8 @@
 <li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -312,6 +316,7 @@ model.</p>
 <li><p><a class="reference internal" href="../api/hyperspy._components.gaussianhf.html#hyperspy._components.gaussianhf.GaussianHF" title="hyperspy._components.gaussianhf.GaussianHF"><code class="xref py py-class docutils literal notranslate"><span class="pre">GaussianHF</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.lorentzian.html#hyperspy._components.lorentzian.Lorentzian" title="hyperspy._components.lorentzian.Lorentzian"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lorentzian</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.voigt.html#hyperspy._components.voigt.Voigt" title="hyperspy._components.voigt.Voigt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Voigt</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy._components.skew_normal.html#hyperspy._components.skew_normal.SkewNormal" title="hyperspy._components.skew_normal.SkewNormal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SkewNormal</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.polynomial.html#hyperspy._components.polynomial.Polynomial" title="hyperspy._components.polynomial.Polynomial"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polynomial</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.logistic.html#hyperspy._components.logistic.Logistic" title="hyperspy._components.logistic.Logistic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logistic</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.bleasdale.html#hyperspy._components.bleasdale.Bleasdale" title="hyperspy._components.bleasdale.Bleasdale"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bleasdale</span></code></a></p></li>
@@ -530,6 +535,25 @@ enables tab completion.</p>
 <code class="docutils literal notranslate"><span class="pre">active</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">False</span></code>. When a component is
 switched off, to all effects it is as if it was not part of the model. To
 switch it on simply set the <code class="docutils literal notranslate"><span class="pre">active</span></code> attribute back to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p id="component-print-current-values">The current values of a component can be visualised using the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">print_current_values()</span></code> method. The
+IPython display function elegantly presents it using HTML
+and allows for correct copying and pasting into Excel spreadsheets.
+Alternatively, a simpler form can be shown by setting the
+<code class="docutils literal notranslate"><span class="pre">fancy</span></code> argument to <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Gaussian: Al_Ka</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min</span>
+<span class="go">============== | ===== | ========== | ========== | ==========</span>
+<span class="go">             A |  True | 62894.6824 | 1039.40944 |        0.0</span>
+<span class="go">         sigma | False | 0.03253440 |       None |       None</span>
+<span class="go">        centre | False |     1.4865 |       None |       None</span>
+</pre></div>
+</div>
 <p>In multidimensional signals it is possible to store the value of the
 <code class="docutils literal notranslate"><span class="pre">active</span></code> attribute at each navigation index.
 To enable this feature for a given component set the
@@ -577,8 +601,13 @@ are automatically recomputed for the resulting slices.</p>
 </div>
 <div class="section" id="getting-and-setting-parameter-values-and-attributes">
 <h2>Getting and setting parameter values and attributes<a class="headerlink" href="#getting-and-setting-parameter-values-and-attributes" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.print_current_values" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a> prints the value of the
-parameters of the components in the current coordinates.</p>
+<p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.print_current_values" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a> prints the properties of the
+parameters of the components in the current coordinates. In the Jupyter Notebook,
+the default view is HTML-formatted, which allows for formatted copying
+into other software, such as Excel. This can be changed to a standard
+terminal view with the argument <code class="docutils literal notranslate"><span class="pre">fancy=False</span></code>. One can also filter for only active
+components and only showing component with free parameters with the arguments
+<code class="docutils literal notranslate"><span class="pre">only_active</span></code> and <code class="docutils literal notranslate"><span class="pre">only_free</span></code>, respectively.</p>
 <p>The current coordinates can be either set by navigating the <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.plot" title="hyperspy.model.BaseModel.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a>, or specified by
 pixel indices in <code class="docutils literal notranslate"><span class="pre">m.axes_manager.indices</span></code> or as calibrated coordinates in
 <code class="docutils literal notranslate"><span class="pre">m.axes_manager.coordinates</span></code>.</p>
@@ -625,14 +654,14 @@ of all parameters in a component to <cite>True</cite> use
 <code class="docutils literal notranslate"><span class="pre">parameter_name_list</span></code>, shown in the example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;,</span>
-<span class="go">    &lt;Parameter sigma of Gaussian component&gt;,</span>
-<span class="go">    &lt;Parameter centre of Gaussian component&gt;])</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;,</span>
+<span class="go">&lt;Parameter sigma of Gaussian component&gt;,</span>
+<span class="go">&lt;Parameter centre of Gaussian component&gt;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">()</span>
-<span class="go">set([])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">parameter_name_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;centre&#39;</span><span class="p">])</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;,</span>
-<span class="go">     &lt;Parameter centre of Gaussian component&gt;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">free_parameters</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;,</span>
+<span class="go">&lt;Parameter centre of Gaussian component&gt;]</span>
 </pre></div>
 </div>
 <p>Similar functions exist for <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a>:
@@ -645,76 +674,78 @@ components and parameter-names can also be specified. For example:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([])</span>
+<span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g2</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([])</span>
+<span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">parameter_name_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;])</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g2</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;])</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">([</span><span class="n">g1</span><span class="p">],</span> <span class="n">parameter_name_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;,</span>
-<span class="go">     &lt;Parameter sigma of Gaussian component&gt;])</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;,</span>
+<span class="go">     &lt;Parameter sigma of Gaussian component&gt;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g2</span><span class="o">.</span><span class="n">free_parameters</span>
-<span class="go">set([&lt;Parameter A of Gaussian component&gt;])</span>
+<span class="go">[&lt;Parameter A of Gaussian component&gt;]</span>
 </pre></div>
 </div>
 <p>The value of a parameter can be coupled to the value of another by setting the
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin" title="hyperspy.component.Parameter.twin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin</span></code></a> attribute.</p>
 <p>For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian</span><span class="o">.</span><span class="n">parameters</span> <span class="c1"># Print the parameters of the gaussian components</span>
-<span class="go">(A, sigma, centre)</span>
+<span class="go">(&lt;Parameter A of Carbon component&gt;,</span>
+<span class="go">&lt;Parameter sigma of Carbon component&gt;,</span>
+<span class="go">&lt;Parameter centre of Carbon component&gt;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">free</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># Fix the centre</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian</span><span class="o">.</span><span class="n">free_parameters</span>  <span class="c1"># Print the free parameters</span>
-<span class="go">set([A, sigma])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span> <span class="c1"># Print the current value of all free param.</span>
-<span class="go">Components  Parameter       Value</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">        centre      0.000000</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">Normalized Gaussian</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        centre      0.000000</span>
+<span class="go">[&lt;Parameter A of Carbon component&gt;, &lt;Parameter sigma of Carbon component&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">only_free</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="c1"># Print the values of all free parameters.</span>
+<span class="go">Model1D:</span>
+<span class="go">Gaussian: Carbon</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True |        1.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+
+<span class="go">Gaussian: Long Hydrogen name</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True |        1.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
+
+<span class="go">Gaussian: Nitrogen</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True |        1.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
+
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Couple the A parameter of gaussian2 to the A parameter of gaussian 3:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin</span> <span class="o">=</span> <span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># Set the gaussian2 centre value to 10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
-<span class="go">Components  Parameter       Value</span>
-<span class="go">Carbon</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        centre      0.000000</span>
-<span class="go">Hydrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   10.000000</span>
-<span class="go">        centre      10.000000</span>
-<span class="go">Nitrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   10.000000</span>
-<span class="go">        centre      0.000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># Set the gaussian2 A value to 10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Gaussian: Nitrogen</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True |       10.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># Set the gaussian1 centre value to 5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
-<span class="go">Components  Parameter       Value</span>
-<span class="go">Carbon</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        centre      0.000000</span>
-<span class="go">Hydrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   5.000000</span>
-<span class="go">        centre      10.000000</span>
-<span class="go">Nitrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   5.000000</span>
-<span class="go">        centre      0.000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Gaussian: Long Hydrogen name</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A | False |        5.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
 </pre></div>
 </div>
 <div class="deprecated">
@@ -736,37 +767,25 @@ example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_function_expr</span> <span class="o">=</span> <span class="s2">&quot;x**2&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_inverse_function_expr</span> <span class="o">=</span> <span class="s2">&quot;sqrt(abs(x))&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
-<span class="go">Components  Parameter       Value</span>
-<span class="go">Carbon</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        centre      0.000000</span>
-<span class="go">Hydrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   4.000000</span>
-<span class="go">        centre      10.000000</span>
-<span class="go">Nitrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   2.000000</span>
-<span class="go">        centre      0.000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Gaussian: Nitrogen</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True |        2.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
-<span class="go">Components  Parameter       Value</span>
-<span class="go">Carbon</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   1.000000</span>
-<span class="go">        centre      0.000000</span>
-<span class="go">Hydrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   16.000000</span>
-<span class="go">        centre      10.000000</span>
-<span class="go">Nitrogen</span>
-<span class="go">        sigma       1.000000</span>
-<span class="go">        A   4.000000</span>
-<span class="go">        centre      0.000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Gaussian: Long Hydrogen name</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A | False |       16.0 |       None |        0.0 |       None</span>
+<span class="go">         sigma |  True |        1.0 |       None |       None |       None</span>
+<span class="go">        centre |  True |        0.0 |       None |       None |       None</span>
 </pre></div>
 </div>
 </div>
@@ -893,10 +912,14 @@ to the data.</p>
 </div>
 <p>On fitting completion, the optimized value of the parameters and their
 estimated standard deviation are stored in the following line attributes:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
-<span class="go">(0.99246156488437653, 103.67507406125888)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
-<span class="go">(0.11771053738516088, 13.541061301257537)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0.9924615648843765</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span>
+<span class="go">103.67507406125888</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">std</span>
+<span class="go">0.11771053738516088</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">std</span>
+<span class="go">13.541061301257537</span>
 </pre></div>
 </div>
 <p>When the noise is heterocedastic, only if the
@@ -1046,7 +1069,7 @@ these attributes set the minimum and maximum values allowed for <cite>parameter.
 histogram is fitted using a <a class="reference internal" href="../api/hyperspy._components.gaussian.html#hyperspy._components.gaussian.Gaussian" title="hyperspy._components.gaussian.Gaussian"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gaussian</span></code></a>
 component using mpfit and bounds on the <code class="docutils literal notranslate"><span class="pre">centre</span></code> parameter.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
-<span class="gp">... </span><span class="n">size</span><span class="o">=</span><span class="mf">1e5</span><span class="p">))</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">))</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">binned</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
@@ -1056,12 +1079,15 @@ component using mpfit and bounds on the <code class="docutils literal notranslat
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmax</span> <span class="o">=</span> <span class="mi">14</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bounded</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fitter</span><span class="o">=</span><span class="s2">&quot;mpfit&quot;</span><span class="p">,</span> <span class="n">bounded</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
-<span class="go">Components  Parameter   Value</span>
-<span class="go">Gaussian</span>
-<span class="go">        sigma   0.00996345</span>
-<span class="go">        A   99918.7</span>
-<span class="go">        centre  9.99976</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">Model1D:  histogram</span>
+<span class="go">Gaussian: Gaussian</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True | 99997.3481 | 232.333693 |        0.0 |       None</span>
+<span class="go">         sigma |  True | 0.00999184 | 2.68064163 |       None |       None</span>
+<span class="go">        centre |  True | 9.99980788 | 2.68064070 |        7.0 |       14.0</span>
 </pre></div>
 </div>
 </div>
@@ -1429,7 +1455,7 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
         <a href="eels.html" class="btn btn-neutral float-right" title="Electron Energy Loss Spectroscopy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="mva.html" class="btn btn-neutral" title="Machine learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="mva.html" class="btn btn-neutral float-left" title="Machine learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1438,7 +1464,7 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2018, The HyperSpy development team
+        &copy; Copyright 2011-2019, The HyperSpy development team
 
     </p>
   </div>
@@ -1455,27 +1481,16 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
