@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cluster analysis &mdash; HyperSpy 1.6.dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Cluster analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user_guide/cluster.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cluster-analysis">
+<h1>Cluster analysis<a class="headerlink" href="#cluster-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.</span></p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster analysis</a> or clustering
+is the task of grouping a set of measurements such that measurements in the same
+group (called a cluster) are more similar (in some sense) to each other than to
+those in other groups (clusters).
+A Hyperspy signal can represent a number of large arrays of different measurements
+which can represent spectra, images or sets of paramaters.
+Identifying and extracting trends from large datasets is often difficult and
+PCA, BSS, NMF and cluster analysis play an important role in this process.</p>
+<p>Cluster analysis, in essence, compares the “distances” (or similar metric)
+between different sets of measurements and groups those that are closest together.
+The features it groups can be raw data points, for example, comparing for
+every navigation dimension all points of a spectrum. However if the
+dataset is large the process of clustering can be computationally intensive so
+clustering is more commonly used on an extracted set of features or parameters.
+For example, extraction of two peak positions of interest via a fitting process
+rather than clustering all spectra points.</p>
+<p>Decomposition or Blind Source Separation (PCA, NMF, BSS etc.) can produce a smaller set
+of features as it reduces the description of the data into a set of loadings and factors.
+The loadings capture a core representation of the features in the data and the factors
+provide the mixing ratios of these loadings that best describe the original data.
+Overall this represents a much smaller data volume compared to the original data
+and can helps to identify initial differences. Cluster analysis is then performed
+on the factors.</p>
+<p>A detailed description of the application of cluster analysis in x-ray
+spectro-microscopy and further details on the theory and implementation can be found here.
+<a class="reference internal" href="bibliography.html#lerotic2004"><span class="std std-ref">[Lerotic2004]</span></a>.</p>
+</div>
+<div class="section" id="nomenclature">
+<h2>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">¶</a></h2>
+<p>Taking the example of a 1D Signal of dimensions <cite>(20, 10|4)</cite> containing the
+dataset, we say there are 200 <em>samples</em>. The four measured parameters are the
+<em>features</em>. If we choose to search for 3 clusters within this dataset, we
+derive two main values: the <cite>labels</cite>, of dimensions <cite>(20, 10|3)</cite> (each
+sample is assigned a label to each cluster), and the <cite>centers</cite>, of
+dimensions <cite>(3, 4)</cite> (each centre has a coordinate in each feature).
+If you take all features within a given cluster and average them
+this average set of features is the center of that cluster.</p>
+</div>
+<div class="section" id="clustering-in-hyperspy">
+<h2>Clustering in HyperSpy<a class="headerlink" href="#clustering-in-hyperspy" title="Permalink to this headline">¶</a></h2>
+<p>All HyperSpy signals have the following methods to perform clustering analysis:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a></p></li>
+</ul>
+<p>The clustering itself uses either the <code class="docutils literal notranslate"><span class="pre">kmeans</span></code> or <code class="docutils literal notranslate"><span class="pre">agglomerative</span></code>
+methods from <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html">sklearn.clustering</a>
+and further details on operation and implementation can be found there</p>
+</div>
+<div class="section" id="pre-processing">
+<h2>Pre-processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">¶</a></h2>
+<p>Cluster analysis measures the distances between features and groups them. It
+is often necessary to pre-process the features in order to obtain meaningful
+results.</p>
+<p>For example, consider the case of a spectrum image. If the signal magnitude
+varies strongly from spectra to spectra or image to image, then the
+clustering would group the data into clusters based on differences in
+magnitude. However, if the objective is to identify, for example, that peak 1
+is the same as peak 2, then this magnitude variation needs to be removed and
+the spectra should therefore all be normalized first to remove the effect of
+peak height.</p>
+<p>As discussed previously, decomposition methods decompose data into a set of
+components and a set of factors defining the mixing needed to represent the
+data. If signal 1 is reduced to three components with mixing 0.1 0.5 2.0 and
+signal 2 is reduced to a mixing of 0.2 1.0 4.0 it should be clear that these
+represent the same signal but with a scaling difference. Normalization of the
+data can again be used to remove scaling effects.</p>
+<p>Pre-processing to remove scaling effects is handled within the cluster
+analysis methods and implements the <code class="docutils literal notranslate"><span class="pre">standard</span></code> , <code class="docutils literal notranslate"><span class="pre">minmax</span></code> or <code class="docutils literal notranslate"><span class="pre">norm</span></code>
+pre-processing methods as standard or allows for custom methods from
+<a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html">sklearn.preprocessing</a> For the
+reasons described above the scaling will influence the results and should be
+evaluated for the problem under investigation. Briefly, <code class="docutils literal notranslate"><span class="pre">norm</span></code> treats the
+features as a vector and normalizes the vector length. This is the default
+scaling used in the cluster analysis methods. <code class="docutils literal notranslate"><span class="pre">standard</span></code> re-scales each
+feature by removing the mean and scaling to unit variance. <code class="docutils literal notranslate"><span class="pre">minmax</span></code>
+normalizes each feature between the minimum and maximum range of that
+feature.</p>
+</div>
+<div class="section" id="cluster-centers-and-labels">
+<h2>Cluster Centers and Labels<a class="headerlink" href="#cluster-centers-and-labels" title="Permalink to this headline">¶</a></h2>
+<p>The cluster labels and centers found using the sklearn methods are based on
+the features after they’ve been whitened or scaled.
+To create a meaningful representation of the clusters areas with identical label
+are averaged to create a set of cluster centers. This averaging can be performed
+on the  <code class="docutils literal notranslate"><span class="pre">signal</span></code> itself, the  <code class="docutils literal notranslate"><span class="pre">bss</span></code>  or  <code class="docutils literal notranslate"><span class="pre">decomposition</span></code> results or a
+user supplied signal.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>We can use the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html">make_blobs</a>
+supplied by <cite>scikit-learn</cite> to make dummy data to see how clustering might work in practice.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>make_blobs creates 3 distinct centres or 3 “types” of signal by default.
+If we examine the signal using PCA we can see that there are 3 regions but
+their interpretation of the signal is a little ambigous.</p>
+<p>To see how cluster analysis works it’s best to first examine the signal.
+Moving around the image you should be able to see 3 distinct regions in which
+the 1D signal modulates slightly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If we then perform PCA we start to see the 3 regions a little more clearly but
+the factors and loadings don’t match up with the original 1D signals or image.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_decomposition_results</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can then cluster, using the decomposition results, to find similar regions
+and the representative features in those regions.
+This indentifies 3 regions and the average or representative 1D signals in
+those regions</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_results</span><span class="p">(</span><span class="s2">&quot;decomposition&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To see what the labels the cluster algorithm has assigned you can inspect:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">cluster_membership</span>
+</pre></div>
+</div>
+<p>These are split into a cluster_labels array to help plotting and masking:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">cluster_labels</span>
+</pre></div>
+</div>
+<p>The clustering methods currently supported in hyperspy are kmeans and
+agglomerative. Additional keywords can be passed directly to the scikit learn
+methods in the following manner:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;agglomerative&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="n">affinity</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_results</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="estimating-the-number-of-clusters">
+<h2>Estimating the number of clusters<a class="headerlink" href="#estimating-the-number-of-clusters" title="Permalink to this headline">¶</a></h2>
+<p>In this case we know there are 3 signals but for real examples it is difficult
+to define the number of clusters to use. A number of metrics, such as elbow,
+Silhouette and Gap can be used to determine the optimal number of clusters.
+The elbow method measures the sum-of-squares of the distances within a
+cluster and as for the PCA decomposition an “elbow” or point where the gains
+diminish with increasing number of clusters indicates the ideal number of
+clusters. Silhouette analysis measures how well separated clusters are and
+can be used to determine the most likely number of clusters. As the scoring
+is a measure of separation of clusters a number of solutions may occur and
+maxima in the scores are used to indicate possible solutions. Gap analysis
+is similar but compares the “gap” between the clustered data results and
+those from a randomly data set of the same size. The largest gap indicates
+the best clustering. The metric results can be plotted to check how
+well-defined the clustering is.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">evaluate_number_of_clusters</span><span class="p">(</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;gap&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_metric</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The optimal number of clusters can be set or accessed from the learning
+results</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">number_of_clusters</span>
+</pre></div>
+</div>
+<p>If running cluster analysis and the number of clusters have not been
+specified the algorithm will attempt to use the estimated number of clusters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="clustering-different-signal-information">
+<h2>Clustering different signal information<a class="headerlink" href="#clustering-different-signal-information" title="Permalink to this headline">¶</a></h2>
+<p>As discussed in the introduction, clustering can be performed on fitted or
+extracted parameters. Given an existing fitted model the parameters
+can be extracted as signals and stacked. Decomposition and clustering can then
+be applied as described previously to identify trends in the
+fitted results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.misc.utils.stack</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a signal called original signal and setup fitting</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># model created using two gaussians and fitting performed...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fitted_centre1</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fitted_centre2</span> <span class="o">=</span> <span class="n">g2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_signal</span> <span class="o">=</span> <span class="n">stack</span><span class="p">([</span><span class="n">fitted_centre1</span><span class="p">,</span><span class="n">fitted_centre2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_signal</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span><span class="n">source_for_centers</span><span class="o">=</span><span class="n">original_signal</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To extract cluster centers based on the decomposition results
+of a signal using the results of fitting on that signal</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.misc.utils.stack</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># A signal called original signal and setup fitting</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># model created using two gaussians and fitting performed...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fitted_centre1</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fitted_centre2</span> <span class="o">=</span> <span class="n">g2</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_signal</span> <span class="o">=</span> <span class="n">stack</span><span class="p">([</span><span class="n">fitted_centre1</span><span class="p">,</span><span class="n">fitted_centre2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">original_signal</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">new_signal</span><span class="p">,</span><span class="n">source_for_centers</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2020, The HyperSpy development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

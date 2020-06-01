@@ -1,0 +1,920 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy._signals.eels module &mdash; HyperSpy 1.6.dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy._signals.hologram_image module" href="hyperspy._signals.hologram_image.html" />
+    <link rel="prev" title="hyperspy._signals.eds_tem module" href="hyperspy._signals.eds_tem.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+        
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+        
+          <li><a href="hyperspy._signals.html">hyperspy._signals package</a> &raquo;</li>
+        
+      <li>hyperspy._signals.eels module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy._signals.eels.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy._signals.eels">
+<span id="hyperspy-signals-eels-module"></span><h1>hyperspy._signals.eels module<a class="headerlink" href="#module-hyperspy._signals.eels" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="hyperspy._signals.eels.EELSSpectrum">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.eels.</code><code class="sig-name descname">EELSSpectrum</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin" title="hyperspy._signals.eels.EELSSpectrum_mixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.eels.EELSSpectrum_mixin</span></code></a>, <a class="reference internal" href="hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal1d.Signal1D</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.eels.</code><code class="sig-name descname">EELSSpectrum_mixin</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin._alias_signal_types">
+<code class="sig-name descname">_alias_signal_types</code><em class="property"> = ['TEM EELS']</em><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin._alias_signal_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin._are_microscope_parameters_missing">
+<code class="sig-name descname">_are_microscope_parameters_missing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ignore_parameters</span><span class="o">=</span><span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin._are_microscope_parameters_missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the EELS parameters necessary to calculate the GOS
+are defined in metadata. If not, in interactive mode
+raises an UI item to fill the values.
+The <cite>ignore_parameters</cite> list can be to ignore parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin._signal_type">
+<code class="sig-name descname">_signal_type</code><em class="property"> = 'EELS'</em><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin._signal_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.add_elements">
+<code class="sig-name descname">add_elements</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">elements</span></em>, <em class="sig-param"><span class="n">include_pre_edges</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.add_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declare the elemental composition of the sample.</p>
+<p>The ionisation edges of the elements present in the current
+energy range will be added automatically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elements</strong> (<em>tuple of strings</em>) – The symbol of the elements. Note this input must always be
+in the form of a tuple. Meaning: add_elements((‘C’,)) will
+work, while add_elements((‘C’)) will NOT work.</p></li>
+<li><p><strong>include_pre_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the ionization edges with an onset below the lower
+energy limit of the SI will be incluided</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EELSSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1024</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">((</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak">
+<code class="sig-name descname">align_zero_loss_peak</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">calibrate</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">also_align</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">print_stats</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">subpixel</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_range</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">crop</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align the zero-loss peak.</p>
+<p>This function first aligns the spectra using the result of
+<cite>estimate_zero_loss_peak_centre</cite> and afterward, if subpixel is True,
+proceeds to align with subpixel accuracy using <cite>align1D</cite>. The offset
+is automatically correct if <cite>calibrate</cite> is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>calibrate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, set the offset of the spectral axis so that the
+zero-loss peak is at position zero.</p></li>
+<li><p><strong>also_align</strong> (<em>list of signals</em>) – A list containing other spectra of identical dimensions to
+align using the shifts applied to the current spectrum.
+If <cite>calibrate</cite> is True, the calibration is also applied to
+the spectra in the list.</p></li>
+<li><p><strong>print_stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, print summary statistics of the ZLP maximum before
+the aligment.</p></li>
+<li><p><strong>subpixel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, perform the alignment with subpixel accuracy
+using cross-correlation.</p></li>
+<li><p><strong>mask</strong> (<em>Signal1D of bool data type.</em>) – It must have signal_dimension = 0 and navigation_shape equal to the
+current signal. Where mask is True the shift is not computed
+and set to nan.</p></li>
+<li><p><strong>signal_range</strong> (<em>tuple of integers</em><em>, </em><em>tuple of floats. Optional</em>) – Will only search for the ZLP within the signal_range. If given
+in integers, the range will be in index values. If given floats,
+the range will be in spectrum values. Useful if there are features
+in the spectrum which are more intense than the ZLP.
+Default is searching in the whole signal. Note that ROIs can be used
+in place of a tuple.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True automatically crop the signal axis at both ends if needed.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s_ll</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EELSSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_ll</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_ll</span><span class="o">.</span><span class="n">align_zero_loss_peak</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Aligning both the lowloss signal and another signal</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EELSSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_ll</span><span class="o">.</span><span class="n">align_zero_loss_peak</span><span class="p">(</span><span class="n">also_align</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Aligning within a narrow range of the lowloss signal</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s_ll</span><span class="o">.</span><span class="n">align_zero_loss_peak</span><span class="p">(</span><span class="n">signal_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">10.</span><span class="p">,</span><span class="mf">10.</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_zero_loss_peak_centre" title="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_zero_loss_peak_centre"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_zero_loss_peak_centre()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">align1D()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift1D.()</span></code></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Any extra keyword arguments are passed to <cite>align1D</cite>. For
+more information read its docstring.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ll</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">auto_background</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">auto_add_edges</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">GOS</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dictionary</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.create_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a model for the current EELS data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ll</strong> (<a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><em>EELSSpectrum</em></a><em>, </em><em>optional</em>) – If an EELSSpectrum is provided, it will be assumed that it is
+a low-loss EELS spectrum, and it will be used to simulate the
+effect of multiple scattering by convolving it with the EELS
+spectrum.</p></li>
+<li><p><strong>auto_background</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, and if spectrum is an EELS instance adds automatically
+a powerlaw to the model and estimate the parameters by the
+two-area method.</p></li>
+<li><p><strong>auto_add_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, and if spectrum is an EELS instance, it will
+automatically add the ionization edges as defined in the
+Signal1D instance. Adding a new element to the spectrum using
+the components.EELSSpectrum.add_elements method automatically
+add the corresponding ionisation edges to the model.</p></li>
+<li><p><strong>GOS</strong> (<em>{'hydrogenic' | 'Hartree-Slater'}</em><em>, </em><em>optional</em>) – The generalized oscillation strenght calculations to use for the
+core-loss EELS edges. If None the Hartree-Slater GOS are used if
+available, otherwise it uses the hydrogenic GOS.</p></li>
+<li><p><strong>dictionary</strong> (<em>{None | dict}</em><em>, </em><em>optional</em>) – A dictionary to be used to recreate a model. Usually generated
+using <code class="xref py py-meth docutils literal notranslate"><span class="pre">hyperspy.model.as_dictionary()</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>EELSModel</cite> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_intensity">
+<code class="sig-name descname">estimate_elastic_scattering_intensity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">threshold</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_intensity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rough estimation of the elastic scattering intensity by
+truncation of a EELS low-loss spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<em>{Signal1D</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>int}</em>) – Truncation energy to estimate the intensity of the elastic
+scattering. The threshold can be provided as a signal of the same
+dimension as the input spectrum navigation space containing the
+threshold value in the energy units. Alternatively a constant
+threshold can be specified in energy/index units by passing
+float/int.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>I0</strong> – The elastic scattering intensity.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D">Signal1D</a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_threshold" title="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_threshold"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_elastic_scattering_threshold()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_threshold">
+<code class="sig-name descname">estimate_elastic_scattering_threshold</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">10.0</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">window_length</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">polynomial_order</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the first inflexion point of the spectrum derivative
+within a window.</p>
+<p>This method assumes that the zero-loss peak is located at position zero
+in all the spectra. Currently it looks for an inflexion point, that can
+be a local maximum or minimum. Therefore, to estimate the elastic
+scattering threshold <cite>start</cite> + <cite>window</cite> must be less than the first
+maximum for all spectra (often the bulk plasmon maximum). If there is
+more than one inflexion point in energy the window it selects the
+smoother one what, often, but not always, is a good choice in this
+case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> (<em>{None</em><em>, </em><em>float}</em>) – If None, the search for the local inflexion point is performed
+using the full energy range. A positive float will restrict
+the search to the (0,window] energy window, where window is given
+in the axis units. If no inflexion point is found in this
+spectral range the window value is returned instead.</p></li>
+<li><p><strong>tol</strong> (<em>{None</em><em>, </em><em>float}</em>) – The threshold tolerance for the derivative. If “auto” it is
+automatically calculated as the minimum value that guarantees
+finding an inflexion point in all the spectra in given energy
+range.</p></li>
+<li><p><strong>window_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – If non zero performs order three Savitzky-Golay smoothing
+to the data to avoid falling in local minima caused by
+the noise. It must be an odd interger.</p></li>
+<li><p><strong>polynomial_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Savitzky-Golay filter polynomial order.</p></li>
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Position from the zero-loss peak centre from where to start
+looking for the inflexion point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>threshold</strong> – A Signal1D of the same dimension as the input spectrum
+navigation space containing the estimated threshold. Where the
+threshold couldn’t be estimated the value is set to nan.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D" title="hyperspy._signals.signal1d.Signal1D">Signal1D</a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_intensity" title="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_elastic_scattering_intensity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_elastic_scattering_intensity()</span></code></a>, <a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak"><code class="xref py py-meth docutils literal notranslate"><span class="pre">align_zero_loss_peak()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_peaks1D_ohaver()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">fourier_ratio_deconvolution.()</span></code></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The main purpose of this method is to be used as input for
+<cite>estimate_elastic_scattering_intensity</cite>. Indeed, for currently
+achievable energy resolutions, there is not such a thing as a elastic
+scattering threshold. Therefore, please be aware of the limitations of
+this method when using it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_thickness">
+<code class="sig-name descname">estimate_thickness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">zlp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mean_free_path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_thickness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates the thickness (relative and absolute)
+of a sample using the log-ratio method.</p>
+<p>The current EELS spectrum must be a low-loss spectrum containing
+the zero-loss peak. The hyperspectrum must be well calibrated
+and aligned. To obtain the thickness relative to the mean free path
+don’t set the <cite>density</cite> and the <cite>mean_free_path</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<em>{BaseSignal</em><em>, </em><em>float}</em><em>, </em><em>optional</em>) – If the zero-loss-peak is not provided, use this energy threshold
+to roughly estimate its intensity by truncation.
+If the threshold is constant across the dataset use a float. Otherwise,
+provide a signal of
+the same dimension as the input spectrum navigation space
+containing the threshold value in the energy units.</p></li>
+<li><p><strong>zlp</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a><em>, </em><em>optional</em>) – If not None the zero-loss peak intensity is calculated from the ZLP
+spectrum supplied by integration.</p></li>
+<li><p><strong>mean_free_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – The mean free path of the material in nanometers.
+If not provided, the thickness
+is given relative to the mean free path.</p></li>
+<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – The density of the material in g/cm**3. This is used to estimate the mean
+free path when the mean free path is not known and to perform the
+angular corrections.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>s</strong> – The thickness relative to the MFP. It returns a Signal1D,
+Signal2D or a BaseSignal, depending on the current navigation
+dimensions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal">BaseSignal</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For details see Egerton, R. Electron Energy-Loss Spectroscopy in the Electron
+Microscope.  Springer-Verlag, 2011.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.estimate_zero_loss_peak_centre">
+<code class="sig-name descname">estimate_zero_loss_peak_centre</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.estimate_zero_loss_peak_centre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the posision of the zero-loss peak.</p>
+<p>This function provides just a coarse estimation of the position
+of the zero-loss peak centre by computing the position of the maximum
+of the spectra. For subpixel accuracy use <cite>estimate_shift1D</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mask</strong> (<em>Signal1D of bool data type.</em>) – It must have signal_dimension = 0 and navigation_shape equal to the
+current signal. Where mask is True the shift is not computed
+and set to nan.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>zlpc</strong> – The estimated position of the maximum of the ZLP peak.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Signal1D subclass</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function only works when the zero-loss peak is the most
+intense feature in the spectrum. If it is not in most cases
+the spectrum can be cropped to meet this criterium.
+Alternatively use <cite>estimate_shift1D</cite>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift1D()</span></code>, <a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak" title="hyperspy._signals.eels.EELSSpectrum_mixin.align_zero_loss_peak"><code class="xref py py-meth docutils literal notranslate"><span class="pre">align_zero_loss_peak()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.fourier_log_deconvolution">
+<code class="sig-name descname">fourier_log_deconvolution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">zlp</span></em>, <em class="sig-param"><span class="n">add_zlp</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">crop</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.fourier_log_deconvolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs fourier-log deconvolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zlp</strong> (<a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><em>EELSSpectrum</em></a>) – The corresponding zero-loss peak.</p></li>
+<li><p><strong>add_zlp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, adds the ZLP to the deconvolved spectrum</p></li>
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True crop the spectrum to leave out the channels that
+have been modified to decay smoothly to zero at the sides
+of the spectrum.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>An EELSSpectrum containing the current data deconvolved.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For details see: Egerton, R. Electron Energy-Loss
+Spectroscopy in the Electron Microscope. Springer-Verlag, 2011.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.fourier_ratio_deconvolution">
+<code class="sig-name descname">fourier_ratio_deconvolution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ll</span></em>, <em class="sig-param"><span class="n">fwhm</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extrapolate_lowloss</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">extrapolate_coreloss</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.fourier_ratio_deconvolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs Fourier-ratio deconvolution.</p>
+<p>The core-loss should have the background removed. To reduce the noise
+amplication the result is convolved with a Gaussian function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ll</strong> (<a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><em>EELSSpectrum</em></a>) – The corresponding low-loss (ll) EELSSpectrum.</p></li>
+<li><p><strong>fwhm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – Full-width half-maximum of the Gaussian function by which
+the result of the deconvolution is convolved. It can be
+used to select the final SNR and spectral resolution. If
+None, the FWHM of the zero-loss peak of the low-loss is
+estimated and used.</p></li>
+<li><p><strong>threshold</strong> (<em>{None</em><em>, </em><em>float}</em>) – Truncation energy to estimate the intensity of the
+elastic scattering. If None the threshold is taken as the
+first minimum after the ZLP centre.</p></li>
+<li><p><strong>extrapolate_coreloss</strong> (<em>extrapolate_lowloss</em><em>,</em>) – If True the signals are extrapolated using a power law,</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For details see: Egerton, R. Electron Energy-Loss
+Spectroscopy in the Electron Microscope. Springer-Verlag, 2011.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.generate_subshells">
+<code class="sig-name descname">generate_subshells</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">include_pre_edges</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.generate_subshells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the subshells for the current energy range for the
+elements present in self.elements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>include_pre_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the ionization edges with an onset below the lower
+energy limit of the SI will be incluided</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.kramers_kronig_analysis">
+<code class="sig-name descname">kramers_kronig_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">zlp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">full_output</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.kramers_kronig_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the complex
+dielectric function from a single scattering distribution (SSD) using
+the Kramers-Kronig relations.</p>
+<p>It uses the FFT method as in <a class="footnote-reference brackets" href="#id3" id="id1">1</a>.  The SSD is an
+EELSSpectrum instance containing SSD low-loss EELS with no zero-loss
+peak. The internal loop is devised to approximately subtract the
+surface plasmon contribution supposing an unoxidized planar surface and
+neglecting coupling between the surfaces. This method does not account
+for retardation effects, instrumental broading and surface plasmon
+excitation in particles.</p>
+<p>Note that either refractive index or thickness are required.
+If both are None or if both are provided an exception is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zlp</strong> (<em>{None</em><em>, </em><em>number</em><em>, </em><em>Signal1D}</em>) – ZLP intensity. It is optional (can be None) if <cite>t</cite> is None and <cite>n</cite>
+is not None and the thickness estimation is not required. If <cite>t</cite>
+is not None, the ZLP is required to perform the normalization and
+if <cite>t</cite> is not None, the ZLP is required to calculate the thickness.
+If the ZLP is the same for all spectra, the integral of the ZLP
+can be provided as a number. Otherwise, if the ZLP intensity is not
+the same for all spectra, it can be provided as i) a Signal1D
+of the same dimensions as the current signal containing the ZLP
+spectra for each location ii) a BaseSignal of signal dimension 0
+and navigation_dimension equal to the current signal containing the
+integrated ZLP intensity.</p></li>
+<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of the iterations for the internal loop to remove the
+surface plasmon contribution. If 1 the surface plasmon contribution
+is not estimated and subtracted (the default is 1).</p></li>
+<li><p><strong>n</strong> (<em>{None</em><em>, </em><em>float}</em>) – The medium refractive index. Used for normalization of the
+SSD to obtain the energy loss function. If given the thickness
+is estimated and returned. It is only required when <cite>t</cite> is None.</p></li>
+<li><p><strong>t</strong> (<em>{None</em><em>, </em><em>number</em><em>, </em><em>Signal1D}</em>) – <dl class="simple">
+<dt>The sample thickness in nm. Used for normalization of the</dt><dd><p>to obtain the energy loss function. It is only required when</p>
+</dd>
+</dl>
+<p><cite>n</cite> is None. If the thickness is the same for all spectra it can be
+given by a number. Otherwise, it can be provided as a BaseSignal
+with signal dimension 0 and navigation_dimension equal to the
+current signal.</p>
+</p></li>
+<li><p><strong>delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – A small number (0.1-0.5 eV) added to the energy axis in
+specific steps of the calculation the surface loss correction to
+improve stability.</p></li>
+<li><p><strong>full_output</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, return a dictionary that contains the estimated
+thickness if <cite>t</cite> is None and the estimated surface plasmon
+excitation and the spectrum corrected from surface plasmon
+excitations if <cite>iterations</cite> &gt; 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>eps</strong> (<em>DielectricFunction instance</em>) –</p>
+<p>The complex dielectric function results,</p>
+<blockquote>
+<div><div class="math">
+<p><img src="../_images/math/7c7ebea376307c242c89f8a650201e31fdab8d73.png" alt="\epsilon = \epsilon_1 + i*\epsilon_2,"/></p>
+</div></div></blockquote>
+<p>contained in an DielectricFunction instance.</p>
+</li>
+<li><p><strong>output</strong> (<em>Dictionary (optional)</em>) – A dictionary of optional outputs with the following keys:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">thickness</span></code></dt><dd><p>The estimated  thickness in nm calculated by normalization of
+the SSD (only when <cite>t</cite> is None)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">plasmon</span> <span class="pre">estimation</span></code></dt><dd><p>The estimated surface plasmon excitation (only if
+<cite>iterations</cite> &gt; 1.)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValuerError</strong> – If both <cite>n</cite> and <cite>t</cite> are undefined (None).</p></li>
+<li><p><strong>AttribureError</strong> – If the beam_energy or the collection semi-angle are not defined in
+    metadata.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method is based in Egerton’s Matlab code <a class="footnote-reference brackets" href="#id3" id="id2">1</a> with some
+minor differences:</p>
+<ul class="simple">
+<li><p>The wrap-around problem when computing the ffts is workarounded by
+padding the signal instead of substracting the reflected tail.</p></li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>)</span></dt>
+<dd><p>Ray Egerton, “Electron Energy-Loss Spectroscopy in the Electron
+Microscope”, Springer-Verlag, 2011.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.power_law_extrapolation">
+<code class="sig-name descname">power_law_extrapolation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window_size</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">extrapolation_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">add_noise</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">fix_neg_r</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.power_law_extrapolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extrapolate the spectrum to the right using a powerlaw</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of channels from the right side of the
+spectrum that are used to estimate the power law
+parameters.</p></li>
+<li><p><strong>extrapolation_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Size of the extrapolation in number of channels</p></li>
+<li><p><strong>add_noise</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, add poissonian noise to the extrapolated spectrum.</p></li>
+<li><p><strong>fix_neg_r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the negative values for the “components.PowerLaw”
+parameter r will be flagged and the extrapolation will be
+done with a constant zero-value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A new spectrum, with the extrapolation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.rebin">
+<code class="sig-name descname">rebin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_shape</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scale</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">crop</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">out</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.rebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebin the signal into a smaller or larger shape, based on linear
+interpolation. Specify <strong>either</strong> <cite>new_shape</cite> or <cite>scale</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – For each dimension specify the new_shape. This will internally be
+converted into a <cite>scale</cite> parameter.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – For each dimension, specify the new:old pixel ratio, e.g. a ratio
+of 1 is no binning and a ratio of 2 means that each pixel in the new
+spectrum is twice the size of the pixels in the old spectrum.
+The length of the list should match the dimension of the
+Signal’s underlying data array.
+<em>Note : Only one of `scale` or `new_shape` should be specified,
+otherwise the function will not run</em></p></li>
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – <p>Whether or not to crop the resulting rebinned data (default is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>). When binning by a non-integer number of
+pixels it is likely that the final row in each dimension will
+contain fewer than the full quota to fill one pixel.</p>
+<blockquote>
+<div><ul>
+<li><p>e.g. a 5*5 array binned by 2.1 will produce two rows
+containing 2.1 pixels and one row containing only 0.8
+pixels. Selection of <code class="docutils literal notranslate"><span class="pre">crop=True</span></code> or <code class="docutils literal notranslate"><span class="pre">crop=False</span></code>
+determines whether or not this <cite>“black”</cite> line is cropped
+from the final binned array or not.</p></li>
+</ul>
+</div></blockquote>
+<p>Please note that if <code class="docutils literal notranslate"><span class="pre">crop=False</span></code> is used, the final row in each
+dimension may appear black if a fractional number of pixels are left
+over. It can be removed but has been left to preserve total counts
+before and after binning.</p>
+</p></li>
+<li><p><strong>out</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclasses) or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a new Signal is created with the result of the
+operation and returned (default). If a Signal is passed,
+it is used to receive the output of the operation, and nothing is
+returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>s</strong> – The resulting cropped signal.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclass)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">EDSTEMSpectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+<span class="go">&lt;EDXTEMSpectrum, title: dimensions: (4, 4|10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Sum = &#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">))))</span>
+<span class="go">Sum = 164.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">&lt;EDSTEMSpectrum, title: dimensions (2, 2|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum = &#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">data</span><span class="p">))))</span>
+<span class="go">Sum =  164.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.richardson_lucy_deconvolution">
+<code class="sig-name descname">richardson_lucy_deconvolution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">psf</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">15</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_workers</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.richardson_lucy_deconvolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>1D Richardson-Lucy Poissonian deconvolution of
+the spectrum by the given kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of iterations of the deconvolution. Note that
+increasing the value will increase the noise amplification.</p></li>
+<li><p><strong>psf</strong> (<a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><em>EELSSpectrum</em></a>) – It must have the same signal dimension as the current
+spectrum and a spatial dimension of 0 or the same as the
+current spectrum.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, perform computation in parallel using multithreading. If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from the preferences settings is used. The number
+of threads is controlled by the <code class="docutils literal notranslate"><span class="pre">max_workers</span></code> argument.</p></li>
+<li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Maximum number of threads used when <code class="docutils literal notranslate"><span class="pre">parallel=True</span></code>. If None, defaults
+to <code class="docutils literal notranslate"><span class="pre">min(32,</span> <span class="pre">os.cpu_count())</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For details on the algorithm see Gloter, A., A. Douiri,
+M. Tence, and C. Colliex. “Improving Energy Resolution of
+EELS Spectra: An Alternative to the Monochromator Solution.”
+Ultramicroscopy 96, no. 3–4 (September 2003): 385–400.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSSpectrum_mixin.set_microscope_parameters">
+<code class="sig-name descname">set_microscope_parameters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beam_energy</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">convergence_angle</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">collection_angle</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">toolkit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">display</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSSpectrum_mixin.set_microscope_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the microscope parameters that are necessary to calculate
+the GOS.</p>
+<p>If not all of them are defined, in interactive mode
+raises an UI item to fill the values</p>
+<dl class="simple">
+<dt>beam_energy: float</dt><dd><p>The energy of the electron beam in keV</p>
+</dd>
+<dt>convengence_angle<span class="classifier">float</span></dt><dd><p>The microscope convergence semi-angle in mrad.</p>
+</dd>
+<dt>collection_angle<span class="classifier">float</span></dt><dd><p>The collection semi-angle in mrad.</p>
+</dd>
+<dt>toolkit<span class="classifier">str, iterable of strings or None</span></dt><dd><p>If None (default), all available widgets are displayed or returned.
+If string, only the widgets of the selected toolkit are displayed
+if available. If an interable of toolkit strings, the widgets of
+all listed toolkits are displayed or returned.</p>
+</dd>
+<dt>display<span class="classifier">bool</span></dt><dd><p>If True, display the user interface widgets. If False, return the
+widgets container in a dictionary, usually for customisation or
+testing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="hyperspy._signals.eels.EELSTEMParametersUI">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.eels.</code><code class="sig-name descname">EELSTEMParametersUI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSTEMParametersUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSetMetadataItems" title="hyperspy.signal.BaseSetMetadataItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSetMetadataItems</span></code></a></p>
+<dl class="py method">
+<dt id="hyperspy._signals.eels.EELSTEMParametersUI.gui">
+<code class="sig-name descname">gui</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">display</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">toolkit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.EELSTEMParametersUI.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
+widgets container in a dictionary, usually for customisation or
+testing.</p></li>
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+If string, only the widgets of the selected toolkit are displayed
+if available. If an interable of toolkit strings, the widgets of
+all listed toolkits are displayed or returned.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._signals.eels.EELSTEMParametersUI.mapping">
+<code class="sig-name descname">mapping</code><em class="property"> = {'Acquisition_instrument.TEM.Detector.EELS.collection_angle': 'collection_angle', 'Acquisition_instrument.TEM.beam_energy': 'beam_energy', 'Acquisition_instrument.TEM.convergence_angle': 'convergence_angle'}</em><a class="headerlink" href="#hyperspy._signals.eels.EELSTEMParametersUI.mapping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="hyperspy._signals.eels.LazyEELSSpectrum">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.eels.</code><code class="sig-name descname">LazyEELSSpectrum</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.eels.LazyEELSSpectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy._signals.eels.EELSSpectrum" title="hyperspy._signals.eels.EELSSpectrum"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.eels.EELSSpectrum</span></code></a>, <a class="reference internal" href="hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.LazySignal1D" title="hyperspy._signals.signal1d.LazySignal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal1d.LazySignal1D</span></code></a></p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hyperspy._signals.hologram_image.html" class="btn btn-neutral float-right" title="hyperspy._signals.hologram_image module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hyperspy._signals.eds_tem.html" class="btn btn-neutral float-left" title="hyperspy._signals.eds_tem module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2020, The HyperSpy development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

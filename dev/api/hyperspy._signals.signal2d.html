@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hyperspy._signals.signal2d module &mdash; HyperSpy 1.6.dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.datasets package" href="hyperspy.datasets.html" />
+    <link rel="prev" title="hyperspy._signals.signal1d module" href="hyperspy._signals.signal1d.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+          
+
+          
+            
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Full HyperSpy API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+        
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+        
+          <li><a href="hyperspy._signals.html">hyperspy._signals package</a> &raquo;</li>
+        
+      <li>hyperspy._signals.signal2d module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/hyperspy._signals.signal2d.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-hyperspy._signals.signal2d">
+<span id="hyperspy-signals-signal2d-module"></span><h1>hyperspy._signals.signal2d module<a class="headerlink" href="#module-hyperspy._signals.signal2d" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="hyperspy._signals.signal2d.LazySignal2D">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">LazySignal2D</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.LazySignal2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.lazy.LazySignal</span></code></a>, <a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.signal2d.Signal2D</span></code></a></p>
+<p>Create a Signal from a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – The signal data. It can be an array of any dimensions.</p></li>
+<li><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary to define the axes (see the documentation of the
+<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> class for more details).</p></li>
+<li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary whose items are stored as attributes.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> attribute.
+Some parameters might be mandatory in some cases.</p></li>
+<li><p><strong>original_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> attribute. It
+typically contains all the parameters that has been
+imported from the original data file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="hyperspy._signals.signal2d.LazySignal2D._lazy">
+<code class="sig-name descname">_lazy</code><em class="property"> = True</em><a class="headerlink" href="#hyperspy._signals.signal2d.LazySignal2D._lazy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="hyperspy._signals.signal2d.Signal2D">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">Signal2D</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a>, <a class="reference internal" href="hyperspy._signals.common_signal2d.html#hyperspy._signals.common_signal2d.CommonSignal2D" title="hyperspy._signals.common_signal2d.CommonSignal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._signals.common_signal2d.CommonSignal2D</span></code></a></p>
+<p>Create a Signal from a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – The signal data. It can be an array of any dimensions.</p></li>
+<li><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary to define the axes (see the documentation of the
+<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> class for more details).</p></li>
+<li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary whose items are stored as attributes.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> attribute.
+Some parameters might be mandatory in some cases.</p></li>
+<li><p><strong>original_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary containing a set of parameters
+that will to stores in the <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> attribute. It
+typically contains all the parameters that has been
+imported from the original data file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="hyperspy._signals.signal2d.Signal2D._lazy">
+<code class="sig-name descname">_lazy</code><em class="property"> = False</em><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D._lazy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._signals.signal2d.Signal2D._signal_dimension">
+<code class="sig-name descname">_signal_dimension</code><em class="property"> = 2</em><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D._signal_dimension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.add_ramp">
+<code class="sig-name descname">add_ramp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ramp_x</span></em>, <em class="sig-param"><span class="n">ramp_y</span></em>, <em class="sig-param"><span class="n">offset</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.add_ramp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a linear ramp to the signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ramp_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Slope of the ramp in x-direction.</p></li>
+<li><p><strong>ramp_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Slope of the ramp in y-direction.</p></li>
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Offset of the ramp at the signal fulcrum.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The fulcrum of the linear ramp is at the origin and the slopes are
+given in units of the axis with the according scale taken into
+account. Both are available via the <cite>axes_manager</cite> of the signal.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.align2D">
+<code class="sig-name descname">align2D</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">crop</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">fill_value</span><span class="o">=</span><span class="default_value">nan</span></em>, <em class="sig-param"><span class="n">shifts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">interpolation_order</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_workers</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.align2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align the images in-place using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.shift.html#scipy.ndimage.shift" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.shift()</span></code></a>.</p>
+<p>The images can be aligned using either user-provided shifts or
+by first estimating the shifts.</p>
+<p>See <a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D.estimate_shift2D" title="hyperspy._signals.signal2d.Signal2D.estimate_shift2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift2D()</span></code></a>
+for more details on estimating image shifts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the data will be cropped not to include regions
+with missing data</p></li>
+<li><p><strong>fill_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>nan</em>) – The areas with missing data are filled with the given value.
+Default is nan.</p></li>
+<li><p><strong>shifts</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>list of tuples</em>) – If None the shifts are estimated using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift2D()</span></code>.</p></li>
+<li><p><strong>expand</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the data will be expanded to fit all data after alignment.
+Overrides <cite>crop</cite>.</p></li>
+<li><p><strong>interpolation_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 1.</em>) – The order of the spline interpolation. Default is 1, linear
+interpolation.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, perform computation in parallel using multithreading. If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from the preferences settings is used. The number
+of threads is controlled by the <code class="docutils literal notranslate"><span class="pre">max_workers</span></code> argument.</p></li>
+<li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Maximum number of threads used when <code class="docutils literal notranslate"><span class="pre">parallel=True</span></code>. If None, defaults
+to <code class="docutils literal notranslate"><span class="pre">min(32,</span> <span class="pre">os.cpu_count())</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to <a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D.estimate_shift2D" title="hyperspy._signals.signal2d.Signal2D.estimate_shift2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift2D()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>shifts</strong> – The estimated shifts are returned only if <code class="docutils literal notranslate"><span class="pre">shifts</span></code> is None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D.estimate_shift2D" title="hyperspy._signals.signal2d.Signal2D.estimate_shift2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift2D()</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.create_model">
+<code class="sig-name descname">create_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dictionary</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.create_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a model for the current signal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dictionary</strong> (<em>{None</em><em>, </em><em>dict}</em><em>, </em><em>optional</em>) – A dictionary to be used to recreate a model. Usually generated
+using <code class="xref py py-meth docutils literal notranslate"><span class="pre">hyperspy.model.as_dictionary()</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A Model class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.crop_image">
+<code class="sig-name descname">crop_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">left</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">convert_units</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.crop_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops an image in place.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bottom</strong><strong>, </strong><strong>left</strong><strong>, </strong><strong>right</strong> (<em>top</em><em>,</em>) – If int the values are taken as indices. If float the values are
+converted to indices.</p></li>
+<li><p><strong>convert_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Default is False
+If True, convert the signal units using the ‘convert_to_units’
+method of the ‘axes_manager’. If False, does nothing.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">crop()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.estimate_shift2D">
+<code class="sig-name descname">estimate_shift2D</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference</span><span class="o">=</span><span class="default_value">'current'</span></em>, <em class="sig-param"><span class="n">correlation_threshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chunk_size</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">roi</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">normalize_corr</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sobel</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">medfilter</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">hanning</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">'float'</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sub_pixel_factor</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.estimate_shift2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the shifts in an image using phase correlation.</p>
+<p>This method can only estimate the shift by comparing
+bi-dimensional features that should not change position
+between frames. To decrease the memory usage, the time of
+computation and the accuracy of the results it is convenient
+to select a region of interest by setting the <code class="docutils literal notranslate"><span class="pre">roi</span></code> argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference</strong> (<em>{'current'</em><em>, </em><em>'cascade'</em><em> ,</em><em>'stat'}</em>) – If ‘current’ (default) the image at the current
+coordinates is taken as reference. If ‘cascade’ each image
+is aligned with the previous one. If ‘stat’ the translation
+of every image with all the rest is estimated and by
+performing statistical analysis on the result the
+translation is estimated.</p></li>
+<li><p><strong>correlation_threshold</strong> (<em>{None</em><em>, </em><em>'auto'</em><em>, </em><em>float}</em>) – This parameter is only relevant when reference=’stat’.
+If float, the shift estimations with a maximum correlation
+value lower than the given value are not used to compute
+the estimated shifts. If ‘auto’ the threshold is calculated
+automatically as the minimum maximum correlation value
+of the automatically selected reference image.</p></li>
+<li><p><strong>chunk_size</strong> (<em>{None</em><em>, </em><em>int}</em>) – If int and reference=’stat’ the number of images used
+as reference are limited to the given value.</p></li>
+<li><p><strong>roi</strong> (<em>tuple of ints</em><em> or </em><em>floats</em><em> (</em><em>left</em><em>, </em><em>right</em><em>, </em><em>top</em><em>, </em><em>bottom</em><em>)</em>) – Define the region of interest. If int(float) the position
+is given axis index(value). Note that ROIs can be used
+in place of a tuple.</p></li>
+<li><p><strong>normalize_corr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, use phase correlation to align the images, otherwise
+use cross correlation.</p></li>
+<li><p><strong>sobel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Apply a Sobel filter for edge enhancement</p></li>
+<li><p><strong>medfilter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Apply a median filter for noise reduction</p></li>
+<li><p><strong>hanning</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Apply a 2D hanning filter</p></li>
+<li><p><strong>plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> or </em><em>'reuse'</em>) – If True plots the images after applying the filters and
+the phase correlation. If ‘reuse’, it will also plot the images,
+but it will only use one figure, and continuously update the images
+in that figure as it progresses through the stack.</p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>dtype</em>) – Typecode or data-type in which the calculations must be
+performed.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+<li><p><strong>sub_pixel_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Estimate shifts with a sub-pixel accuracy of 1/sub_pixel_factor
+parts of a pixel. Default is 1, i.e. no sub-pixel accuracy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>shifts</strong> – List of estimated shifts</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The statistical analysis approach to the translation estimation
+when using <code class="docutils literal notranslate"><span class="pre">reference='stat'</span></code> roughly follows <a class="reference internal" href="#schaffer2004" id="id1"><span>[Schaffer2004]</span></a>.
+If you use it please cite their article.</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="schaffer2004"><span class="brackets"><a class="fn-backref" href="#id1">Schaffer2004</a></span></dt>
+<dd><p>Schaffer, Bernhard, Werner Grogger, and Gerald Kothleitner.
+“Automated Spatial Drift Correction for EFTEM Image Series.”
+Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D.align2D" title="hyperspy._signals.signal2d.Signal2D.align2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">align2D()</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._signals.signal2d.Signal2D.plot">
+<code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">colorbar</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scalebar</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scalebar_color</span><span class="o">=</span><span class="default_value">'white'</span></em>, <em class="sig-param"><span class="n">axes_ticks</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">axes_off</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">saturated_pixels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vmin</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vmax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gamma</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">no_nans</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">centre_colormap</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">min_aspect</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.Signal2D.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the signal at the current coordinates.</p>
+<p>For multidimensional datasets an optional figure,
+the “navigator”, with a cursor to navigate that data is
+raised. In any case it is possible to navigate the data using
+the sliders. Currently only signals with signal_dimension equal to
+0, 1 and 2 can be plotted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>navigator</strong> (str, None, or <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclass)) – </p></li>
+<li><p><strong>string values are 'auto'</strong><strong>, </strong><strong>'slider'</strong><strong>, </strong><strong>and 'spectrum'.</strong> (<em>Allowed</em>) – </p></li>
+<li><p><strong>'auto'</strong> (<em>If</em>) – <blockquote>
+<div><ul>
+<li><p>If <cite>navigation_dimension</cite> &gt; 0, a navigator is
+provided to explore the data.</p></li>
+<li><p>If <cite>navigation_dimension</cite> is 1 and the signal is an image
+the navigator is a sum spectrum obtained by integrating
+over the signal axes (the image).</p></li>
+<li><p>If <cite>navigation_dimension</cite> is 1 and the signal is a spectrum
+the navigator is an image obtained by stacking all the
+spectra in the dataset horizontally.</p></li>
+<li><p>If <cite>navigation_dimension</cite> is &gt; 1, the navigator is a sum
+image obtained by integrating the data over the signal axes.</p></li>
+<li><p>Additionally, if <cite>navigation_dimension</cite> &gt; 2, a window
+with one slider per axis is raised to navigate the data.</p></li>
+<li><p>For example, if the dataset consists of 3 navigation axes <cite>X</cite>,
+<cite>Y</cite>, <cite>Z</cite> and one signal axis, <cite>E</cite>, the default navigator will
+be an image obtained by integrating the data over <cite>E</cite> at the
+current <cite>Z</cite> index and a window with sliders for the <cite>X</cite>, <cite>Y</cite>,
+and <cite>Z</cite> axes will be raised. Notice that changing the <cite>Z</cite>-axis
+index changes the navigator in this case.</p></li>
+</ul>
+</div></blockquote>
+<p>If <code class="docutils literal notranslate"><span class="pre">'slider'</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p>If <cite>navigation dimension</cite> &gt; 0 a window with one slider per
+axis is raised to navigate the data.</p></li>
+</ul>
+</div></blockquote>
+<p>If <code class="docutils literal notranslate"><span class="pre">'spectrum'</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p>If <cite>navigation_dimension</cite> &gt; 0 the navigator is always a
+spectrum obtained by integrating the data over all other axes.</p></li>
+</ul>
+</div></blockquote>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no navigator will be provided.</p>
+<p>Alternatively a <a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> (or subclass)
+instance can be provided. The <cite>signal_dimension</cite> must be 1 (for a
+spectrum navigator) or 2 (for a image navigator) and
+<cite>navigation_shape</cite> must be 0 (for a static navigator) or
+<cite>navigation_shape</cite> + <cite>signal_shape</cite> must be equal to the
+<cite>navigator_shape</cite> of the current object (for a dynamic navigator).
+If the signal <cite>dtype</cite> is RGB or RGBA this parameter has no effect and
+the value is always set to <code class="docutils literal notranslate"><span class="pre">'slider'</span></code>.</p>
+</p></li>
+<li><p><strong>axes_manager</strong> (None or <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>) – If None, the signal’s <cite>axes_manager</cite> attribute is used.</p></li>
+<li><p><strong>plot_markers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Plot markers added using s.add_marker(marker, permanent=True).
+Note, a large number of markers might lead to very slow plotting.</p></li>
+<li><p><strong>navigator_kwds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Only for image navigator, additional keyword arguments for
+matplotlib.pyplot.imshow().</p></li>
+<li><p><strong>colorbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a colorbar is plotted for non-RGB images.</p></li>
+<li><p><strong>scalebar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True and the units and scale of the x and y axes are the same a
+scale bar is plotted.</p></li>
+<li><p><strong>scalebar_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – A valid MPL color string; will be used as the scalebar color.</p></li>
+<li><p><strong>axes_ticks</strong> (<em>{None</em><em>, </em><em>bool}</em><em>, </em><em>optional</em>) – If True, plot the axes ticks. If None axes_ticks are only
+plotted when the scale bar is not plotted. If False the axes ticks
+are never plotted.</p></li>
+<li><p><strong>saturated_pixels</strong> (<em>scalar</em>) – The percentage of pixels that are left out of the bounds.
+For example, the low and high bounds of a value of 1 are the 0.5%
+and 99.5% percentiles. It must be in the [0, 100] range.
+If None (default value), the value from the preferences is used.</p></li>
+<li><p><strong>vmax</strong> (<em>vmin</em><em>,</em>) – <cite>vmin</cite> and <cite>vmax</cite> are used to normalize luminance data.</p></li>
+<li><p><strong>no_nans</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, set nans to zero for plotting.</p></li>
+<li><p><strong>centre_colormap</strong> (<em>{&quot;auto&quot;</em><em>, </em><em>True</em><em>, </em><em>False}</em>) – If True the centre of the color scheme is set to zero. This is
+specially useful when using diverging color schemes. If “auto”
+(default), diverging color schemes are automatically centred.</p></li>
+<li><p><strong>min_aspect</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Set the minimum aspect ratio of the image and the figure. To
+keep the image in the aspect limit the pixels are made
+rectangular.</p></li>
+<li><p><strong>**kwargs</strong> – Only for <a class="reference internal" href="#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal2D</span></code></a>:
+additional (optional) keyword arguments for
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow" title="(in Matplotlib v3.2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.imshow()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.estimate_image_shift">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">estimate_image_shift</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref</span></em>, <em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">roi</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sobel</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">medfilter</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">hanning</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">'float'</span></em>, <em class="sig-param"><span class="n">normalize_corr</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sub_pixel_factor</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">return_maxval</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.estimate_image_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the shift in a image using phase correlation</p>
+<p>This method can only estimate the shift by comparing
+bidimensional features that should not change the position
+in the given axis. To decrease the memory usage, the time of
+computation and the accuracy of the results it is convenient
+to select a region of interest by setting the roi keyword.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref</strong> (<em>2D numpy.ndarray</em>) – Reference image</p></li>
+<li><p><strong>image</strong> (<em>2D numpy.ndarray</em>) – Image to register</p></li>
+<li><p><strong>roi</strong> (<em>tuple of ints</em><em> (</em><em>top</em><em>, </em><em>bottom</em><em>, </em><em>left</em><em>, </em><em>right</em><em>)</em>) – Define the region of interest</p></li>
+<li><p><strong>sobel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – apply a sobel filter for edge enhancement</p></li>
+<li><p><strong>medfilter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – apply a median filter for noise reduction</p></li>
+<li><p><strong>hanning</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Apply a 2d hanning filter</p></li>
+<li><p><strong>plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> or </em><em>matplotlib.Figure</em>) – If True, plots the images after applying the filters and the phase
+correlation. If a figure instance, the images will be plotted to the
+given figure.</p></li>
+<li><p><strong>reference</strong> (<em>'current'</em><em> or </em><em>'cascade'</em>) – If ‘current’ (default) the image at the current
+coordinates is taken as reference. If ‘cascade’ each image
+is aligned with the previous one.</p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>dtype</em>) – Typecode or data-type in which the calculations must be
+performed.</p></li>
+<li><p><strong>normalize_corr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True use phase correlation instead of standard correlation</p></li>
+<li><p><strong>sub_pixel_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Estimate shifts with a sub-pixel accuracy of 1/sub_pixel_factor parts
+of a pixel. Default is 1, i.e. no sub-pixel accuracy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>shifts</strong> (<em>np.array</em>) – containing the estimate shifts</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – The maximum value of the correlation</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The statistical analysis approach to the translation estimation
+when using reference=’stat’ roughly follows <a class="footnote-reference brackets" href="#id3" id="id2">*</a> . If you use
+it please cite their article.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id2">*</a></span></dt>
+<dd><p>Bernhard Schaffer, Werner Grogger and Gerald Kothleitner.
+“Automated Spatial Drift Correction for EFTEM Image Series.”
+Ultramicroscopy 102, no. 1 (December 2004): 27–36.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.fft_correlation">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">fft_correlation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in1</span></em>, <em class="sig-param"><span class="n">in2</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">real_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.fft_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correlation of two N-dimensional arrays using FFT.</p>
+<p>Adapted from scipy’s fftconvolve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in2</strong> (<em>in1</em><em>,</em>) – Input arrays to convolve.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True performs phase correlation.</p></li>
+<li><p><strong>real_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, and in1 and in2 are real-valued inputs, uses
+rfft instead of fft for approx. 2x speed-up.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.hanning2d">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">hanning2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">M</span></em>, <em class="sig-param"><span class="n">N</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.hanning2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 2D hanning window created by outer product.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.shift_image">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">shift_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">im</span></em>, <em class="sig-param"><span class="n">shift</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">interpolation_order</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">fill_value</span><span class="o">=</span><span class="default_value">nan</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.shift_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.sobel_filter">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">sobel_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">im</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.sobel_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy._signals.signal2d.triu_indices_minus_diag">
+<code class="sig-prename descclassname">hyperspy._signals.signal2d.</code><code class="sig-name descname">triu_indices_minus_diag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._signals.signal2d.triu_indices_minus_diag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the indices for the upper-triangle of an (n, n) array
+excluding its diagonal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The length of the square array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hyperspy.datasets.html" class="btn btn-neutral float-right" title="hyperspy.datasets package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hyperspy._signals.signal1d.html" class="btn btn-neutral float-left" title="hyperspy._signals.signal1d module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2020, The HyperSpy development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
