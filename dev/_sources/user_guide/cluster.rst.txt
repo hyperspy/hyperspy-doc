@@ -160,10 +160,7 @@ their interpretation of the signal is a little ambiguous.
     >>> hs.plot.plot_images(data.T)
 
 
-    |Azure|
-
-
-.. |Azure| image:: images/clustering_data.png
+.. image:: images/clustering_data.png
 
 
 To see how cluster analysis works it's best to first examine the signal.
@@ -181,8 +178,9 @@ in general, it is not easy to interpret those results.
 .. code-block:: python
 
     >>> s.decomposition()
-    >>> s.plot_decomposition_results(comp_ids=3, axes_decor="off")
+    >>> s.plot_decomposition_loadings(comp_ids=3, axes_decor="off")
 
+.. image:: images/clustering_decomposition_loadings.png
 
 We can then cluster, using the decomposition results, to find similar regions
 and the representative features in those regions. 
@@ -195,6 +193,7 @@ those regions
     >>> s.plot_cluster_labels(axes_decor="off")
 
 
+.. image:: images/clustering_labels.png
 
 To see what the labels the cluster algorithm has assigned you can inspect:
 
@@ -322,6 +321,7 @@ well-defined the clustering is.
     >>> s.estimate_number_of_clusters(cluster_source="decomposition", metric="gap")
     >>> s.plot_cluster_metric()
 
+.. image:: images/clustering_Gap.png
 
 The optimal number of clusters can be set or accessed from the learning 
 results
@@ -364,7 +364,10 @@ Let's start by creating a suitable synthetic dataset.
     ...     component.centre.map["is_set"][:] = True 
     >>> s = m.as_signal()
     >>> stack = hs.stack([m.components.GaussianHF.centre.as_signal(),
-    >>> hs.plot.plot_images(stack, axes_decor="off", colorbar="single", suptitle="")
+    >>> hs.plot.plot_images(stack, axes_decor="off", colorbar="single",
+    suptitle="")
+
+.. image:: images/clustering_gaussian_centres.png
 
 Let's now perform cluster analysis on the stack and calculate the centres using
 the spectrum image. Notice that we don't need to fit the model to the data
@@ -375,9 +378,14 @@ need to fit the model first.
 
     >>> stack = hs.stack([m.components.GaussianHF.centre.as_signal(), m.components.GaussianHF_0.centre.as_signal()])s.cluster_analysis(cluster_source=stack.T, source_for_centers=s, n_clusters=2)
     >>> s.plot_cluster_labels()
+
+.. image:: images/clustering_gaussian_centres_labels.png
+
+.. code-block:: python
     >>> s.plot_cluster_centers()
 
 
+.. image:: images/clustering_gaussian_centres_centres.png
 
 
 
