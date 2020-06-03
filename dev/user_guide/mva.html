@@ -756,22 +756,21 @@ those in other groups (clusters).
 A Hyperspy signal can represent a number of large arrays of different measurements
 which can represent spectra, images or sets of paramaters.
 Identifying and extracting trends from large datasets is often difficult and
-PCA, BSS, NMF and cluster analysis play an important role in this process.</p>
+decomposition methods, blind source separation and cluster analysis play an important role in this process.</p>
 <p>Cluster analysis, in essence, compares the “distances” (or similar metric)
 between different sets of measurements and groups those that are closest together.
 The features it groups can be raw data points, for example, comparing for
-every navigation dimension all points of a spectrum. However if the
-dataset is large the process of clustering can be computationally intensive so
+every navigation dimension all points of a spectrum. However, if the
+dataset is large, the process of clustering can be computationally intensive so
 clustering is more commonly used on an extracted set of features or parameters.
 For example, extraction of two peak positions of interest via a fitting process
 rather than clustering all spectra points.</p>
-<p>Decomposition or Blind Source Separation (PCA, NMF, BSS etc.) can produce a smaller set
-of features as it reduces the description of the data into a set of loadings and factors.
-The loadings capture a core representation of the features in the data and the factors
-provide the mixing ratios of these loadings that best describe the original data.
-Overall this represents a much smaller data volume compared to the original data
-and can helps to identify initial differences. Cluster analysis is then performed
-on the factors.</p>
+<p>In favourable cases, matrix decomposition and related methods can decompose the
+data into a (ideally small) set of significant loadings and factors.
+The factors capture a core representation of the features in the data and the loadings
+provide the mixing ratios of these factors that best describe the original data.
+Overall, this usually represents a much smaller data volume compared to the original data
+and can helps to identify correlations.</p>
 <p>A detailed description of the application of cluster analysis in x-ray
 spectro-microscopy and further details on the theory and implementation can
 be found in <a class="reference internal" href="bibliography.html#lerotic2004"><span class="std std-ref">[Lerotic2004]</span></a>.</p>
@@ -795,28 +794,30 @@ this average set of features is the center of that cluster.</p>
 <li><p><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_results" title="hyperspy.signal.MVATools.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_labels" title="hyperspy.signal.MVATools.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_centers" title="hyperspy.signal.MVATools.plot_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.MVATools.get_cluster_centers" title="hyperspy.signal.MVATools.get_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.MVATools.get_cluster_labels" title="hyperspy.signal.MVATools.get_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="hyperspy.learn.mva.MVA.estimate_number_of_clusters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_number_of_clusters()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.plot_cluster_metric" title="hyperspy.learn.mva.MVA.plot_cluster_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_metric()</span></code></a></p></li>
 </ul>
 <p>The <a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a> method can perform cluster
 analysis using any <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html">sklearn.clustering</a> clustering
 algorithms or any other object with a compatible API. This involves importing
-the relevant algorithm class from scikit-learn. For convenience, the
-<code class="docutils literal notranslate"><span class="pre">kmeans</span></code> and <code class="docutils literal notranslate"><span class="pre">agglomerative</span></code> algorithms are imported internally.</p>
+the relevant algorithm class from scikit-learn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For convenience, the default algorithm is <code class="docutils literal notranslate"><span class="pre">kmeans</span></code> algorithm and is imported
+internally. All extra keyword arguments are passed to the algorithm when
+present. Therefore the following code is equivalent to the previous one:</p>
 <p>For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="go">algorithm=&quot;kmeans&quot;, n_init=8)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>is equivalent to:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span>
-<span class="go">algorithm=KMeans(n_clusters=3, n_init=8))</span>
-</pre></div>
-</div>
 <p><a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a> computes the cluster labels. The
 clusters areas with identical label are averaged to create a set of cluster
-centers. This averaging can be performed on the <code class="docutils literal notranslate"><span class="pre">signal</span></code> itself, the
+centres. This averaging can be performed on the <code class="docutils literal notranslate"><span class="pre">signal</span></code> itself, the
 <code class="docutils literal notranslate"><span class="pre">bss</span></code> or <code class="docutils literal notranslate"><span class="pre">decomposition</span></code> results or a user supplied signal.</p>
 </div>
 <div class="section" id="pre-processing">
@@ -824,29 +825,22 @@ centers. This averaging can be performed on the <code class="docutils literal no
 <p>Cluster analysis measures the distances between features and groups them. It
 is often necessary to pre-process the features in order to obtain meaningful
 results.</p>
-<p>For example, consider the case of a spectrum image. If the signal magnitude
-varies strongly from spectra to spectra, then the
-clustering would group the data into clusters based on differences in
-magnitude. However, if the objective is to identify, for example, that peak 1
-is the same as peak 2, then this magnitude variation needs to be removed and
-the spectra should therefore all be normalized first to remove the effect of
-peak height.</p>
-<p>Similarly, pre-processing can also be useful to reveal clusters when
+<p>For example, pre-processing can be useful to reveal clusters when
 performing cluster analysis of decomposition results. Decomposition methods
-decompose data into a set of components and a set of factors defining the
+decompose data into a set of factors and a set of loadings defining the
 mixing needed to represent the data. If signal 1 is reduced to three
 components with mixing 0.1 0.5 2.0, and signal 2 is reduced to a mixing of 0.2
 1.0 4.0, it should be clear that these represent the same signal but with a
 scaling difference. Normalization of the data can again be used to remove
 scaling effects.</p>
-<p>For the reasons described above the pre-processing step
+<p>Therefore, the pre-processing step
 will highly influence the results and should be evaluated for the problem
 under investigation.</p>
 <p>All pre-processing methods from (or compatible with) <a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html">sklearn.preprocessing</a> can be passed
 to the <code class="docutils literal notranslate"><span class="pre">scaling</span></code> keyword of the <a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a>
 method. For convenience, the following methods from scikit-learn are
 available as standard: <code class="docutils literal notranslate"><span class="pre">standard</span></code> , <code class="docutils literal notranslate"><span class="pre">minmax</span></code> and <code class="docutils literal notranslate"><span class="pre">norm</span></code> as
-standard.Briefly, <code class="docutils literal notranslate"><span class="pre">norm</span></code> treats the features as a vector and normalizes the
+standard. Briefly, <code class="docutils literal notranslate"><span class="pre">norm</span></code> treats the features as a vector and normalizes the
 vector length. <code class="docutils literal notranslate"><span class="pre">standard</span></code> re-scales each feature by removing the mean and
 scaling to unit variance. <code class="docutils literal notranslate"><span class="pre">minmax</span></code> normalizes each feature between the
 minimum and maximum range of that feature.</p>
@@ -861,15 +855,14 @@ might work in practice.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
-<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="gp">&gt;&gt;&gt; </span>        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">n_features</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>make_blobs creates 3 distinct centres or 3 “types” of signal by default.
-If we examine the signal using PCA we can see that there are 3 regions but
-their interpretation of the signal is a little ambiguous.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -880,17 +873,22 @@ the 1D signal modulates slightly.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>If we then perform PCA we start to see the 3 regions a little more clearly but,
-in general, it is not easy to interpret those results.</p>
+<p>Let’s perform SVD to reduce the dimensionality of the dataset by exploiting
+redundancies:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_decomposition_loadings</span><span class="p">(</span><span class="n">comp_ids</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/clustering_scree_plot.png" src="../_images/clustering_scree_plot.png" />
+<p>From the scree plot we deduce that, as expected, that the dataset can be reduce
+to 3 components. Let’s plot their loadings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_decomposition_loadings</span><span class="p">(</span><span class="n">comp_ids</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../_images/clustering_decomposition_loadings.png" src="../_images/clustering_decomposition_loadings.png" />
-<p>We can then cluster, using the decomposition results, to find similar regions
-and the representative features in those regions.
-This indentifies 3 regions and the average 1D signals in
-those regions</p>
+<p>In the SVD loading we can identify 3 regions, but they are mixed in the components.
+Let’s perform cluster analysis of decomposition results, to find similar regions
+and the representative features in those regions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span> <span class="n">number_of_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">(</span><span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
 </pre></div>
@@ -996,9 +994,9 @@ those regions</p>
 <span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0])</span>
 </pre></div>
 </div>
-<p>In this case we know there are 3 signals but for real examples it is difficult
-to define the number of clusters to use. A number of metrics, such as elbow,
-Silhouette and Gap can be used to determine the optimal number of clusters.
+<p>In this case we know there are 3 cluster, but for real examples the number of
+clusters is not known <em>a priori</em>. A number of metrics, such as elbow,
+Silhouette and Gap can be used to estimate the optimal number of clusters.
 The elbow method measures the sum-of-squares of the distances within a
 cluster and, as for the PCA decomposition, an “elbow” or point where the gains
 diminish with increasing number of clusters indicates the ideal number of
@@ -1055,7 +1053,7 @@ results.</p>
 <img alt="../_images/clustering_gaussian_centres.png" src="../_images/clustering_gaussian_centres.png" />
 <p>Let’s now perform cluster analysis on the stack and calculate the centres using
 the spectrum image. Notice that we don’t need to fit the model to the data
-because this is a synthetic dataset. When analyzing experimental data you will
+because this is a synthetic dataset. When analysing experimental data you will
 need to fit the model first.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">(),</span> <span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF_0</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()])</span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="n">stack</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">source_for_centers</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">()</span>

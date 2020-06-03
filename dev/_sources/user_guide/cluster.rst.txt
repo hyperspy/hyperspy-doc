@@ -15,24 +15,23 @@ those in other groups (clusters).
 A Hyperspy signal can represent a number of large arrays of different measurements
 which can represent spectra, images or sets of paramaters.
 Identifying and extracting trends from large datasets is often difficult and 
-PCA, BSS, NMF and cluster analysis play an important role in this process. 
+decomposition methods, blind source separation and cluster analysis play an important role in this process. 
 
 Cluster analysis, in essence, compares the "distances" (or similar metric) 
 between different sets of measurements and groups those that are closest together.   
 The features it groups can be raw data points, for example, comparing for 
-every navigation dimension all points of a spectrum. However if the 
-dataset is large the process of clustering can be computationally intensive so 
+every navigation dimension all points of a spectrum. However, if the 
+dataset is large, the process of clustering can be computationally intensive so 
 clustering is more commonly used on an extracted set of features or parameters.
 For example, extraction of two peak positions of interest via a fitting process
 rather than clustering all spectra points.
 
-Decomposition or Blind Source Separation (PCA, NMF, BSS etc.) can produce a smaller set 
-of features as it reduces the description of the data into a set of loadings and factors. 
-The loadings capture a core representation of the features in the data and the factors 
-provide the mixing ratios of these loadings that best describe the original data. 
-Overall this represents a much smaller data volume compared to the original data 
-and can helps to identify initial differences. Cluster analysis is then performed 
-on the factors. 
+In favourable cases, matrix decomposition and related methods can decompose the
+data into a (ideally small) set of significant loadings and factors.
+The factors capture a core representation of the features in the data and the loadings 
+provide the mixing ratios of these factors that best describe the original data. 
+Overall, this usually represents a much smaller data volume compared to the original data 
+and can helps to identify correlations.
 
 A detailed description of the application of cluster analysis in x-ray
 spectro-microscopy and further details on the theory and implementation can
@@ -60,6 +59,8 @@ All HyperSpy signals have the following methods for clustering analysis:
 * :py:meth:`~.signal.MVATools.plot_cluster_results`
 * :py:meth:`~.signal.MVATools.plot_cluster_labels`
 * :py:meth:`~.signal.MVATools.plot_cluster_centers`
+* :py:meth:`~.signal.MVATools.get_cluster_centers`
+* :py:meth:`~.signal.MVATools.get_cluster_labels`
 * :py:meth:`~.learn.mva.MVA.estimate_number_of_clusters`
 * :py:meth:`~.learn.mva.MVA.plot_cluster_metric`
 
@@ -67,27 +68,29 @@ The :py:meth:`~.learn.mva.MVA.cluster_analysis` method can perform cluster
 analysis using any `sklearn.clustering
 <https://scikit-learn.org/stable/modules/clustering.html>`_ clustering
 algorithms or any other object with a compatible API. This involves importing
-the relevant algorithm class from scikit-learn. For convenience, the
-``kmeans`` and ``agglomerative`` algorithms are imported internally.
+the relevant algorithm class from scikit-learn.
+
+.. code-block:: python
+
+    >>> from sklearn.cluster import KMeans
+    >>> s.cluster_analysis(cluster_source="signal", algorithm=KMeans(n_clusters=3, n_init=8))
+
+
+For convenience, the default algorithm is ``kmeans`` algorithm and is imported
+internally. All extra keyword arguments are passed to the algorithm when
+present. Therefore the following code is equivalent to the previous one:
 
 For example:
 
 .. code-block:: python
 
-    >>> s.cluster_analysis(cluster_source="signal", n_clusters=3,
-    algorithm="kmeans", n_init=8)
+    >>> s.cluster_analysis(cluster_source="signal", n_clusters=3, algorithm="kmeans", n_init=8)
 
 is equivalent to:
 
-.. code-block:: python
-
-    >>> from sklearn.cluster import KMeans
-    >>> s.cluster_analysis(cluster_source="signal",
-    algorithm=KMeans(n_clusters=3, n_init=8))
-
 :py:meth:`~.learn.mva.MVA.cluster_analysis` computes the cluster labels. The
 clusters areas with identical label are averaged to create a set of cluster
-centers. This averaging can be performed on the ``signal`` itself, the
+centres. This averaging can be performed on the ``signal`` itself, the
 ``bss`` or ``decomposition`` results or a user supplied signal.
 
 Pre-processing
@@ -97,24 +100,16 @@ Cluster analysis measures the distances between features and groups them. It
 is often necessary to pre-process the features in order to obtain meaningful
 results.
 
-For example, consider the case of a spectrum image. If the signal magnitude
-varies strongly from spectra to spectra, then the
-clustering would group the data into clusters based on differences in
-magnitude. However, if the objective is to identify, for example, that peak 1
-is the same as peak 2, then this magnitude variation needs to be removed and
-the spectra should therefore all be normalized first to remove the effect of
-peak height.
-
-Similarly, pre-processing can also be useful to reveal clusters when
+For example, pre-processing can be useful to reveal clusters when
 performing cluster analysis of decomposition results. Decomposition methods
-decompose data into a set of components and a set of factors defining the
+decompose data into a set of factors and a set of loadings defining the
 mixing needed to represent the data. If signal 1 is reduced to three
 components with mixing 0.1 0.5 2.0, and signal 2 is reduced to a mixing of 0.2
 1.0 4.0, it should be clear that these represent the same signal but with a
 scaling difference. Normalization of the data can again be used to remove
 scaling effects.
 
-For the reasons described above the pre-processing step
+Therefore, the pre-processing step
 will highly influence the results and should be evaluated for the problem
 under investigation.
 
@@ -123,7 +118,7 @@ All pre-processing methods from (or compatible with) `sklearn.preprocessing
 to the ``scaling`` keyword of the :py:meth:`~.learn.mva.MVA.cluster_analysis`
 method. For convenience, the following methods from scikit-learn are
 available as standard: ``standard`` , ``minmax`` and ``norm`` as
-standard.Briefly, ``norm`` treats the features as a vector and normalizes the
+standard. Briefly, ``norm`` treats the features as a vector and normalizes the
 vector length. ``standard`` re-scales each feature by removing the mean and
 scaling to unit variance. ``minmax`` normalizes each feature between the
 minimum and maximum range of that feature.
@@ -145,15 +140,12 @@ might work in practice.
     >>> import hyperspy.api as hs
     >>> from sklearn.datasets import make_blobs
     >>> data = make_blobs(
-    >>>         n_samples=500,
-    >>>         n_features=3,
-    >>>         shuffle=False)[0].reshape(50, 10, 4)
+    >>>         n_samples=1000,
+    >>>         n_features=100,
+    >>>         centers=3,
+    >>>         shuffle=False,
+    >>>         random_state=1)[0].reshape(50, 20, 100)
     >>> s = hs.signals.Signal1D(data)
-
-make_blobs creates 3 distinct centres or 3 "types" of signal by default.
-If we examine the signal using PCA we can see that there are 3 regions but
-their interpretation of the signal is a little ambiguous.
-
 
 .. code-block:: python
 
@@ -172,26 +164,34 @@ the 1D signal modulates slightly.
     >>> s.plot()
 
 
-If we then perform PCA we start to see the 3 regions a little more clearly but,
-in general, it is not easy to interpret those results.
+Let's perform SVD to reduce the dimensionality of the dataset by exploiting
+redundancies:
+
 
 .. code-block:: python
 
     >>> s.decomposition()
+    >>> s.plot_explained_variance_ratio()
+
+.. image:: images/clustering_scree_plot.png
+
+From the scree plot we deduce that, as expected, that the dataset can be reduce
+to 3 components. Let's plot their loadings:
+
+.. code-block:: python
+
     >>> s.plot_decomposition_loadings(comp_ids=3, axes_decor="off")
 
 .. image:: images/clustering_decomposition_loadings.png
 
-We can then cluster, using the decomposition results, to find similar regions
-and the representative features in those regions. 
-This indentifies 3 regions and the average 1D signals in 
-those regions
+In the SVD loading we can identify 3 regions, but they are mixed in the components.
+Let's perform cluster analysis of decomposition results, to find similar regions
+and the representative features in those regions.
 
 .. code-block:: python
 
     >>> s.cluster_analysis(cluster_source="decomposition", number_of_components=3)
     >>> s.plot_cluster_labels(axes_decor="off")
-
 
 .. image:: images/clustering_labels.png
 
@@ -301,9 +301,9 @@ Internally they are split into a ``cluster_labels`` array to help plotting and m
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 
-In this case we know there are 3 signals but for real examples it is difficult
-to define the number of clusters to use. A number of metrics, such as elbow,
-Silhouette and Gap can be used to determine the optimal number of clusters.
+In this case we know there are 3 cluster, but for real examples the number of
+clusters is not known *a priori*. A number of metrics, such as elbow,
+Silhouette and Gap can be used to estimate the optimal number of clusters.
 The elbow method measures the sum-of-squares of the distances within a
 cluster and, as for the PCA decomposition, an "elbow" or point where the gains
 diminish with increasing number of clusters indicates the ideal number of
@@ -361,7 +361,7 @@ Let's start by creating a suitable synthetic dataset.
     >>> m.components.GaussianHF_0.centre.map["values"][:, 32:] = m.components.GaussianHF.centre.map["values"][:, 32:] * 2
     >>> m.components.GaussianHF_0.centre.map["values"][:, :32] = m.components.GaussianHF.centre.map["values"][:, :32] * 0.5
     >>> for component in m:
-    ...     component.centre.map["is_set"][:] = True 
+    ...     component.centre.map["is_set"][:] = True
     >>> s = m.as_signal()
     >>> stack = hs.stack([m.components.GaussianHF.centre.as_signal(),
     >>> hs.plot.plot_images(stack, axes_decor="off", colorbar="single",
@@ -371,7 +371,7 @@ Let's start by creating a suitable synthetic dataset.
 
 Let's now perform cluster analysis on the stack and calculate the centres using
 the spectrum image. Notice that we don't need to fit the model to the data
-because this is a synthetic dataset. When analyzing experimental data you will
+because this is a synthetic dataset. When analysing experimental data you will
 need to fit the model first.
 
 .. code-block:: python
