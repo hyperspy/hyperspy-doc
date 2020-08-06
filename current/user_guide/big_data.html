@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working with big data &mdash; HyperSpy 1.5.2 documentation</title>
+  <title>Working with big data &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,24 +23,21 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Metadata structure" href="metadata_structure.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -113,7 +115,8 @@
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
@@ -133,6 +136,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#casting-signals-as-lazy">Casting signals as lazy</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#machine-learning">Machine learning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#practical-tips">Practical tips</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#chunking">Chunking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#computing-lazy-signals">Computing lazy signals</a></li>
@@ -142,7 +146,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#immutable-signals">Immutable signals</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#machine-learning-decomposition">Machine learning (decomposition)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#other-minor-differences">Other minor differences</a></li>
 </ul>
 </li>
@@ -162,6 +165,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -200,7 +204,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
@@ -227,10 +231,10 @@
 <span id="big-data-label"></span><h1>Working with big data<a class="headerlink" href="#working-with-big-data" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>All the features described in this chapter are in beta state.
-Although most of them work, their opearation may not always be optimal,
-well documented and/or consistent with their in-memory counterparts.
-Therefore, although efforts will be taken to minimise major disruptions,
+<p>All the features described in this chapter are in beta state.</p>
+<p>Although most of them work as described, their operation may not always
+be optimal, well-documented and/or consistent with their in-memory counterparts.</p>
+<p>Therefore, although efforts will be taken to minimise major disruptions,
 the syntax and features described here may change in patch and minor
 HyperSpy releases. If you experience issues with HyperSpy’s lazy features
 please report them to the developers.</p>
@@ -253,7 +257,7 @@ as normal and call <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">h5py</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;myfile.hdf5&quot;</span><span class="p">)</span>           <span class="c1"># Load the file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;/data/path&#39;</span><span class="p">]</span>                 <span class="c1"># Get the data</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="kn">as</span> <span class="nn">da</span>                <span class="c1"># Import dask to wrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>                <span class="c1"># Import dask to wrap</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chunks</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>                    <span class="c1"># Chunk as appropriate</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span> <span class="c1"># Wrap the data in dask</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span> <span class="c1"># Create the lazy signal</span>
@@ -264,15 +268,15 @@ as normal and call <code class="docutils literal notranslate"><span class="pre">
 <h3>Loading lazily<a class="headerlink" href="#loading-lazily" title="Permalink to this headline">¶</a></h3>
 <p>To load the data lazily, pass the keyword <code class="docutils literal notranslate"><span class="pre">lazy=True</span></code>.  As an example,
 loading a 34.9 GB <code class="docutils literal notranslate"><span class="pre">.blo</span></code> file on a regular laptop might look like:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;shish26.02-6.blo&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;shish26.02-6.blo&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">&lt;LazySignal2D, title: , dimensions: (400, 333|512, 512)&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
 <span class="go">dask.array&lt;array-e..., shape=(333, 400, 512, 512), dtype=uint8, chunksize=(20, 12, 512, 512)&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
 <span class="go">uint8 34.9175808</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span> <span class="c1"># To be able to perform decomposition, etc.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
 <span class="go">float64 279.3406464</span>
 </pre></div>
 </div>
@@ -288,24 +292,24 @@ least while the signal exists. In order to close it explicitly, use the
 <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.close_file" title="hyperspy._signals.lazy.LazySignal.close_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close_file()</span></code></a> method. Alternatively,
 you could close it on calling <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.compute" title="hyperspy._signals.lazy.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a>
 by passing the keyword argument <code class="docutils literal notranslate"><span class="pre">close_file=True</span></code> e.g.:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;file.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;file.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ssum</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ssum</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">close_file</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># closes the file.hspy file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ssum</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">close_file</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># closes the file.hspy file</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="lazy-stacking">
 <h3>Lazy stacking<a class="headerlink" href="#lazy-stacking" title="Permalink to this headline">¶</a></h3>
 <p>Occasionally the full dataset consists of many smaller files. To combine them
-into a one large <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code>, we can <a class="reference internal" href="tools.html#signal-stack-split"><span class="std std-ref">stack</span></a> them
+into a one large <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code>, we can <a class="reference internal" href="signal.html#signal-stack-split"><span class="std std-ref">stack</span></a> them
 lazily (both when loading or afterwards):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">siglist</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">siglist</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">siglist</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or load lazily and stack afterwards:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">siglist</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">siglist</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">siglist</span><span class="p">)</span> <span class="c1"># no need to pass &#39;lazy&#39;, as signals already lazy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or do everything in one go:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;*.hdf5&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -324,10 +328,52 @@ operations are only performed lazily, use the
 </div>
 </div>
 </div>
+<div class="section" id="machine-learning">
+<span id="big-data-decomposition"></span><h2>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="mva.html#mva-decomposition"><span class="std std-ref">Decomposition</span></a> algorithms for machine learning often perform
+large matrix manipulations, requiring significantly more memory than the data size.
+To perform decomposition operation lazily, HyperSpy provides access to several “online”
+algorithms  as well as <a class="reference external" href="https://dask.pydata.org/">dask</a>’s lazy SVD algorithm.
+Online algorithms perform the decomposition by operating serially on chunks of
+data, enabling the lazy decomposition of large datasets. In line with the
+standard HyperSpy signals, lazy <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.decomposition" title="hyperspy._signals.lazy.LazySignal.decomposition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decomposition()</span></code></a>
+offers the following online algorithms:</p>
+<span id="lazy-decomposition-table"></span><table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Available lazy decomposition algorithms in HyperSpy</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“SVD” (default)</p></td>
+<td><p><a class="reference external" href="https://docs.dask.org/en/latest/array-api.html#dask.array.linalg.svd" title="(in Dask v2.22.0+0.g6268d5c2.dirty)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.svd()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>“PCA”</p></td>
+<td><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA" title="(in scikit-learn v0.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.decomposition.IncrementalPCA</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>“ORPCA”</p></td>
+<td><p><a class="reference internal" href="../api/hyperspy.learn.rpca.html#hyperspy.learn.rpca.ORPCA" title="hyperspy.learn.rpca.ORPCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">ORPCA</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>“ORNMF”</p></td>
+<td><p><a class="reference internal" href="../api/hyperspy.learn.ornmf.html#hyperspy.learn.ornmf.ORNMF" title="hyperspy.learn.ornmf.ORNMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ORNMF</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../api/hyperspy.learn.mva.html#hyperspy.learn.mva.MVA.decomposition" title="hyperspy.learn.mva.MVA.decomposition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decomposition()</span></code></a> for more details on decomposition
+with non-lazy signals.</p>
+</div>
+</div>
 <div class="section" id="practical-tips">
 <h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this headline">¶</a></h2>
 <p>Despite the limitations detailed below, most HyperSpy operations can be
-performed lazily. Important points of note are:</p>
+performed lazily. Important points are:</p>
 <div class="section" id="chunking">
 <h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this headline">¶</a></h3>
 <div class="versionadded">
@@ -363,7 +409,7 @@ once, and only pass it for all other plots. Pay attention to the transpose
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">&lt;LazySignal2D, title: , dimensions: (200, 200|512, 512)&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># for fastest results, just pick one signal space pixel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">optimize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">inav</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Alternatively, sum as per default behaviour</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span>
@@ -432,30 +478,6 @@ operations. So, the operation above could be rewritten as follows:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="machine-learning-decomposition">
-<h3>Machine learning (decomposition)<a class="headerlink" href="#machine-learning-decomposition" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="mva.html#decomposition"><span class="std std-ref">Decomposition</span></a> algorithms often performs large matrix manipulations,
-requiring significantly more memory than the data size. To perform
-decomposition operation lazily HyperSpy provides several “online” algorithms and
-<a class="reference external" href="https://dask.pydata.org/">dask</a>’s lazy SVD algorithm.
-Online algorithms perform the decomposition by operating serially on chunks of
-data, enabling the lazy decomposition of large datasets. In line with the
-standard HyperSpy signals,
-<a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.decomposition" title="hyperspy._signals.lazy.LazySignal.decomposition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decomposition()</span></code></a> offers  the following
-online algorithms:</p>
-<ul class="simple">
-<li><p><strong>PCA</strong> (<code class="docutils literal notranslate"><span class="pre">algorithm='PCA'</span></code>): performs <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA">IncrementalPCA</a>
-from <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. Please refer to its documentation for a description
-of the several keyword arguments taken by its :meth:<code class="docutils literal notranslate"><span class="pre">fit</span></code> method.</p></li>
-<li><p><strong>ORPCA</strong> (<code class="docutils literal notranslate"><span class="pre">algorithm='ORPCA'</span></code>): performs Online Robust PCA. Please
-refer to the docstring of <code class="xref py py-meth docutils literal notranslate"><span class="pre">ORPCA()</span></code> for details on
-usage and keyword arguments.</p></li>
-<li><p><strong>NMF</strong> (<code class="docutils literal notranslate"><span class="pre">algorithm='ONMF'</span></code>): performs Online Robust NMF, as per “OPGD”
-algorithm in <a class="reference internal" href="bibliography.html#zhao2016"><span class="std std-ref">[Zhao2016]</span></a>. Please
-refer to the docstring of <code class="xref py py-meth docutils literal notranslate"><span class="pre">ONMF()</span></code> for details on
-usage and keyword arguments.</p></li>
-</ul>
-</div>
 <div class="section" id="other-minor-differences">
 <h3>Other minor differences<a class="headerlink" href="#other-minor-differences" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -488,8 +510,9 @@ further operations branch from it. Only when a certain branch result is
 requested, the way to the root is found and evaluated in the correct sequence
 on the correct blocks.</p>
 <p>The “magic” is performed by (for the sake of simplicity) storing the data not
-as <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, but <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> (more information <a class="reference external" href="https://dask.readthedocs.io/en/latest/">here</a>). <code class="docutils literal notranslate"><span class="pre">dask</span></code> offers a couple of
-advantages:</p>
+as <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, but <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> (see the
+<a class="reference external" href="https://dask.readthedocs.io/en/latest/">dask documentation</a>). <code class="docutils literal notranslate"><span class="pre">dask</span></code>
+offers a couple of advantages:</p>
 <ul class="simple">
 <li><p><strong>Arbitrary-sized data processing is possible</strong>. By only loading a couple of
 chunks at a time, theoretically any signal can be processed, albeit slower.
@@ -500,10 +523,11 @@ fit into the computer memory comfortably at the same time.</p></li>
 not required for the final result, it will not be loaded at all, saving time
 and resources.</p></li>
 <li><p><strong>Able to extend to a distributed computing environment (clusters)</strong>.
-<code class="docutils literal notranslate"><span class="pre">dask.distributed</span></code> (documentation <a class="reference external" href="https://distributed.readthedocs.io/en/latest/">here</a>) offers a straightforward
-way to expand the effective memory for computations to that of a cluster,
-which allows performing the operations significantly faster than on a single
-machine.</p></li>
+:py:<code class="docutils literal notranslate"><span class="pre">dask.distributed</span></code> (see
+<a class="reference external" href="https://distributed.readthedocs.io/en/latest/">the dask documentation</a>) offers
+a straightforward way to expand the effective memory for computations to that
+of a cluster, which allows performing the operations significantly faster
+than on a single machine.</p></li>
 </ul>
 </div>
 </div>
@@ -528,11 +552,19 @@ machine.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2019, The HyperSpy development team
+        
+        &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -543,7 +575,6 @@ machine.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

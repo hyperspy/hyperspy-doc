@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Signal2D Tools &mdash; HyperSpy 1.5.2 documentation</title>
+  <title>Signal2D Tools &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,24 +23,21 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Data visualization" href="visualisation.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -113,12 +115,22 @@
 <li class="toctree-l2"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools: the Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Signal2D Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#two-dimensional-signal-registration-alignment">Two dimensional signal registration (alignment)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signal-registration-and-alignment">Signal registration and alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cropping-an-image">Cropping an image</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#add-a-linear-ramp">Add a linear ramp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peak-finding">Peak finding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#maximum-based-peak-finder">Maximum based peak finder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zaeferrer-peak-finder">Zaeferrer peak finder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ball-statistical-peak-finder">Ball statistical peak finder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matrix-based-peak-finding">Matrix based peak finding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#template-matching">Template matching</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-parametrization">Interactive parametrization</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
@@ -144,6 +156,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -182,7 +195,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
@@ -208,35 +221,71 @@
   <div class="section" id="signal2d-tools">
 <h1>Signal2D Tools<a class="headerlink" href="#signal2d-tools" title="Permalink to this headline">¶</a></h1>
 <p>The methods described in this section are only available for two-dimensional
-signals in the Signal2D class.</p>
-<div class="section" id="two-dimensional-signal-registration-alignment">
-<span id="signal2d-align"></span><h2>Two dimensional signal registration (alignment)<a class="headerlink" href="#two-dimensional-signal-registration-alignment" title="Permalink to this headline">¶</a></h2>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.4: </span><code class="docutils literal notranslate"><span class="pre">sub_pixel_factor</span></code> keyword.</p>
-</div>
+signals in the <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D" title="hyperspy._signals.signal2d.Signal2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal2D</span></code></a>. class.</p>
+<div class="section" id="signal-registration-and-alignment">
+<span id="signal2d-align"></span><h2>Signal registration and alignment<a class="headerlink" href="#signal-registration-and-alignment" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.align2D" title="hyperspy._signals.signal2d.Signal2D.align2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">align2D()</span></code></a> and
 <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.estimate_shift2D" title="hyperspy._signals.signal2d.Signal2D.estimate_shift2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_shift2D()</span></code></a> methods provide
-advanced image alignment functionality. Sub-pixel accuracy can be achieved
-by using skimage’s upsampled matrix-multiplication DFT method
-<a class="reference internal" href="bibliography.html#guizar2008"><span class="std std-ref">[Guizar2008]</span></a>—by setting the <cite>sub_pixel_factor</cite> keyword argument—
-and/or, for multi-dimensional datasets only, using the statistical method
-<a class="reference internal" href="bibliography.html#schaffer2004"><span class="std std-ref">[Schaffer2004]</span></a>—by setting the <code class="docutils literal notranslate"><span class="pre">reference</span></code> keyword argument to <code class="docutils literal notranslate"><span class="pre">&quot;stat&quot;</span></code>.</p>
+advanced image alignment functionality.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimate shifts, then align the images</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">shifts</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_shift2D</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">align2D</span><span class="p">(</span><span class="n">shifts</span><span class="o">=</span><span class="n">shifts</span><span class="p">)</span>
+
+<span class="c1"># Estimate and align in a single step</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">align2D</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">s.align2D()</span></code> will modify the data <strong>in-place</strong>. If you don’t want
+to modify your original data, first take a copy before aligning.</p>
+</div>
+<p>Sub-pixel accuracy can be achieved in two ways:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-image.org/">scikit-image’s</a> upsampled matrix-multiplication DFT method
+<a class="reference internal" href="bibliography.html#guizar2008"><span class="std std-ref">[Guizar2008]</span></a>, by setting the <code class="docutils literal notranslate"><span class="pre">sub_pixel_factor</span></code>
+keyword argument</p></li>
+<li><p>for multi-dimensional datasets only, using the statistical
+method <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#schaffer2004"><span class="std std-ref">[Schaffer2004]</span></a>, by setting the <code class="docutils literal notranslate"><span class="pre">reference</span></code>
+keyword argument to <code class="docutils literal notranslate"><span class="pre">&quot;stat&quot;</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># skimage upsampling method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">shifts</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_shift2D</span><span class="p">(</span><span class="n">sub_pixel_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># stat method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">shifts</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_shift2D</span><span class="p">(</span><span class="n">reference</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">)</span>
+
+<span class="c1"># combined upsampling and statistical method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">shifts</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_shift2D</span><span class="p">(</span><span class="n">reference</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span> <span class="n">sub_pixel_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have a large stack of images, you can perform the image alignment step in
+parallel by passing <code class="docutils literal notranslate"><span class="pre">parallel=True</span></code>. You can control the number of threads used
+with the <code class="docutils literal notranslate"><span class="pre">max_workers</span></code> argument. See the <a class="reference internal" href="signal.html#parallel-map-label"><span class="std std-ref">map documentation</span></a>
+for more information.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimate shifts</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">shifts</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_shift2D</span><span class="p">()</span>
+
+<span class="c1"># Align images in parallel using 4 threads</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">align2D</span><span class="p">(</span><span class="n">shifts</span><span class="o">=</span><span class="n">shifts</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="cropping-an-image">
-<span id="image-crop"></span><h2>Cropping an image<a class="headerlink" href="#cropping-an-image" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">crop_image()</span></code> method crops the
+<span id="signal2d-crop"></span><h2>Cropping an image<a class="headerlink" href="#cropping-an-image" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.crop_image" title="hyperspy._signals.signal2d.Signal2D.crop_image"><code class="xref py py-meth docutils literal notranslate"><span class="pre">crop_image()</span></code></a> method crops the
 image <em>in-place</em> e.g.:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">imc</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">560</span><span class="p">)</span> <span class="c1"># im is cropped in-place</span>
 </pre></div>
 </div>
-<p>Cropping in HyperSpy is performed using the <a class="reference internal" href="tools.html#signal-indexing"><span class="std std-ref">Signal indexing</span></a> syntax. For example, to crop an image:</p>
+<p>Cropping in HyperSpy is performed using the <a class="reference internal" href="signal.html#signal-indexing"><span class="std std-ref">Signal indexing</span></a> syntax. For example, to crop an image:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># im is not cropped, imc is a &quot;cropped view&quot; of im</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">imc</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mf">120.</span><span class="p">:,</span> <span class="mf">300.</span><span class="p">:</span><span class="mf">560.</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>It is possible to crop interactively using <a class="reference internal" href="tools.html#roi-label"><span class="std std-ref">Region Of Interest (ROI)</span></a>. For example:</p>
+<p>It is possible to crop interactively using <a class="reference internal" href="interactive_operations_ROIs.html#roi-label"><span class="std std-ref">Region Of Interest (ROI)</span></a>. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">roi</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">RectangularROI</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">460.</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">560</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -244,20 +293,133 @@ image <em>in-place</em> e.g.:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">imc</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id1">
+<div class="figure align-center" id="id3">
 <span id="interactive-signal2d-cropping-image"></span><img alt="../_images/interactive_signal2d_cropping.png" src="../_images/interactive_signal2d_cropping.png" />
-<p class="caption"><span class="caption-text">Interactive image cropping using a ROI.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Interactive image cropping using a ROI.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="add-a-linear-ramp">
 <h2>Add a linear ramp<a class="headerlink" href="#add-a-linear-ramp" title="Permalink to this headline">¶</a></h2>
 <p>A linear ramp can be added to the signal via the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">add_ramp()</span></code> method. The parameters
+<a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.add_ramp" title="hyperspy._signals.signal2d.Signal2D.add_ramp"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_ramp()</span></code></a> method. The parameters
 <cite>ramp_x</cite> and <cite>ramp_y</cite> dictate the slope of the ramp in <cite>x</cite>- and <cite>y</cite> direction,
 while the offset is determined by the <cite>offset</cite> parameter. The fulcrum of the
 linear ramp is at the origin and the slopes are given in units of the axis
 with the according scale taken into account. Both are available via the
 <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> of the signal.</p>
+</div>
+<div class="section" id="peak-finding">
+<span id="peak-finding-label"></span><h2>Peak finding<a class="headerlink" href="#peak-finding" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.</span></p>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.find_peaks" title="hyperspy._signals.signal2d.Signal2D.find_peaks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_peaks()</span></code></a> method provides access
+to a number of algorithms for peak finding in two dimensional signals. The
+methods available are:</p>
+<div class="section" id="maximum-based-peak-finder">
+<h3>Maximum based peak finder<a class="headerlink" href="#maximum-based-peak-finder" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;local_max&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;minmax&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These methods search for peaks using maximum (and minimum) values in the
+image. There all have a <code class="docutils literal notranslate"><span class="pre">distance</span></code> parameter to set the minimum distance
+between the peaks.</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'local_max'</span></code> method uses the <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.17.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.peak_local_max()</span></code></a>
+function (<code class="docutils literal notranslate"><span class="pre">distance</span></code> and <code class="docutils literal notranslate"><span class="pre">threshold</span></code> parameters are mapped to
+<code class="docutils literal notranslate"><span class="pre">min_distance</span></code> and <code class="docutils literal notranslate"><span class="pre">threshold_abs</span></code>, respectively).</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'max'</span></code> method uses the
+<a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_max" title="hyperspy.utils.peakfinders2D.find_peaks_max"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_max()</span></code></a> function to search
+for peaks higher than <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">*</span> <span class="pre">sigma</span></code>, where <code class="docutils literal notranslate"><span class="pre">alpha</span></code> is parameters and
+<code class="docutils literal notranslate"><span class="pre">sigma</span></code> is the standard deviation of the image. It also has a <code class="docutils literal notranslate"><span class="pre">distance</span></code>
+parameters to set the minimum distance between peaks.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'minmax'</span></code> method uses the
+<a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_minmax" title="hyperspy.utils.peakfinders2D.find_peaks_minmax"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_minmax()</span></code></a> function to locate
+the positive peaks in an image by comparing maximum and minimum filtered
+images. Its <code class="docutils literal notranslate"><span class="pre">threshold</span></code> parameter defines the minimum difference between
+the maximum and minimum filtered images.</p></li>
+</ul>
+</div>
+<div class="section" id="zaeferrer-peak-finder">
+<h3>Zaeferrer peak finder<a class="headerlink" href="#zaeferrer-peak-finder" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;zaefferer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This algorithm was developed by Zaefferer <span id="id1">[Zaefferer2000]</span>. It is based on a
+gradient threshold followed by a local maximum search within a square window,
+which is moved until it is centered on the brightest point, which is taken as a
+peak if it is within a certain distance of the starting point. It uses the
+<a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_zaefferer" title="hyperspy.utils.peakfinders2D.find_peaks_zaefferer"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_zaefferer()</span></code></a> function, which can take
+<code class="docutils literal notranslate"><span class="pre">grad_threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">distance_cutoff</span></code> as parameters. See
+the <a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_zaefferer" title="hyperspy.utils.peakfinders2D.find_peaks_zaefferer"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_zaefferer()</span></code></a> function documentation
+for more details.</p>
+</div>
+<div class="section" id="ball-statistical-peak-finder">
+<h3>Ball statistical peak finder<a class="headerlink" href="#ball-statistical-peak-finder" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;stat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Described by White <span id="id2">[White2009]</span>, this method is based on finding points that
+have a statistically higher value than the surrounding areas, then iterating
+between smoothing and binarising until the number of peaks has converged. This
+method can be slower than the others, but is very robust to a variety of image types.
+It uses the <a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_stat" title="hyperspy.utils.peakfinders2D.find_peaks_stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_stat()</span></code></a> function, which can take
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">window_radius</span></code> and <code class="docutils literal notranslate"><span class="pre">convergence_ratio</span></code> as parameters. See the
+<a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_stat" title="hyperspy.utils.peakfinders2D.find_peaks_stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_stat()</span></code></a> function documentation for more
+details.</p>
+</div>
+<div class="section" id="matrix-based-peak-finding">
+<h3>Matrix based peak finding<a class="headerlink" href="#matrix-based-peak-finding" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;laplacian_of_gaussians&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;difference_of_gaussians&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These methods are essentially wrappers around the
+Laplacian of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log" title="(in skimage v0.17.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_log()</span></code></a>) or the difference
+of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog" title="(in skimage v0.17.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_dog()</span></code></a>) methods, based on stacking
+the Laplacian/difference of images convolved with Gaussian kernels of various
+standard deviations. For more information, see the example in the
+<a class="reference external" href="https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_blob.html">scikit-image documentation</a>.</p>
+</div>
+<div class="section" id="template-matching">
+<h3>Template matching<a class="headerlink" href="#template-matching" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components2D</span><span class="o">.</span><span class="n">Gaussian2D</span><span class="p">()</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;template_matching&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This method locates peaks in the cross correlation between the image and a
+template using the <a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_xc" title="hyperspy.utils.peakfinders2D.find_peaks_xc"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_xc()</span></code></a> function. See
+the <a class="reference internal" href="../api/hyperspy.utils.peakfinders2D.html#hyperspy.utils.peakfinders2D.find_peaks_xc" title="hyperspy.utils.peakfinders2D.find_peaks_xc"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_xc()</span></code></a> function documentation for
+more details.</p>
+</div>
+</div>
+<div class="section" id="interactive-parametrization">
+<h2>Interactive parametrization<a class="headerlink" href="#interactive-parametrization" title="Permalink to this headline">¶</a></h2>
+<p>Many of the peak finding algorithms implemented here have a number of tunable
+parameters that significantly affect their accuracy and speed. The GUIs can be
+used to set to select the method and set the parameters interactively:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Several widgets are available:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/find_peaks2D.png"><img alt="../_images/find_peaks2D.png" src="../_images/find_peaks2D.png" style="width: 600px;" /></a>
+</div>
+<ul class="simple">
+<li><p>The method selector is used to compare different methods. The last-set
+parameters are maintained.</p></li>
+<li><p>The parameter adjusters will update the parameters of the method and re-plot
+the new peaks.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some methods take significantly longer than others, particularly
+where there are a large number of peaks to be found. The plotting window
+may be inactive during this time.</p>
+</div>
 </div>
 </div>
 
@@ -281,11 +443,19 @@ with the according scale taken into account. Both are available via the
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2019, The HyperSpy development team
+        
+        &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -296,7 +466,6 @@ with the according scale taken into account. Both are available via the
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Speeding up code &mdash; HyperSpy 1.5.2 documentation</title>
+  <title>Speeding up code &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,24 +23,21 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Writing packages that extend HyperSpy" href="writing_extensions.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -110,6 +112,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/index.html">HyperSpy User Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Guide</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">﻿Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html">Using Git and GitHub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">Running and writing tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="writing_docs.html">Writing documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coding_style.html">Coding style</a></li>
@@ -123,6 +126,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="useful_information.html">Useful information</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
@@ -133,6 +137,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -171,7 +176,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">HyperSpy Developer Guide</a> &raquo;</li>
         
@@ -208,42 +213,45 @@ the functionality using Python and Numpy and profiling your code.</p>
 <div class="section" id="writing-numba-code">
 <h2>Writing Numba code<a class="headerlink" href="#writing-numba-code" title="Permalink to this headline">¶</a></h2>
 <p>If you need to improve the speed of a given part of the code your first choice
-should be <a class="reference external" href="https://numba.pydata.org/">Numba</a>. This is because Numba code is
-very similar (when not identical) to Python code, and, therefore, it is a lot
-easier to maintain than Cython code.</p>
+should be <a class="reference external" href="https://numba.pydata.org/">Numba</a>. The motivation is that Numba
+code is very similar (when not identical) to Python code, and, therefore, it is
+a lot easier to maintain than Cython code (see below).</p>
+<p>Numba is also a required dependency for HyperSpy, unlike Cython which
+is only an optional dependency.</p>
 </div>
 <div class="section" id="writing-cython-code">
 <h2>Writing Cython code<a class="headerlink" href="#writing-cython-code" title="Permalink to this headline">¶</a></h2>
 <p>Cython code should only be considered if:</p>
 <ol class="arabic simple">
-<li><p>It is not possible to speed up the function using numba instead,</p></li>
+<li><p>It is not possible to speed up the function using Numba, and instead,</p></li>
 <li><p>it is accompanied by a pure Python
-version of the same code that behaves exactly in the same way when the compiled
-C extension is not present. This because we may not be able to provide
-binaries for all platforms and not all users will be able to compile C code
-in their platforms.</p></li>
+version of the same code that behaves exactly in the same way when the
+compiled C extension is not present. This extra version is required because
+we may not be able to provide binaries for all platforms and not all users
+will be able to compile C code in their platforms.</p></li>
 </ol>
 <p>Please read through the official Cython recommendations
 (<a class="reference external" href="http://docs.cython.org/">http://docs.cython.org/</a>) before writing Cython code.</p>
-<p>To help troubleshoot
-potential deprecations in future Cython releases, add a comment in the
-header of your .pyx files stating the Cython version you used when writing the
-code.</p>
-<p>Note that the “cythonized” .c or .cpp files are not
-welcome in the git source repository because they are
-they are typically very large.</p>
-<p>Once you have written you Cython files, add
-them to <code class="docutils literal notranslate"><span class="pre">raw_extensions</span></code> in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
+<p>To help troubleshoot potential deprecations in future Cython releases, add a
+comment in the header of your .pyx files stating the Cython version you used
+when writing the code.</p>
+<p>Note that the “cythonized” .c or .cpp files are not welcome in the git source
+repository because they are typically very large.</p>
+<p>Once you have written you Cython files, add them to <code class="docutils literal notranslate"><span class="pre">raw_extensions</span></code> in
+<code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
 <div class="section" id="compiling-cython-code">
 <h3>Compiling Cython code<a class="headerlink" href="#compiling-cython-code" title="Permalink to this headline">¶</a></h3>
 <p>If Cython is present in
-the build environment and any cythonized c/c++ file is missing, then setup
-.py tries to cythonize all extensions automatically.</p>
+the build environment and any cythonized c/c++ file is missing, then
+<code class="docutils literal notranslate"><span class="pre">setup.py</span></code> tries to cythonize all extensions automatically.</p>
 <p>To make the development easier <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> provides a <code class="docutils literal notranslate"><span class="pre">recythonize</span></code> command
 that can be used in conjunction with default commands.  For
-example <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">recythonize</span> <span class="pre">build_ext</span> <span class="pre">--inplace</span></code> will recythonize
-all Cython code and compile it.</p>
-<p>Cythonization and compilation also takes takes place during continous
+example</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python setup.py recythonize build_ext --inplace
+</pre></div>
+</div>
+<p>will recythonize all Cython code and compile it.</p>
+<p>Cythonization and compilation also take place during continous
 integration (CI).</p>
 </div>
 </div>
@@ -269,11 +277,19 @@ integration (CI).</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2019, The HyperSpy development team
+        
+        &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -284,7 +300,6 @@ integration (CI).</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

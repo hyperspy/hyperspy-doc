@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.learn.rpca module &mdash; HyperSpy 1.5.2 documentation</title>
+  <title>hyperspy.learn.rpca module &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,28 +23,25 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyperspy.learn.svd_pca module" href="hyperspy.learn.svd_pca.html" />
-    <link rel="prev" title="hyperspy.learn.onmf module" href="hyperspy.learn.onmf.html" />
+    <link rel="prev" title="hyperspy.learn.orthomax module" href="hyperspy.learn.orthomax.html" />
  
 <script type="text/javascript">
 
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -117,13 +119,11 @@
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.external.html">hyperspy.external package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hyperspy.tests.html">hyperspy.tests package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
 </ul>
 </li>
@@ -140,6 +140,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -178,7 +179,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">hyperspy</a> &raquo;</li>
         
@@ -207,128 +208,226 @@
             
   <div class="section" id="module-hyperspy.learn.rpca">
 <span id="hyperspy-learn-rpca-module"></span><h1>hyperspy.learn.rpca module<a class="headerlink" href="#module-hyperspy.learn.rpca" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hyperspy.learn.rpca.ORPCA">
-<em class="property">class </em><code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">ORPCA</code><span class="sig-paren">(</span><em class="sig-param">rank</em>, <em class="sig-param">fast=False</em>, <em class="sig-param">lambda1=None</em>, <em class="sig-param">lambda2=None</em>, <em class="sig-param">method=None</em>, <em class="sig-param">learning_rate=None</em>, <em class="sig-param">init=None</em>, <em class="sig-param">training_samples=None</em>, <em class="sig-param">momentum=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="method">
-<dt id="hyperspy.learn.rpca.ORPCA.finish">
-<code class="sig-name descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.finish" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.learn.rpca.ORPCA.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">iterating=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="hyperspy.learn.rpca.ORPCA.project">
-<code class="sig-name descname">project</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.project" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="hyperspy.learn.rpca.orpca">
-<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">orpca</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">rank</em>, <em class="sig-param">fast=False</em>, <em class="sig-param">lambda1=None</em>, <em class="sig-param">lambda2=None</em>, <em class="sig-param">method=None</em>, <em class="sig-param">learning_rate=None</em>, <em class="sig-param">init=None</em>, <em class="sig-param">training_samples=None</em>, <em class="sig-param">momentum=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.orpca" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function performs Online Robust PCA
-with missing or corrupted data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>{numpy array</em><em>, </em><em>iterator}</em>) – [nfeatures x nsamples] matrix of observations
-or an iterator that yields samples, each with nfeatures elements.</p></li>
-<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The model dimensionality.</p></li>
-<li><p><strong>lambda1</strong> (<em>{None</em><em>, </em><em>float}</em>) – Nuclear norm regularization parameter.
-If None, set to 1 / sqrt(nsamples)</p></li>
-<li><p><strong>lambda2</strong> (<em>{None</em><em>, </em><em>float}</em>) – Sparse error regularization parameter.
-If None, set to 1 / sqrt(nsamples)</p></li>
-<li><p><strong>method</strong> (<em>{None</em><em>, </em><em>'CF'</em><em>, </em><em>'BCD'</em><em>, </em><em>'SGD'</em><em>, </em><em>'MomentumSGD'}</em>) – ‘CF’  - Closed-form solver
-‘BCD’ - Block-coordinate descent
-‘SGD’ - Stochastic gradient descent
-‘MomentumSGD’ - Stochastic gradient descent with momentum
-If None, set to ‘CF’</p></li>
-<li><p><strong>learning_rate</strong> (<em>{None</em><em>, </em><em>float}</em>) – Learning rate for the stochastic gradient
-descent algorithm
-If None, set to 1</p></li>
-<li><p><strong>init</strong> (<em>{None</em><em>, </em><em>'qr'</em><em>, </em><em>'rand'</em><em>, </em><em>np.ndarray}</em>) – ‘qr’   - QR-based initialization
-‘rand’ - Random initialization
-np.ndarray if the shape [nfeatures x rank].
-If None, set to ‘qr’</p></li>
-<li><p><strong>training_samples</strong> (<em>{None</em><em>, </em><em>integer}</em>) – Specifies the number of training samples to use in
-the ‘qr’ initialization
-If None, set to 10</p></li>
-<li><p><strong>momentum</strong> (<em>{None</em><em>, </em><em>float}</em>) – Momentum parameter for ‘MomentumSGD’ method, should be
-a float between 0 and 1.
-If None, set to 0.5</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>Xhat</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] low-rank matrix</p></li>
-<li><p><strong>Ehat</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] sparse error matrix</p></li>
-<li><p><strong>U, S, V</strong> (<em>numpy arrays</em>) – are the results of an SVD on Xhat</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The ORPCA code is based on a transcription of MATLAB code obtained from
-the following research paper:</p>
-<blockquote>
-<div><p>Jiashi Feng, Huan Xu and Shuicheng Yuan, “Online Robust PCA via
-Stochastic Optimization”, Advances in Neural Information Processing
-Systems 26, (2013), pp. 404-412.</p>
-</div></blockquote>
-<p>It has been updated to include a new initialization method based
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">ORPCA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rank</span></em>, <em class="sig-param"><span class="n">store_error</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">lambda1</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">lambda2</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'BCD'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'qr'</span></em>, <em class="sig-param"><span class="n">training_samples</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">subspace_learning_rate</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">subspace_momentum</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Performs Online Robust PCA with missing or corrupted data.</p>
+<p>The ORPCA code is based on a transcription of MATLAB code from <a class="reference internal" href="#feng2013" id="id1"><span>[Feng2013]</span></a>.
+It has been updated to include a new initialization method based
 on a QR decomposition of the first n “training” samples of the data.
 A stochastic gradient descent (SGD) solver is also implemented,
 along with a MomentumSGD solver for improved convergence and robustness
 with respect to local minima. More information about the gradient descent
-methods and choosing appropriate parameters can be found here:</p>
-<blockquote>
-<div><p>Sebastian Ruder, “An overview of gradient descent optimization
+methods and choosing appropriate parameters can be found in <a class="reference internal" href="#ruder2016" id="id2"><span>[Ruder2016]</span></a>.</p>
+<p>Read more in the <a class="reference internal" href="../user_guide/mva.html#mva-rpca"><span class="std std-ref">User Guide</span></a>.</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="feng2013"><span class="brackets"><a class="fn-backref" href="#id1">Feng2013</a></span></dt>
+<dd><p>Jiashi Feng, Huan Xu and Shuicheng Yuan, “Online Robust PCA
+via Stochastic Optimization”, Advances in Neural Information Processing
+Systems 26, (2013), pp. 404-412.</p>
+</dd>
+<dt class="label" id="ruder2016"><span class="brackets"><a class="fn-backref" href="#id2">Ruder2016</a></span></dt>
+<dd><p>Sebastian Ruder, “An overview of gradient descent optimization
 algorithms”, arXiv:1609.04747, (2016), http://arxiv.org/abs/1609.04747.</p>
-</div></blockquote>
-</dd></dl>
-
-<dl class="function">
-<dt id="hyperspy.learn.rpca.rpca_godec">
-<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">rpca_godec</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">rank</em>, <em class="sig-param">fast=False</em>, <em class="sig-param">lambda1=None</em>, <em class="sig-param">power=None</em>, <em class="sig-param">tol=None</em>, <em class="sig-param">maxiter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.rpca_godec" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function performs Robust PCA with missing or corrupted data,
-using the GoDec algorithm.</p>
+</dd>
+</dl>
+<p>Creates Online Robust PCA instance that can learn a representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] matrix of observations.</p></li>
-<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The model dimensionality.</p></li>
-<li><p><strong>lambda1</strong> (<em>None | float</em>) – Regularization parameter.
-If None, set to 1 / sqrt(nsamples)</p></li>
-<li><p><strong>power</strong> (<em>None | integer</em>) – The number of power iterations used in the initialization
-If None, set to 0 for speed</p></li>
-<li><p><strong>tol</strong> (<em>None | float</em>) – Convergence tolerance
-If None, set to 1e-3</p></li>
-<li><p><strong>maxiter</strong> (<em>None | integer</em>) – Maximum number of iterations
-If None, set to 1e3</p></li>
+<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The rank of the representation (number of components/factors)</p></li>
+<li><p><strong>store_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, stores the sparse error matrix.</p></li>
+<li><p><strong>lambda1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Nuclear norm regularization parameter.</p></li>
+<li><p><strong>lambda2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Sparse error regularization parameter.</p></li>
+<li><p><strong>method</strong> (<em>{'CF'</em><em>, </em><em>'BCD'</em><em>, </em><em>'SGD'</em><em>, </em><em>'MomentumSGD'}</em><em>, </em><em>default 'BCD'</em>) – <ul>
+<li><p>‘CF’  - Closed-form solver</p></li>
+<li><p>’BCD’ - Block-coordinate descent</p></li>
+<li><p>’SGD’ - Stochastic gradient descent</p></li>
+<li><p>’MomentumSGD’ - Stochastic gradient descent with momentum</p></li>
+</ul>
+</p></li>
+<li><p><strong>init</strong> (<em>{'qr'</em><em>, </em><em>'rand'</em><em>, </em><em>np.ndarray}</em><em>, </em><em>default 'qr'</em>) – <ul>
+<li><p>‘qr’   - QR-based initialization</p></li>
+<li><p>’rand’ - Random initialization</p></li>
+<li><p>np.ndarray if the shape [n_features x rank]</p></li>
+</ul>
+</p></li>
+<li><p><strong>training_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Specifies the number of training samples to use in
+the ‘qr’ initialization.</p></li>
+<li><p><strong>subspace_learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Learning rate for the ‘SGD’ and ‘MomentumSGD’ methods.
+Should be a float &gt; 0.0</p></li>
+<li><p><strong>subspace_momentum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Momentum parameter for ‘MomentumSGD’ method, should be
+a float between 0 and 1.</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><em>RandomState instance</em><em>, </em><em>default None</em>) – Used to initialize the subspace on the first iteration.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA._initialize_subspace">
+<code class="sig-name descname">_initialize_subspace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA._initialize_subspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the subspace estimate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA._setup">
+<code class="sig-name descname">_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA._setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA._solve_L">
+<code class="sig-name descname">_solve_L</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA._solve_L" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA.finish">
+<code class="sig-name descname">finish</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the learnt factors and loadings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Learn RPCA components from the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [n_samples x n_features] matrix of observations
+or an iterator that yields samples, each with n_features elements.</p></li>
+<li><p><strong>batch_size</strong> (<em>{None</em><em>, </em><em>int}</em>) – If not None, learn the data in batches, each of batch_size samples
+or less.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.learn.rpca.ORPCA.project">
+<code class="sig-name descname">project</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">return_error</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.ORPCA.project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Project the learnt components on the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{numpy.ndarray</em><em>, </em><em>iterator}</em>) – [n_samples x n_features] matrix of observations
+or an iterator that yields n_samples, each with n_features elements.</p></li>
+<li><p><strong>return_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, returns the sparse error matrix as well. Otherwise only
+the weights (loadings)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy.learn.rpca._soft_thresh">
+<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">_soft_thresh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">lambda1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca._soft_thresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Soft-thresholding of array X.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy.learn.rpca._solveproj">
+<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">_solveproj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Id</span></em>, <em class="sig-param"><span class="n">lambda2</span></em>, <em class="sig-param"><span class="n">r</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">e</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca._solveproj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy.learn.rpca._updatecol">
+<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">_updatecol</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em>, <em class="sig-param"><span class="n">Id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca._updatecol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy.learn.rpca.orpca">
+<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">orpca</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">rank</span></em>, <em class="sig-param"><span class="n">store_error</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">project</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lambda1</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">lambda2</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'BCD'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'qr'</span></em>, <em class="sig-param"><span class="n">training_samples</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">subspace_learning_rate</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">subspace_momentum</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.orpca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform online, robust PCA on the data X.</p>
+<p>This is a wrapper function for the ORPCA class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{numpy array</em><em>, </em><em>iterator}</em>) – [n_features x n_samples] matrix of observations
+or an iterator that yields samples, each with n_features elements.</p></li>
+<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The rank of the representation (number of components/factors)</p></li>
+<li><p><strong>store_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, stores the sparse error matrix.</p></li>
+<li><p><strong>project</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, project the data X onto the learnt model.</p></li>
+<li><p><strong>batch_size</strong> (<em>{None</em><em>, </em><em>int}</em><em>, </em><em>default None</em>) – If not None, learn the data in batches, each of batch_size samples
+or less.</p></li>
+<li><p><strong>lambda1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Nuclear norm regularization parameter.</p></li>
+<li><p><strong>lambda2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Sparse error regularization parameter.</p></li>
+<li><p><strong>method</strong> (<em>{'CF'</em><em>, </em><em>'BCD'</em><em>, </em><em>'SGD'</em><em>, </em><em>'MomentumSGD'}</em><em>, </em><em>default 'BCD'</em>) – <ul>
+<li><p>‘CF’  - Closed-form solver</p></li>
+<li><p>’BCD’ - Block-coordinate descent</p></li>
+<li><p>’SGD’ - Stochastic gradient descent</p></li>
+<li><p>’MomentumSGD’ - Stochastic gradient descent with momentum</p></li>
+</ul>
+</p></li>
+<li><p><strong>init</strong> (<em>{'qr'</em><em>, </em><em>'rand'</em><em>, </em><em>np.ndarray}</em><em>, </em><em>default 'qr'</em>) – <ul>
+<li><p>‘qr’   - QR-based initialization</p></li>
+<li><p>’rand’ - Random initialization</p></li>
+<li><p>np.ndarray if the shape [n_features x rank]</p></li>
+</ul>
+</p></li>
+<li><p><strong>training_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Specifies the number of training samples to use in
+the ‘qr’ initialization.</p></li>
+<li><p><strong>subspace_learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Learning rate for the ‘SGD’ and ‘MomentumSGD’ methods.
+Should be a float &gt; 0.0</p></li>
+<li><p><strong>subspace_momentum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Momentum parameter for ‘MomentumSGD’ method, should be
+a float between 0 and 1.</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><em>RandomState instance</em><em>, </em><em>default None</em>) – Used to initialize the subspace on the first iteration.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>Xhat</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] low-rank matrix</p></li>
-<li><p><strong>Ehat</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] sparse error matrix</p></li>
-<li><p><strong>Ghat</strong> (<em>numpy array</em>) – is the [nfeatures x nsamples] Gaussian noise matrix</p></li>
-<li><p><strong>U, S, V</strong> (<em>numpy arrays</em>) – are the results of an SVD on Xhat</p></li>
+<li><p>If project is True, returns the low-rank factors and loadings only</p></li>
+<li><p>Otherwise, returns the low-rank and sparse error matrices, as well
+as the results of a singular value decomposition (SVD) applied to
+the low-rank matrix.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hyperspy.learn.rpca.rpca_godec">
+<code class="sig-prename descclassname">hyperspy.learn.rpca.</code><code class="sig-name descname">rpca_godec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">rank</span></em>, <em class="sig-param"><span class="n">lambda1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">power</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">maxiter</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.rpca.rpca_godec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Robust PCA with missing or corrupted data, using the GoDec algorithm.</p>
+<p>Decomposes a matrix Y = X + E, where X is low-rank and E
+is a sparse error matrix. This algorithm is based on the
+Matlab code from <a class="reference internal" href="#zhou2011" id="id3"><span>[Zhou2011]</span></a>. See code here:
+<a class="reference external" href="https://sites.google.com/site/godecomposition/matrix/artifact-1">https://sites.google.com/site/godecomposition/matrix/artifact-1</a></p>
+<p>Read more in the <a class="reference internal" href="../user_guide/mva.html#mva-rpca"><span class="std std-ref">User Guide</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em>, </em><em>shape</em><em> (</em><em>n_features</em><em>, </em><em>n_samples</em><em>)</em>) – The matrix of observations.</p></li>
+<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The model dimensionality.</p></li>
+<li><p><strong>lambda1</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Regularization parameter.
+If None, set to 1 / sqrt(n_features)</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 0</em>) – The number of power iterations used in the initialization</p></li>
+<li><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1e-3</em>) – Convergence tolerance</p></li>
+<li><p><strong>maxiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 1000</em>) – Maximum number of iterations</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><em>RandomState instance</em><em>, </em><em>default None</em>) – Used to initialize the subspace on the first iteration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Xhat</strong> (<em>numpy array, shape (n_features, n_samples)</em>) – The  low-rank matrix</p></li>
+<li><p><strong>Ehat</strong> (<em>numpy array, shape (n_features, n_samples)</em>) – The sparse error matrix</p></li>
+<li><p><strong>U, S, V</strong> (<em>numpy arrays</em>) – The results of an SVD on Xhat</p></li>
 </ul>
 </p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<dl class="simple">
-<dt>Algorithm based on the following research paper:</dt><dd><p>Tianyi Zhou and Dacheng Tao, “GoDec: Randomized Low-rank &amp; Sparse Matrix
-Decomposition in Noisy Case”, ICML-11, (2011), pp. 33-40.</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="zhou2011"><span class="brackets"><a class="fn-backref" href="#id3">Zhou2011</a></span></dt>
+<dd><p>Tianyi Zhou and Dacheng Tao, “GoDec: Randomized Low-rank &amp;
+Sparse Matrix Decomposition in Noisy Case”, ICML-11, (2011), pp. 33-40.</p>
 </dd>
 </dl>
-<p>Code: <a class="reference external" href="https://sites.google.com/site/godecomposition/matrix/artifact-1">https://sites.google.com/site/godecomposition/matrix/artifact-1</a></p>
 </dd></dl>
 
 </div>
@@ -344,7 +443,7 @@ Decomposition in Noisy Case”, ICML-11, (2011), pp. 33-40.</p>
         <a href="hyperspy.learn.svd_pca.html" class="btn btn-neutral float-right" title="hyperspy.learn.svd_pca module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperspy.learn.onmf.html" class="btn btn-neutral float-left" title="hyperspy.learn.onmf module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperspy.learn.orthomax.html" class="btn btn-neutral float-left" title="hyperspy.learn.orthomax module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -353,11 +452,19 @@ Decomposition in Noisy Case”, ICML-11, (2011), pp. 33-40.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2019, The HyperSpy development team
+        
+        &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -368,7 +475,6 @@ Decomposition in Noisy Case”, ICML-11, (2011), pp. 33-40.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

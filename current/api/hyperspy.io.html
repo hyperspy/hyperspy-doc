@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.io module &mdash; HyperSpy 1.5.2 documentation</title>
+  <title>hyperspy.io module &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,24 +23,21 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyperspy.logger module" href="hyperspy.logger.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -151,6 +153,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -189,7 +192,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">hyperspy</a> &raquo;</li>
         
@@ -216,17 +219,48 @@
             
   <div class="section" id="module-hyperspy.io">
 <span id="hyperspy-io-module"></span><h1>hyperspy.io module<a class="headerlink" href="#module-hyperspy.io" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
+<dt id="hyperspy.io._escape_square_brackets">
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">_escape_square_brackets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io._escape_square_brackets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escapes pairs of square brackets in strings for glob.glob().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The text to escape</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The escaped string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Say there are two files like this:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># /home/data/afile[1x1].txt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># /home/data/afile[1x2].txt</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/home/data/afile[*].txt&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">_escape_square_brackets</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+<span class="go">[&#39;/home/data/afile[1x2].txt&#39;, &#39;/home/data/afile[1x1].txt&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt id="hyperspy.io.assign_signal_subclass">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">assign_signal_subclass</code><span class="sig-paren">(</span><em class="sig-param">dtype</em>, <em class="sig-param">signal_dimension</em>, <em class="sig-param">signal_type=''</em>, <em class="sig-param">lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.assign_signal_subclass" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given record_by and signal_type return the matching Signal subclass.</p>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">assign_signal_subclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dtype</span></em>, <em class="sig-param"><span class="n">signal_dimension</span></em>, <em class="sig-param"><span class="n">signal_type</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">lazy</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.assign_signal_subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given dtype, signal_dimension and signal_type, return the matching Signal subclass.</p>
+<p>See <cite>hs.print_known_signal_types()</cite> for a list of known signal_types,
+and the developer guide for details on how to add new signal_types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – </p></li>
-<li><p><strong>signal_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </p></li>
-<li><p><strong>signal_type</strong> (<em>{&quot;EELS&quot;</em><em>, </em><em>&quot;EDS&quot;</em><em>, </em><em>&quot;EDS_SEM&quot;</em><em>, </em><em>&quot;EDS_TEM&quot;</em><em>, </em><em>&quot;DielectricFunction&quot;</em><em>, </em><em>&quot;&quot;</em><em>, </em><em>str}</em>) – </p></li>
-<li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – </p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – Signal dtype</p></li>
+<li><p><strong>signal_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Signal dimension</p></li>
+<li><p><strong>signal_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>default &quot;&quot;</em>) – Signal type. Optional. Will log a warning if it is unknown to HyperSpy.</p></li>
+<li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, returns the matching LazySignal subclass.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -238,9 +272,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="hyperspy.io.dict2signal">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">dict2signal</code><span class="sig-paren">(</span><em class="sig-param">signal_dict</em>, <em class="sig-param">lazy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.dict2signal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">dict2signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal_dict</span></em>, <em class="sig-param"><span class="n">lazy</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.dict2signal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a signal (or subclass) instance defined by a dictionary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -255,19 +289,21 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="hyperspy.io.load">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filenames=None</em>, <em class="sig-param">signal_type=None</em>, <em class="sig-param">stack=False</em>, <em class="sig-param">stack_axis=None</em>, <em class="sig-param">new_axis_name='stack_element'</em>, <em class="sig-param">lazy=False</em>, <em class="sig-param">convert_units=False</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filenames</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stack</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">stack_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">new_axis_name</span><span class="o">=</span><span class="default_value">'stack_element'</span></em>, <em class="sig-param"><span class="n">lazy</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">convert_units</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">escape_square_brackets</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load potentially multiple supported file into an hyperspy structure.</p>
 <p>Supported formats: hspy (HDF5), msa, Gatan dm3, Ripple (rpl+raw),
 Bruker bcf and spx, FEI ser and emi, SEMPER unf, EMD, EDAX spd/spc,
 tif, and a number of image formats.</p>
+<p>Depending on the number of datasets to load in the file, this function will
+return a HyperSpy signal instance or list of HyperSpy signal instances.</p>
 <p>Any extra keyword is passed to the corresponding reader. For
 available options see their individual documentation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>list of strings</em>) – The filename to be loaded. If None, a window will open to select
+<li><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of strings</em>) – The filename to be loaded. If None, a window will open to select
 a file to load. If a valid filename is passed in that single
 file is loaded. If multiple file names are passed in
 a list, a list of objects or a single object containing the data
@@ -289,12 +325,12 @@ the case in a transmission electron  microscope (TEM) —,
 — as it is usually the case in a scanning electron  microscope (SEM).
 If “” (empty string) the value is not read from the file and is
 considered undefined.</p></li>
-<li><p><strong>stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True and multiple filenames are passed in, stacking all
+<li><p><strong>stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True and multiple filenames are passed in, stacking all
 the data into a single object is attempted. All files must match
 in shape. If each file contains multiple (N) signals, N stacks will be
 created, with the requirement that each file contains the same number
 of signals.</p></li>
-<li><p><strong>stack_axis</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>str}</em>) – If None, the signals are stacked over a new axis. The data must
+<li><p><strong>stack_axis</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>str}</em>) – If None, the signals are stacked over a new axis. The data must
 have the same dimensions. Otherwise the
 signals are stacked over the axis given by its integer index or
 its name. The data must have the same shape, except in the dimension
@@ -308,15 +344,19 @@ disk until required. Allows opening arbitrary-sized datasets. The default
 is <cite>False</cite>.</p></li>
 <li><p><strong>convert_units</strong> (<em>{bool}</em>) – If True, convert the units using the <cite>convert_to_units</cite> method of
 the <cite>axes_manager</cite>. If False, does nothing. The default is False.</p></li>
-<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – For SEMPER unf- and EMD (Berkeley)-files, if True (default is False)
+<li><p><strong>escape_square_brackets</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, and <code class="docutils literal notranslate"><span class="pre">filenames</span></code> is a str containing square brackets,
+then square brackets are escaped before wildcard matching with
+<code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code>. If False, square brackets are used to represent
+character classes (e.g. <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> matches lowercase letters.</p></li>
+<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – For SEMPER unf- and EMD (Berkeley)-files, if True (default is False)
 additional information read during loading is printed for a quick
 overview.</p></li>
-<li><p><strong>downsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> (</em><em>1–4095</em><em>)</em>) – For Bruker bcf files, if set to integer (&gt;=2) (default 1)
+<li><p><strong>downsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> (</em><em>1–4095</em><em>)</em>) – For Bruker bcf files, if set to integer (&gt;=2) (default 1)
 bcf is parsed into down-sampled size array by given integer factor,
 multiple values from original bcf pixels are summed forming downsampled
 pixel. This allows to improve signal and conserve the memory with the
 cost of lower resolution.</p></li>
-<li><p><strong>cutoff_at_kV</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>float}</em>) – For Bruker bcf files, if set to numerical (default is None)
+<li><p><strong>cutoff_at_kV</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>float}</em>) – For Bruker bcf files, if set to numerical (default is None)
 bcf is parsed into array with depth cutoff at coresponding given energy.
 This allows to conserve the memory, with cutting-off unused spectra’s
 tail, or force enlargement of the spectra size.</p></li>
@@ -325,25 +365,32 @@ For Bruker bcf and Velox emd files: if one of ‘spectrum_image’, ‘image’
 or ‘single_spectrum’, the loader return single_spectrumns either only
 the spectrum image or only the images (including EDS map for Velox emd
 files) or only the single spectra (for Velox emd files).</p></li>
-<li><p><strong>first_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> (</em><em>default 0</em><em>)</em>) – Only for Velox emd files: load only the data acquired after the
+<li><p><strong>first_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> (</em><em>default 0</em><em>)</em>) – Only for Velox emd files: load only the data acquired after the
 specified fname.</p></li>
-<li><p><strong>last_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> (</em><em>default None</em><em>)</em>) – Only for Velox emd files: load only the data acquired up to specified
+<li><p><strong>last_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> (</em><em>default None</em><em>)</em>) – Only for Velox emd files: load only the data acquired up to specified
 fname. If None, load up the data to the end.</p></li>
-<li><p><strong>sum_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – Only for Velox emd files: if False, load each EDS frame individually.</p></li>
-<li><p><strong>sum_EDS_detectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – Only for Velox emd files: if True, the signal from the different
+<li><p><strong>sum_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – Only for Velox emd files: if False, load each EDS frame individually.</p></li>
+<li><p><strong>sum_EDS_detectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – Only for Velox emd files: if True, the signal from the different
 detector are summed. If False, a distinct signal is returned for each
 EDS detectors.</p></li>
-<li><p><strong>rebin_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>a multiple of the length of the energy dimension</em><em> (</em><em>default 1</em><em>)</em>) – Only for Velox emd files: rebin the energy axis by the integer provided
+<li><p><strong>rebin_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>a multiple of the length of the energy dimension</em><em> (</em><em>default 1</em><em>)</em>) – Only for Velox emd files: rebin the energy axis by the integer provided
 during loading in order to save memory space.</p></li>
-<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><em>numpy.dtype</em></a>) – Only for Velox emd files: set the dtype of the spectrum image data in
+<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.19)"><em>numpy.dtype</em></a>) – Only for Velox emd files: set the dtype of the spectrum image data in
 order to save memory space. If None, the default dtype from the Velox emd
 file is used.</p></li>
-<li><p><strong>load_SI_image_stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em> (</em><em>default False</em><em>)</em>) – Only for Velox emd files: if True, load the stack of STEM images
+<li><p><strong>load_SI_image_stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> (</em><em>default False</em><em>)</em>) – Only for Velox emd files: if True, load the stack of STEM images
 acquired simultaneously as the EDS spectrum image.</p></li>
-<li><p><strong>dataset_name</strong> (<em>string</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – For filetypes which support several datasets in the same file, this
+<li><p><strong>dataset_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of str</em><em>, </em><em>optional</em>) – For filetypes which support several datasets in the same file, this
 will only load the specified dataset. Several datasets can be loaded
-by using a list of strings. Only for EMD (NCEM) files.</p></li>
-<li><p><strong>only_valid_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for FEI emi/ser file in case of series or linescan with the
+by using a list of strings. Only for EMD (NCEM) and hdf5 (USID) files.</p></li>
+<li><p><strong>stack_group</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for EMD NCEM. Stack datasets of groups with common name. Relevant
+for emd file version &gt;= 0.5 where groups can be named ‘group0000’,
+‘group0001’, etc.</p></li>
+<li><p><strong>ignore_non_linear_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default is True</em>) – Only for HDF5 USID. If True, parameters that were varied non-linearly
+in the desired dataset will result in Exceptions.
+Else, all such non-linearly varied parameters will be treated as
+linearly varied parameters and a Signal object will be generated.</p></li>
+<li><p><strong>only_valid_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for FEI emi/ser file in case of series or linescan with the
 acquisition stopped before the end: if True, load only the acquired
 data. If False, fill empty data with zeros. Default is False and this
 default value will change to True in version 2.0.</p></li>
@@ -358,27 +405,31 @@ default value will change to True in version 2.0.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>Loading a single file providing the signal type:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.dm3&#39;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file.dm3&#39;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Loading multiple files:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file1.dm3&#39;</span><span class="p">,</span><span class="s1">&#39;file2.dm3&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file1.dm3&#39;</span><span class="p">,</span><span class="s1">&#39;file2.dm3&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Loading multiple files matching the pattern:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.dm3&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.dm3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Loading multiple files containing square brackets:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file[*].dm3&#39;</span><span class="p">,</span> <span class="n">escape_square_brackets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Loading (potentially larger than the available memory) files lazily and
 stacking:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.blo&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file*.blo&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="hyperspy.io.load_single_file">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load_single_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load_single_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load_single_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load_single_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load any supported file into an HyperSpy structure
 Supported formats: netCDF, msa, Gatan dm3, Ripple (rpl+raw),
 Bruker bcf, FEI ser and emi, EDAX spc and spd, hspy (HDF5), and SEMPER unf.</p>
@@ -389,15 +440,33 @@ Bruker bcf, FEI ser and emi, EDAX spc and spd, hspy (HDF5), and SEMPER unf.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="hyperspy.io.load_with_reader">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load_with_reader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">reader</em>, <em class="sig-param">signal_type=None</em>, <em class="sig-param">convert_units=False</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load_with_reader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">load_with_reader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">reader</span></em>, <em class="sig-param"><span class="n">signal_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">convert_units</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.load_with_reader" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="hyperspy.io.save">
-<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">signal</em>, <em class="sig-param">overwrite=None</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">hyperspy.io.</code><code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save hyperspy signal to a file.</p>
+<p>A list of plugins supporting file saving can be found here:
+<a class="reference external" href="http://hyperspy.org/hyperspy-doc/current/user_guide/io.html#supported-formats">http://hyperspy.org/hyperspy-doc/current/user_guide/io.html#supported-formats</a></p>
+<p>Any extra keyword is passed to the corresponding save method in the
+io_plugin.
+For available options see their individual documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The filename to save the signal to.</p></li>
+<li><p><strong>signal</strong> (<em>Hyperspy signal</em>) – The signal to be saved to file</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>Bool</em><em> (</em><em>default</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>)</em>) – If None and a file exists the user will be prompted to on whether to
+overwrite. If False and a file exists the file will not be written.
+If True and a file exists the file will be overwritten without
+prompting</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 
@@ -421,11 +490,19 @@ Bruker bcf, FEI ser and emi, EDAX spc and spd, hspy (HDF5), and SEMPER unf.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2011-2019, The HyperSpy development team
+        
+        &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -436,7 +513,6 @@ Bruker bcf, FEI ser and emi, EDAX spc and spd, hspy (HDF5), and SEMPER unf.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
