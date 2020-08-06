@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data visualization &mdash; HyperSpy 1.6.dev documentation</title>
+  <title>Data visualization &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,7 +23,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,11 +38,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Machine learning" href="mva.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.6.dev
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -126,6 +128,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#plotting-multiple-signals">Plotting multiple signals</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plotting-several-images">Plotting several images</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plotting-several-spectra">Plotting several spectra</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plotting-profiles-interactively">Plotting profiles interactively</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#markers">Markers</a></li>
@@ -153,6 +156,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -191,7 +195,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
@@ -405,7 +409,7 @@ arguments are supported as well:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">ascent</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="gp">... </span>         <span class="n">axes_ticks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">saturated_pixels</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span>         <span class="n">axes_ticks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-center" id="id13">
@@ -415,14 +419,72 @@ arguments are supported as well:</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4: </span><code class="docutils literal notranslate"><span class="pre">norm</span></code> keyword argument</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">norm</span></code> keyword argument can be used to select between linear, logarithmic or
-custom (using a matplotlib norm) intensity scale. The default, “auto”, automatically
-selects a logarithmic scale when plotting a power spectrum.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">norm</span></code> keyword argument can be used to select between linear, logarithmic
+or custom (using a matplotlib norm) intensity scale. The default, “auto”,
+automatically selects a logarithmic scale when plotting a power spectrum.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6: </span><code class="docutils literal notranslate"><span class="pre">autoscale</span></code> keyword argument</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">autoscale</span></code> keyword argument can be used to specify which axis limits are
+reset when the data or navigation indices change. It can take any combinations
+of the following characters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'x'</span></code>: to reset the horizontal axes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'y'</span></code>: to reset the vertical axes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'v'</span></code>: to reset the contrast of the image  according to <code class="docutils literal notranslate"><span class="pre">vmin</span></code> and <code class="docutils literal notranslate"><span class="pre">vmax</span></code></p></li>
+</ul>
+<p>By default (<code class="docutils literal notranslate"><span class="pre">autoscale='v'</span></code>), only the contrast of the image will be reset
+automatically. For example, to reset the extent of the image (x and y) to their
+maxima but not the contrast, use <code class="docutils literal notranslate"><span class="pre">autoscale='xy'</span></code>; To reset all limits,
+including the contrast of the image, use <code class="docutils literal notranslate"><span class="pre">autoscale='xyv'</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">autoscale</span><span class="o">=</span><span class="s1">&#39;xyv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="plot-divergent-colormaps-label">When plotting using divergent colormaps, if <code class="docutils literal notranslate"><span class="pre">centre_colormap</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>
+(default) the contrast is automatically adjusted so that zero corresponds to
+the center of the colormap (usually white). This can be useful e.g. when
+displaying images that contain pixels with both positive and negative values.</p>
+<p>The following example shows the effect of centring the color map:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span><span class="p">[</span><span class="n">data2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id14">
+<a class="reference internal image-reference" href="../_images/divergent_cmap.png"><img alt="../_images/divergent_cmap.png" src="../_images/divergent_cmap.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">Divergent color map with <code class="docutils literal notranslate"><span class="pre">Centre</span> <span class="pre">colormap</span></code> enabled (default).</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</div>
+<p>The same example with the feature disabled:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span><span class="p">[</span><span class="n">data2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">centre_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>                    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id15">
+<a class="reference internal image-reference" href="../_images/divergent_cmap_no_centre.png"><img alt="../_images/divergent_cmap_no_centre.png" src="../_images/divergent_cmap_no_centre.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">Divergent color map with <code class="docutils literal notranslate"><span class="pre">Centre</span> <span class="pre">colormap</span></code> disabled.</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="customizing-the-navigator">
+<span id="plot-customize-navigator"></span><h2>Customizing the “navigator”<a class="headerlink" href="#customizing-the-navigator" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.1.2: </span>Passing keyword arguments to the navigator plot.</p>
 </div>
-<p>The same options can be passed to the navigator, albeit separately, by specifying
-them as a dictionary in <code class="docutils literal notranslate"><span class="pre">navigator_kwds</span></code> argument when plotting:</p>
+<p>The navigator can be customised by using the <code class="docutils literal notranslate"><span class="pre">navigator_kwds</span></code> argument. For
+example, in case of a image navigator, all image plot arguments mentioned in
+the section <a class="reference internal" href="#plot-customize-images"><span class="std std-ref">Customising image plot</span></a> can be passed as a dictionary to the
+<code class="docutils literal notranslate"><span class="pre">navigator_kwds</span></code> argument:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">ascent</span><span class="p">())</span>
@@ -439,46 +501,10 @@ them as a dictionary in <code class="docutils literal notranslate"><span class="
 <span class="gp">... </span>         <span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id14">
-<a class="reference internal image-reference" href="../_images/custom_nav_opts.png"><img alt="../_images/custom_nav_opts.png" src="../_images/custom_nav_opts.png" style="height: 250px;" /></a>
-<p class="caption"><span class="caption-text">Custom different options for both signal and navigator image plots</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
-</div>
-<p id="plot-divergent-colormaps-label">When plotting using divergent colormaps, if <code class="docutils literal notranslate"><span class="pre">centre_colormap</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>
-(default) the contrast is automatically adjusted so that zero corresponds to
-the center of the colormap (usually white). This can be useful e.g. when
-displaying images that contain pixels with both positive and negative values.</p>
-<p>The following example shows the effect of centring the color map:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span><span class="p">[</span><span class="n">data2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="figure align-center" id="id15">
-<a class="reference internal image-reference" href="../_images/divergent_cmap.png"><img alt="../_images/divergent_cmap.png" src="../_images/divergent_cmap.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">Divergent color map with <code class="docutils literal notranslate"><span class="pre">Centre</span> <span class="pre">colormap</span></code> enabled (default).</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
-</div>
-<p>The same example with the feature disabled:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span><span class="p">[</span><span class="n">data2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">centre_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="gp">... </span>                    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
 <div class="figure align-center" id="id16">
-<a class="reference internal image-reference" href="../_images/divergent_cmap_no_centre.png"><img alt="../_images/divergent_cmap_no_centre.png" src="../_images/divergent_cmap_no_centre.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">Divergent color map with <code class="docutils literal notranslate"><span class="pre">Centre</span> <span class="pre">colormap</span></code> disabled.</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+<a class="reference internal image-reference" href="../_images/custom_nav_opts.png"><img alt="../_images/custom_nav_opts.png" src="../_images/custom_nav_opts.png" style="height: 250px;" /></a>
+<p class="caption"><span class="caption-text">Custom different options for both signal and navigator image plots</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
 </div>
-</div>
-<div class="section" id="customizing-the-navigator">
-<span id="plot-customize-navigator"></span><h2>Customizing the “navigator”<a class="headerlink" href="#customizing-the-navigator" title="Permalink to this headline">¶</a></h2>
 <p>Data files used in the following examples can be downloaded using</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#Download the data (130MB)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span><span class="p">,</span> <span class="n">urlopen</span>
@@ -722,7 +748,7 @@ which is used to call subplots_adjust method of matplotlib
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">,</span> <span class="n">saturated_pixels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s1">&#39;1th&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="s1">&#39;99th&#39;</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">scalebar_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">suptitle_fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">padding</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;top&#39;</span><span class="p">:</span><span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">:</span><span class="mf">0.10</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span>
 <span class="gp">... </span>             <span class="s1">&#39;right&#39;</span><span class="p">:</span><span class="mf">0.85</span><span class="p">,</span> <span class="s1">&#39;wspace&#39;</span><span class="p">:</span><span class="mf">0.20</span><span class="p">,</span> <span class="s1">&#39;hspace&#39;</span><span class="p">:</span><span class="mf">0.10</span><span class="p">})</span>
@@ -747,7 +773,7 @@ generator:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="s1">&#39;plasma&#39;</span><span class="p">],</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">,</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="n">saturated_pixels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">colorbar</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s1">&#39;1th&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="s1">&#39;99th&#39;</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="n">scalebar_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">suptitle_fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -766,7 +792,7 @@ signals and their relative intensities (such as the results of a
 <a class="reference internal" href="#id5">next section</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;core_shell.hdf5&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;nmf&#39;</span><span class="p">,</span> <span class="n">output_dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;NMF&#39;</span><span class="p">,</span> <span class="n">output_dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factors</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_decomposition_factors</span><span class="p">()</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># the first factor is a very strong carbon background component, so we</span>
@@ -1003,6 +1029,30 @@ and “overlap” styles:</p>
 <a class="reference internal image-reference" href="../_images/plot_spectra_ax_argument.png"><img alt="../_images/plot_spectra_ax_argument.png" src="../_images/plot_spectra_ax_argument.png" style="width: 350px;" /></a>
 <p class="caption"><span class="caption-text">Plotting on existing matplotlib axes.</span><a class="headerlink" href="#id38" title="Permalink to this image">¶</a></p>
 </div>
+</div>
+<div class="section" id="plotting-profiles-interactively">
+<span id="plot-profiles-interactive-label"></span><h3>Plotting profiles interactively<a class="headerlink" href="#plotting-profiles-interactively" title="Permalink to this headline">¶</a></h3>
+<p>Spectra or line profile can be plotted interactively on the same figure using
+the <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_spectra()</span></code></a> function. For example, profiles
+obtained from different Signal2D using the <a class="reference internal" href="../api/hyperspy.roi.html#hyperspy.roi.Line2DROI" title="hyperspy.roi.Line2DROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">Line2DROI</span></code></a> ROI can
+be plotted interactively:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">object_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im0</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im1</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create the ROI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line_profile</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">Line2DROI</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Obtain the signals to plot by &quot;slicing&quot; the signals with the ROI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line0</span> <span class="o">=</span> <span class="n">line_profile</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="n">im0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line1</span> <span class="o">=</span> <span class="n">line_profile</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Plotting the profile on the same figure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_spectra</span><span class="p">([</span><span class="n">line0</span><span class="p">,</span> <span class="n">line1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/interactive_profiles.gif"><img alt="../_images/interactive_profiles.gif" src="../_images/interactive_profiles.gif" style="width: 1024px;" /></a>
+<p class="caption"><span class="caption-text">Plotting profiles from different images interactively.</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
+</div>
 <div class="section" id="plotting-several-signals">
 <span id="plot-signals"></span><h4>Plotting several signals<a class="headerlink" href="#plotting-several-signals" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a> is used to plot several signals at the
@@ -1015,10 +1065,10 @@ same time:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_signals</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id39">
+<div class="figure align-center" id="id40">
 <a class="reference internal image-reference" href="../_images/plot_signals.png"><img alt="../_images/plot_signals.png" src="../_images/plot_signals.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">The <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a> plots several signals with
-optional synchronized navigation.</span><a class="headerlink" href="#id39" title="Permalink to this image">¶</a></p>
+optional synchronized navigation.</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
 </div>
 <p>The navigator can be specified by using the navigator argument, where the
 different options are “auto”, None, “spectrum”, “slider” or Signal.
@@ -1031,9 +1081,9 @@ To specify the navigator:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_signals</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span> <span class="n">navigator</span><span class="o">=</span><span class="s2">&quot;slider&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id40">
+<div class="figure align-center" id="id41">
 <a class="reference internal image-reference" href="../_images/plot_signals_slider.png"><img alt="../_images/plot_signals_slider.png" src="../_images/plot_signals_slider.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">Customising the navigator in <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a>.</span><a class="headerlink" href="#id40" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Customising the navigator in <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a>.</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
 </div>
 <p>Navigators can also be set differently for different plots using the
 navigator_list argument. Where the navigator_list be the same length
@@ -1046,10 +1096,10 @@ For example:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_signals</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span> <span class="n">navigator_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;slider&quot;</span><span class="p">,</span> <span class="n">s3</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id41">
+<div class="figure align-center" id="id42">
 <a class="reference internal image-reference" href="../_images/plot_signals_navigator_list.png"><img alt="../_images/plot_signals_navigator_list.png" src="../_images/plot_signals_navigator_list.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Customising the navigator in <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a> by
-providing a navigator list.</span><a class="headerlink" href="#id41" title="Permalink to this image">¶</a></p>
+providing a navigator list.</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
 </div>
 <p>Several signals can also be plotted without syncing the navigation by using
 sync=False. The navigator_list can still be used to specify a navigator for
@@ -1061,9 +1111,9 @@ each plot:</p>
 <span class="gp">... </span>                     <span class="n">navigator_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;slider&quot;</span><span class="p">,</span> <span class="s2">&quot;slider&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id42">
+<div class="figure align-center" id="id43">
 <a class="reference internal image-reference" href="../_images/plot_signals_sync.png"><img alt="../_images/plot_signals_sync.png" src="../_images/plot_signals_sync.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">Disabling syncronised navigation in <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a>.</span><a class="headerlink" href="#id42" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Disabling syncronised navigation in <a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a>.</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -1079,9 +1129,9 @@ can be used in a static way</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id43">
+<div class="figure align-center" id="id44">
 <a class="reference internal image-reference" href="../_images/plot_markers_std.png"><img alt="../_images/plot_markers_std.png" src="../_images/plot_markers_std.png" style="width: 400px;" /></a>
-<p class="caption"><span class="caption-text">Rectangle static marker.</span><a class="headerlink" href="#id43" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Rectangle static marker.</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
 </div>
 <p>By providing an array of positions, the marker can also change position when
 navigating the signal. In the following example, the local maxima are displayed
@@ -1098,9 +1148,9 @@ for each R, G and B channel of a colour image.</p>
 <span class="gp">... </span>    <span class="n">ims</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id44">
+<div class="figure align-center" id="id45">
 <a class="reference internal image-reference" href="../_images/plot_markers_im.gif"><img alt="../_images/plot_markers_im.gif" src="../_images/plot_markers_im.gif" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Point markers in image.</span><a class="headerlink" href="#id44" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Point markers in image.</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
 </div>
 <p>The markers can be added to the navigator as well. In the following example,
 each slice of a 2D spectrum is tagged with a text marker on the signal plot.
@@ -1117,9 +1167,9 @@ Each slice is indicated with the same text on the navigator.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id45">
+<div class="figure align-center" id="id46">
 <a class="reference internal image-reference" href="../_images/plot_markers_nav.gif"><img alt="../_images/plot_markers_nav.gif" src="../_images/plot_markers_nav.gif" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Multi-dimensional markers.</span><a class="headerlink" href="#id45" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Multi-dimensional markers.</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2: </span>Permanent markers.</p>
@@ -1134,9 +1184,9 @@ Each slice is indicated with the same text on the navigator.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id46">
+<div class="figure align-center" id="id47">
 <a class="reference internal image-reference" href="../_images/permanent_marker_one.png"><img alt="../_images/permanent_marker_one.png" src="../_images/permanent_marker_one.png" style="width: 400px;" /></a>
-<p class="caption"><span class="caption-text">Plotting with permanent markers.</span><a class="headerlink" href="#id46" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Plotting with permanent markers.</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
 </div>
 <p>Markers can be removed by deleting them from the metadata</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -1163,9 +1213,9 @@ as a function of the navigation index. For a signal with 1 navigation axis:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id47">
+<div class="figure align-center" id="id48">
 <a class="reference internal image-reference" href="../_images/plot_markers_nav_index.gif"><img alt="../_images/plot_markers_nav_index.gif" src="../_images/plot_markers_nav_index.gif" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Plotting with markers that change with the navigation index.</span><a class="headerlink" href="#id47" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Plotting with markers that change with the navigation index.</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
 </div>
 <p>Or for a signal with 2 navigation axes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -1173,9 +1223,9 @@ as a function of the navigation index. For a signal with 1 navigation axis:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id48">
+<div class="figure align-center" id="id49">
 <a class="reference internal image-reference" href="../_images/plot_markers_2dnav_index.gif"><img alt="../_images/plot_markers_2dnav_index.gif" src="../_images/plot_markers_2dnav_index.gif" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Plotting with markers that change with the two-dimensional navigation index.</span><a class="headerlink" href="#id48" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Plotting with markers that change with the two-dimensional navigation index.</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
 </div>
 <p>This can be extended to 4 (or more) navigation dimensions:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1600</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -1200,10 +1250,10 @@ to add them as an iterable (list, tuple, …), which will be much faster:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">markers</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id49">
+<div class="figure align-center" id="id50">
 <a class="reference internal image-reference" href="../_images/plot_markers_2dnav_random_iter.gif"><img alt="../_images/plot_markers_2dnav_random_iter.gif" src="../_images/plot_markers_2dnav_random_iter.gif" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">Plotting many markers with an iterable so they change with the navigation
-index.</span><a class="headerlink" href="#id49" title="Permalink to this image">¶</a></p>
+index.</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
 </div>
 <p>This can also be done using different types of markers</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">random</span>
@@ -1227,10 +1277,10 @@ index.</span><a class="headerlink" href="#id49" title="Permalink to this image">
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">markers</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id50">
+<div class="figure align-center" id="id51">
 <a class="reference internal image-reference" href="../_images/plot_markers_2dnav_random_iter_many_types.gif"><img alt="../_images/plot_markers_2dnav_random_iter_many_types.gif" src="../_images/plot_markers_2dnav_random_iter_many_types.gif" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">Plotting many types of markers with an iterable so they change with the
-navigation index.</span><a class="headerlink" href="#id50" title="Permalink to this image">¶</a></p>
+navigation index.</span><a class="headerlink" href="#id51" title="Permalink to this image">¶</a></p>
 </div>
 <p>Permanent markers are stored in the HDF5 file if the signal is saved:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -1267,11 +1317,19 @@ navigation index.</span><a class="headerlink" href="#id50" title="Permalink to t
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1282,7 +1340,6 @@ navigation index.</span><a class="headerlink" href="#id50" title="Permalink to t
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

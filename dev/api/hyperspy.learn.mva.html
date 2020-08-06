@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.learn.mva module &mdash; HyperSpy 1.6.dev documentation</title>
+  <title>hyperspy.learn.mva module &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,7 +23,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,11 +38,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyperspy.learn.ornmf module" href="hyperspy.learn.ornmf.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.6.dev
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -138,6 +140,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -176,7 +179,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">hyperspy</a> &raquo;</li>
         
@@ -243,6 +246,11 @@
 <dl class="py attribute">
 <dt id="hyperspy.learn.mva.LearningResults.cluster_centers">
 <code class="sig-name descname">cluster_centers</code><em class="property"> = None</em><a class="headerlink" href="#hyperspy.learn.mva.LearningResults.cluster_centers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy.learn.mva.LearningResults.cluster_centers_estimated">
+<code class="sig-name descname">cluster_centers_estimated</code><em class="property"> = None</em><a class="headerlink" href="#hyperspy.learn.mva.LearningResults.cluster_centers_estimated" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -468,45 +476,34 @@ restarted to optimize results.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="hyperspy.learn.mva.MVA._create_cluster_centers_from_labels">
-<code class="sig-name descname">_create_cluster_centers_from_labels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">source_for_centers</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._create_cluster_centers_from_labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>From a set of cluster labels generate the cluster centers from the
-raw data or PCA decomposition results</p>
+<dt id="hyperspy.learn.mva.MVA._distances_within_cluster">
+<code class="sig-name descname">_distances_within_cluster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_data</span></em>, <em class="sig-param"><span class="n">memberships</span></em>, <em class="sig-param"><span class="n">squared</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">summed</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._distances_within_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return inter cluster distances.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>labels</strong> (<em>int array of length n_samples where each value is a cluster</em>) – label from 0 to n_clusters-1</p></li>
-<li><p><strong>source_for_centers</strong> (<em>{&quot;decomposition&quot;</em><em>,</em><em>&quot;bss&quot;</em><em>,</em><em>&quot;signal&quot;</em><em>, </em><em>Signal}</em>) – If “bss” the blind source separation results are used
-If “decomposition” the decomposition results are used
-if “signal” the signal data is used
-If  providing a Signal it should have the same navigation shape as
-the signal.</p></li>
-<li><p><strong>number_of_components</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default None</em>) – If you are getting the cluster centers using the decomposition or bss
-results you can define how
-components to use. If set to None the method uses the
-estimate of significant components found in the decomposition step
-using the elbow method and stored in the
-<code class="docutils literal notranslate"><span class="pre">learning_results.number_significant_components</span></code> attribute.
-This applies to both bss and decomposition results.</p></li>
-<li><p><strong>navigation_mask</strong> (<em>boolean numpy array</em>) – Create cluster labels and centers for navigation locations marked as as True.
-labels outside the navigation mask are set to -1 and centers in
-these regions are set to zero.</p></li>
+<li><p><strong>cluster_data</strong> (<em>ndarray</em>) – scaled cluster data</p></li>
+<li><p><strong>memberships</strong> (<em>ndarray</em>) – cluster labels</p></li>
+<li><p><strong>squared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – square distance measurement. The default is True.</p></li>
+<li><p><strong>summed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If False returns array showing sum of distance from a given point
+to all other points in the cluster.
+If True returns a sum of all distances within a cluster.
+The results are scaled by 2*number of cluster points.
+The default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>sorted_labels</strong> (<em>array  - (n_samples)</em>)</p></li>
-<li><p><strong>cluster_labels</strong> (<em>array  - (n_clusters, n_samples)</em>)</p></li>
-<li><p><strong>cluster_centers</strong> (<em>array  - (n_clusters, signal_shape)</em>)</p></li>
-</ul>
-</p>
+<dd class="field-even"><p><strong>result</strong> – list of distances for within the cluster</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA._get_cluster_algorithm">
-<code class="sig-name descname">_get_cluster_algorithm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span></em>, <em class="sig-param"><span class="n">n_clusters</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._get_cluster_algorithm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_get_cluster_algorithm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._get_cluster_algorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to lookup cluster algorithm if algorithm is a string
 and instantiates it with n_clusters or if it’s an object check that
 the object has a fit method</p>
@@ -521,7 +518,7 @@ or if it’s an object check that the object has a fit_transform method</p>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA._get_cluster_signal">
-<code class="sig-name descname">_get_cluster_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sum_over_navigation_mask</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._get_cluster_signal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_get_cluster_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._get_cluster_signal" title="Permalink to this definition">¶</a></dt>
 <dd><p>A cluster source can be an external signal, the signal data
 or the decomposition or bss results
 Return a flatten version of the data, nav and signal mask</p>
@@ -536,21 +533,17 @@ The default is None.</p></li>
 <li><p><strong>signal_mask</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – mask used to select regions of the cluster_source signal.
 For decomposition or bss this is not used.
 The default is None.</p></li>
-<li><p><strong>sum_over_navigation_mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True the cluster_source is summed over the navigation axes
-(accounting for the navigation_mask).
-For bss or decomposition results the sum is over the
-factor &#64; loadings result
-The default is False.</p></li>
+<li><p><strong>reproject</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If False the and the cluster_source is decomposition or bss
+the loadings are returned. If True the factor &#64; loadings result
+is used. The default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>toreturn</strong> (<em>ndarray</em>) – Returns an unfolded dataset from
-the selected cluster_source</p></li>
-<li><p><strong>navigation_mask</strong> (<em>ndarray</em>) – navigation_mask (flattened and inverted if needed)</p></li>
-<li><p><strong>signal_mask</strong> (<em>ndarray</em>) – signal mask (flattened and inverted if needed)</p></li>
-</ul>
-</p>
+<dd class="field-even"><p><strong>toreturn</strong> – Returns an unfolded dataset from
+the selected cluster_source</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -568,38 +561,26 @@ the selected cluster_source</p></li>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA._scale_data_for_clustering">
-<code class="sig-name descname">_scale_data_for_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">'norm'</span></em>, <em class="sig-param"><span class="n">scaling_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._scale_data_for_clustering" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_scale_data_for_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_signal</span></em>, <em class="sig-param"><span class="n">preprocessing</span><span class="o">=</span><span class="default_value">'norm'</span></em>, <em class="sig-param"><span class="n">preprocessing_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA._scale_data_for_clustering" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale data for cluster analysis</p>
 <p>Results are stored in <cite>learning_results</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cluster_source</strong> (<em>{&quot;bss&quot;</em><em>, </em><em>&quot;decomposition&quot;</em><em>, </em><em>&quot;signal&quot;</em><em>, </em><em>Signal}</em>) – If “bss” the blind source separation results are used
+<li><p><strong>cluster_signal</strong> (<em>{&quot;bss&quot;</em><em>, </em><em>&quot;decomposition&quot;</em><em>, </em><em>&quot;signal&quot;</em><em>, </em><em>Signal}</em>) – If “bss” the blind source separation results are used
 If “decomposition” the decomposition results are used
 if “signal” the signal data is used (signal should be unfolded)</p></li>
-<li><p><strong>scaling</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em>,</em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>scikit learn scaling method}</em>) – default: ‘norm’
-Preprocessing the data before cluster analysis requires scaling
-the data to be clustered to similar scales. Standard scaling
-adjusts each feature to have uniform variation. Norm scaling
+<li><p><strong>preprocessing</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em>,</em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>scikit learn preprocessing method}</em>) – default: ‘norm’
+Preprocessing the data before cluster analysis requires preprocessing
+the data to be clustered to similar scales. Standard preprocessing
+adjusts each feature to have uniform variation. Norm preprocessing
 adjusts treats the set of features like a vector and
 each measurement is scaled to length 1.
 You can also pass a cikit-learn preprocessing object
 See scaling methods in scikit-learn preprocessing for further
 details.</p></li>
-<li><p><strong>scaling_kwargs</strong> – Additional parameters passed to the cluster scaling algorithm.
-See sklearn.preprocessing scaling methods for further details</p></li>
-<li><p><strong>number_of_components</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> , </em><em>default None</em>) – If you are clustering using the decomposition results
-(cluster_source = “decomposition”) you can define how many
-components to use.   if set to None the method uses the
-estimate of significant components found in the decomposition step
-using the elbow method
-(learningresults.number_significant_components)</p></li>
-<li><p><strong>navigation_mask</strong> (<em>boolean numpy array</em>) – The navigation locations marked as True are not used in the
-clustering.</p></li>
-<li><p><strong>signal_mask</strong> (<em>boolean numpy array</em>) – The signal locations marked as True are not used in the
-clustering.  Note that if cluster_source=”decomposition” or “bss”
-the signal_mask is ignored. The number of PCA components is used to
-set the number of components to use.</p></li>
+<li><p><strong>preprocessing_kwargs</strong> – Additional parameters passed to the cluster preprocessing algorithm.
+See sklearn.preprocessing preprocessing methods for further details</p></li>
 </ul>
 </dd>
 </dl>
@@ -609,10 +590,10 @@ set the number of components to use.</p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">clusters_analysis()</span></code>,</p></li>
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="hyperspy.learn.mva.MVA.estimate_number_of_clusters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_number_of_clusters()</span></code></a>,</p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code>,</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_centers()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_signals()</span></code>,</p></li>
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.plot_cluster_metric" title="hyperspy.learn.mva.MVA.plot_cluster_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_metric()</span></code></a>,</p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_results" title="hyperspy.signal.MVATools.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
-<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_centers" title="hyperspy.signal.MVATools.plot_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_signals" title="hyperspy.signal.MVATools.plot_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_signals()</span></code></a></p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_labels" title="hyperspy.signal.MVATools.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
 </ul>
 </div>
@@ -634,7 +615,7 @@ set the number of components to use.</p></li>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA.blind_source_separation">
-<code class="sig-name descname">blind_source_separation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'sklearn_fastica'</span></em>, <em class="sig-param"><span class="n">diff_order</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">diff_axes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">factors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">comp_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on_loadings</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">reverse_component_criterion</span><span class="o">=</span><span class="default_value">'factors'</span></em>, <em class="sig-param"><span class="n">whiten_method</span><span class="o">=</span><span class="default_value">'pca'</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_info</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.blind_source_separation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">blind_source_separation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'sklearn_fastica'</span></em>, <em class="sig-param"><span class="n">diff_order</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">diff_axes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">factors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">comp_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on_loadings</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">reverse_component_criterion</span><span class="o">=</span><span class="default_value">'factors'</span></em>, <em class="sig-param"><span class="n">whiten_method</span><span class="o">=</span><span class="default_value">'PCA'</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_info</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.blind_source_separation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply blind source separation (BSS) to the result of a decomposition.</p>
 <p>The results are stored in <code class="docutils literal notranslate"><span class="pre">self.learning_results</span></code>.</p>
 <p>Read more in the <a class="reference internal" href="../user_guide/mva.html#mva-blind-source-separation"><span class="std std-ref">User Guide</span></a>.</p>
@@ -670,7 +651,7 @@ mask shape must be equal to the signal shape
 decomposition, otherwise, perform the BSS on the factors.</p></li>
 <li><p><strong>reverse_component_criterion</strong> (<em>{&quot;factors&quot;</em><em>, </em><em>&quot;loadings&quot;}</em><em>, </em><em>default &quot;factors&quot;</em>) – Use either the factors or the loadings to determine if the
 component needs to be reversed.</p></li>
-<li><p><strong>whiten_method</strong> (<em>{&quot;pca&quot;</em><em>, </em><em>&quot;zca&quot;</em><em>, </em><em>None}</em><em>, </em><em>default &quot;pca&quot;</em>) – How to whiten the data prior to blind source separation.
+<li><p><strong>whiten_method</strong> (<em>{&quot;PCA&quot;</em><em>, </em><em>&quot;ZCA&quot;</em><em>, </em><em>None}</em><em>, </em><em>default &quot;PCA&quot;</em>) – How to whiten the data prior to blind source separation.
 If None, no whitening is applied. See <a class="reference internal" href="hyperspy.learn.whitening.html#hyperspy.learn.whitening.whiten_data" title="hyperspy.learn.whitening.whiten_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">whiten_data()</span></code></a>
 for more details.</p></li>
 <li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – The result of the decomposition is stored internally. However,
@@ -709,7 +690,7 @@ Estimator object.</p></li>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA.cluster_analysis">
-<code class="sig-name descname">cluster_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">n_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">source_for_centers</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">'norm'</span></em>, <em class="sig-param"><span class="n">scaling_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'kmeans'</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.cluster_analysis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cluster_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">source_for_centers</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preprocessing</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preprocessing_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.cluster_analysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cluster analysis of a signal or decomposition results of a signal
 Results are stored in <cite>learning_results</cite>.</p>
 <dl class="field-list simple">
@@ -721,26 +702,24 @@ if “signal” the signal data is used
 Note that using the signal or BaseSignal can be memory intensive
 and is only recommended if the Signal dimension is small
 BaseSignal must have the same navigation dimensions as the signal.</p></li>
-<li><p><strong>n_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default = 2</em>) – Number of clusters to find using the one of the pre-defined methods
-“kmeans”,”agglomerative”,”minibatchkmeans”,”spectralclustering”</p></li>
 <li><p><strong>source_for_centers</strong> (<em>{None</em><em>,</em><em>&quot;decomposition&quot;</em><em>,</em><em>&quot;bss&quot;</em><em>,</em><em>&quot;signal&quot;</em><em>,</em><em>BaseSignal}</em><em>,</em>) – default : None
 If None the cluster_source is used
 If “bss” the blind source separation results are used
 If “decomposition” the decomposition results are used
 if “signal” the signal data is used
 BaseSignal must have the same navigation dimensions as the signal.</p></li>
-<li><p><strong>scaling</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em>,</em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>scikit learn scaling method}</em>) – default: ‘norm’
-Preprocessing the data before cluster analysis requires scaling
-the data to be clustered to similar scales. Standard scaling
-adjusts each feature to have uniform variation. Norm scaling
+<li><p><strong>preprocessing</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em>,</em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>scikit learn preprocessing method}</em>) – default: ‘norm’
+Preprocessing the data before cluster analysis requires preprocessing
+the data to be clustered to similar scales. Standard preprocessing
+adjusts each feature to have uniform variation. Norm preprocessing
 adjusts treats the set of features like a vector and
 each measurement is scaled to length 1.
 You can also pass one of the scikit-learn preprocessing
 scale_method = import sklearn.processing.StandadScaler()
-scaling = scale_method
-See scaling methods in scikit-learn preprocessing for further
+preprocessing = scale_method
+See preprocessing methods in scikit-learn preprocessing for further
 details.</p></li>
-<li><p><strong>scaling_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Additional parameters passed to the cluster scaling algorithm.
+<li><p><strong>preprocessing_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Additional parameters passed to the supported sklearn preprocessing methods.
 See sklearn.preprocessing scaling methods for further details</p></li>
 <li><p><strong>number_of_components</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default None</em>) – If you are getting the cluster centers using the decomposition
 results (cluster_source_for_centers=”decomposition”) you can define how
@@ -754,16 +733,21 @@ This applies to both bss and decomposition results.</p></li>
 clustering for “signal” or Signals supplied as cluster source.
 This is not applied to decomposition results or source_for_centers
 (as it may be a different shape to the cluster source)</p></li>
-<li><p><strong>algorithm</strong> (<em>{ &quot;kmeans&quot; | &quot;agglomerative&quot; | &quot;minibatchkmeans&quot; | &quot;spectralclustering&quot;}</em>) – See scikit-lear documentation. Default “kmeans”</p></li>
+<li><p><strong>algorithm</strong> (<em>{ &quot;kmeans&quot; | &quot;agglomerative&quot; | &quot;minibatchkmeans&quot; | &quot;spectralclustering&quot;}</em>) – See scikit-learn documentation. Default “kmeans”</p></li>
 <li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – The result of the cluster analysis is stored internally. However,
 the cluster class used  contain a number of attributes.
 If True (the default is False)
 return the cluster object so the attributes can be accessed.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict  optional</em><em>, </em><em>default - empty</em>) – Additional parameters passed to the clustering algorithm.
+<li><p><strong>**kwargs</strong> (<em>dict  optional</em><em>, </em><em>default - empty</em>) – Additional parameters passed to the clustering class for initialization.
 For example, in case of the “kmeans” algorithm, <cite>n_init</cite> can be
 used to define the number of times the algorithm is restarted to
 optimize results.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to find using the one of the pre-defined methods
+“kmeans”,”agglomerative”,”minibatchkmeans”,”spectralclustering”
+See sklearn.cluster for details</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -771,10 +755,11 @@ optimize results.</p></li>
 <ul class="simple">
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="hyperspy.learn.mva.MVA.estimate_number_of_clusters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_number_of_clusters()</span></code></a>,</p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code>,</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_centers()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_signals()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_distances()</span></code>,</p></li>
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.plot_cluster_metric" title="hyperspy.learn.mva.MVA.plot_cluster_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_metric()</span></code></a>,</p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_results" title="hyperspy.signal.MVATools.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
-<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_centers" title="hyperspy.signal.MVATools.plot_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_signals" title="hyperspy.signal.MVATools.plot_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_signals()</span></code></a></p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_labels" title="hyperspy.signal.MVATools.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
 </ul>
 </div>
@@ -792,7 +777,7 @@ optimize results.</p></li>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA.decomposition">
-<code class="sig-name descname">decomposition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">normalize_poissonian_noise</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'svd'</span></em>, <em class="sig-param"><span class="n">output_dimension</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">centre</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">auto_transpose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">var_array</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">var_func</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reproject</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_info</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">svd_solver</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">copy</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.decomposition" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">decomposition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">normalize_poissonian_noise</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'SVD'</span></em>, <em class="sig-param"><span class="n">output_dimension</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">centre</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">auto_transpose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">var_array</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">var_func</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reproject</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_info</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_info</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">svd_solver</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">copy</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.decomposition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a decomposition to a dataset with a choice of algorithms.</p>
 <p>The results are stored in <code class="docutils literal notranslate"><span class="pre">self.learning_results</span></code>.</p>
 <p>Read more in the <a class="reference internal" href="../user_guide/mva.html#mva-decomposition"><span class="std std-ref">User Guide</span></a>.</p>
@@ -801,7 +786,7 @@ optimize results.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>normalize_poissonian_noise</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, scale the signal to normalize Poissonian noise using
 the approach described in <a class="reference internal" href="#keenan2004" id="id1"><span>[Keenan2004]</span></a>.</p></li>
-<li><p><strong>algorithm</strong> (<em>{&quot;svd&quot;</em><em>, </em><em>&quot;mlpca&quot;</em><em>, </em><em>&quot;sklearn_pca&quot;</em><em>, </em><em>&quot;nmf&quot;</em><em>, </em><em>&quot;sparse_pca&quot;</em><em>, </em><em>&quot;mini_batch_sparse_pca&quot;</em><em>, </em><em>&quot;rpca&quot;</em><em>, </em><em>&quot;orpca&quot;</em><em>, </em><em>&quot;ornmf&quot;</em><em>, </em><em>custom object}</em><em>, </em><em>default &quot;svd&quot;</em>) – The decomposition algorithm to use. If algorithm is an object,
+<li><p><strong>algorithm</strong> (<em>{&quot;SVD&quot;</em><em>, </em><em>&quot;MLPCA&quot;</em><em>, </em><em>&quot;sklearn_pca&quot;</em><em>, </em><em>&quot;NMF&quot;</em><em>, </em><em>&quot;sparse_pca&quot;</em><em>, </em><em>&quot;mini_batch_sparse_pca&quot;</em><em>, </em><em>&quot;RPCA&quot;</em><em>, </em><em>&quot;ORPCA&quot;</em><em>, </em><em>&quot;ORNMF&quot;</em><em>, </em><em>custom object}</em><em>, </em><em>default &quot;SVD&quot;</em>) – The decomposition algorithm to use. If algorithm is an object,
 it must implement a <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> method or <code class="docutils literal notranslate"><span class="pre">fit()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> methods, in the same manner as a scikit-learn estimator.</p></li>
 <li><p><strong>output_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of components to keep/calculate.
@@ -809,26 +794,26 @@ Default is None, i.e. <code class="docutils literal notranslate"><span class="pr
 <li><p><strong>centre</strong> (<em>{None</em><em>, </em><em>&quot;navigation&quot;</em><em>, </em><em>&quot;signal&quot;}</em><em>, </em><em>default None</em>) – <ul>
 <li><p>If None, the data is not centered prior to decomposition.</p></li>
 <li><p>If “navigation”, the data is centered along the navigation axis.
-Only used by the “svd” algorithm.</p></li>
+Only used by the “SVD” algorithm.</p></li>
 <li><p>If “signal”, the data is centered along the signal axis.
-Only used by the “svd” algorithm.</p></li>
+Only used by the “SVD” algorithm.</p></li>
 </ul>
 </p></li>
 <li><p><strong>auto_transpose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, automatically transposes the data to boost performance.
-Only used by the “svd” algorithm.</p></li>
+Only used by the “SVD” algorithm.</p></li>
 <li><p><strong>navigation_mask</strong> (<em>boolean numpy array</em>) – The navigation locations marked as True are not used in the
-decompostion.</p></li>
+decomposition.</p></li>
 <li><p><strong>signal_mask</strong> (<em>boolean numpy array</em>) – The signal locations marked as True are not used in the
 decomposition.</p></li>
 <li><p><strong>var_array</strong> (<em>numpy array</em>) – Array of variance for the maximum likelihood PCA algorithm.
-Only used by the “mlpca” algorithm.</p></li>
+Only used by the “MLPCA” algorithm.</p></li>
 <li><p><strong>var_func</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>function</em><em> or </em><em>numpy array</em><em>, </em><em>default None</em>) – <ul>
 <li><p>If None, ignored</p></li>
 <li><p>If function, applies the function to the data to obtain <code class="docutils literal notranslate"><span class="pre">var_array</span></code>.
-Only used by the “mlpca” algorithm.</p></li>
+Only used by the “MLPCA” algorithm.</p></li>
 <li><p>If numpy array, creates <code class="docutils literal notranslate"><span class="pre">var_array</span></code> by applying a polynomial function
 defined by the array of coefficients to the data. Only used by
-the “mlpca” algorithm.</p></li>
+the “MLPCA” algorithm.</p></li>
 </ul>
 </p></li>
 <li><p><strong>reproject</strong> (<em>{None</em><em>, </em><em>&quot;signal&quot;</em><em>, </em><em>&quot;navigation&quot;</em><em>, </em><em>&quot;both&quot;}</em><em>, </em><em>default None</em>) – If not None, the results of the decomposition will be projected in
@@ -850,10 +835,10 @@ method is enabled. Otherwise the exact full SVD is computed and
 optionally truncated afterwards.</p>
 </dd>
 <dt>If full:</dt><dd><p>run exact SVD, calling the standard LAPACK solver via
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.linalg.svd()</span></code></a>, and select the components by postprocessing</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.linalg.svd()</span></code></a>, and select the components by postprocessing</p>
 </dd>
 <dt>If arpack:</dt><dd><p>use truncated SVD, calling ARPACK solver via
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.svds.html#scipy.sparse.linalg.svds" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.sparse.linalg.svds()</span></code></a>. It requires strictly
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.svds.html#scipy.sparse.linalg.svds" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.sparse.linalg.svds()</span></code></a>. It requires strictly
 <cite>0 &lt; output_dimension &lt; min(data.shape)</cite></p>
 </dd>
 <dt>If randomized:</dt><dd><p>use truncated SVD, calling <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.extmath.randomized_svd.html#sklearn.utils.extmath.randomized_svd" title="(in scikit-learn v0.23)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.utils.extmath.randomized_svd()</span></code></a>
@@ -875,7 +860,7 @@ usage, but care must be taken since data will be overwritten.</p></li>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p><strong>return_info</strong> –</p>
 <ul class="simple">
-<li><p>If True and ‘algorithm’ in [‘rpca’, ‘orpca’, ‘ornmf’], returns
+<li><p>If True and ‘algorithm’ in [‘RPCA’, ‘ORPCA’, ‘ORNMF’], returns
 the low-rank (X) and sparse (E) matrices from robust PCA/NMF.</p></li>
 <li><p>If True and ‘algorithm’ is an sklearn Estimator, returns the
 Estimator object.</p></li>
@@ -957,7 +942,7 @@ Computing Systems Workshops, pp. 166-171, June 2011.</p>
 
 <dl class="py method">
 <dt id="hyperspy.learn.mva.MVA.estimate_number_of_clusters">
-<code class="sig-name descname">estimate_number_of_clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">max_clusters</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">'norm'</span></em>, <em class="sig-param"><span class="n">scaling_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'kmeans'</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'gap'</span></em>, <em class="sig-param"><span class="n">n_ref</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">estimate_number_of_clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_source</span></em>, <em class="sig-param"><span class="n">max_clusters</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">preprocessing</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preprocessing_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">number_of_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">navigation_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'gap'</span></em>, <em class="sig-param"><span class="n">n_ref</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs cluster analysis of a signal for cluster sizes ranging from
 n_clusters =2 to max_clusters ( default 12)
 Note that this can be a slow process for large datasets so please
@@ -977,17 +962,17 @@ Input Signal must have the same navigation dimensions as the
 signal instance.</p></li>
 <li><p><strong>max_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 10</em>) – Max number of clusters to use. The method will scan from 2 to
 max_clusters.</p></li>
-<li><p><strong>scaling</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em> or </em><em>sklearn preprocessing object}</em>) – default: ‘norm’
-Preprocessing the data before cluster analysis requires scaling
-the data to be clustered to similar scales. Standard scaling
-adjusts each feature to have uniform variation. Norm scaling
+<li><p><strong>preprocessing</strong> (<em>{&quot;standard&quot;</em><em>,</em><em>&quot;norm&quot;</em><em>,</em><em>&quot;minmax&quot;</em><em> or </em><em>sklearn-like preprocessing object}</em>) – default: ‘norm’
+Preprocessing the data before cluster analysis requires preprocessing
+the data to be clustered to similar scales. Standard preprocessing
+adjusts each feature to have uniform variation. Norm preprocessing
 adjusts treats the set of features like a vector and
 each measurement is scaled to length 1.
 You can also pass an instance of a sklearn preprocessing module.
-See scaling methods in scikit-learn preprocessing for further
+See preprocessing methods in scikit-learn preprocessing for further
 details.</p></li>
-<li><p><strong>scaling_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>default empty</em>) – Additional parameters passed to the cluster scaling algorithm.
-See sklearn.preprocessing scaling methods for further details</p></li>
+<li><p><strong>preprocessing_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>default empty</em>) – Additional parameters passed to the cluster preprocessing algorithm.
+See sklearn.preprocessing preprocessing methods for further details</p></li>
 <li><p><strong>number_of_components</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default None</em>) – If you are getting the cluster centers using the decomposition
 results (cluster_source_for_centers=”decomposition”) you can define how
 many PCA components to use. If set to None the method uses the
@@ -1008,18 +993,24 @@ For elbow the optimal k is the knee or elbow point.
 For gap the optimal k is the first k gap(k)&gt;= gap(k+1)-std_error
 For silhouette the optimal k will be one of the “maxima” found with
 this method</p></li>
-<li><p><strong>n_ref</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 10</em>) – Number of random references to use in gap statistics method
+<li><p><strong>n_ref</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 4</em>) – Number of references to use in gap statistics method
 Gap statistics compares the results from clustering the data to
-clustering random data. This random clustering is
-typically averaged n_ref times to get an statistical average</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict {}  default empty</em>) – Additional parameters passed to the clustering algorithm.</p></li>
+clustering uniformly distributed data. As clustering has
+a random variation it is typically averaged n_ref times
+to get an statistical average</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict {}  default empty</em>) – Parameters passed to the clustering algorithm.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>best_k</strong> – Estimate of the best cluster size</p>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to find using the one of the pre-defined methods
+“kmeans”,”agglomerative”,”minibatchkmeans”,”spectralclustering”
+See sklearn.cluster for details</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>best_k</strong> – Estimate of the best cluster size</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -1027,10 +1018,11 @@ typically averaged n_ref times to get an statistical average</p></li>
 <ul class="simple">
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a>,</p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code>,</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_centers()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_signals()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_distances()</span></code>,</p></li>
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.plot_cluster_metric" title="hyperspy.learn.mva.MVA.plot_cluster_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_metric()</span></code></a>,</p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_results" title="hyperspy.signal.MVATools.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
-<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_centers" title="hyperspy.signal.MVATools.plot_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_signals" title="hyperspy.signal.MVATools.plot_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_signals()</span></code></a></p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_labels" title="hyperspy.signal.MVATools.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
 </ul>
 </div>
@@ -1105,23 +1097,6 @@ typically averaged n_ref times to get an statistical average</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="hyperspy.learn.mva.MVA.is_hyperspy_signal">
-<code class="sig-name descname">is_hyperspy_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_object</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.is_hyperspy_signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if an object is a Hyperspy Signal</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>input_object</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Object to be tests</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If true the object is a subclass of hyperspy.signal.BaseSignal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="hyperspy.learn.mva.MVA.normalize_bss_components">
 <code class="sig-name descname">normalize_bss_components</code><span class="sig-paren">(</span><em class="sig-param">target='factors'</em>, <em class="sig-param">function=&lt;function sum&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.learn.mva.MVA.normalize_bss_components" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize BSS components.</p>
@@ -1182,9 +1157,9 @@ subsequent decomposition analysis <a class="reference internal" href="#keenan200
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.estimate_number_of_clusters" title="hyperspy.learn.mva.MVA.estimate_number_of_clusters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_number_of_clusters()</span></code></a>,</p></li>
 <li><p><a class="reference internal" href="#hyperspy.learn.mva.MVA.cluster_analysis" title="hyperspy.learn.mva.MVA.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a>,</p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code>,</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_centers()</span></code>,</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_signals()</span></code>,</p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_results" title="hyperspy.signal.MVATools.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
-<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_centers" title="hyperspy.signal.MVATools.plot_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_centers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_signals" title="hyperspy.signal.MVATools.plot_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_signals()</span></code></a></p></li>
 <li><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.MVATools.plot_cluster_labels" title="hyperspy.signal.MVATools.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
 </ul>
 </div>
@@ -1375,11 +1350,19 @@ noise components and a modified cutoff threshold value:</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1390,7 +1373,6 @@ noise components and a modified cutoff threshold value:</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The Signal class &mdash; HyperSpy 1.6.dev documentation</title>
+  <title>The Signal class &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,7 +23,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,11 +38,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Interactive Operations and Region of Interest (ROI)" href="interactive_operations_ROIs.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.6.dev
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -131,7 +133,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#rebinning">Rebinning</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#folding-and-unfolding">Folding and unfolding</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#splitting-and-stacking">Splitting and stacking</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fft-and-ifft">FFT and iFFT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fast-fourier-transform-fft">Fast Fourier Transform (FFT)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inverse-fast-fourier-transform-ifft">Inverse Fast Fourier Transform (iFFT)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#changing-the-data-type">Changing the data type</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#transposing-changing-signal-spaces">Transposing (changing signal spaces)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#applying-apodization-window">Applying apodization window</a></li>
@@ -178,6 +181,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -216,7 +220,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
         
@@ -698,7 +702,7 @@ the convention adopted for specifying that position, which is described here.</p
 mastered it is one of the most powerful features of Python based code and
 greatly simplifies many common tasks. HyperSpy’s Signal indexing is similar
 to numpy array indexing and those new to Python are encouraged to read the
-associated <a class="reference external" href="http://ipython.org/">numpy documentation on the subject</a>.</p>
+associated <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html">numpy documentation on the subject</a>.</p>
 <p>Key features of indexing in HyperSpy are as follows (note that some of these
 features differ from numpy):</p>
 <ul class="simple">
@@ -1145,8 +1149,7 @@ arbitrary new shapes as long as the number of dimensions stays the same.
 However, internally, it uses two different algorithms to perform the task. Only
 when the new shape dimensions are divisors of the old shape’s, the operation
 supports <a class="reference internal" href="big_data.html#big-data-label"><span class="std std-ref">lazy-evaluation</span></a> and is usually faster.
-Otherwise, the operation requires linear interpolation and is generally slower if
-<a class="reference external" href="http://numba.pydata.org/">Numba</a> is not installed.</p>
+Otherwise, the operation requires linear interpolation.</p>
 <p>For example, the following two equivalent rebinning operations can be  performed
 lazily:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
@@ -1233,29 +1236,72 @@ to reverse the <a class="reference internal" href="../api/hyperspy.misc.utils.ht
 <p class="caption"><span class="caption-text">Splitting example.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<div class="section" id="fft-and-ifft">
-<span id="signal-fft"></span><h3>FFT and iFFT<a class="headerlink" href="#fft-and-ifft" title="Permalink to this headline">¶</a></h3>
-<p>The Fast Fourier transform and its inverse can be applied on a signal with the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> and
-the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.ifft" title="hyperspy.signal.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> methods. In order to remove streaks in FFT
-(usually used only for presenting FFT patterns rather than for quantitative
-analyses) use <code class="docutils literal notranslate"><span class="pre">apodization</span></code> attribute as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_power_apodized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">apodization</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">([</span><span class="n">fft_power</span><span class="p">,</span> <span class="n">fft_power_apodized</span><span class="p">],</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="section" id="fast-fourier-transform-fft">
+<span id="signal-fft"></span><h3>Fast Fourier Transform (FFT)<a class="headerlink" href="#fast-fourier-transform-fft" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a>
+of a signal can be computed using the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method. By default,
+the FFT is calculated with the origin at (0, 0), which will be displayed at the
+bottom left and not in the centre of the FFT. Conveniently, the <code class="docutils literal notranslate"><span class="pre">shift</span></code> argument of the
+the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method can be used to center the output of the FFT.
+In the following example, the FFT of a hologram is computed using <code class="docutils literal notranslate"><span class="pre">shift=True</span></code> and its
+output signal is displayed, which shows that the FFT results in a complex signal with a
+real and an imaginary parts:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_shifted</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_shifted</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="figure align-center">
-<a class="reference internal image-reference" href="../_images/ref_hologram_fft.png"><img alt="../_images/ref_hologram_fft.png" src="../_images/ref_hologram_fft.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../_images/FFT_vacuum_reference_hologram.png"><img alt="../_images/FFT_vacuum_reference_hologram.png" src="../_images/FFT_vacuum_reference_hologram.png" style="width: 800px;" /></a>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">apodization</span></code> attribute can also take following values which correspond to types of apodization windows:
-<code class="docutils literal notranslate"><span class="pre">hann</span></code> (or <code class="docutils literal notranslate"><span class="pre">apodization=True</span></code>), <code class="docutils literal notranslate"><span class="pre">hamming</span></code>, <code class="docutils literal notranslate"><span class="pre">tukey</span></code>.</p>
-<p>Note that for visual inspection of FFT it is common to plot logarithm of amplitude
-rather than FFT itself as it is done in the example above.</p>
-<p>By default both methods calculate FFT and IFFT with origin at (0, 0) (not in the centre of FFT). Use <code class="docutils literal notranslate"><span class="pre">shift=True</span></code> option to
-calculate FFT and the inverse with origin shifted in the centre.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im_ifft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">fft_shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">fft_shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>The strong features in the real and imaginary parts correspond to the lattice fringes of the
+hologram.</p>
+<p>For visual inspection of the FFT it is convenient to display its power spectrum
+(i.e. the square of the absolute value of the FFT) rather than FFT itself as it is done
+in the example above by using the <code class="docutils literal notranslate"><span class="pre">power_spectum</span></code> argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">power_spectum</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> since it is the first argument of the
+<a class="reference internal" href="../api/hyperspy._signals.complex_signal.html#hyperspy._signals.complex_signal.ComplexSignal_mixin.plot" title="hyperspy._signals.complex_signal.ComplexSignal_mixin.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method for complex signal.
+When <code class="docutils literal notranslate"><span class="pre">power_spectrum=True</span></code>, the plot will be displayed on a log scale by default.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/FFT_vacuum_reference_hologram_power_spectrum.png"><img alt="../_images/FFT_vacuum_reference_hologram_power_spectrum.png" src="../_images/FFT_vacuum_reference_hologram_power_spectrum.png" style="width: 400px;" /></a>
+</div>
+<p>The visualisation can be further improved by setting the minimum value to display to the 30-th
+percentile; this can be done by using <code class="docutils literal notranslate"><span class="pre">vmin=&quot;30th&quot;</span></code> in the plot function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s2">&quot;30th&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png"><img alt="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png" src="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png" style="width: 400px;" /></a>
+</div>
+<p>The streaks visible in the FFT come from the edge of the image and can be removed by
+applying an <a class="reference external" href="https://en.wikipedia.org/wiki/Apodization">apodization</a> function to the original
+signal before the computation of the FFT. This can be done using the <code class="docutils literal notranslate"><span class="pre">apodization</span></code> argument of
+the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method and it is usually used for visualising FFT patterns
+rather than for quantitative analyses. By default, the so-called <code class="docutils literal notranslate"><span class="pre">hann</span></code> windows is
+used but different type of windows such as the <code class="docutils literal notranslate"><span class="pre">hamming</span></code> and <code class="docutils literal notranslate"><span class="pre">tukey</span></code> windows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">reference_hologram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_apodized</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">apodization</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_apodized</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s2">&quot;30th&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png"><img alt="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png" src="../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png" style="width: 400px;" /></a>
+</div>
+</div>
+<div class="section" id="inverse-fast-fourier-transform-ifft">
+<h3>Inverse Fast Fourier Transform (iFFT)<a class="headerlink" href="#inverse-fast-fourier-transform-ifft" title="Permalink to this headline">¶</a></h3>
+<p>Inverse fast Fourier transform can be calculated from a complex signal by using the
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.ifft" title="hyperspy.signal.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> method. Similarly to the <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.fft" title="hyperspy.signal.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method,
+the <code class="docutils literal notranslate"><span class="pre">shift</span></code> argument can be provided to shift the origin of the iFFT when necessary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im_ifft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1487,19 +1533,26 @@ with histograms of several random chi-square distributions:</p>
 <code class="docutils literal notranslate"><span class="pre">metadata.Signal.Noise_properties.variance</span></code> attribute if it exists. You can
 set this attribute as in the following example where we set the variance to be
 10:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Noise_properties.variance&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Noise_properties.variance&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For heterocedastic noise the <code class="docutils literal notranslate"><span class="pre">variance</span></code> attribute must be a
+<p>You can also use the functions <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.set_noise_variance" title="hyperspy.signal.BaseSignal.set_noise_variance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_noise_variance()</span></code></a>
+and <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.get_noise_variance" title="hyperspy.signal.BaseSignal.get_noise_variance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_noise_variance()</span></code></a> for convenience:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_noise_variance</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_noise_variance</span><span class="p">()</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>For heteroscedastic noise the <code class="docutils literal notranslate"><span class="pre">variance</span></code> attribute must be a
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>.  Poissonian noise is a common case  of
-heterocedastic noise where the variance is equal to the expected value. The
+heteroscedastic noise where the variance is equal to the expected value. The
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.estimate_poissonian_noise_variance" title="hyperspy.signal.BaseSignal.estimate_poissonian_noise_variance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_poissonian_noise_variance()</span></code></a>
-<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> method can help setting the variance of data with
-semi-poissonian noise. With the default arguments, this method simply sets the
+method can help setting the variance of data with
+semi-Poissonian noise. With the default arguments, this method simply sets the
 variance attribute to the given <code class="docutils literal notranslate"><span class="pre">expected_value</span></code>. However, more generally
-(although then noise is not strictly poissonian), the variance may be
+(although the noise is not strictly Poissonian), the variance may be
 proportional to the expected value. Moreover, when the noise is a mixture of
-white (gaussian) and poissonian noise, the variance is described by the
+white (Gaussian) and Poissonian noise, the variance is described by the
 following linear model:</p>
 <blockquote>
 <div><div class="math">
@@ -1604,7 +1657,7 @@ calculate the angle, which is equivalent to using the <cite>phase</cite> propert
 argument is used. If the data is real, the angle will be 0 for positive
 values and 2$pi$ for negative values. If the <cite>deg</cite> parameter is set to
 <cite>True</cite>, the result will be given in degrees, otherwise in rad (default). The
-underlying function is the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.angle.html#numpy.angle" title="(in NumPy v1.18)"><code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code></a> function.
+underlying function is the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.angle.html#numpy.angle" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code></a> function.
 <code class="xref py py-func docutils literal notranslate"><span class="pre">angle()</span></code> will return an appropriate
 HyperSpy signal.</p>
 </div>
@@ -1664,11 +1717,19 @@ available via the <a class="reference internal" href="../api/hyperspy.axes.html#
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1679,7 +1740,6 @@ available via the <a class="reference internal" href="../api/hyperspy.axes.html#
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.models.eelsmodel module &mdash; HyperSpy 1.6.dev documentation</title>
+  <title>hyperspy.models.eelsmodel module &mdash; HyperSpy 1.6.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
 
   
   
@@ -19,7 +23,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,11 +38,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyperspy.models.model1d module" href="hyperspy.models.model1d.html" />
@@ -69,7 +70,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
           
 
           
@@ -82,7 +83,7 @@
             
             
               <div class="version">
-                1.6.dev
+                1.6.0
               </div>
             
           
@@ -99,6 +100,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -138,6 +140,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -176,7 +179,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">hyperspy</a> &raquo;</li>
         
@@ -427,40 +430,111 @@ Otherwise, it will be performed only on the listed components.</p>
 
 <dl class="py method">
 <dt id="hyperspy.models.eelsmodel.EELSModel.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fitter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'ls'</span></em>, <em class="sig-param"><span class="n">grad</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">bounded</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ext_bounding</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">update_plot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'std'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fits the model to the experimental data</p>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'std'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the model to the experimental data.</p>
+<p>Read more in the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fitter</strong> (<em>{None</em><em>, </em><em>&quot;leastsq&quot;</em><em>, </em><em>&quot;odr&quot;</em><em>, </em><em>&quot;mpfit&quot;</em><em>, </em><em>&quot;fmin&quot;}</em>) – The optimizer to perform the fitting. If None the fitter
-defined in the Preferences is used. leastsq is the most
-stable but it does not support bounding. mpfit supports
-bounding. fmin is the only one that supports
-maximum likelihood estimation, but it is less robust than
-the Levenberg–Marquardt based leastsq and mpfit, and it is
-better to use it after one of them to refine the estimation.</p></li>
-<li><p><strong>method</strong> (<em>{'ls'</em><em>, </em><em>'ml'}</em>) – Choose ‘ls’ (default) for least squares and ‘ml’ for
-maximum-likelihood estimation. The latter only works with
-fitter = ‘fmin’.</p></li>
-<li><p><strong>grad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the analytical gradient is used if defined to
-speed up the estimation.</p></li>
-<li><p><strong>ext_bounding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, enforce bounding by keeping the value of the
-parameters constant out of the defined bounding area.</p></li>
-<li><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True performs bounded optimization if the fitter
-supports it. Currently only mpfit support bounding.</p></li>
-<li><p><strong>update_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the plot is updated during the optimization
-process. It slows down the optimization but it permits
-to visualize the optimization evolution.</p></li>
-<li><p><strong>kind</strong> (<em>{'std'</em><em>, </em><em>'smart'}</em>) – If ‘std’ (default) performs standard fit. If ‘smart’
-performs smart_fit</p></li>
-<li><p><strong>**kwargs</strong> (<em>key word arguments</em>) – Any extra key word argument will be passed to the chosen
-fitter</p></li>
+<li><p><strong>kind</strong> (<em>{&quot;std&quot;</em><em>, </em><em>&quot;smart&quot;}</em><em>, </em><em>default &quot;std&quot;</em>) – If “std”, performs standard fit. If “smart”,
+performs a smart_fit - for more details see
+the <a class="reference internal" href="../user_guide/eels.html#eels-fitting"><span class="std std-ref">User Guide</span></a>.</p></li>
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
+<blockquote>
+<div><ul>
+<li><p>”lm” performs least-squares optimization using the
+Levenberg-Marquardt algorithm, and supports bounds
+on parameters.</p></li>
+<li><p>”trf” performs least-squares optimization using the
+Trust Region Reflective algorithm, and supports
+bounds on parameters.</p></li>
+<li><p>”dogbox” performs least-squares optimization using the
+dogleg algorithm with rectangular trust regions, and
+supports bounds on parameters.</p></li>
+<li><p>”odr” performs the optimization using the orthogonal
+distance regression (ODR) algorithm. It does not support
+bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/odr.html#module-scipy.odr" title="(in SciPy v1.5.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
+<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
+can be used here. See the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>
+documentation for more details.</p></li>
+<li><p>”Differential Evolution” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
+details on available options.</p></li>
+<li><p>”Dual Annealing” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
+details on available options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+<li><p>”SHGO” (simplicial homology global optimization” is a global
+optimization method. It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
+options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
 </ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>loss_function</strong> (<em>{&quot;ls&quot;</em><em>, </em><em>&quot;ML-poisson&quot;</em><em>, </em><em>&quot;huber&quot;</em><em>, </em><em>callable}</em><em>, </em><em>default &quot;ls&quot;</em>) – <p>The loss function to use for minimization. Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> is available
+if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is one of <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">&quot;dogbox&quot;,</span> <span class="pre">&quot;odr&quot;]</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>”ls” minimizes the least-squares loss function.</p></li>
+<li><p>”ML-poisson” minimizes the negative log-likelihood for
+Poisson-distributed data. Also known as Poisson maximum
+likelihood estimation (MLE).</p></li>
+<li><p>”huber” minimize the Huber loss function. The delta value
+of the Huber function is controlled by the <code class="docutils literal notranslate"><span class="pre">huber_delta</span></code>
+keyword argument (the default value is 1.0).</p></li>
+<li><p>callable supports passing your own minimization function.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>grad</strong> (<em>{&quot;fd&quot;</em><em>, </em><em>&quot;analytical&quot;</em><em>, </em><em>callable</em><em>, </em><em>None}</em><em>, </em><em>default &quot;fd&quot;</em>) – <p>Whether to use information about the gradient of the loss function
+as part of the optimization. This parameter has no effect if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a derivative-free or global optimization method.</p>
+<blockquote>
+<div><ul>
+<li><p>”fd” uses a finite difference scheme (if available) for numerical
+estimation of the gradient. The scheme can be further controlled
+with the <code class="docutils literal notranslate"><span class="pre">fd_scheme</span></code> keyword argument.</p></li>
+<li><p>”analytical” uses the analytical gradient (if available) to speed
+up the optimization, since the gradient does not need to be estimated.</p></li>
+<li><p>callable should be a function that returns the gradient vector.</p></li>
+<li><p>None means that no gradient information is used or estimated. Not
+available if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is in <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">``&quot;dogbox&quot;</span></code>].</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, performs bounded parameter optimization if
+supported by <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>.</p></li>
+<li><p><strong>update_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, the plot is updated during the optimization
+process. It slows down the optimization, but it enables
+visualization of the optimization progress.</p></li>
+<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, print information about the fitting results, which
+are also stored in <code class="docutils literal notranslate"><span class="pre">model.fit_output</span></code> in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, returns the fitting results in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>fd_scheme</strong> (<em>str {&quot;2-point&quot;</em><em>, </em><em>&quot;3-point&quot;</em><em>, </em><em>&quot;cs&quot;}</em><em>, </em><em>default &quot;2-point&quot;</em>) – If <code class="docutils literal notranslate"><span class="pre">grad='fd'</span></code>, selects the finite difference scheme to use.
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – Any extra keyword argument will be passed to the chosen
+optimizer. For more information, read the docstring of the
+optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.5.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="hyperspy.models.eelsmodel.EELSModel.smart_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">smart_fit()</span></code></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">smart_fit()</span></code></p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -644,27 +718,110 @@ structure width.</p>
 <dl class="py method">
 <dt id="hyperspy.models.eelsmodel.EELSModel.smart_fit">
 <code class="sig-name descname">smart_fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start_energy</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fits EELS edges in a cascade style.
-The fitting procedure acts in iterative manner along the energy-loss-axis.
-First it fits only the background up to the first edge.
-It continues by deactivating all edges except the first one, then performs the fit.
-Then it only activates the the first two, fits, and repeats this until all
-edges are fitted simultanously.</p>
-<p>Other, non-EELSCLEdge components, are never deactivated, and fitted on every iteration.</p>
+<dd><p>Fits EELS edges in a cascade style.</p>
+<p>The fitting procedure acts in iterative manner along
+the energy-loss-axis. First it fits only the background
+up to the first edge. It continues by deactivating all
+edges except the first one, then performs the fit. Then
+it only activates the the first two, fits, and repeats
+this until all edges are fitted simultanously.</p>
+<p>Other, non-EELSCLEdge components, are never deactivated,
+and fitted on every iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>start_energy</strong> (<em>{float</em><em>, </em><em>None}</em>) – If float, limit the range of energies from the left to the
 given value.</p></li>
-<li><p><strong>**kwargs</strong> (<em>key word arguments</em>) – Any extra key word argument will be passed to
-the fit method. See the fit method documentation for
-a list of valid arguments.</p></li>
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
+<blockquote>
+<div><ul>
+<li><p>”lm” performs least-squares optimization using the
+Levenberg-Marquardt algorithm, and supports bounds
+on parameters.</p></li>
+<li><p>”trf” performs least-squares optimization using the
+Trust Region Reflective algorithm, and supports
+bounds on parameters.</p></li>
+<li><p>”dogbox” performs least-squares optimization using the
+dogleg algorithm with rectangular trust regions, and
+supports bounds on parameters.</p></li>
+<li><p>”odr” performs the optimization using the orthogonal
+distance regression (ODR) algorithm. It does not support
+bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/odr.html#module-scipy.odr" title="(in SciPy v1.5.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
+<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
+can be used here. See the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>
+documentation for more details.</p></li>
+<li><p>”Differential Evolution” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
+details on available options.</p></li>
+<li><p>”Dual Annealing” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
+details on available options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+<li><p>”SHGO” (simplicial homology global optimization” is a global
+optimization method. It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
+options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>loss_function</strong> (<em>{&quot;ls&quot;</em><em>, </em><em>&quot;ML-poisson&quot;</em><em>, </em><em>&quot;huber&quot;</em><em>, </em><em>callable}</em><em>, </em><em>default &quot;ls&quot;</em>) – <p>The loss function to use for minimization. Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> is available
+if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is one of <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">&quot;dogbox&quot;,</span> <span class="pre">&quot;odr&quot;]</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>”ls” minimizes the least-squares loss function.</p></li>
+<li><p>”ML-poisson” minimizes the negative log-likelihood for
+Poisson-distributed data. Also known as Poisson maximum
+likelihood estimation (MLE).</p></li>
+<li><p>”huber” minimize the Huber loss function. The delta value
+of the Huber function is controlled by the <code class="docutils literal notranslate"><span class="pre">huber_delta</span></code>
+keyword argument (the default value is 1.0).</p></li>
+<li><p>callable supports passing your own minimization function.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>grad</strong> (<em>{&quot;fd&quot;</em><em>, </em><em>&quot;analytical&quot;</em><em>, </em><em>callable</em><em>, </em><em>None}</em><em>, </em><em>default &quot;fd&quot;</em>) – <p>Whether to use information about the gradient of the loss function
+as part of the optimization. This parameter has no effect if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a derivative-free or global optimization method.</p>
+<blockquote>
+<div><ul>
+<li><p>”fd” uses a finite difference scheme (if available) for numerical
+estimation of the gradient. The scheme can be further controlled
+with the <code class="docutils literal notranslate"><span class="pre">fd_scheme</span></code> keyword argument.</p></li>
+<li><p>”analytical” uses the analytical gradient (if available) to speed
+up the optimization, since the gradient does not need to be estimated.</p></li>
+<li><p>callable should be a function that returns the gradient vector.</p></li>
+<li><p>None means that no gradient information is used or estimated. Not
+available if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is in <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">``&quot;dogbox&quot;</span></code>].</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, performs bounded parameter optimization if
+supported by <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>.</p></li>
+<li><p><strong>update_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, the plot is updated during the optimization
+process. It slows down the optimization, but it enables
+visualization of the optimization progress.</p></li>
+<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, print information about the fitting results, which
+are also stored in <code class="docutils literal notranslate"><span class="pre">model.fit_output</span></code> in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, returns the fitting results in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>fd_scheme</strong> (<em>str {&quot;2-point&quot;</em><em>, </em><em>&quot;3-point&quot;</em><em>, </em><em>&quot;cs&quot;}</em><em>, </em><em>default &quot;2-point&quot;</em>) – If <code class="docutils literal notranslate"><span class="pre">grad='fd'</span></code>, selects the finite difference scheme to use.
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – Any extra keyword argument will be passed to the chosen
+optimizer. For more information, read the docstring of the
+optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.5.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fit" title="hyperspy.models.eelsmodel.EELSModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -725,11 +882,19 @@ background components of the model</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2011-2020, The HyperSpy development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -740,7 +905,6 @@ background components of the model</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -451,7 +451,7 @@ Those new to Python may find indexing a somewhat esoteric concept but once
 mastered it is one of the most powerful features of Python based code and
 greatly simplifies many common tasks. HyperSpy's Signal indexing is similar
 to numpy array indexing and those new to Python are encouraged to read the
-associated `numpy documentation on the subject  <http://ipython.org/>`_.
+associated `numpy documentation on the subject <https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html>`_.
 
 
 Key features of indexing in HyperSpy are as follows (note that some of these
@@ -1072,38 +1072,93 @@ to reverse the :py:func:`~.utils.stack` function:
 
 .. _signal.fft:
 
-FFT and iFFT
-^^^^^^^^^^^^
+Fast Fourier Transform (FFT)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Fast Fourier transform and its inverse can be applied on a signal with the :py:meth:`~.signal.BaseSignal.fft` and
-the :py:meth:`~.signal.BaseSignal.ifft` methods. In order to remove streaks in FFT
-(usually used only for presenting FFT patterns rather than for quantitative
-analyses) use ``apodization`` attribute as follows:
+The `fast Fourier transform <https://en.wikipedia.org/wiki/Fast_Fourier_transform>`_ 
+of a signal can be computed using the :py:meth:`~.signal.BaseSignal.fft` method. By default, 
+the FFT is calculated with the origin at (0, 0), which will be displayed at the 
+bottom left and not in the centre of the FFT. Conveniently, the ``shift`` argument of the 
+the :py:meth:`~.signal.BaseSignal.fft` method can be used to center the output of the FFT. 
+In the following example, the FFT of a hologram is computed using ``shift=True`` and its 
+output signal is displayed, which shows that the FFT results in a complex signal with a 
+real and an imaginary parts:
 
 .. code-block:: python
 
-    >>> import numpy as np
     >>> im = hs.datasets.example_signals.reference_hologram()
-    >>> fft_power = np.log(im.fft(shift=True).amplitude)
-    >>> fft_power_apodized = np.log(im.fft(shift=True, apodization=True).amplitude)
-    >>> hs.plot.plot_images([fft_power, fft_power_apodized], tight_layout=True)
+    >>> fft_shifted = im.fft(shift=True)
+    >>> fft_shifted.plot()
 
-.. figure::  images/ref_hologram_fft.png
+.. figure::  images/FFT_vacuum_reference_hologram.png
   :align:   center
   :width:   800
 
-``apodization`` attribute can also take following values which correspond to types of apodization windows:
-``hann`` (or ``apodization=True``), ``hamming``, ``tukey``.
+The strong features in the real and imaginary parts correspond to the lattice fringes of the 
+hologram.
 
-Note that for visual inspection of FFT it is common to plot logarithm of amplitude
-rather than FFT itself as it is done in the example above.
-
-By default both methods calculate FFT and IFFT with origin at (0, 0) (not in the centre of FFT). Use ``shift=True`` option to
-calculate FFT and the inverse with origin shifted in the centre.
+For visual inspection of the FFT it is convenient to display its power spectrum 
+(i.e. the square of the absolute value of the FFT) rather than FFT itself as it is done 
+in the example above by using the ``power_spectum`` argument:
 
 .. code-block:: python
 
-    >>> im_ifft = im.fft(fft_shift=True).ifft(fft_shift=True)
+    >>> im = hs.datasets.example_signals.reference_hologram()
+    >>> fft = im.fft(True)
+    >>> fft.plot(True)
+
+Where ``power_spectum`` is set to ``True`` since it is the first argument of the 
+:py:meth:`~._signals.complex_signal.ComplexSignal_mixin.plot` method for complex signal. 
+When ``power_spectrum=True``, the plot will be displayed on a log scale by default.
+
+
+.. figure::  images/FFT_vacuum_reference_hologram_power_spectrum.png
+  :align:   center
+  :width:   400
+
+The visualisation can be further improved by setting the minimum value to display to the 30-th 
+percentile; this can be done by using ``vmin="30th"`` in the plot function:
+
+.. code-block:: python
+
+    >>> im = hs.datasets.example_signals.reference_hologram()
+    >>> fft = im.fft(True)
+    >>> fft.plot(True, vmin="30th")
+
+.. figure::  images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png
+  :align:   center
+  :width:   400
+
+The streaks visible in the FFT come from the edge of the image and can be removed by  
+applying an `apodization <https://en.wikipedia.org/wiki/Apodization>`_ function to the original 
+signal before the computation of the FFT. This can be done using the ``apodization`` argument of 
+the :py:meth:`~.signal.BaseSignal.fft` method and it is usually used for visualising FFT patterns 
+rather than for quantitative analyses. By default, the so-called ``hann`` windows is 
+used but different type of windows such as the ``hamming`` and ``tukey`` windows. 
+
+.. code-block:: python
+
+    >>> im = hs.datasets.example_signals.reference_hologram()
+    >>> fft = im.fft(shift=True)
+    >>> fft_apodized = im.fft(shift=True, apodization=True)
+    >>> fft_apodized.plot(True, vmin="30th")
+
+.. figure::  images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png
+  :align:   center
+  :width:   400
+
+
+
+Inverse Fast Fourier Transform (iFFT)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Inverse fast Fourier transform can be calculated from a complex signal by using the 
+:py:meth:`~.signal.BaseSignal.ifft` method. Similarly to the :py:meth:`~.signal.BaseSignal.fft` method, 
+the ``shift`` argument can be provided to shift the origin of the iFFT when necessary:
+
+.. code-block:: python
+
+    >>> im_ifft = im.fft(shift=True).ifft(shift=True)
 
 
 .. _signal.change_dtype:
@@ -1582,8 +1637,9 @@ added before calling :py:meth:`~.roi.BaseInteractiveROI.interactive`.
   :align:   center
   :width:   500
 
-Notably, since ROIs are independent from the signals they sub-select, the widget
-can be plotted on a different signal altogether.
+Notably,
+since ROIs are independent from the signals they sub-select, the widget can be
+plotted on a different signal altogether.
 
 .. code-block:: python
 
@@ -1639,44 +1695,22 @@ order to increase responsiveness.
     ROIs can be used in place of slices when indexing and to define a
     signal range in functions taken a ``signal_range`` argument.
 
-.. _roi-slice-label:
 
-Slicing using ROIs
-^^^^^^^^^^^^^^^^^^
-
-ROIs can be used in place of slices when indexing. For example:
+ROIs can be used in place of slices when indexing and to define a
+signal range in functions taken a ``signal_range`` argument. For example:
 
 .. code-block:: python
 
     >>> s = hs.datasets.example_signals.EDS_TEM_Spectrum()
     >>> roi = hs.roi.SpanROI(left=5, right=15)
     >>> sc = s.isig[roi]
+    >>> s.remove_background(signal_range=roi, background_type="Polynomial")
     >>> im = hs.datasets.example_signals.object_hologram()
     >>> roi = hs.roi.RectangularROI(left=120, right=460., top=300, bottom=560)
     >>> imc = im.isig[roi]
 
 .. versionadded:: 1.3
     :meth:`gui` method.
-
-.. versionadded:: 1.6
-    New :meth:`__getitem__` method for all ROIs.
-
-In addition the following all ROIs have a py:meth:`__getitem__` method that enables
-using them in place of tuples.
-For example, the method :py:meth:`~._signals.signal2d.align2D` takes a ``roi``
-argument with the left, right, top, bottom coordinates of the ROI.
-Handily, we can pass a :py:class:`~.roi.RectangularROI` ROI instead.
-
-.. code-block:: python
-
-    >>> import hyperspy.api as hs
-    >>> import numpy as np
-    >>> im = hs.signals.Signal2D(np.random.random((10,30,30))
-    >>> roi = hs.roi.RectangularROI(left=2, right=10, top=0, bottom=5))
-    >>> tuple(roi)
-    (2.0, 10.0, 0.0, 5.0)
-    >>> im.align2D(roi=roi)
-
 
 
 All ROIs have a :meth:`gui` method that displays an user interface if
@@ -1789,25 +1823,6 @@ complex phase of a signal can be unwrapped and returned as a new signal. The
 underlying method is :py:func:`~skimage.restoration.unwrap`, which uses the
 algorithm described in :ref:`[Herraez] <Herraez>`.
 
-
-.. _complex.argand:
-
-Calculate and display Argand diagram
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Sometimes it is convenient to visualize a complex signal as a plot of its
-imaginary part versus real one. In this case so called Argand diagrams can
-be calculated using :py:func:`~hyperspy.signals.ComplexSignal.argand_diagram`
-method, which returns the plot as a
-:py:class:`~._signals.complex_signal.Signal2D`. Optional arguments ``size``
-and ``display_range`` can be used to change the size (and therefore
-resolution) of the plot and to change the range for the display of the
-plot respectively. The last one is especially useful in order to zoom
-into specific regions of the plot or to limit the plot in case of noisy
-data points.
-
-An example of calculation of Aragand diagram is :ref:`shown for electron
-holography data <holo.argand-example>`.
 
 Add a linear phase ramp
 ^^^^^^^^^^^^^^^^^^^^^^^
