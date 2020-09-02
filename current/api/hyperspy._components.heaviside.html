@@ -33,7 +33,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -210,20 +210,42 @@
 <span id="hyperspy-components-heaviside-module"></span><h1>hyperspy._components.heaviside module<a class="headerlink" href="#module-hyperspy._components.heaviside" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="hyperspy._components.heaviside.HeavisideStep">
-<em class="property">class </em><code class="sig-prename descclassname">hyperspy._components.heaviside.</code><code class="sig-name descname">HeavisideStep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">module</span><span class="o">=</span><span class="default_value">'numpy'</span></em>, <em class="sig-param"><span class="n">compute_gradients</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.heaviside.HeavisideStep" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._components.heaviside.</code><code class="sig-name descname">HeavisideStep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">module</span><span class="o">=</span><span class="default_value">'numpy'</span></em>, <em class="sig-param"><span class="n">compute_gradients</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.heaviside.HeavisideStep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="hyperspy._components.expression.html#hyperspy._components.expression.Expression" title="hyperspy._components.expression.Expression"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._components.expression.Expression</span></code></a></p>
 <p>The Heaviside step function.</p>
+<p>Based on the corresponding <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.heaviside.html">numpy function</a>
+using the half maximum definition for the central point:</p>
 <div class="math">
-<p><img src="../_images/math/6a2e45017d9066851ae186ca630572a962e75c68.png" alt="f(x) =
-\\begin{cases}
-0 &amp; x&lt;n\\\\
-A &amp; x&gt;=n
-\\end{cases}"/></p>
-</div><dl class="field-list simple">
+<p><img src="../_images/math/e6429f4eed254a99246e433082f8c2e14fc81e94.png" alt="f(x) =
+\begin{cases}
+0 &amp; x&lt;n\\
+A/2 &amp; x=n\\
+A &amp; x&gt;n
+\end{cases}"/></p>
+</div><table class="docutils align-default">
+<colgroup>
+<col style="width: 52%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Parameter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/></p></td>
+<td><p>centre</p></td>
+</tr>
+<tr class="row-odd"><td><p><img class="math" src="../_images/math/211284f68205c3e66773eaf026f32a0acdd3dfb3.png" alt="A"/></p></td>
+<td><p>height</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Location parameter defining the x position of the step.</p></li>
-<li><p><strong>A</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Height parameter for x&gt;=n.</p></li>
+<li><p><strong>A</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Height parameter for x&gt;n.</p></li>
 <li><p><strong>**kwargs</strong> – Extra keyword arguments are passed to the <code class="docutils literal notranslate"><span class="pre">Expression</span></code> component.</p></li>
 </ul>
 </dd>
@@ -298,16 +320,6 @@ semicolumns:</p>
 <span class="go"> &lt;Parameter two of my function component&gt;)</span>
 </pre></div>
 </div>
-<dl class="py method">
-<dt id="hyperspy._components.heaviside.HeavisideStep.grad_A">
-<code class="sig-name descname">grad_A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.heaviside.HeavisideStep.grad_A" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="hyperspy._components.heaviside.HeavisideStep.grad_n">
-<code class="sig-name descname">grad_n</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.heaviside.HeavisideStep.grad_n" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>

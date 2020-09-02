@@ -33,7 +33,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -442,7 +442,7 @@ value.</p>
 </div>
 <dl class="py method">
 <dt id="hyperspy.model.BaseModel._as_signal_iter">
-<code class="sig-name descname">_as_signal_iter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">component_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel._as_signal_iter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_as_signal_iter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">component_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel._as_signal_iter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -692,27 +692,22 @@ attributes, for more information, see
 
 <dl class="py method">
 <dt id="id2">
-<code class="sig-name descname">as_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">component_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out_of_range_to_nan</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_workers</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a recreation of the dataset using the model.
-The spectral range that is not fitted is filled with nans.</p>
+<code class="sig-name descname">as_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">component_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out_of_range_to_nan</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_progressbar</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a recreation of the dataset using the model.</p>
+<p>By default, the signal range outside of the fitted range is filled with nans.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>component_list</strong> (<em>list of HyperSpy components</em><em>, </em><em>optional</em>) – If a list of components is given, only the components given in the
 list is used in making the returned spectrum. The components can
 be specified by name, index or themselves.</p></li>
-<li><p><strong>out_of_range_to_nan</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True the spectral range that is not fitted is filled with nans.
-Default True.</p></li>
+<li><p><strong>out_of_range_to_nan</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True the signal range outside of the fitted range is filled with
+nans. Default True.</p></li>
 <li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
 the preferences settings is used.</p></li>
 <li><p><strong>out</strong> (<em>{None</em><em>, </em><em>BaseSignal}</em>) – The signal where to put the result into. Convenient for parallel
 processing. If None (default), creates a new one. If passed, it is
 assumed to be of correct shape and dtype and not checked.</p></li>
-<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, perform computation in parallel using multithreading. If
-<code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from the preferences settings is used. The number
-of threads is controlled by the <code class="docutils literal notranslate"><span class="pre">max_workers</span></code> argument.</p></li>
-<li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Maximum number of threads used when <code class="docutils literal notranslate"><span class="pre">parallel=True</span></code>. If None, defaults
-to <code class="docutils literal notranslate"><span class="pre">min(32,</span> <span class="pre">os.cpu_count())</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -814,8 +809,9 @@ the file names modify the name attributes.</p>
 
 <dl class="py method">
 <dt id="id4">
-<code class="sig-name descname">extend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span> &#x2192; None – extend list by appending elements from the iterable<a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">extend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend list by appending elements from the iterable.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id5">
@@ -990,7 +986,7 @@ all listed toolkits are displayed or returned.</p></li>
 <dl class="py method">
 <dt id="hyperspy.model.BaseModel.insert">
 <code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel.insert" title="Permalink to this definition">¶</a></dt>
-<dd><p>L.insert(index, object) – insert object before index</p>
+<dd><p>Insert object before index.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1337,7 +1333,7 @@ it with the current parameters.</p>
 
 <dl class="py method">
 <dt id="id12">
-<code class="sig-name descname">update_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id12" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">render_figure</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">update_ylimits</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id12" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update model plot.</p>
 <p>The updating can be suspended using <cite>suspend_update</cite>.</p>
 <div class="admonition seealso">

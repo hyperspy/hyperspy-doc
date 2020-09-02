@@ -33,7 +33,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -219,7 +219,31 @@
 
 <dl class="py method">
 <dt id="hyperspy.drawing.signal1d.Signal1DFigure.add_line">
-<code class="sig-name descname">add_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">line</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">'left'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.add_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">line</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">connect_navigation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.add_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Signal1DLine to figure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line</strong> (<em>Signal1DLine object</em>) – Line to be added to the figure.</p></li>
+<li><p><strong>ax</strong> (<em>{'left'</em><em>, </em><em>'right'}</em><em>, </em><em>optional</em>) – Position the y axis, either ‘left’. The default is ‘left’.</p></li>
+<li><p><strong>connect_navigation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Connect the update of the line to the <cite>indices_changed</cite> event of
+the axes_manager. This only necessary when adding a line to the
+left since the <cite>indices_changed</cite> event is already connected to
+the <cite>update</cite> method of <cite>Signal1DFigure</cite>. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy.drawing.signal1d.Signal1DFigure.close_right_axis">
+<code class="sig-name descname">close_right_axis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.close_right_axis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -229,7 +253,7 @@
 
 <dl class="py method">
 <dt id="hyperspy.drawing.signal1d.Signal1DFigure.create_right_axis">
-<code class="sig-name descname">create_right_axis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.create_right_axis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_right_axis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.create_right_axis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -240,7 +264,10 @@
 <dl class="py method">
 <dt id="hyperspy.drawing.signal1d.Signal1DFigure.update">
 <code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DFigure.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update lines, markers and render at the end.
+This method is connected to the <cite>indices_changed</cite> event of the
+<cite>axes_manager</cite>.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -300,7 +327,7 @@ arguments.</p>
 </dl>
 <dl class="py method">
 <dt id="hyperspy.drawing.signal1d.Signal1DLine._auto_update_line">
-<code class="sig-name descname">_auto_update_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DLine._auto_update_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_auto_update_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">update_ylimits</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DLine._auto_update_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the line plot only if <cite>auto_update</cite> is <cite>True</cite>.</p>
 <p>This is useful to connect to events that automatically update the line.</p>
 </dd></dl>
@@ -347,8 +374,20 @@ arguments.</p>
 
 <dl class="py method">
 <dt id="hyperspy.drawing.signal1d.Signal1DLine.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force_replot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">render_figure</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DLine.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force_replot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">render_figure</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">update_ylimits</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.signal1d.Signal1DLine.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the current spectrum figure</p>
+<dl class="simple">
+<dt>force_replot<span class="classifier">bool</span></dt><dd><p>If True, close and open the figure. Default is False.</p>
+</dd>
+<dt>render_figure<span class="classifier">bool</span></dt><dd><p>If True, render the figure. Useful to avoid firing matplotlib
+drawing events too often. Default is True.</p>
+</dd>
+<dt>update_ylimits<span class="classifier">bool</span></dt><dd><p>If True, update the y-limits. This is useful to avoid the figure
+flickering when different lines update the y-limits consecutively,
+in which case, this is done in <cite>Signal1DFigure.update</cite>.
+Default is False.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

@@ -33,7 +33,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
-        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -204,7 +204,7 @@
 <span id="testing-label"></span><h1>Running and writing tests<a class="headerlink" href="#running-and-writing-tests" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="writing-tests">
 <h2>Writing tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
-<p>Every new function that is written in to HyperSpy needs to be tested and
+<p>Every new function that is written in to HyperSpy should be tested and
 documented. HyperSpy uses the <a class="reference external" href="http://doc.pytest.org/">pytest</a> library
 for testing. The tests reside in the <code class="docutils literal notranslate"><span class="pre">hyperspy.tests</span></code> module.</p>
 <p>Tests are short functions, found in <code class="docutils literal notranslate"><span class="pre">hyperspy/tests</span></code>, that call your functions
@@ -213,13 +213,13 @@ should depend on as few other features as possible so that when they break
 we know exactly what caused it. Ideally, the tests should be written at the
 same time than the code itself, as they are very convenient to run to check
 outputs when coding. Writing tests can seem laborious but you’ll probably
-soon find that they’re very important as they force you to sanity check all
-you do.</p>
-<p><strong>Useful hints on testing:</strong></p>
+soon find that they are very important, as they force you to sanity-check
+all the work that you do.</p>
+<p><strong>Useful testing hints:</strong></p>
 <ul class="simple">
 <li><p>When comparing integers, it’s fine to use <code class="docutils literal notranslate"><span class="pre">==</span></code></p></li>
-<li><p>When comparing floats, be sure to use <code class="xref py py-meth docutils literal notranslate"><span class="pre">np.testing.assert_almost_equal()</span></code>
-or <code class="xref py py-meth docutils literal notranslate"><span class="pre">np.testing.assert_allclose()</span></code></p></li>
+<li><p>When comparing floats, be sure to use <code class="xref py py-meth docutils literal notranslate"><span class="pre">np.testing.assert_allclose()</span></code>
+or <code class="xref py py-meth docutils literal notranslate"><span class="pre">np.testing.assert_almost_equal()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">np.testing.assert_allclose()</span></code> is also convenient for comparing
 numpy arrays</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">hyperspy.misc.test_utils.py</span></code> contains a few useful functions for
@@ -227,12 +227,18 @@ testing</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize()</span></code> is a very convenient decorator to test several
 parameters of the same function without having to write to much repetitive
 code, which is often error-prone. See <a class="reference external" href="http://doc.pytest.org/en/latest/parametrize.html">pytest documentation</a> for more details.</p></li>
-<li><p>It is good to check that the tests does not use too much of memory after
+<li><p>It is good to check that the tests does not use too much memory after
 creating new tests. If you need to explicitly delete your objects and free
-memory, you can do the following to release the memory associated to the
-<code class="docutils literal notranslate"><span class="pre">s</span></code> object, for example:</p></li>
+memory, you can do the following to release the memory associated with the
+<code class="docutils literal notranslate"><span class="pre">s</span></code> object:</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">s</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Do some work with the object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Clear the memory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">s</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -241,10 +247,10 @@ memory, you can do the following to release the memory associated to the
 <h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
 <p>First ensure pytest and its plugins are installed by:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If using a standard hyperspy install</span>
-pip install hyperspy<span class="o">[</span>test<span class="o">]</span>
+pip install hyperspy<span class="o">[</span>tests<span class="o">]</span>
 
 <span class="c1"># Or, from a hyperspy local development directory</span>
-pip install -e .<span class="o">[</span>test<span class="o">]</span>
+pip install -e .<span class="o">[</span>tests<span class="o">]</span>
 
 <span class="c1"># Or just installing the dependencies using conda</span>
 conda install -c conda-forge pytest pytest-mpl
@@ -266,9 +272,9 @@ conda install -c conda-forge pytest pytest-mpl
 </div>
 <div class="section" id="test-coverage">
 <h2>Test coverage<a class="headerlink" href="#test-coverage" title="Permalink to this headline">¶</a></h2>
-<p>Once, you have pushed your pull request to the official HyperSpy repository,
-it can be useful to check the coverage of your tests using the
-<a class="reference external" href="https://codecov.io/gh/hyperspy/hyperspy">codecov.io</a> check of
+<p>Once you have pushed your pull request to the official HyperSpy repository,
+you can see the coverage of your tests using the
+<a class="reference external" href="https://codecov.io/gh/hyperspy/hyperspy">codecov.io</a> check for
 your PR. There should be a link to it at the bottom of your PR on the Github
 PR page. This service can help you to find how well your code is being tested
 and exactly which parts are not currently tested.</p>
@@ -281,36 +287,55 @@ you can run (from HyperSpy’s project folder):</p>
 under the <code class="docutils literal notranslate"><span class="pre">[coverage:run]</span></code> and <code class="docutils literal notranslate"><span class="pre">[coverage:report]</span></code> sections. See the <a class="reference external" href="https://coverage.readthedocs.io/en/coverage-5.1/config.html">coverage
 documentation</a>
 for more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://codecov.io/gh/hyperspy/hyperspy">codecov.io</a> check in your
+PR will fail if it either decreases the overall test coverage of HyperSpy,
+or if any of the lines introduced in your diff are not covered.</p>
+</div>
 </div>
 <div class="section" id="continuous-integration-ci">
 <h2>Continuous integration (CI)<a class="headerlink" href="#continuous-integration-ci" title="Permalink to this headline">¶</a></h2>
-<p>The test suite is run using continuous integration services provided by
+<p>The HyperSpy test suite is run using continuous integration services provided by
 <a class="reference external" href="https://travis-ci.org/github/hyperspy/hyperspy">Travis CI</a> and
-<a class="reference external" href="https://dev.azure.com/franciscode-la-pena-manchon/hyperspy/_build">Azure Pipeline</a>.
+<a class="reference external" href="https://dev.azure.com/franciscode-la-pena-manchon/hyperspy/_build">Azure Pipelines</a>.
 The CI helper scripts are pulled from the
 <a class="reference external" href="https://github.com/hyperspy/ci-scripts">ci-scripts</a> repository.</p>
-<p>The testing matrix is as follow:</p>
+<p>The testing matrix is as follows:</p>
 <ul class="simple">
-<li><p><strong>Travis CI</strong>: test all supported python versions on Linux; all dependencies
-are pulled from <a class="reference external" href="https://pypi.org">pypi</a>,</p></li>
-<li><p><strong>Azure Pipeline</strong>: test a range of python version on Linux, MacOS and Windows;
-all dependencies are pulled from <a class="reference external" href="https://anaconda.org/">anaconda cloud</a>
+<li><p><strong>Travis CI</strong>: test all supported Python versions on Linux only; all dependencies
+are pulled from <a class="reference external" href="https://pypi.org">PyPI</a>. See <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> in the HyperSpy
+repository for further details.</p></li>
+<li><p><strong>Azure Pipeline</strong>: test a range of Python versions on Linux, MacOS and Windows;
+all dependencies are pulled from <a class="reference external" href="https://anaconda.org/">Anaconda Cloud</a>
 using the <a class="reference external" href="https://anaconda.org/anaconda">Anaconda “defaults”</a> and the
 <a class="reference external" href="https://anaconda.org/conda-forge">“conda-forge”</a> channel (in this order of
-priority)</p></li>
+priority). See <code class="docutils literal notranslate"><span class="pre">azure-pipelines.yml</span></code> in the HyperSpy repository for further details.</p></li>
 </ul>
-<p>This testing matrix has been designed to be simple and easy to maintain and also
-to ensure that packages from pypi and Anaconda cloud are not mixed in order to
+<p>This testing matrix has been designed to be simple and easy to maintain, whilst
+ensuring that packages from PyPI and Anaconda cloud are not mixed in order to
 avoid red herring failures of the test suite caused by application binary
 interface (ABI) incompatibility between dependencies.</p>
-<p>The most recent versions of packages will be available first on pypi and later
-on anaconda cloud. It means that if a recent release of a dependency breaks the
-test suite, it should happen first on travis - usual suspect would be
-matplotlib, numpy, scipy, etc. Similarly, deprecation warning should appear
-first on Travis CI.</p>
-<p>The build of the doc is done on Travis CI and it is worth checking that no new
+<p>The most recent versions of packages are usually available first on PyPI, before
+they are available on Anaconda Cloud. These means that if a recent release of a
+dependency breaks the test suite, it should happen first on Travis CI.
+Similarly, deprecation warnings will usually appear first on Travis CI.</p>
+<p>The documentation build is done on both Travis CI and
+<a class="reference external" href="https://readthedocs.org/">Read the Docs</a>, and it is worth checking that no new
 warnings have been introduced when writing documentation in the user guide or
-in the docstring.</p>
+in the docstrings.</p>
+<p>The Travis CI testing matrix also includes the following special cases:</p>
+<ul class="simple">
+<li><p>The test suite is run against HyperSpy’s minimum requirements on Python 3.7
+on Linux. This will skip any tests that require <strong>optional</strong> packages such as
+<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p></li>
+<li><p>The test suite is run against the oldest supported versions of <code class="docutils literal notranslate"><span class="pre">numpy</span></code>,
+<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. For more details, see this
+<a class="reference external" href="https://github.com/hyperspy/hyperspy/pull/2485">Github issue</a>.</p></li>
+<li><p><a class="reference external" href="https://codecov.io/gh/hyperspy/hyperspy">codecov.io</a> will only report
+the coverage of your PR if the test suite passes on Python 3.7 on Linux.
+This job is labelled as <code class="docutils literal notranslate"><span class="pre">&quot;Linux,</span> <span class="pre">3.7,</span> <span class="pre">pip&quot;</span></code> on Travis CI.</p></li>
+</ul>
 </div>
 <div class="section" id="plot-testing">
 <span id="plot-test-label"></span><h2>Plot testing<a class="headerlink" href="#plot-testing" title="Permalink to this headline">¶</a></h2>
@@ -320,11 +345,12 @@ decorator uses reference images to compare with the generated output during the
 tests. The reference images are located in the folder defined by the argument
 <code class="docutils literal notranslate"><span class="pre">baseline_dir</span></code> of the <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.mpl_image_compare</span></code> decorator.</p>
 <p>To run plot tests, you simply need to add the option <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pytest</span> <span class="o">--</span><span class="n">mpl</span>
-</pre></div>
-</div>
-<p>If you don’t use <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>, the code of the tests will be executed, but the
-images will not be compared to the references images.</p>
+<p>:: code:: bash</p>
+<blockquote>
+<div><p>pytest –mpl</p>
+</div></blockquote>
+<p>If you don’t use <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>, the test functions will be executed, but the
+images will not be compared to the reference images.</p>
 <p>If you need to add or change some plots, follow the workflow below:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -337,15 +363,16 @@ images will not be compared to the references images.</p>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> to put the new file in the git repository.</p></li>
 </ol>
 </div></blockquote>
-<p>When the plotting tests are failing, it is possible to download the figure
-comparison images generated by pytest-mpl in the artifacts tabs of the
-corresponding build on azure pipeline:</p>
+<p>When the plotting tests fail, it is possible to download the figure
+comparison images generated by <code class="docutils literal notranslate"><span class="pre">pytest-mpl</span></code> in the artifacts tabs of the
+corresponding build on Azure Pipeliness:</p>
 <div class="figure align-default">
 <img alt="../_images/azure_pipeline_artifacts.png" src="../_images/azure_pipeline_artifacts.png" />
 </div>
-<p>The plotting tests are tested on azure pipeline against a specific version of
-matplotlib defined in <code class="docutils literal notranslate"><span class="pre">conda_environment_dev.yml</span></code> since small changes in the
-way matplotlib generates the figure can make the tests fail.</p>
+<p>The plotting tests are tested on Azure Pipelines against a specific version of
+matplotlib defined in <code class="docutils literal notranslate"><span class="pre">conda_environment_dev.yml</span></code>. This is because small
+changes in the way matplotlib generates the figure between versions can sometimes
+make the tests fail.</p>
 <p>For plotting tests, the matplotlib backend is set to <code class="docutils literal notranslate"><span class="pre">agg</span></code> by setting
 the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">agg</span></code>. At the first import of
 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code>, matplotlib will look at the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment
