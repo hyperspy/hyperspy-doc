@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy.drawing.utils module &mdash; HyperSpy 1.6.0 documentation</title>
+  <title>hyperspy.drawing.utils module &mdash; HyperSpy 1.6.1 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.6.1
               </div>
             
           
@@ -211,7 +211,7 @@
 <dl class="py class">
 <dt id="hyperspy.drawing.utils.ColorCycle">
 <em class="property">class </em><code class="sig-prename descclassname">hyperspy.drawing.utils.</code><code class="sig-name descname">ColorCycle</code><a class="headerlink" href="#hyperspy.drawing.utils.ColorCycle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py attribute">
 <dt id="hyperspy.drawing.utils.ColorCycle._color_cycle">
 <code class="sig-name descname">_color_cycle</code><em class="property"> = [(0.0, 0.0, 1.0, 1), (0.0, 0.5, 0.0, 1), (1.0, 0.0, 0.0, 1), (0.0, 0.75, 0.75, 1), (0.75, 0.0, 0.75, 1), (0.75, 0.75, 0.0, 1), (0.0, 0.0, 0.0, 1)]</em><a class="headerlink" href="#hyperspy.drawing.utils.ColorCycle._color_cycle" title="Permalink to this definition">¶</a></dt>
@@ -274,7 +274,10 @@
 <dd><p>Calculate vmin and vmax to set the colormap midpoint to zero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>vmax</strong> (<em>vmin</em><em>,</em>) – The range of data to display.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vmin</strong> (<em>scalar</em>) – The range of data to display.</p></li>
+<li><p><strong>vmax</strong> (<em>scalar</em>) – The range of data to display.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>cvmin, cvmax</strong> – The values to obtain a centre colormap.</p>
@@ -293,7 +296,15 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>numpy array</em>) – </p></li>
-<li><p><strong>vmax</strong> (<em>vmin</em><em>,</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+of pixels that are left out of the lower and upper bounds.
+For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
+estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
+of the highest value will be ignored in the estimation of the maximum
+value. See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+If None, use the percentiles value set in the preferences.
+If float of integer, keep this value as bounds.</p></li>
+<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
@@ -310,7 +321,7 @@ If float of integer, keep this value as bounds.</p></li>
 <dd class="field-odd"><p>scalar</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the value of <cite>vmin</cite> <cite>vmax</cite> is out of the valid range for percentile
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the value of <cite>vmin</cite> <cite>vmax</cite> is out of the valid range for percentile
     calculation (in case of string values).</p>
 </dd>
 </dl>
@@ -328,7 +339,7 @@ keyword argument is passed to the plt.figure function.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>window_title</strong> (<em>{None</em><em>, </em><em>string}</em><em>, </em><em>optional</em>) – </p></li>
 <li><p><strong>_on_figure_window_close</strong> (<em>{None</em><em>, </em><em>function}</em><em>, </em><em>optional</em>) – </p></li>
-<li><p><strong>disable_xyscale_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Disable the <cite>k</cite>, <cite>l</cite> and <cite>L</cite> shortcuts which toggle the x or y axis
+<li><p><strong>disable_xyscale_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Disable the <cite>k</cite>, <cite>l</cite> and <cite>L</cite> shortcuts which toggle the x or y axis
 between linear and log scale. Default False.</p></li>
 </ul>
 </dd>
@@ -360,13 +371,13 @@ and used under the terms of that code’s BSD-3 license</p>
 <li><p><strong>colors</strong> (<em>iterable</em>) – list of either tuples containing rgb values, or html strings
 Colors should be arranged so that the first color is the lowest
 value for the colorbar and the last is the highest.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of colormap to use when registering with matplotlib</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of colormap to use when registering with matplotlib</p></li>
 <li><p><strong>position</strong> (<em>{None</em><em>, </em><em>iterable}</em><em>, </em><em>optional</em>) – list containing the values (from [0,1]) that dictate the position
 of each color within the colormap. If None (default), the colors
 will be equally-spaced within the colorbar.</p></li>
-<li><p><strong>bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – True if RGB colors are given in 8-bit [0 to 255] or False if given
+<li><p><strong>bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – True if RGB colors are given in 8-bit [0 to 255] or False if given
 in arithmetic basis [0 to 1] (default).</p></li>
-<li><p><strong>register</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Wwitch to control whether or not to register the custom colormap
+<li><p><strong>register</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Wwitch to control whether or not to register the custom colormap
 with matplotlib in order to enable use by just the name string.</p></li>
 </ul>
 </dd>
@@ -401,7 +412,7 @@ with matplotlib in order to enable use by just the name string.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_list</strong> (<em>list of Signal2D instances</em>) – </p></li>
 <li><p><strong>normalization</strong> (<em>{'single'</em><em>, </em><em>'global'}</em><em>, </em><em>optional</em>) – </p></li>
-<li><p><strong>dont_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Default False.</p></li>
+<li><p><strong>dont_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Default False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -424,7 +435,7 @@ the <cite>utils.plot.plot_spectra</cite> function.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>signal_list</strong> (<em>iterable</em>) – Ordered list of spectra to plot. If <cite>style</cite> is “cascade” or “mosaic”,
 the spectra can have different size and axes.</p></li>
-<li><p><strong>bins</strong> (<em>{int</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>str}</em><em>, </em><em>optional</em>) – If bins is a string, then it must be one of:
+<li><p><strong>bins</strong> (<em>{int</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>, </em><em>str}</em><em>, </em><em>optional</em>) – If bins is a string, then it must be one of:
 ‘knuth’ : use Knuth’s rule to determine bins,
 ‘scott’ : use Scott’s rule to determine bins,
 ‘fd’ : use the Freedman-diaconis rule to determine bins,
@@ -441,7 +452,7 @@ spectra to plot, line_style will be cycled.
 If <cite>None</cite>, use continuous lines, eg: (‘-‘,’–’,’steps’,’-.’,’:’)</p></li>
 <li><p><strong>legend</strong> (<em>{None</em><em>, </em><em>list of str</em><em>, </em><em>'auto'}</em><em>, </em><em>optional</em>) – Display a legend. If ‘auto’, the title of each spectra
 (metadata.General.title) is used.</p></li>
-<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a spectrum can be toggled on and off by clicking on
+<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a spectrum can be toggled on and off by clicking on
 the line in the legend.</p></li>
 <li><p><strong>fig</strong> (<em>{None</em><em>, </em><em>matplotlib figure}</em><em>, </em><em>optional</em>) – If None, a default figure will be created.</p></li>
 <li><p><strong>**kwargs</strong> – other keyword arguments (weight and density) are described in
@@ -488,9 +499,9 @@ default <code class="docutils literal notranslate"><span class="pre">matplotlib<
 <a class="reference internal" href="#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_spectra()</span></code></a> method).
 Note: if using more than one colormap, using the <code class="docutils literal notranslate"><span class="pre">'single'</span></code>
 option for <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> is disallowed.</p></li>
-<li><p><strong>no_nans</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, set nans to zero for plotting.</p></li>
-<li><p><strong>per_row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – The number of plots in each row.</p></li>
-<li><p><strong>label</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>list of str}</em><em>, </em><em>optional</em>) – Control the title labeling of the plotted images.
+<li><p><strong>no_nans</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, set nans to zero for plotting.</p></li>
+<li><p><strong>per_row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – The number of plots in each row.</p></li>
+<li><p><strong>label</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>list of str}</em><em>, </em><em>optional</em>) – Control the title labeling of the plotted images.
 If None, no titles will be shown.
 If ‘auto’ (default), function will try to determine suitable titles
 using Signal2D titles, falling back to the ‘titles’ option if no good
@@ -503,14 +514,14 @@ If any other single str, images will be labeled in sequence using
 that str as a prefix.
 If a list of str, the list elements will be used to determine the
 labels (repeated, if necessary).</p></li>
-<li><p><strong>labelwrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Integer specifying the number of characters that will be used on
+<li><p><strong>labelwrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Integer specifying the number of characters that will be used on
 one line.
 If the function returns an unexpected blank figure, lower this
 value to reduce overlap of the labels between figures.</p></li>
-<li><p><strong>suptitle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Title to use at the top of the figure. If called with label=’auto’,
+<li><p><strong>suptitle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Title to use at the top of the figure. If called with label=’auto’,
 this parameter will override the automatically determined title.</p></li>
-<li><p><strong>suptitle_fontsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Font size to use for super title at top of figure.</p></li>
-<li><p><strong>colorbar</strong> (<em>{'multi'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>'single'}</em>) – Controls the type of colorbars that are plotted.
+<li><p><strong>suptitle_fontsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Font size to use for super title at top of figure.</p></li>
+<li><p><strong>colorbar</strong> (<em>{'multi'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a><em>, </em><em>'single'}</em>) – Controls the type of colorbars that are plotted.
 If None, no colorbar is plotted.
 If ‘multi’ (default), individual colorbars are plotted for each
 (non-RGB) image
@@ -522,7 +533,7 @@ particularly useful when using diverging color schemes. If “auto”
 <li><p><strong>scalebar</strong> (<em>{None</em><em>, </em><em>'all'</em><em>, </em><em>list of ints}</em><em>, </em><em>optional</em>) – If None (or False), no scalebars will be added to the images.
 If ‘all’, scalebars will be added to all images.
 If list of ints, scalebars will be added to each image specified.</p></li>
-<li><p><strong>scalebar_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – A valid MPL color string; will be used as the scalebar color.</p></li>
+<li><p><strong>scalebar_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – A valid MPL color string; will be used as the scalebar color.</p></li>
 <li><p><strong>axes_decor</strong> (<em>{'all'</em><em>, </em><em>'ticks'</em><em>, </em><em>'off'</em><em>, </em><em>None}</em><em>, </em><em>optional</em>) – Controls how the axes are displayed on each image; default is ‘all’.
 If ‘all’, both ticks and axis labels will be shown.
 If ‘ticks’, no axis labels will be shown, but ticks/labels will.
@@ -533,10 +544,10 @@ If None, default options will be used.
 Otherwise, supply a dictionary with the spacing options as
 keywords and desired values as values.
 Values should be supplied as used in
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots_adjust.html#matplotlib.pyplot.subplots_adjust" title="(in Matplotlib v3.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots_adjust()</span></code></a>,
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots_adjust.html#matplotlib.pyplot.subplots_adjust" title="(in Matplotlib v3.3.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots_adjust()</span></code></a>,
 and can be ‘left’, ‘bottom’, ‘right’, ‘top’, ‘wspace’ (width) and
 ‘hspace’ (height).</p></li>
-<li><p><strong>tight_layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, hyperspy will attempt to improve image placement in
+<li><p><strong>tight_layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, hyperspy will attempt to improve image placement in
 figure using matplotlib’s tight_layout.
 If false, repositioning images inside the figure will be left as
 an exercise for the user.</p></li>
@@ -544,15 +555,15 @@ an exercise for the user.</p></li>
 If ‘square’, image will be forced onto square display.
 If ‘equal’, aspect ratio of 1 will be enforced.
 If float (or int/long), given value will be used.</p></li>
-<li><p><strong>min_asp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Minimum aspect ratio to be used when plotting images.</p></li>
-<li><p><strong>namefrac_thresh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Threshold to use for auto-labeling. This parameter controls how
+<li><p><strong>min_asp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Minimum aspect ratio to be used when plotting images.</p></li>
+<li><p><strong>namefrac_thresh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Threshold to use for auto-labeling. This parameter controls how
 much of the titles must be the same for the auto-shortening of
 labels to activate. Can vary from 0 to 1. Smaller values
 encourage shortening of titles by auto-labeling, while larger
 values will require more overlap in titles before activing the
 auto-label code.</p></li>
 <li><p><strong>fig</strong> (<em>mpl figure</em><em>, </em><em>optional</em>) – If set, the images will be plotted to an existing MPL figure</p></li>
-<li><p><strong>vmax</strong> (<em>vmin</em><em>,</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
@@ -561,24 +572,34 @@ value. It must be in the range [0, 100]
 See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
 If None, use the percentiles value set in the preferences.
 If float of integer, keep this value as bounds.</p></li>
-<li><p><strong>optional</strong> (<em>**kwargs</em><em>,</em>) – Additional keyword arguments passed to matplotlib.imshow()</p></li>
+<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+of pixels that are left out of the lower and upper bounds.
+For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
+estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
+of the highest value will be ignored in the estimation of the maximum
+value. It must be in the range [0, 100]
+See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+If None, use the percentiles value set in the preferences.
+If float of integer, keep this value as bounds.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to matplotlib.imshow()</p></li>
+<li><p><strong>optional</strong> – Additional keyword arguments passed to matplotlib.imshow()</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>axes_list</strong> – A list of subplot axes that hold the images.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_spectra()</span></code></a></dt><dd><p>Plotting of multiple spectra</p>
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_spectra" title="hyperspy.drawing.utils.plot_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_spectra</span></code></a></dt><dd><p>Plotting of multiple spectra</p>
 </dd>
-<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_signals()</span></code></a></dt><dd><p>Plotting of multiple signals</p>
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_signals" title="hyperspy.drawing.utils.plot_signals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_signals</span></code></a></dt><dd><p>Plotting of multiple signals</p>
 </dd>
-<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_histograms" title="hyperspy.drawing.utils.plot_histograms"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_histograms()</span></code></a></dt><dd><p>Compare signal histograms</p>
+<dt><a class="reference internal" href="#hyperspy.drawing.utils.plot_histograms" title="hyperspy.drawing.utils.plot_histograms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histograms</span></code></a></dt><dd><p>Compare signal histograms</p>
 </dd>
 </dl>
 </div>
@@ -603,7 +624,7 @@ same navigation shape, but not necessarily the same signal shape.</p></li>
 <li><p><strong>sync</strong> (<em>{True</em><em>, </em><em>False}</em><em>, </em><em>default &quot;True&quot;</em><em>, </em><em>optional</em>) – If True: the signals will share navigation, all the signals
 must have the same navigation shape for this to work, but not
 necessarily the same signal shape.</p></li>
-<li><p><strong>navigator</strong> (<em>{&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>&quot;spectrum&quot;</em><em>, </em><em>&quot;slider&quot;</em><em>, </em><em>BaseSignal}</em><em>, </em><em>optional</em><em>,</em>) – </p></li>
+<li><p><strong>navigator</strong> (<em>{&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a><em>, </em><em>&quot;spectrum&quot;</em><em>, </em><em>&quot;slider&quot;</em><em>, </em><em>BaseSignal}</em><em>, </em><em>optional</em><em>,</em>) – </p></li>
 <li><p><strong>&quot;auto&quot;</strong> (<em>default</em>) – See signal.plot docstring for full description.</p></li>
 <li><p><strong>navigator_list</strong> (<em>{None</em><em>, </em><em>list of navigator arguments}</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – Set different navigator options for the signals. Must use valid
 navigator arguments: “auto”, None, “spectrum”, “slider”, or a
@@ -657,7 +678,7 @@ The main line style are ‘-‘,’–’,’steps’,’-.’,’:’.
 For a list, if its length is less than the number of
 spectra to plot, line_style will be cycled. If
 If <cite>None</cite>, use continuous lines, eg: (‘-‘,’–’,’steps’,’-.’,’:’).</p></li>
-<li><p><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em><em>, </em><em>default 1.0</em>) – Option for “cascade”. 1 guarantees that there is no overlapping.
+<li><p><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em><em>, </em><em>default 1.0</em>) – Option for “cascade”. 1 guarantees that there is no overlapping.
 However, in many cases, a value between 0 and 1 can produce a tighter
 plot without overlapping. Negative values have the same effect but
 reverse the order of the spectra without reversing the order of the
@@ -665,7 +686,7 @@ colors.</p></li>
 <li><p><strong>legend</strong> (<em>{None</em><em>, </em><em>list of str</em><em>, </em><em>'auto'}</em><em>, </em><em>optional</em>) – If list of string, legend for “cascade” or title for “mosaic” is
 displayed. If ‘auto’, the title of each spectra (metadata.General.title)
 is used.</p></li>
-<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), a spectrum can be toggled on and off by clicking on
+<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), a spectrum can be toggled on and off by clicking on
 the legended line.</p></li>
 <li><p><strong>legend_loc</strong> (<em>{str</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – This parameter controls where the legend is placed on the figure;
 see the pyplot.legend docstring for valid values</p></li>
@@ -673,11 +694,14 @@ see the pyplot.legend docstring for valid values</p></li>
 not work for the ‘heatmap’ style.</p></li>
 <li><p><strong>ax</strong> (<em>{none</em><em>, </em><em>matplotlib ax</em><em> (</em><em>subplot</em><em>)</em><em>}</em><em>, </em><em>optional</em>) – If None, a default ax will be created. Will not work for ‘mosaic’
 or ‘heatmap’ style.</p></li>
-<li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – If True, the plot will update when the data are changed. Only supported
+<li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If True, the plot will update when the data are changed. Only supported
 with style=’overlap’ and a list of signal with navigation dimension 0.
 If None (default), update the plot only for style=’overlap’.</p></li>
-<li><p><strong>optional</strong> (<em>**kwargs</em><em>,</em>) – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
+<li><p><strong>**kwargs</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.3.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.3.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
+Has no effect on ‘heatmap’ style.</p></li>
+<li><p><strong>optional</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.3.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.3.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
 Has no effect on ‘heatmap’ style.</p></li>
 </ul>
 </dd>
@@ -713,7 +737,7 @@ Has no effect on ‘heatmap’ style.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mpl_ax</strong> (<a class="reference external" href="https://matplotlib.org/api/axis_api.html#matplotlib.axis.Axis" title="(in Matplotlib v3.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axis.Axis</span></code></a>) – The <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> axis to change.</p></li>
+<li><p><strong>mpl_ax</strong> (<a class="reference external" href="https://matplotlib.org/api/axis_api.html#matplotlib.axis.Axis" title="(in Matplotlib v3.3.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axis.Axis</span></code></a>) – The <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> axis to change.</p></li>
 <li><p><strong>hs_axis</strong> (<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The data axis that contains the values which control the scaling.</p></li>
 </ul>
 </dd>

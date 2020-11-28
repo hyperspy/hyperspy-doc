@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working with big data &mdash; HyperSpy 1.6.0 documentation</title>
+  <title>Working with big data &mdash; HyperSpy 1.6.1 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.6.1
               </div>
             
           
@@ -376,6 +376,29 @@ with non-lazy signals.</p>
 performed lazily. Important points are:</p>
 <div class="section" id="chunking">
 <h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this headline">¶</a></h3>
+<p>Data saved in the HDF5 format is typically divided into smaller chunks which can be loaded separately into memory,
+allowing lazy loading. Chunk size can dramatically affect the speed of various HyperSpy algorithms, so chunk size is
+worth careful consideration when saving a signal. HyperSpy’s default chunking sizes are probably not optimal
+for a given data analysis technique. For more comprehensible documentation on chunking,
+see the dask <a class="reference external" href="https://docs.dask.org/en/latest/array-chunks.html">array chunks</a> and <a class="reference external" href="https://docs.dask.org/en/latest/array-best-practices.html">best practices</a> docs. The chunks saved into HDF5 will
+match the dask array chunks in <code class="docutils literal notranslate"><span class="pre">s.data.chunks</span></code> when lazy loading.
+Chunk shape should follow the axes order of the numpy shape (<code class="docutils literal notranslate"><span class="pre">s.data.shape</span></code>), not the hyperspy shape.
+The following example shows how to chunk one of the two navigation dimensions into smaller chunks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">chunksize</span>
+<span class="go">(10, 200, 300)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="c1"># Note the reversed order of navigation dimensions</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (200, 10|300)&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;chunked_signal.hspy&#39;</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span> <span class="c1"># Chunking first hyperspy dimension (second array dimension)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;chunked_signal.hspy&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">chunksize</span>
+<span class="go">(10, 100, 300)</span>
+</pre></div>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.3.2.</span></p>
 </div>

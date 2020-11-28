@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using Git and GitHub &mdash; HyperSpy 1.6.0 documentation</title>
+  <title>Using Git and GitHub &mdash; HyperSpy 1.6.1 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.6.1
               </div>
             
           
@@ -114,6 +114,8 @@
 <li class="toctree-l2"><a class="reference internal" href="intro.html">﻿Introduction</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Using Git and GitHub</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#use-git-and-work-in-manageable-branches">Use Git and work in manageable branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#semantic-versioning-and-hyperspy-main-branches">Semantic versioning and HyperSpy main branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-base-branch">Changing base branch</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">Running and writing tests</a></li>
@@ -244,6 +246,40 @@ request!</p>
 <p>Diagrammatically, you should be aiming for something like this:</p>
 <div class="figure align-default">
 <img alt="../_images/branching_schematic.png" src="../_images/branching_schematic.png" />
+</div>
+</div>
+<div class="section" id="semantic-versioning-and-hyperspy-main-branches">
+<h2>Semantic versioning and HyperSpy main branches<a class="headerlink" href="#semantic-versioning-and-hyperspy-main-branches" title="Permalink to this headline">¶</a></h2>
+<p>HyperSpy versioning follows <a class="reference external" href="https://semver.org/spec/v2.0.0.html">semantic versioning</a>
+and the version number is therefore a three-part number: MAJOR.MINOR.PATCH.
+Each number will change depending on the type of changes according to the following:</p>
+<ul class="simple">
+<li><p>MAJOR increases when making incompatible API changes,</p></li>
+<li><p>MINOR increases when adding functionality in a backwards compatible manner, and</p></li>
+<li><p>PATCH increases when making backwards compatible bug fixes.</p></li>
+</ul>
+<p>The git repository of HyperSpy has 3 main branches matching the above pattern
+and depending on the type of pull request, you will need to base your pull request
+one one of the following branch:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RELEASE_next_major</span></code> to change the API in a not backward-compatible fashion,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RELEASE_next_minor</span></code> to add new features and improvement,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RELEASE_next_patch</span></code> for bug fixes.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">RELEASE_next_patch</span></code> is merged daily in the <code class="docutils literal notranslate"><span class="pre">RELEASE_next_minor</span></code> by the github action
+<a class="reference external" href="https://github.com/hyperspy/hyperspy/actions">Nightly Merge</a>.</p>
+</div>
+<div class="section" id="changing-base-branch">
+<h2>Changing base branch<a class="headerlink" href="#changing-base-branch" title="Permalink to this headline">¶</a></h2>
+<p>If you started your work in the wrong branch (typically on <code class="docutils literal notranslate"><span class="pre">RELEASE_next_minor</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">RELEASE_next_patch</span></code> and you are doing a bug fix), you can change the
+base branch using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">--onto</span></code>, like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git rebase --onto &lt;NEW-BASE-BRANCH&gt; &lt;OLD-BASE-BRANCH&gt; &lt;YOUR-BRANCH&gt;
+</pre></div>
+</div>
+<p>For example, to rebase the <code class="docutils literal notranslate"><span class="pre">bug_fix_branch</span></code> branch from <code class="docutils literal notranslate"><span class="pre">RELEASE_next_minor</span></code> onto <code class="docutils literal notranslate"><span class="pre">RELEASE_next_patch</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git rebase --onto RELEASE_next_patch RELEASE_next_minor bug_fix_branch
+</pre></div>
 </div>
 </div>
 </div>

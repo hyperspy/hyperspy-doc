@@ -27,11 +27,20 @@ information.
 If the loaded file contains several datasets, the :py:func:`~.io.load`
 functions will return a list of the corresponding signal.
 
-.. NOTE::
+.. note::
+
     Note for python programmers: the data is stored in a numpy array
     in the :py:attr:`~.signal.BaseSignal.data` attribute, but you will not
-    normally need to access it there.)
+    normally need to access it there.
 
+HyperSpy will attempt to infer the appropriate file reader to use based on
+the file extension (for example. ``.hspy``, ``.emd`` and so on). You can
+override this using the ``reader`` keyword:
+
+.. code-block:: python
+
+    # Load a .hspy file with an unknown extension
+    >>> s = hs.load("filename.some_extension", reader="hspy")
 
 HyperSpy will try to guess the most likely data type for the corresponding
 file. However, you can force it to read the data as a particular data type by
@@ -40,7 +49,7 @@ providing the ``signal`` keyword, which has to be one of: ``spectrum``,
 
 .. code-block:: python
 
-    >>> s = hs.load("filename", signal = "EELS")
+    >>> s = hs.load("filename", signal_type="EELS")
 
 Some file formats store some extra information about the data, which can be
 stored in "attributes". If HyperSpy manages to read some extra information
@@ -122,6 +131,22 @@ or by using `shell-style wildcards <http://docs.python.org/library/glob.html>`_:
         >>> # /home/data/afile[1x2].hspy
 
         >>> s = hs.load("/home/data/afile[*].hspy", escape_square_brackets=True)
+
+HyperSpy also supports ```pathlib.Path`` <https://docs.python.org/3/library/pathlib.html>`_
+objects, for example:
+
+.. code-block:: python
+
+    >>> import hyperspy.api as hs
+    >>> from pathlib import Path
+
+    >>> # Use pathlib.Path
+    >>> p = Path("/path/to/a/file.hspy")
+    >>> s = hs.load(p)
+
+    >>> # Use pathlib.Path.glob
+    >>> p = Path("/path/to/some/files/").glob("*.hspy")
+    >>> s = hs.load(p)
 
 By default HyperSpy will return a list of all the files loaded. Alternatively,
 HyperSpy can stack the data of the files contain data with exactly the same
@@ -299,8 +324,7 @@ The change of type is done using numpy "safe" rules, so no information is lost,
 as numbers are represented to full machine precision.
 
 This feature is particularly useful when using
-:py:meth:`~._signals.EDSSEMSpectrum.get_lines_intensity` (see :ref:`get lines
-intensity<get_lines_intensity>`):
+:py:meth:`~hyperspy._signals.eds.EDS_mixin.get_lines_intensity`:
 
 .. code-block:: python
 
@@ -319,14 +343,16 @@ intensity<get_lines_intensity>`):
 .. versionadded:: 1.3.1
     ``chunks`` keyword argument
 
-By default, the data is saved in chunks that are optimised to contain at least one full signal. It is
-possible to customise the chunk shape using the ``chunks`` keyword. For example, to save the data with
-``(20, 20, 256)`` chunks instead of the default ``(7, 7, 2048)`` chunks for this signal:
+The hyperspy HDF5 format supports chunking the data into smaller pieces to make it possible to load only part
+of a dataset at a time. By default, the data is saved in chunks that are optimised to contain at least one
+full signal shape. It is possible to customise the chunk shape using the ``chunks`` keyword. 
+For example, to save the data with ``(20, 20, 256)`` chunks instead of the default ``(7, 7, 2048)`` chunks
+for this signal:
 
 .. code-block:: python
 
     >>> s = hs.signals.Signal1D(np.random.random((100, 100, 2048)))
-    >>> s.save("test_chunks", chunks=(20, 20, 256), overwrite=True)
+    >>> s.save("test_chunks", chunks=(20, 20, 256))
 
 Note that currently it is not possible to pass different customised chunk shapes to all signals and
 arrays contained in a signal and its metadata. Therefore, the value of ``chunks`` provided on saving
@@ -337,9 +363,29 @@ what, for large signal spaces usually leads to smaller chunks as ``guess_chunks`
 constrain of storing at least one signal per chunks. For example, for the signal in the example above
 passing ``chunks=True`` results in ``(7, 7, 256)`` chunks.
 
+Choosing the correct chunk-size can significantly affect the speed of reading, writing and performance of many hyperspy algorithms.
+See the `chunking section <big_data.html#Chunking>`__ under `Working with big data <big_data.html>`__ for more information.
+
 Extra saving arguments
 ^^^^^^^^^^^^^^^^^^^^^^^
-- ``compression`` : One of None, 'gzip', 'szip', 'lzf' (default is 'gzip').
+- ``compression``: One of ``None``, ``'gzip'``, ``'szip'``, ``'lzf'`` (default is ``'gzip'``). 
+  ``'szip'`` may be unavailable as it depends on the HDF5 installation including it.
+
+.. note::
+
+    HyperSpy uses h5py for reading and writing HDF5 files and, therefore, it
+    supports all `compression filters supported by h5py <https://docs.h5py.org/en/stable/high/dataset.html#dataset-compression>`_.
+    The default is ``'gzip'``. It is possible to enable other compression filters
+    such as ``blosc`` by installing e.g. `hdf5plugin <https://github.com/silx-kit/hdf5plugin>`_.
+    However, be aware that loading those files will require installing the package
+    providing the compression filter. If not available an error will be raised.
+
+    Compression can significantly increase the saving speed. If file size is not
+    an issue, it can be disabled by setting ``compression=None``. Notice that only
+    ``compression=None`` and ``compression='gzip'`` are available in all platforms,
+    see the `h5py documentation <https://docs.h5py.org/en/stable/faq.html#what-compression-processing-filters-are-supported>`_
+    for more details. Therefore, if you choose any other compression filter for
+    saving a file, be aware that it may not be possible to load it in some platforms.
 
 
 .. _netcdf-format:
@@ -524,9 +570,9 @@ TIFF
 ----
 
 HyperSpy can read and write 2D and 3D TIFF files using using
-Christoph Gohlke's tifffile library. In particular it supports reading and
+Christoph Gohlke's ``tifffile`` library. In particular, it supports reading and
 writing of TIFF, BigTIFF, OME-TIFF, STK, LSM, NIH, and FluoView files. Most of
-these are uncompressed or losslessly compressed 2**(0 to 6) bit integer,16, 32
+these are uncompressed or losslessly compressed 2**(0 to 6) bit integer, 16, 32
 and 64-bit float, grayscale and RGB(A) images, which are commonly used in
 bio-scientific imaging. See `the library webpage
 <http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html>`_ for more details.
@@ -536,21 +582,20 @@ bio-scientific imaging. See `the library webpage
    ImageJ or DigitalMicrograph
 
 Currently HyperSpy has limited support for reading and saving the TIFF tags.
-However, the way that HyperSpy reads and saves the scale and the units of tiff
+However, the way that HyperSpy reads and saves the scale and the units of TIFF
 files is compatible with ImageJ/Fiji and Gatan Digital Micrograph software.
-HyperSpy can also import the scale and the units from tiff files saved using
-FEI and Zeiss SEM software.
+HyperSpy can also import the scale and the units from TIFF files saved using
+FEI, Zeiss SEM and Olympus SIS software.
 
 .. code-block:: python
 
     >>> # Force read image resolution using the x_resolution, y_resolution and
-    >>> # the resolution_unit of the tiff tags. Be aware, that most of the
-    >>> # software doesn't (properly) use these tags when saving tiff files.
+    >>> # the resolution_unit of the TIFF tags. Be aware, that most of the
+    >>> # software doesn't (properly) use these tags when saving TIFF files.
     >>> s = hs.load('file.tif', force_read_resolution=True)
 
-HyperSpy can also read and save custom tags through Christoph Gohlke's tifffile
-library. See `the library webpage
-<http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html>`_ for more details.
+HyperSpy can also read and save custom tags through the ``tifffile``
+library.
 
 .. code-block:: python
 
@@ -562,6 +607,24 @@ library. See `the library webpage
     >>> s2 = hs.load('file.tif')
     >>> s2.original_metadata['Number_65000']
     b'Random metadata'
+
+.. warning::
+
+    The file will be saved with the same bit depth as the signal. Since
+    most processing operations in HyperSpy and numpy will result in 64-bit
+    floats, this can result in 64-bit ``.tiff`` files, which are not always
+    compatible with other imaging software.
+
+    You can first change the dtype of the signal before saving:
+
+    .. code-block:: python
+
+        >>> s.data.dtype
+        dtype('float64')
+        >>> s.change_dtype('float32')
+        >>> s.data.dtype
+        dtype('float32')
+        >>> s.save('file.tif')
 
 .. _dm3-format:
 
@@ -578,7 +641,7 @@ us aware of the problem.
 Extra loading arguments
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-- `optimize`: bool, default is True. During loading, the data is replaced by its
+- ``optimize``: bool, default is True. During loading, the data is replaced by its
   :ref:`optimized copy <signal.transpose_optimize>` to speed up operations,
   e. g. iteration over navigation axes. The cost of this speed improvement is to
   double the memory requirement during data loading.
@@ -588,7 +651,7 @@ Extra loading arguments
     It has been reported that in some versions of Gatan Digital Micrograph,
     any binned data stores the _averages_ of the binned channels or pixels,
     rather than the _sum_, which would be required for proper statistical
-    analysis. We therefore strongly recommend that all binning is performed 
+    analysis. We therefore strongly recommend that all binning is performed
     using Hyperspy where possible.
 
     See the original `bug report here <https://github.com/hyperspy/hyperspy/issues/1624>`_.
@@ -631,7 +694,7 @@ Extra loading arguments for SPD file
 Extra loading arguments for SPD and SPC files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- `load_all_spc` : bool, switch to control if all of the ``.spc`` header is
+- ``load_all_spc`` : bool, switch to control if all of the ``.spc`` header is
   read, or just the important parts for import into HyperSpy.
 
 
@@ -868,11 +931,22 @@ the data size in memory.
     [<Signal2D, title: HAADF, dimensions: (|179, 161)>,
     <EDSSEMSpectrum, title: EDS, dimensions: (179, 161|4096)>]
 
+.. note::
+    
+    FFTs made in Velox are loaded in as-is as a HyperSpy ComplexSignal2D object.
+    The FFT is not centered and only positive frequencies are stored in the file.
+    Lazy reading of these datasets is not supported. Making FFTs with HyperSpy
+    from the respective image datasets is recommended.
+
+.. note::
+    
+    DPC data is loaded in as a HyperSpy ComplexSignal2D object. Lazy reading of these
+    datasets is not supported.
 
 .. note::
 
     Currently only lazy uncompression rather than lazy loading is implemented.
-    This means that it is not currently possible to read EDS SI Veloz EMD files
+    This means that it is not currently possible to read EDS SI Velox EMD files
     with size bigger than the available memory.
 
 
@@ -1017,13 +1091,13 @@ If multiple datasets are present within the h5USID file and you try the same com
     [<Signal2D, title: HAADF, dimensions: (|128, 128)>,
     <Signal1D, title: EELS, dimensions: (|64, 64, 1024)>]
 
-We can load a specific dataset using the ``dset_path`` keyword argument. setting it to the
+We can load a specific dataset using the ``dataset_path`` keyword argument. setting it to the
 absolute path of the desired dataset will cause the single dataset to be loaded.
 
 .. code-block:: python
 
     >>> # Loading a specific dataset
-    >>> hs.load("sample.h5", dset_path='/Measurement_004/Channel_003/Main_Data')
+    >>> hs.load("sample.h5", dataset_path='/Measurement_004/Channel_003/Main_Data')
     <Signal2D, title: HAADF, dimensions: (|128, 128)>
 
 h5USID files support the storage of HDF5 dataset with
@@ -1094,10 +1168,17 @@ Nexus uses a variety of classes to record data, values,
 units and other experimental metadata associated with an experiment.
 For specific types of experiments an Application Definition may exist which
 defines an agreed common layout that facilities can adhere to.
+
 Nexus metadata and data are stored in Hierarchical Data Format Files (HDF5) with
 a .nxs extension although standards HDF5 extensions are sometimes used.
 Files must use the ``.nxs`` file extension in order to use this io plugin.
-Using the ``.nxs`` extension will default to the Nexus loader
+Using the ``.nxs`` extension will default to the Nexus loader. If your file has
+a HDF5 extension, you can also explicitly set the Nexus file reader:
+
+.. code-block:: python
+
+    # Load a NeXus file with a .h5 extension
+    >>> s = hs.load("filename.h5", reader="nxs")
 
 The loader will follow version 3 of the
 `Nexus data rules <https://manual.nexusformat.org/datarules.html#version-3>`_.
@@ -1429,13 +1510,13 @@ SUR and PRO format
 This is a format developed by the digitalsurf company to handle various types of
 scientific measurements data such as profilometer,SEM,AFM,RGB(A) images, multilayer
 surfaces and profiles. Even though it is essentially a surfaces format, 1D signals
-are supported for spectra and spectral maps. Metadata parsing is supported, including
-user-customised metadata, as well as the loading of files containing multiple objects
-packed together.
+are supported for spectra and spectral maps. Specifically, this file format is used
+by Attolight SA for the its Scanning Electron Microscope Cathodoluminescence
+(SEM-CL) hyperspectral maps. Metadata parsing is supported, including user-specific
+metadata, as well as the loading of files containing multiple objects packed together.
 
 The plugin was developed based on the MountainsMap software documentation which
 contains a description of the binary format.
-
 
 .. _empad-format:
 
@@ -1497,12 +1578,21 @@ When executed it will ask for 2 files:
 #. The data itself in raw format.
 
 If a file with the same name and path as the riple file exits
-with raw or bin extension it is opened directly without prompting
-
+with raw or bin extension it is opened directly without prompting.
 ImportRPL was written by Luiz Fernando Zagonel.
 
-
 `Download ImportRPL <https://github.com/downloads/hyperspy/ImportRPL/ImportRPL.s>`_
+
+
+HDF5 reader plugin for Digital Micrograph
+-----------------------------------------
+
+This Digital Micrograph plugin is designed to import HDF5 files and like the
+`ImportRPL` script above, it can used to easily transfer data from HyperSpy to
+Digital Micrograph by using the HDF5 hyperspy format (``hspy`` extension).
+
+Download ``gms_plugin_hdf5`` from its `Github repository <https://github.com/niermann/gms_plugin_hdf5>`_.
+
 
 .. _hyperspy-matlab:
 

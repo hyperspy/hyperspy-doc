@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running and writing tests &mdash; HyperSpy 1.6.0 documentation</title>
+  <title>Running and writing tests &mdash; HyperSpy 1.6.1 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.6.1
               </div>
             
           
@@ -116,6 +116,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Running and writing tests</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#writing-tests">Writing tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flaky-tests">Flaky tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#test-coverage">Test coverage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#continuous-integration-ci">Continuous integration (CI)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#plot-testing">Plot testing</a></li>
@@ -247,21 +248,21 @@ memory, you can do the following to release the memory associated with the
 <h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
 <p>First ensure pytest and its plugins are installed by:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If using a standard hyperspy install</span>
-pip install hyperspy<span class="o">[</span>tests<span class="o">]</span>
+$ pip install hyperspy<span class="o">[</span>tests<span class="o">]</span>
 
 <span class="c1"># Or, from a hyperspy local development directory</span>
-pip install -e .<span class="o">[</span>tests<span class="o">]</span>
+$ pip install -e .<span class="o">[</span>tests<span class="o">]</span>
 
 <span class="c1"># Or just installing the dependencies using conda</span>
-conda install -c conda-forge pytest pytest-mpl
+$ conda install -c conda-forge pytest pytest-mpl
 </pre></div>
 </div>
 <p>To run them:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --mpl --pyargs hyperspy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest --mpl --pyargs hyperspy
 </pre></div>
 </div>
 <p>Or, from HyperSpy’s project folder, simply:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest
 </pre></div>
 </div>
 <div class="admonition note">
@@ -269,6 +270,43 @@ conda install -c conda-forge pytest pytest-mpl
 <p>pytest configuration options are set in the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file, under the
 <code class="docutils literal notranslate"><span class="pre">[tool:pytest]</span></code> section. See the <a class="reference external" href="https://docs.pytest.org/en/latest/customize.html">pytest configuration documentation</a> for more details.</p>
 </div>
+<p>The HyperSpy test suite can also be run in parallel if you have multiple CPUs
+available, using the <code class="docutils literal notranslate"><span class="pre">`pytest-xdist</span></code> plugin &lt;<a class="reference external" href="https://pypi.org/project/pytest-xdist/">https://pypi.org/project/pytest-xdist/</a>&gt;`_.
+If you have the plugin installed, HyperSpy will automatically run the test suite in
+parallel on your machine.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To run on all the cores of your machine</span>
+$ pytest -n auto --dist loadfile
+
+<span class="c1"># To run on 2 cores</span>
+$ pytest -n <span class="m">2</span> --dist loadfile
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--dist</span> <span class="pre">loadfile</span></code> argument will group tests by their containing file. The
+groups are then distributed to available workers as whole units, thus guaranteeing
+that all tests in a file run in the same worker.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Running tests in parallel using <code class="docutils literal notranslate"><span class="pre">pytest-xdist</span></code> will change the content
+and format of the output of <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to the console. We recommend installing
+<code class="docutils literal notranslate"><span class="pre">`pytest-sugar</span></code> &lt;<a class="reference external" href="https://pypi.org/project/pytest-sugar/">https://pypi.org/project/pytest-sugar/</a>&gt;`_ to produce
+nicer-looking output including an animated progressbar.</p>
+</div>
+</div>
+<div class="section" id="flaky-tests">
+<h2>Flaky tests<a class="headerlink" href="#flaky-tests" title="Permalink to this headline">¶</a></h2>
+<p>Test functions can sometimes exhibit intermittent or sporadic failure, with seemingly
+random or non-deterministic behaviour. They may sometimes pass or sometimes fail, and
+it won’t always be clear why. These are usually known as “flaky” tests.</p>
+<p>One way to approach flaky tests is to rerun them, to see if the failure was a one-off.
+This can be achieved using the <code class="docutils literal notranslate"><span class="pre">`pytest-rerunfailures</span></code> plugin &lt;<a class="reference external" href="https://pypi.org/project/pytest-rerunfailures/">https://pypi.org/project/pytest-rerunfailures/</a>&gt;`_.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To re-run all test suite failures a maximum of 3 times</span>
+$ pytest --reruns <span class="m">3</span>
+
+<span class="c1"># To wait 1 second before the next retry</span>
+$ pytest --reruns <span class="m">3</span> --reruns-delay <span class="m">1</span>
+</pre></div>
+</div>
+<p>You can read more about flaky tests in the <a class="reference external" href="https://docs.pytest.org/en/stable/flaky.html">pytest documentation</a>.</p>
 </div>
 <div class="section" id="test-coverage">
 <h2>Test coverage<a class="headerlink" href="#test-coverage" title="Permalink to this headline">¶</a></h2>
@@ -280,7 +318,7 @@ PR page. This service can help you to find how well your code is being tested
 and exactly which parts are not currently tested.</p>
 <p>You can also measure code coverage locally. If you have installed <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code>,
 you can run (from HyperSpy’s project folder):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --cov<span class="o">=</span>hyperspy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest --cov<span class="o">=</span>hyperspy
 </pre></div>
 </div>
 <p>Configuration options for code coverage are also set in the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file,
@@ -297,17 +335,17 @@ or if any of the lines introduced in your diff are not covered.</p>
 <div class="section" id="continuous-integration-ci">
 <h2>Continuous integration (CI)<a class="headerlink" href="#continuous-integration-ci" title="Permalink to this headline">¶</a></h2>
 <p>The HyperSpy test suite is run using continuous integration services provided by
-<a class="reference external" href="https://travis-ci.org/github/hyperspy/hyperspy">Travis CI</a> and
+<a class="reference external" href="https://github.com/hyperspy/hyperspy/actions">Github Actions</a> and
 <a class="reference external" href="https://dev.azure.com/franciscode-la-pena-manchon/hyperspy/_build">Azure Pipelines</a>.
-The CI helper scripts are pulled from the
+In case of Azure Pipelines, CI helper scripts are pulled from the
 <a class="reference external" href="https://github.com/hyperspy/ci-scripts">ci-scripts</a> repository.</p>
 <p>The testing matrix is as follows:</p>
 <ul class="simple">
-<li><p><strong>Travis CI</strong>: test all supported Python versions on Linux only; all dependencies
-are pulled from <a class="reference external" href="https://pypi.org">PyPI</a>. See <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> in the HyperSpy
-repository for further details.</p></li>
+<li><p><strong>Github Actions</strong>: test a range of Pythons version on Linux, MacOS and Windows;
+all dependencies are installed from <a class="reference external" href="https://pypi.org">PyPI</a>.
+See <code class="docutils literal notranslate"><span class="pre">.github/workflows/tests.yml</span></code> in the HyperSpy repository for further details.</p></li>
 <li><p><strong>Azure Pipeline</strong>: test a range of Python versions on Linux, MacOS and Windows;
-all dependencies are pulled from <a class="reference external" href="https://anaconda.org/">Anaconda Cloud</a>
+all dependencies are installed from <a class="reference external" href="https://anaconda.org/">Anaconda Cloud</a>
 using the <a class="reference external" href="https://anaconda.org/anaconda">Anaconda “defaults”</a> and the
 <a class="reference external" href="https://anaconda.org/conda-forge">“conda-forge”</a> channel (in this order of
 priority). See <code class="docutils literal notranslate"><span class="pre">azure-pipelines.yml</span></code> in the HyperSpy repository for further details.</p></li>
@@ -318,13 +356,13 @@ avoid red herring failures of the test suite caused by application binary
 interface (ABI) incompatibility between dependencies.</p>
 <p>The most recent versions of packages are usually available first on PyPI, before
 they are available on Anaconda Cloud. These means that if a recent release of a
-dependency breaks the test suite, it should happen first on Travis CI.
-Similarly, deprecation warnings will usually appear first on Travis CI.</p>
-<p>The documentation build is done on both Travis CI and
+dependency breaks the test suite, it should happen first on Github Actions.
+Similarly, deprecation warnings will usually appear first on Github Actions.</p>
+<p>The documentation build is done on both Github Actions and
 <a class="reference external" href="https://readthedocs.org/">Read the Docs</a>, and it is worth checking that no new
 warnings have been introduced when writing documentation in the user guide or
 in the docstrings.</p>
-<p>The Travis CI testing matrix also includes the following special cases:</p>
+<p>The Github Actions testing matrix also includes the following special cases:</p>
 <ul class="simple">
 <li><p>The test suite is run against HyperSpy’s minimum requirements on Python 3.7
 on Linux. This will skip any tests that require <strong>optional</strong> packages such as
@@ -332,9 +370,6 @@ on Linux. This will skip any tests that require <strong>optional</strong> packag
 <li><p>The test suite is run against the oldest supported versions of <code class="docutils literal notranslate"><span class="pre">numpy</span></code>,
 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. For more details, see this
 <a class="reference external" href="https://github.com/hyperspy/hyperspy/pull/2485">Github issue</a>.</p></li>
-<li><p><a class="reference external" href="https://codecov.io/gh/hyperspy/hyperspy">codecov.io</a> will only report
-the coverage of your PR if the test suite passes on Python 3.7 on Linux.
-This job is labelled as <code class="docutils literal notranslate"><span class="pre">&quot;Linux,</span> <span class="pre">3.7,</span> <span class="pre">pip&quot;</span></code> on Travis CI.</p></li>
 </ul>
 </div>
 <div class="section" id="plot-testing">
@@ -347,7 +382,7 @@ tests. The reference images are located in the folder defined by the argument
 <p>To run plot tests, you simply need to add the option <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>:</p>
 <p>:: code:: bash</p>
 <blockquote>
-<div><p>pytest –mpl</p>
+<div><p>$ pytest –mpl</p>
 </div></blockquote>
 <p>If you don’t use <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>, the test functions will be executed, but the
 images will not be compared to the reference images.</p>
@@ -382,11 +417,11 @@ variable and accordingly set the backend.</p>
 <h2>Exporting pytest results as HTML<a class="headerlink" href="#exporting-pytest-results-as-html" title="Permalink to this headline">¶</a></h2>
 <p>With <code class="docutils literal notranslate"><span class="pre">pytest-html</span></code> it is possible to export the results of running pytest
 for easier viewing. It can be installed by conda:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install pytest-html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install pytest-html
 </pre></div>
 </div>
 <p>and run by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --mpl --html<span class="o">=</span>report.html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest --mpl --html<span class="o">=</span>report.html
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://pypi.python.org/pypi/pytest-mpl">pytest-mpl</a> for more details.</p>

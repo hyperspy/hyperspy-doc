@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hyperspy._components.eels_cl_edge module &mdash; HyperSpy 1.6.0 documentation</title>
+  <title>hyperspy._components.eels_cl_edge module &mdash; HyperSpy 1.6.1 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
             
               <div class="version">
-                1.6.0
+                1.6.1
               </div>
             
           
@@ -206,8 +206,286 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="hyperspy-components-eels-cl-edge-module">
-<h1>hyperspy._components.eels_cl_edge module<a class="headerlink" href="#hyperspy-components-eels-cl-edge-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-hyperspy._components.eels_cl_edge">
+<span id="hyperspy-components-eels-cl-edge-module"></span><h1>hyperspy._components.eels_cl_edge module<a class="headerlink" href="#module-hyperspy._components.eels_cl_edge" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge">
+<em class="property">class </em><code class="sig-prename descclassname">hyperspy._components.eels_cl_edge.</code><code class="sig-name descname">EELSCLEdge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element_subshell</span></em>, <em class="sig-param"><span class="n">GOS</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.component.Component</span></code></a></p>
+<p>EELS core loss ionisation edge from hydrogenic or tabulated
+Hartree-Slater GOS with splines for fine structure fitting.</p>
+<p>Hydrogenic GOS are limited to K and L shells.</p>
+<p>Currently it only supports Peter Rez’s Hartree Slater cross sections
+parametrised as distributed by Gatan in their Digital Micrograph (DM)
+software. If Digital Micrograph is installed in the system HyperSpy in the
+standard location HyperSpy should find the path to the HS GOS folder.
+Otherwise, the location of the folder can be defined in HyperSpy
+preferences, which can be done through hs.preferences.gui() or the
+hs.preferences.EELS.eels_gos_files_path variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element_subshell</strong> (<em>{str</em><em>, </em><em>dict}</em>) – Usually a string, for example, ‘Ti_L3’ for the GOS of the titanium L3
+subshell. If a dictionary is passed, it is assumed that Hartree Slater
+GOS was exported using <cite>GOS.as_dictionary</cite>, and will be reconstructed.</p></li>
+<li><p><strong>GOS</strong> (<em>{'hydrogenic'</em><em>, </em><em>'Hartree-Slater'</em><em>, </em><em>None}</em>) – The GOS to use. If None it will use the Hartree-Slater GOS if
+they are available, otherwise it will use the hydrogenic GOS.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.onset_energy">
+<code class="sig-name descname">onset_energy</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.onset_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>The edge onset position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter">Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.intensity">
+<code class="sig-name descname">intensity</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.intensity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The factor by which the cross section is multiplied, what in
+favourable cases is proportional to the number of atoms of
+the element. It is a component.Parameter instance.
+It is fixed by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter">Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_coeff">
+<code class="sig-name descname">fine_structure_coeff</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_coeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>The coefficients of the spline that fits the fine structure.
+Fix this parameter to fix the fine structure. It is a
+component.Parameter instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter">Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.effective_angle">
+<code class="sig-name descname">effective_angle</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.effective_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The effective collection semi-angle. It is automatically
+calculated by set_microscope_parameters. It is a
+component.Parameter instance. It is fixed by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter">Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_smoothing">
+<code class="sig-name descname">fine_structure_smoothing</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_smoothing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the level of smoothing of the fine structure model.
+Decreasing the value increases the level of smoothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float between 0 and 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_active">
+<code class="sig-name descname">fine_structure_active</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates/deactivates the fine structure feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.E0">
+<em class="property">property </em><code class="sig-name descname">E0</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.E0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._calculate_effective_angle">
+<code class="sig-name descname">_calculate_effective_angle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._calculate_effective_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._calculate_knots">
+<code class="sig-name descname">_calculate_knots</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._calculate_knots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._fine_structure_smoothing">
+<code class="sig-name descname">_fine_structure_smoothing</code><em class="property"> = 0.3</em><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._fine_structure_smoothing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._get_E0">
+<code class="sig-name descname">_get_E0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._get_E0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._get_collection_angle">
+<code class="sig-name descname">_get_collection_angle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._get_collection_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._get_convergence_angle">
+<code class="sig-name descname">_get_convergence_angle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._get_convergence_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._get_fine_structure_active">
+<code class="sig-name descname">_get_fine_structure_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._get_fine_structure_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._get_fine_structure_width">
+<code class="sig-name descname">_get_fine_structure_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._get_fine_structure_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._integrate_GOS">
+<code class="sig-name descname">_integrate_GOS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._integrate_GOS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._onset_energy">
+<code class="sig-name descname">_onset_energy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._onset_energy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_E0">
+<code class="sig-name descname">_set_E0</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_E0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_collection_angle">
+<code class="sig-name descname">_set_collection_angle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_collection_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_convergence_angle">
+<code class="sig-name descname">_set_convergence_angle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_convergence_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_active">
+<code class="sig-name descname">_set_fine_structure_active</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_coeff">
+<code class="sig-name descname">_set_fine_structure_coeff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_coeff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_width">
+<code class="sig-name descname">_set_fine_structure_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge._set_fine_structure_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.collection_angle">
+<em class="property">property </em><code class="sig-name descname">collection_angle</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.collection_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.convergence_angle">
+<em class="property">property </em><code class="sig-name descname">convergence_angle</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.convergence_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="id0">
+<em class="property">property </em><code class="sig-name descname">fine_structure_active</code><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_coeff_to_txt">
+<code class="sig-name descname">fine_structure_coeff_to_txt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_coeff_to_txt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="id1">
+<em class="property">property </em><code class="sig-name descname">fine_structure_smoothing</code><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the level of the smoothing of the fine structure.</p>
+<p>It must a real number between 0 and 1. The higher close to 0
+the higher the smoothing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_width">
+<em class="property">property </em><code class="sig-name descname">fine_structure_width</code><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.fine_structure_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.function">
+<code class="sig-name descname">function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">E</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of counts in barns</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.get_fine_structure_as_signal1D">
+<code class="sig-name descname">get_fine_structure_as_signal1D</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.get_fine_structure_as_signal1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a spectrum containing the fine structure.</p>
+<p class="rubric">Notes</p>
+<p>The fine structure is corrected from multiple scattering if
+the model was convolved with a low-loss spectrum</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.grad_intensity">
+<code class="sig-name descname">grad_intensity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">E</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.grad_intensity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.gui">
+<code class="sig-name descname">gui</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">display</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">toolkit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
+widgets container in a dictionary, usually for customisation or
+testing.</p></li>
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+If string, only the widgets of the selected toolkit are displayed
+if available. If an interable of toolkit strings, the widgets of
+all listed toolkits are displayed or returned.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.set_microscope_parameters">
+<code class="sig-name descname">set_microscope_parameters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">E0</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">energy_scale</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.set_microscope_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>E0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Electron beam energy in keV.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Convergence semi-angle in mrad.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Collection semi-angle in mrad.</p></li>
+<li><p><strong>energy_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The energy step in eV.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hyperspy._components.eels_cl_edge.EELSCLEdge.txt_to_fine_structure_coeff">
+<code class="sig-name descname">txt_to_fine_structure_coeff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy._components.eels_cl_edge.EELSCLEdge.txt_to_fine_structure_coeff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 
