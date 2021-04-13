@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Model fitting &mdash; HyperSpy 1.6.1 documentation</title>
+  <title>Model fitting &mdash; HyperSpy 1.6.2 documentation</title>
   
 
   
@@ -19,7 +19,10 @@
   
     <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
   
+
   
+  
+
   
 
   
@@ -70,7 +73,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HyperSpy
+            <a href="../index.html" class="icon icon-home"> HyperSpy
           
 
           
@@ -83,7 +86,7 @@
             
             
               <div class="version">
-                1.6.1
+                1.6.2
               </div>
             
           
@@ -108,76 +111,98 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">HyperSpy User Guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="what_is_new.html">What’s new</a></li>
-<li class="toctree-l2"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="signal.html">The Signal class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mva.html">Machine learning</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Model fitting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#caveats">Caveats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#model-components">Model components</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pre-defined-model-components">Pre-defined model components</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#define-components-from-a-mathematical-expression">Define components from a mathematical expression</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#define-new-components-from-a-python-function">Define new components from a Python function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#define-components-from-a-fixed-pattern">Define components from a fixed-pattern</a></li>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_new.html">What’s new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_new.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model fitting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#caveats">Caveats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-model">Creating a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-components">Model components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-defined-model-components">Pre-defined model components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-components-from-a-mathematical-expression">Define components from a mathematical expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-new-components-from-a-python-function">Define new components from a Python function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-components-from-a-fixed-pattern">Define components from a fixed-pattern</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#indexing-the-model">Indexing the model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-and-setting-parameter-values-and-attributes">Getting and setting parameter values and attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#optimization-algorithms">Optimization algorithms</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loss-functions">Loss functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#using-gradient-information">Using gradient information</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#bounded-optimization">Bounded optimization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#optimization-results">Optimization results</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#goodness-of-fit">Goodness of fit</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#visualizing-the-model">Visualizing the model</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#setting-the-initial-parameters">Setting the initial parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fitting-multidimensional-datasets">Fitting multidimensional datasets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-components-to-the-model">Adding components to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indexing-the-model">Indexing the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-and-setting-parameter-values-and-attributes">Getting and setting parameter values and attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitting-the-model-to-the-data">Fitting the model to the data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-algorithms">Optimization algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loss-functions">Loss functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#least-squares-with-error-estimation">Least squares with error estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weighted-least-squares-with-error-estimation">Weighted least squares with error estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#poisson-maximum-likelihood-estimation">Poisson maximum likelihood estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#huber-loss-function">Huber loss function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-loss-functions">Custom loss functions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#storing-models">Storing models</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#exporting-the-result-of-the-fit">Exporting the result of the fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-gradient-information">Using gradient information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bounded-optimization">Bounded optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-results">Optimization results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#goodness-of-fit">Goodness of fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualizing-the-model">Visualizing the model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-the-initial-parameters">Setting the initial parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fitting-multidimensional-datasets">Fitting multidimensional datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#batch-setting-of-parameter-attributes">Batch setting of parameter attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#smart-adaptive-multi-dimensional-fitting-samfire">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#the-idea">The idea</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#strategies">Strategies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#local-strategy-family">Local strategy family</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#global-strategy-family">Global strategy family</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#seed-points">Seed points</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-models">Storing models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exporting-the-result-of-the-fit">Exporting the result of the fit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#batch-setting-of-parameter-attributes">Batch setting of parameter attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#smart-adaptive-multi-dimensional-fitting-samfire">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-idea">The idea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strategies">Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-strategy-family">Local strategy family</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-strategy-family">Global strategy family</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#seed-points">Seed points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
-<li class="toctree-l2"><a class="reference internal" href="io.html">Loading and saving data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="big_data.html">Working with big data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../dev_guide/index.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">Full HyperSpy API Documentation</a></li>
+<p class="caption"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">hyperspy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Credits and citation</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
 </ul>
@@ -220,20 +245,20 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">HyperSpy User Guide</a> &raquo;</li>
-        
       <li>Model fitting</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/user_guide/model.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -333,6 +358,7 @@ model.</p>
 <li><p><a class="reference internal" href="../api/hyperspy._components.scalable_fixed_pattern.html#hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern" title="hyperspy._components.scalable_fixed_pattern.ScalableFixedPattern"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalableFixedPattern</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.skew_normal.html#hyperspy._components.skew_normal.SkewNormal" title="hyperspy._components.skew_normal.SkewNormal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SkewNormal</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.voigt.html#hyperspy._components.voigt.Voigt" title="hyperspy._components.voigt.Voigt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Voigt</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy._components.split_voigt.html#hyperspy._components.split_voigt.SplitVoigt" title="hyperspy._components.split_voigt.SplitVoigt"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitVoigt</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy._components.volume_plasmon_drude.html#hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude" title="hyperspy._components.volume_plasmon_drude.VolumePlasmonDrude"><code class="xref py py-class docutils literal notranslate"><span class="pre">VolumePlasmonDrude</span></code></a></p></li>
 </ul>
 <p>The following components developed with specific signal types in mind are
@@ -492,8 +518,8 @@ Therefore, the table above may not all may empty on model creation.</p>
 <p>To add a component to the model, first we have to create an instance of the
 component.
 Once the instance has been created we can add the component to the model
-using the <a class="reference internal" href="../api/hyperspy.model.html#id0" title="hyperspy.model.BaseModel.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a> and
-<a class="reference internal" href="../api/hyperspy.model.html#id4" title="hyperspy.model.BaseModel.extend"><code class="xref py py-meth docutils literal notranslate"><span class="pre">extend()</span></code></a> methods for one or more components
+using the <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.append" title="hyperspy.model.BaseModel.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.extend" title="hyperspy.model.BaseModel.extend"><code class="xref py py-meth docutils literal notranslate"><span class="pre">extend()</span></code></a> methods for one or more components
 respectively.</p>
 <p>As an example, let’s add several <a class="reference internal" href="../api/hyperspy._components.gaussian.html#hyperspy._components.gaussian.Gaussian" title="hyperspy._components.gaussian.Gaussian"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gaussian</span></code></a>
 components to the model:</p>
@@ -507,7 +533,7 @@ components to the model:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian3</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span> <span class="c1"># Create a third gaussian</span>
 </pre></div>
 </div>
-<p>We could use the <a class="reference internal" href="../api/hyperspy.model.html#id0" title="hyperspy.model.BaseModel.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a> method twice to add the
+<p>We could use the <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.append" title="hyperspy.model.BaseModel.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a> method twice to add the
 two Gaussians, but when adding multiple components it is handier to use the
 extend method that enables adding a list of components at once.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">gaussian2</span><span class="p">,</span> <span class="n">gaussian3</span><span class="p">))</span> <span class="c1"># note the double parentheses!</span>
@@ -576,7 +602,7 @@ switch it back on simply set the <code class="docutils literal notranslate"><spa
 <p>In multi-dimensional signals it is possible to store the value of the
 <code class="docutils literal notranslate"><span class="pre">active</span></code> attribute at each navigation index.
 To enable this feature for a given component set the
-<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component.active_is_multidimensional" title="hyperspy.component.Component.active_is_multidimensional"><code class="xref py py-attr docutils literal notranslate"><span class="pre">active_is_multidimensional</span></code></a> attribute to
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">active_is_multidimensional</span></code> attribute to
 <cite>True</cite>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
@@ -606,7 +632,7 @@ To enable this feature for a given component set the
 a particular location (i.e. a slice in the navigation space) or energy range
 (i.e. a slice in the signal space). This can be done using exactly the same
 syntax that we use for signal indexing (<a class="reference internal" href="signal.html#signal-indexing"><span class="std std-ref">Indexing</span></a>).
-<a class="reference internal" href="../api/hyperspy.model.html#id8" title="hyperspy.model.BaseModel.red_chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">red_chisq</span></code></a> and <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.dof" title="hyperspy.model.BaseModel.dof"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dof</span></code></a>
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.red_chisq" title="hyperspy.model.BaseModel.red_chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">red_chisq</span></code></a> and <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.dof" title="hyperspy.model.BaseModel.dof"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dof</span></code></a>
 are automatically recomputed for the resulting slices.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
@@ -620,7 +646,7 @@ are automatically recomputed for the resulting slices.</p>
 </div>
 <div class="section" id="getting-and-setting-parameter-values-and-attributes">
 <h2>Getting and setting parameter values and attributes<a class="headerlink" href="#getting-and-setting-parameter-values-and-attributes" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="../api/hyperspy.model.html#id7" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a> prints the properties of the
+<p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.print_current_values" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a> prints the properties of the
 parameters of the components in the current coordinates. In the Jupyter Notebook,
 the default view is HTML-formatted, which allows for formatted copying
 into other software, such as Excel. This can be changed to a standard
@@ -659,7 +685,7 @@ pixels, <code class="xref py py-attr docutils literal notranslate"><span class="
 standard error for each index. The last element shows whether the value has
 been set in a given index, either by a fitting procedure or manually.</p>
 <p>If a model contains several components with the same parameters, it is possible
-to change them all by using <a class="reference internal" href="../api/hyperspy.model.html#id10" title="hyperspy.model.BaseModel.set_parameters_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_value()</span></code></a>.
+to change them all by using <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.set_parameters_value" title="hyperspy.model.BaseModel.set_parameters_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_value()</span></code></a>.
 Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
@@ -727,7 +753,7 @@ components and parameter-names can also be specified. For example:</p>
 </pre></div>
 </div>
 <p>The value of a parameter can be coupled to the value of another by setting the
-<a class="reference internal" href="../api/hyperspy.component.html#id6" title="hyperspy.component.Parameter.twin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin</span></code></a> attribute:</p>
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin" title="hyperspy.component.Parameter.twin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin</span></code></a> attribute:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian</span><span class="o">.</span><span class="n">parameters</span> <span class="c1"># Print the parameters of the Gaussian components</span>
 <span class="go">(&lt;Parameter A of Carbon component&gt;,</span>
 <span class="go">&lt;Parameter sigma of Carbon component&gt;,</span>
@@ -784,19 +810,19 @@ components and parameter-names can also be specified. For example:</p>
 </pre></div>
 </div>
 <div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 1.2.0: </span>Setting the <a class="reference internal" href="../api/hyperspy.component.html#id7" title="hyperspy.component.Parameter.twin_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function</span></code></a> and
-<a class="reference internal" href="../api/hyperspy.component.html#id9" title="hyperspy.component.Parameter.twin_inverse_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_inverse_function</span></code></a> attributes. Set the
-<a class="reference internal" href="../api/hyperspy.component.html#id8" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
+<p><span class="versionmodified deprecated">Deprecated since version 1.2.0: </span>Setting the <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_function" title="hyperspy.component.Parameter.twin_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_inverse_function" title="hyperspy.component.Parameter.twin_inverse_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_inverse_function</span></code></a> attributes. Set the
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_function_expr" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_inverse_function_expr" title="hyperspy.component.Parameter.twin_inverse_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_inverse_function_expr</span></code></a> attributes
 instead.</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.2.0: </span><a class="reference internal" href="../api/hyperspy.component.html#id8" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
+<p><span class="versionmodified added">New in version 1.2.0: </span><a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_function_expr" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_inverse_function_expr" title="hyperspy.component.Parameter.twin_inverse_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_inverse_function_expr</span></code></a>.</p>
 </div>
 <p>By default the coupling function is the identity function. However it is
 possible to set a different coupling function by setting the
-<a class="reference internal" href="../api/hyperspy.component.html#id8" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_function_expr" title="hyperspy.component.Parameter.twin_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_function_expr</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.twin_inverse_function_expr" title="hyperspy.component.Parameter.twin_inverse_function_expr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">twin_inverse_function_expr</span></code></a> attributes.  For
 example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gaussian2</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">twin_function_expr</span> <span class="o">=</span> <span class="s2">&quot;x**2&quot;</span>
@@ -894,7 +920,7 @@ whether the optimizers find a local or global optima.</p>
 <td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
 <td><p>local</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.6.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
 <td><p>Yes *</p></td>
 <td><p>Yes *</p></td>
 <td><p>No</p></td>
@@ -926,7 +952,7 @@ whether the optimizers find a local or global optima.</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>* <strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.5.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
+<p>* <strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.6.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
 supported by HyperSpy; however, only some of them support bounds and/or gradients. For more information,
 please see the <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy documentation</a>.</p>
 <p>** Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p>
@@ -1221,7 +1247,7 @@ on the <code class="docutils literal notranslate"><span class="pre">centre</span
 <h3>Optimization results<a class="headerlink" href="#optimization-results" title="Permalink to this headline">¶</a></h3>
 <p>After fitting the model, details about the optimization
 procedure, including whether it finished successfully,
-are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
+are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.6.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
 according to the keyword argument <code class="docutils literal notranslate"><span class="pre">return_info=True</span></code>.
 These details are often useful for diagnosing problems such
 as a poorly-fitted model or a convergence failure.
@@ -1259,7 +1285,7 @@ You can also access the object as the <code class="docutils literal notranslate"
 <p>The chi-squared, reduced chi-squared and the degrees of freedom are
 computed automatically when fitting a (weighted) least-squares model
 (i.e. only when <code class="docutils literal notranslate"><span class="pre">loss_function=&quot;ls&quot;</span></code>). They are stored as signals, in the
-<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.chisq" title="hyperspy.model.BaseModel.chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">chisq</span></code></a>, <a class="reference internal" href="../api/hyperspy.model.html#id8" title="hyperspy.model.BaseModel.red_chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">red_chisq</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.chisq" title="hyperspy.model.BaseModel.chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">chisq</span></code></a>, <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.red_chisq" title="hyperspy.model.BaseModel.red_chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">red_chisq</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.dof" title="hyperspy.model.BaseModel.dof"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dof</span></code></a> attributes of the model respectively.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1277,13 +1303,13 @@ homocedastic and heteroscedastic noise.</p>
 </div>
 <p>By default only the full model line is displayed in the plot. In addition, it
 is possible to display the individual components by calling
-<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.enable_plot_components" title="hyperspy.model.BaseModel.enable_plot_components"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enable_plot_components()</span></code></a> or directly using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">enable_plot_components()</span></code> or directly using
 <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.plot" title="hyperspy.model.BaseModel.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_components</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Visualise the results</span>
 </pre></div>
 </div>
 <p>To disable this feature call
-<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.disable_plot_components" title="hyperspy.model.BaseModel.disable_plot_components"><code class="xref py py-meth docutils literal notranslate"><span class="pre">disable_plot_components()</span></code></a>.</p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">disable_plot_components()</span></code>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4: </span><code class="docutils literal notranslate"><span class="pre">Signal1D.plot</span></code> keyword arguments</p>
 </div>
@@ -1335,6 +1361,41 @@ undesired spectral channels from the fitting process:</p>
 <li><p><a class="reference internal" href="../api/hyperspy.models.model1d.html#hyperspy.models.model1d.Model1D.remove_signal_range" title="hyperspy.models.model1d.Model1D.remove_signal_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_signal_range()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.models.model1d.html#hyperspy.models.model1d.Model1D.reset_signal_range" title="hyperspy.models.model1d.Model1D.reset_signal_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset_signal_range()</span></code></a></p></li>
 </ul>
+<p>In 2D models, those methods are not implemented and the
+<code class="docutils literal notranslate"><span class="pre">m.channel_switches</span></code> attribute of a model can be set using boolean arrays of the
+same shape as the data’s signal, where <code class="docutils literal notranslate"><span class="pre">True</span></code> means that the datapoint
+will be used in the fitting routine.</p>
+<p>The example below shows how a boolean array can be easily created from the
+signal and how the <code class="docutils literal notranslate"><span class="pre">isig</span></code> syntax can be used to define the signal range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a sample 2D gaussian dataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components2D</span><span class="o">.</span><span class="n">Gaussian2D</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">A</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">centre_x</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">centre_y</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">sigma_x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_y</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span> <span class="c1"># Model initialisation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gt</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components2D</span><span class="o">.</span><span class="n">Gaussian2D</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gt</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a boolean signal of the same shape as the signal space of im</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># and with all values set to `False`.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_mask</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">im</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Specify the signal range using the isig syntax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_mask</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="o">-</span><span class="mf">7.</span><span class="p">:</span><span class="o">-</span><span class="mf">3.</span><span class="p">,</span><span class="o">-</span><span class="mf">9.</span><span class="p">:</span><span class="o">-</span><span class="mf">1.</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">channel_switches</span> <span class="o">=</span> <span class="n">signal_mask</span><span class="o">.</span><span class="n">data</span> <span class="c1"># Set channel switches</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="fitting-multidimensional-datasets">
 <span id="model-multidimensional-label"></span><h3>Fitting multidimensional datasets<a class="headerlink" href="#fitting-multidimensional-datasets" title="Permalink to this headline">¶</a></h3>
@@ -1387,14 +1448,14 @@ to the order that the signal is fitted in.</span><a class="headerlink" href="#id
 </div>
 <p>Sometimes one may like to store and fetch the value of the parameters at a
 given position manually. This is possible using
-<a class="reference internal" href="../api/hyperspy.model.html#id11" title="hyperspy.model.BaseModel.store_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store_current_values()</span></code></a> and
-<a class="reference internal" href="../api/hyperspy.model.html#id5" title="hyperspy.model.BaseModel.fetch_stored_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fetch_stored_values()</span></code></a>.</p>
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.store_current_values" title="hyperspy.model.BaseModel.store_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store_current_values()</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.fetch_stored_values" title="hyperspy.model.BaseModel.fetch_stored_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fetch_stored_values()</span></code></a>.</p>
 </div>
 <div class="section" id="visualising-the-result-of-the-fit">
 <h3>Visualising the result of the fit<a class="headerlink" href="#visualising-the-result-of-the-fit" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../api/hyperspy.model.html#id6" title="hyperspy.model.BaseModel.plot_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_results()</span></code></a>,
+<p>The <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.plot_results" title="hyperspy.model.BaseModel.plot_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_results()</span></code></a>,
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component.plot" title="hyperspy.component.Component.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> and
-<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#id5" title="hyperspy.component.Parameter.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> methods
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.plot" title="hyperspy.component.Parameter.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> methods
 can be used to visualise the result of the fit <strong>when fitting multidimensional
 datasets</strong>.</p>
 </div>
@@ -1498,9 +1559,9 @@ back the parameter values and arrays.</p></li>
 </div>
 <div class="section" id="exporting-the-result-of-the-fit">
 <h3>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../api/hyperspy.model.html#id3" title="hyperspy.model.BaseModel.export_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export_results()</span></code></a>,
+<p>The <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.export_results" title="hyperspy.model.BaseModel.export_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export_results()</span></code></a>,
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component.export" title="hyperspy.component.Component.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a> and
-<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#id2" title="hyperspy.component.Parameter.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a>
+<a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter.export" title="hyperspy.component.Parameter.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a>
 methods can be used to export the result of the optimization in all supported
 formats.</p>
 </div>
@@ -1513,7 +1574,7 @@ on individual components.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.set_parameters_not_free" title="hyperspy.model.BaseModel.set_parameters_not_free"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_not_free()</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.set_parameters_free" title="hyperspy.model.BaseModel.set_parameters_free"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_free()</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/hyperspy.model.html#id10" title="hyperspy.model.BaseModel.set_parameters_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_value()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.set_parameters_value" title="hyperspy.model.BaseModel.set_parameters_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_value()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="smart-adaptive-multi-dimensional-fitting-samfire">
@@ -1612,12 +1673,12 @@ added to its strategist list:</p>
 <p>The currently active strategy is marked by an ‘x’ in the first column.</p>
 <p>If a new datapoint (i.e. pixel) is added manually, the “database” of the
 currently active strategy has to be refreshed using the
-<a class="reference internal" href="../api/hyperspy.samfire.html#id11" title="hyperspy.samfire.Samfire.refresh_database"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_database()</span></code></a> call.</p>
+<a class="reference internal" href="../api/hyperspy.samfire.html#hyperspy.samfire.Samfire.refresh_database" title="hyperspy.samfire.Samfire.refresh_database"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh_database()</span></code></a> call.</p>
 <p>The current strategy “database” can be plotted using the
-<a class="reference internal" href="../api/hyperspy.samfire.html#id8" title="hyperspy.samfire.Samfire.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method.</p>
+<a class="reference internal" href="../api/hyperspy.samfire.html#hyperspy.samfire.Samfire.plot" title="hyperspy.samfire.Samfire.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method.</p>
 <p>Whilst SAMFire is running, each pixel is checked by a <code class="docutils literal notranslate"><span class="pre">goodness_test</span></code>,
 which is by default
-<a class="reference internal" href="../api/hyperspy.samfire_utils.goodness_of_fit_tests.red_chisq.html#hyperspy.samfire_utils.goodness_of_fit_tests.red_chisq.red_chisq_test" title="hyperspy.samfire_utils.goodness_of_fit_tests.red_chisq.red_chisq_test"><code class="xref py py-class docutils literal notranslate"><span class="pre">red_chisq_test</span></code></a>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">red_chisq_test</span></code>,
 checking the reduced chi-squared to be in the bounds of [0, 2].</p>
 <p>This tolerance can (and most likely should!) be changed appropriately for the
 data as follows:</p>
@@ -1625,7 +1686,7 @@ data as follows:</p>
 </pre></div>
 </div>
 <p>The SAMFire managed multi-dimensional fit can be started using the
-<a class="reference internal" href="../api/hyperspy.samfire.html#id14" title="hyperspy.samfire.Samfire.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> method. All keyword arguments are passed to
+<a class="reference internal" href="../api/hyperspy.samfire.html#hyperspy.samfire.Samfire.start" title="hyperspy.samfire.Samfire.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> method. All keyword arguments are passed to
 the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a> call:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">samf</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span> <span class="n">bounded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -1639,37 +1700,29 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="eels.html" class="btn btn-neutral float-right" title="Electron Energy Loss Spectroscopy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="mva.html" class="btn btn-neutral float-left" title="Machine learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="eels.html" class="btn btn-neutral float-right" title="Electron Energy Loss Spectroscopy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mva.html" class="btn btn-neutral float-left" title="Machine learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2011-2020, The HyperSpy development team
+        &#169; Copyright 2011-2021, The HyperSpy development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
