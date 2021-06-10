@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>hyperspy.component module &mdash; HyperSpy 1.6.2 documentation</title>
+  <title>hyperspy.component module &mdash; HyperSpy 1.6.3 documentation</title>
   
 
   
@@ -86,7 +86,7 @@
             
             
               <div class="version">
-                1.6.2
+                1.6.3
               </div>
             
           
@@ -114,8 +114,7 @@
               <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guide/what_is_new.html">What’s new</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guide/what_is_new.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
@@ -299,6 +298,14 @@ correct twins.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hyperspy.component.Component.active_is_multidimensional">
+<em class="property">property </em><code class="sig-name descname">active_is_multidimensional</code><a class="headerlink" href="#hyperspy.component.Component.active_is_multidimensional" title="Permalink to this definition">¶</a></dt>
+<dd><p>In multidimensional signals it is possible to store the value of the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> attribute at each navigation
+index.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="hyperspy.component.Component.as_dictionary">
 <code class="sig-name descname">as_dictionary</code><span class="sig-paren">(</span><em class="sig-param">fullcopy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.as_dictionary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns component as a dictionary. For more information on method
@@ -347,6 +354,22 @@ exported.</p></li>
 <p>The name of the files will be determined by each the Component
 and each Parameter name attributes. Therefore, it is possible to
 customise the file names modify the name attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyperspy.component.Component.fetch_values_from_array">
+<code class="sig-name descname">fetch_values_from_array</code><span class="sig-paren">(</span><em class="sig-param">p</em>, <em class="sig-param">p_std=None</em>, <em class="sig-param">onlyfree=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.fetch_values_from_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the parameter values from an array <cite>p</cite> and optionally standard
+deviation from <cite>p_std</cite>. Places them <cite>component.parameter.value</cite> and
+<cite>…std</cite>, according to their position in the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>array</em>) – array containing new values for the parameters in a component</p></li>
+<li><p><strong>p_std</strong> (<em>array</em><em>, </em><em>optional</em>) – array containing the corresponding standard deviation.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -676,7 +699,10 @@ dimension is greater than 0.</p>
 <dl class="method">
 <dt id="hyperspy.component.Parameter.assign_current_value_to_all">
 <code class="sig-name descname">assign_current_value_to_all</code><span class="sig-paren">(</span><em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Parameter.assign_current_value_to_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign the current value attribute to all the  indices</p>
+<dd><p>Assign the current value attribute to all the indices,
+setting parameter.map for all parameters in the component.</p>
+<p>Takes the current <cite>parameter.value</cite> and sets it for all
+indices in <cite>parameter.map[‘values’]</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>mask</strong> (<em>{None</em><em>, </em><em>boolean numpy array}</em>) – Set only the indices that are not masked i.e. where
@@ -719,7 +745,12 @@ modified by appending a number to the file path.</p></li>
 <dl class="method">
 <dt id="hyperspy.component.Parameter.fetch">
 <code class="sig-name descname">fetch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Parameter.fetch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fetch the stored value and std attributes.</p>
+<dd><p>Fetch the stored value and std attributes from the
+parameter.map[‘values’] and …[‘std’] if
+<cite>parameter.map[‘is_set’]</cite> is True for that index. Updates
+<cite>parameter.value</cite> and <cite>parameter.std</cite>.
+If not stored, then .value and .std will remain from their
+previous values, i.e. from a fit in a previous pixel.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#hyperspy.component.Parameter.store_current_value_in_array" title="hyperspy.component.Parameter.store_current_value_in_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store_current_value_in_array()</span></code></a>, <a class="reference internal" href="#hyperspy.component.Parameter.assign_current_value_to_all" title="hyperspy.component.Parameter.assign_current_value_to_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assign_current_value_to_all()</span></code></a></p>
