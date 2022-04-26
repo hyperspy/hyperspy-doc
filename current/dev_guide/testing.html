@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Running and writing tests &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Running and writing tests &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -146,9 +147,9 @@ documented. HyperSpy uses the <a class="reference external" href="http://doc.pyt
 for testing. The tests reside in the <code class="docutils literal notranslate"><span class="pre">hyperspy.tests</span></code> module.</p>
 <p>Tests are short functions, found in <code class="docutils literal notranslate"><span class="pre">hyperspy/tests</span></code>, that call your functions
 under some known conditions and check the outputs against known values. They
-should depend on as few other features as possible so that when they break
+should depend on as few other features as possible so that when they break,
 we know exactly what caused it. Ideally, the tests should be written at the
-same time than the code itself, as they are very convenient to run to check
+same time as the code itself, as they are very convenient to run to check
 outputs when coding. Writing tests can seem laborious but you’ll probably
 soon find that they are very important, as they force you to sanity-check
 all the work that you do.</p>
@@ -164,7 +165,7 @@ testing</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize()</span></code> is a very convenient decorator to test several
 parameters of the same function without having to write to much repetitive
 code, which is often error-prone. See <a class="reference external" href="http://doc.pytest.org/en/latest/parametrize.html">pytest documentation</a> for more details.</p></li>
-<li><p>It is good to check that the tests does not use too much memory after
+<li><p>It is good to check that the tests do not use too much memory after
 creating new tests. If you need to explicitly delete your objects and free
 memory, you can do the following to release the memory associated with the
 <code class="docutils literal notranslate"><span class="pre">s</span></code> object:</p></li>
@@ -207,7 +208,7 @@ $ conda install -c conda-forge pytest pytest-mpl
 <code class="docutils literal notranslate"><span class="pre">[tool:pytest]</span></code> section. See the <a class="reference external" href="https://docs.pytest.org/en/latest/customize.html">pytest configuration documentation</a> for more details.</p>
 </div>
 <p>The HyperSpy test suite can also be run in parallel if you have multiple CPUs
-available, using the <code class="docutils literal notranslate"><span class="pre">`pytest-xdist</span></code> plugin &lt;<a class="reference external" href="https://pypi.org/project/pytest-xdist/">https://pypi.org/project/pytest-xdist/</a>&gt;`_.
+available, using the <a class="reference external" href="https://pypi.org/project/pytest-xdist/">pytest-xdist plugin</a>.
 If you have the plugin installed, HyperSpy will automatically run the test suite in
 parallel on your machine.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To run on all the cores of your machine</span>
@@ -224,7 +225,7 @@ that all tests in a file run in the same worker.</p>
 <p class="admonition-title">Note</p>
 <p>Running tests in parallel using <code class="docutils literal notranslate"><span class="pre">pytest-xdist</span></code> will change the content
 and format of the output of <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to the console. We recommend installing
-<code class="docutils literal notranslate"><span class="pre">`pytest-sugar</span></code> &lt;<a class="reference external" href="https://pypi.org/project/pytest-sugar/">https://pypi.org/project/pytest-sugar/</a>&gt;`_ to produce
+<a class="reference external" href="https://pypi.org/project/pytest-sugar/">pytest-sugar</a> to produce
 nicer-looking output including an animated progressbar.</p>
 </div>
 </section>
@@ -234,7 +235,7 @@ nicer-looking output including an animated progressbar.</p>
 random or non-deterministic behaviour. They may sometimes pass or sometimes fail, and
 it won’t always be clear why. These are usually known as “flaky” tests.</p>
 <p>One way to approach flaky tests is to rerun them, to see if the failure was a one-off.
-This can be achieved using the <code class="docutils literal notranslate"><span class="pre">`pytest-rerunfailures</span></code> plugin &lt;<a class="reference external" href="https://pypi.org/project/pytest-rerunfailures/">https://pypi.org/project/pytest-rerunfailures/</a>&gt;`_.</p>
+This can be achieved using the <a class="reference external" href="https://pypi.org/project/pytest-rerunfailures/">pytest-rerunfailures plugin</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To re-run all test suite failures a maximum of 3 times</span>
 $ pytest --reruns <span class="m">3</span>
 
@@ -277,13 +278,15 @@ In case of Azure Pipelines, CI helper scripts are pulled from the
 <a class="reference external" href="https://github.com/hyperspy/ci-scripts">ci-scripts</a> repository.</p>
 <p>The testing matrix is as follows:</p>
 <ul class="simple">
-<li><p><strong>Github Actions</strong>: test a range of Pythons version on Linux, MacOS and Windows;
+<li><p><strong>Github Actions</strong>: test a range of Python versions on Linux, MacOS and Windows;
 all dependencies are installed from <a class="reference external" href="https://pypi.org">PyPI</a>.
 See <code class="docutils literal notranslate"><span class="pre">.github/workflows/tests.yml</span></code> in the HyperSpy repository for further details.</p></li>
 <li><p><strong>Azure Pipeline</strong>: test a range of Python versions on Linux, MacOS and Windows;
 all dependencies are installed from <a class="reference external" href="https://anaconda.org/">Anaconda Cloud</a>
 using the <a class="reference external" href="https://anaconda.org/conda-forge">“conda-forge”</a> channel.
 See <code class="docutils literal notranslate"><span class="pre">azure-pipelines.yml</span></code> in the HyperSpy repository for further details.</p></li>
+<li><p>The testing of <strong>HyperSpy extensions</strong> is described in the
+<a class="reference internal" href="writing_extensions.html#integration-test-suite-label"><span class="std std-ref">integration test suite</span></a> section.</p></li>
 </ul>
 <p>This testing matrix has been designed to be simple and easy to maintain, whilst
 ensuring that packages from PyPI and Anaconda cloud are not mixed in order to
@@ -319,10 +322,9 @@ decorator uses reference images to compare with the generated output during the
 tests. The reference images are located in the folder defined by the argument
 <code class="docutils literal notranslate"><span class="pre">baseline_dir</span></code> of the <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.mpl_image_compare</span></code> decorator.</p>
 <p>To run plot tests, you simply need to add the option <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>:</p>
-<p>:: code:: bash</p>
-<blockquote>
-<div><p>$ pytest –mpl</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest --mpl
+</pre></div>
+</div>
 <p>If you don’t use <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>, the test functions will be executed, but the
 images will not be compared to the reference images.</p>
 <p>If you need to add or change some plots, follow the workflow below:</p>
@@ -354,7 +356,7 @@ variable and accordingly set the backend.</p>
 </section>
 <section id="exporting-pytest-results-as-html">
 <h2>Exporting pytest results as HTML<a class="headerlink" href="#exporting-pytest-results-as-html" title="Permalink to this headline"></a></h2>
-<p>With <code class="docutils literal notranslate"><span class="pre">pytest-html</span></code> it is possible to export the results of running pytest
+<p>With <code class="docutils literal notranslate"><span class="pre">pytest-html</span></code>, it is possible to export the results of running pytest
 for easier viewing. It can be installed by conda:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install pytest-html
 </pre></div>
@@ -378,7 +380,7 @@ for easier viewing. It can be installed by conda:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

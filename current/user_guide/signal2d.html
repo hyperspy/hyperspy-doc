@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signal2D Tools &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Signal2D Tools &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,11 +66,13 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Signal2D Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#signal-registration-and-alignment">Signal registration and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cropping-an-image">Cropping an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-calibration">Interactive calibration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-a-linear-ramp">Add a linear ramp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#peak-finding">Peak finding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#maximum-based-peak-finder">Maximum based peak finder</a></li>
@@ -224,6 +226,21 @@ image <em>in-place</em> e.g.:</p>
 </figcaption>
 </figure>
 </section>
+<section id="interactive-calibration">
+<h2>Interactive calibration<a class="headerlink" href="#interactive-calibration" title="Permalink to this headline"></a></h2>
+<p>The scale can be calibrated interactively by using
+<a class="reference internal" href="../api/hyperspy._signals.signal2d.html#hyperspy._signals.signal2d.Signal2D.calibrate" title="hyperspy._signals.signal2d.Signal2D.calibrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">calibrate()</span></code></a>, which is used to
+set the scale by dragging a line across some feature of known size.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">calibrate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The same function can also be used non-interactively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">new_length</span><span class="o">=</span><span class="mf">3.4</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;nm&quot;</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="add-a-linear-ramp">
 <h2>Add a linear ramp<a class="headerlink" href="#add-a-linear-ramp" title="Permalink to this headline"></a></h2>
 <p>A linear ramp can be added to the signal via the
@@ -253,7 +270,7 @@ methods available are:</p>
 image. There all have a <code class="docutils literal notranslate"><span class="pre">distance</span></code> parameter to set the minimum distance
 between the peaks.</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">'local_max'</span></code> method uses the <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.peak_local_max()</span></code></a>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'local_max'</span></code> method uses the <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.peak_local_max()</span></code></a>
 function (<code class="docutils literal notranslate"><span class="pre">distance</span></code> and <code class="docutils literal notranslate"><span class="pre">threshold</span></code> parameters are mapped to
 <code class="docutils literal notranslate"><span class="pre">min_distance</span></code> and <code class="docutils literal notranslate"><span class="pre">threshold_abs</span></code>, respectively).</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">'max'</span></code> method uses the
@@ -303,8 +320,8 @@ details.</p>
 </pre></div>
 </div>
 <p>These methods are essentially wrappers around the
-Laplacian of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_log()</span></code></a>) or the difference
-of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_dog()</span></code></a>) methods, based on stacking
+Laplacian of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_log()</span></code></a>) or the difference
+of Gaussian (<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog" title="(in skimage v0.19.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_dog()</span></code></a>) methods, based on stacking
 the Laplacian/difference of images convolved with Gaussian kernels of various
 standard deviations. For more information, see the example in the
 <a class="reference external" href="https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_blob.html">scikit-image documentation</a>.</p>
@@ -360,7 +377,7 @@ may be inactive during this time.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

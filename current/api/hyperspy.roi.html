@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.roi module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.roi module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -193,7 +194,7 @@ operation.</p>
 </div></blockquote>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BaseInteractiveROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseInteractiveROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseInteractiveROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseInteractiveROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseInteractiveROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseROI" title="hyperspy.roi.BaseROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseROI</span></code></a></p>
 <p>Base class for interactive ROIs, i.e. ROIs with widget interaction.
 The base class defines a lot of the common code for interacting with
@@ -224,6 +225,13 @@ axes and signal.</p>
 <dd><p>Callback for widgets’ ‘changed’ event. Updates the internal state
 from the widget, and triggers events (excluding connections to the
 source widget).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.BaseInteractiveROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.BaseInteractiveROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -278,7 +286,7 @@ possible, otherwise it will try the signal space. If none of the
 two attempts work, an error message will be raised.</p></li>
 </ul>
 </p></li>
-<li><p><strong>widget</strong> (<em>Widget</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> (</em><em>default</em><em>)</em>) – If specified, this is the widget that will be added. If None, the
+<li><p><strong>widget</strong> (<em>Widget</em><em> or </em><em>None</em><em> (</em><em>default</em><em>)</em>) – If specified, this is the widget that will be added. If None, the
 default widget will be used, as given by _get_widget_type().</p></li>
 <li><p><strong>color</strong> (<em>Matplotlib color specifier</em><em> (</em><em>default: 'green'</em><em>)</em>) – The color for the widget. Any format that matplotlib uses should be
 ok. This will not change the color for any widget passed with the
@@ -300,19 +308,21 @@ hyperspy.interactive.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>signal</strong> (<em>Signal</em>) – The source signal to slice.</p></li>
-<li><p><strong>navigation_signal</strong> (<em>Signal</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>&quot;same&quot;</em><em> (</em><em>default</em><em>)</em>) – If not None, it will automatically create a widget on
-navigation_signal. Passing “same” is identical to passing the same
-signal to ‘signal’ and ‘navigation_signal’, but is less ambigous,
-and allows “same” to be the default value.</p></li>
-<li><p><strong>out</strong> (<em>Signal</em>) – If not None, it will use ‘out’ as the output instead of returning
-a new Signal.</p></li>
+<li><p><strong>navigation_signal</strong> (<em>Signal</em><em>, </em><em>None</em><em> or </em><em>&quot;same&quot;</em><em> (</em><em>default</em><em>)</em>) – The signal the ROI will be added to, for navigation purposes
+only. Only the source signal will be sliced.
+If not None, it will automatically create a widget on
+navigation_signal. Passing “same” is identical to passing the
+same signal to ‘signal’ and ‘navigation_signal’, but is less
+ambigous, and allows “same” to be the default value.</p></li>
+<li><p><strong>out</strong> (<em>Signal</em>) – If not None, it will use ‘out’ as the output instead of
+returning a new Signal.</p></li>
 <li><p><strong>color</strong> (<em>Matplotlib color specifier</em><em> (</em><em>default: 'green'</em><em>)</em>) – The color for the widget. Any format that matplotlib uses should be
 ok. This will not change the color for any widget passed with the
 ‘widget’ argument.</p></li>
 <li><p><strong>snap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the ROI will be snapped to the axes values. Default is
 True.</p></li>
 <li><p><strong>**kwargs</strong> – All kwargs are passed to the roi __call__ method which is called
-interactively on any roi attribute change.</p></li>
+interactively on any roi parameter change.</p></li>
 </ul>
 </dd>
 </dl>
@@ -338,11 +348,8 @@ disconnected.</p></li>
 in order to save redraw events. The default is True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -360,7 +367,7 @@ triggers the changed event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BasePointROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BasePointROI</span></span><a class="headerlink" href="#hyperspy.roi.BasePointROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BasePointROI</span></span><a class="headerlink" href="#hyperspy.roi.BasePointROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
 <p>Base ROI class for point ROIs, i.e. ROIs with a unit size in each of its
 dimensions.</p>
@@ -369,7 +376,7 @@ dimensions.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BaseROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Base class for all ROIs.</p>
 <p>Provides some basic functionalities that are likely to be shared between all
@@ -423,11 +430,8 @@ two attempts work, an error message will be raised.</p></li>
 <li><p><strong>axes_manager</strong> (<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>) – The AxesManager to use for parsing axes</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple of <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple of <a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -452,7 +456,7 @@ The base implementation simply triggers the changed event.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.CircleROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">CircleROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_inner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.CircleROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">CircleROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_inner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.CircleROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
 <p>Selects a circular or annular region in a 2D space. The coordinates of
 the center of the circle are stored in the ‘cx’ and ‘cy’ attributes. The
@@ -478,6 +482,13 @@ axes and signal.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.CircleROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.CircleROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.CircleROI._set_from_widget">
 <span class="sig-name descname"><span class="pre">_set_from_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.CircleROI._set_from_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the internal representation of the ROI from the passed widget,
@@ -494,7 +505,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -515,10 +526,10 @@ and that the values makes sense relative to each other.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Line2DROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Line2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Line2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
-<p>Selects a line of a given width in 2D space. The coordinates of the end points of the line are stored in the <cite>x1</cite>, <cite>y1</cite>, <cite>x2</cite>, <cite>y2</cite> attributes.
-The length is available in the <cite>length</cite> attribute and the method <cite>angle</cite> computes the angle of the line with the axes.</p>
+<p>Selects a line of a given width in 2D space. The coordinates of the end points of the line are stored in the <cite>x1</cite>, <cite>y1</cite>, <cite>x2</cite>, <cite>y2</cite> parameters.
+The length is available in the <cite>length</cite> parameter and the method <cite>angle</cite> computes the angle of the line with the axes.</p>
 <p><cite>Line2DROI</cite> can be used in place of a tuple containing the coordinates of the two end-points of the line and the linewdith <cite>(x1, y1, x2, y2, linewidth)</cite>.</p>
 <p>Sets up events.changed event, and inits HasTraits.</p>
 <dl class="py method">
@@ -539,7 +550,7 @@ axes and signal.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.Line2DROI._line_profile_coordinates">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">_line_profile_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI._line_profile_coordinates" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_line_profile_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI._line_profile_coordinates" title="Permalink to this definition"></a></dt>
 <dd><p>Return the coordinates of the profile of an image along a scan line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -561,6 +572,13 @@ the profile is the ceil of the computed length of the scan line.</p>
 <p>This is a utility method meant to be used internally by skimage
 functions. The destination point is included in the profile, in
 contrast to standard numpy indexing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.Line2DROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -610,7 +628,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -620,16 +638,8 @@ all listed toolkits are displayed or returned.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hyperspy.roi.Line2DROI.is_valid">
-<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI.is_valid" title="Permalink to this definition"></a></dt>
-<dd><p>Determine if the ROI is in a valid state.</p>
-<p>This is typically determined by all the coordinates being defined,
-and that the values makes sense relative to each other.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.Line2DROI.profile_line">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">profile_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI.profile_line" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">profile_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI.profile_line" title="Permalink to this definition"></a></dt>
 <dd><p>Return the intensity profile of an image measured along a scan line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -671,14 +681,14 @@ profile is the ceil of the computed length of the scan line.</p>
 </div>
 <p class="rubric">Notes</p>
 <p>The destination point is included in the profile, in contrast to
-standard numpy indexing.</p>
+standard numpy indexing. Requires uniform navigation axes.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Point1DROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point1DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point1DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BasePointROI</span></code></a></p>
 <p>Selects a single point in a 1D space. The coordinate of the point in the
 1D space is stored in the ‘value’ trait.</p>
@@ -718,6 +728,13 @@ axes and signal.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.Point1DROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.Point1DROI._set_from_widget">
 <span class="sig-name descname"><span class="pre">_set_from_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI._set_from_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the internal representation of the ROI from the passed widget,
@@ -734,7 +751,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -743,19 +760,11 @@ all listed toolkits are displayed or returned.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="hyperspy.roi.Point1DROI.is_valid">
-<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI.is_valid" title="Permalink to this definition"></a></dt>
-<dd><p>Determine if the ROI is in a valid state.</p>
-<p>This is typically determined by all the coordinates being defined,
-and that the values makes sense relative to each other.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Point2DROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BasePointROI</span></code></a></p>
 <p>Selects a single point in a 2D space. The coordinates of the point in
 the 2D space are stored in the traits ‘x’ and ‘y’.</p>
@@ -796,6 +805,13 @@ axes and signal.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.Point2DROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.Point2DROI._set_from_widget">
 <span class="sig-name descname"><span class="pre">_set_from_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI._set_from_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the internal representation of the ROI from the passed widget,
@@ -812,7 +828,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -821,19 +837,11 @@ all listed toolkits are displayed or returned.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="hyperspy.roi.Point2DROI.is_valid">
-<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI.is_valid" title="Permalink to this definition"></a></dt>
-<dd><p>Determine if the ROI is in a valid state.</p>
-<p>This is typically determined by all the coordinates being defined,
-and that the values makes sense relative to each other.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">RectangularROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.RectangularROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">RectangularROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.RectangularROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
 <p>Selects a range in a 2D space. The coordinates of the range in
 the 2D space are stored in the traits ‘left’, ‘right’, ‘top’ and ‘bottom’.
@@ -875,6 +883,13 @@ axes and signal.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.RectangularROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.RectangularROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI._set_from_widget">
 <span class="sig-name descname"><span class="pre">_set_from_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.RectangularROI._set_from_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the internal representation of the ROI from the passed widget,
@@ -891,7 +906,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -902,7 +917,7 @@ all listed toolkits are displayed or returned.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI.height">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.height" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.height" title="Permalink to this definition"></a></dt>
 <dd><p>Returns / sets the height of the ROI</p>
 </dd></dl>
 
@@ -916,20 +931,20 @@ and that the values makes sense relative to each other.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI.width">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.width" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.width" title="Permalink to this definition"></a></dt>
 <dd><p>Returns / sets the width of the ROI</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI.x">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.x" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.x" title="Permalink to this definition"></a></dt>
 <dd><p>Returns / sets the x coordinate of the ROI without changing its
 width</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI.y">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.y" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#hyperspy.roi.RectangularROI.y" title="Permalink to this definition"></a></dt>
 <dd><p>Returns / sets the y coordinate of the ROI without changing its
 height</p>
 </dd></dl>
@@ -938,7 +953,7 @@ height</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.SpanROI">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">SpanROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.SpanROI" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">SpanROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.SpanROI" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
 <p>Selects a range in a 1D space. The coordinates of the range in
 the 1D space are stored in the traits ‘left’ and ‘right’.</p>
@@ -978,6 +993,13 @@ axes and signal.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.roi.SpanROI._set_default_values">
+<span class="sig-name descname"><span class="pre">_set_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.SpanROI._set_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>When the ROI is called interactively with Undefined parameters,
+use these values instead.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.roi.SpanROI._set_from_widget">
 <span class="sig-name descname"><span class="pre">_set_from_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.SpanROI._set_from_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the internal representation of the ROI from the passed widget,
@@ -994,7 +1016,7 @@ without doing anything to events.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -1011,6 +1033,12 @@ all listed toolkits are displayed or returned.</p></li>
 and that the values makes sense relative to each other.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.roi._get_central_half_limits_of_axis">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">_get_central_half_limits_of_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi._get_central_half_limits_of_axis" title="Permalink to this definition"></a></dt>
+<dd><p>Return indices of the central half of a DataAxis</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1042,7 +1070,7 @@ plot’s matplotlib Axes to return.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

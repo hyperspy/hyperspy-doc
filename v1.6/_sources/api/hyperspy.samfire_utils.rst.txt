@@ -1,0 +1,36 @@
+hyperspy.samfire\_utils package
+===============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.samfire_utils.goodness_of_fit_tests
+   hyperspy.samfire_utils.segmenters
+   hyperspy.samfire_utils.weights
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.samfire_utils.fit_tests
+   hyperspy.samfire_utils.global_strategies
+   hyperspy.samfire_utils.local_strategies
+   hyperspy.samfire_utils.samfire_kernel
+   hyperspy.samfire_utils.samfire_pool
+   hyperspy.samfire_utils.samfire_worker
+   hyperspy.samfire_utils.strategy
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.samfire_utils
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

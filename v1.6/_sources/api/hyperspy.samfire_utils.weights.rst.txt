@@ -1,0 +1,20 @@
+hyperspy.samfire\_utils.weights package
+=======================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.samfire_utils.weights.red_chisq
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.samfire_utils.weights
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

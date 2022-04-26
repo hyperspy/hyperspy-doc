@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.utils.peakfinders2D module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.utils.plot module" href="hyperspy.utils.plot.html" />
+    <link rel="prev" title="hyperspy.utils.parallel_pool module" href="hyperspy.utils.parallel_pool.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+          <li><a href="hyperspy.utils.html">hyperspy.utils package</a> &raquo;</li>
+      <li>hyperspy.utils.peakfinders2D module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.utils.peakfinders2D.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.utils.peakfinders2D">
+<span id="hyperspy-utils-peakfinders2d-module"></span><h1>hyperspy.utils.peakfinders2D module<a class="headerlink" href="#module-hyperspy.utils.peakfinders2D" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D._fast_mean">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">_fast_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D._fast_mean" title="Permalink to this definition"></a></dt>
+<dd><p>JIT-compiled mean of array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Input array.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mean</strong> – Mean of X.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Used by scipy.ndimage.generic_filter in the find_peaks_stat
+method to reduce overhead of repeated Python function calls.
+See <a class="reference external" href="https://github.com/scipy/scipy/issues/8916">https://github.com/scipy/scipy/issues/8916</a> for more details.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D._fast_std">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">_fast_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D._fast_std" title="Permalink to this definition"></a></dt>
+<dd><p>JIT-compiled standard deviation of array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Input array.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>std</strong> – Standard deviation of X.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Used by scipy.ndimage.generic_filter in the find_peaks_stat
+method to reduce overhead of repeated Python function calls.
+See <a class="reference external" href="https://github.com/scipy/scipy/issues/8916">https://github.com/scipy/scipy/issues/8916</a> for more details.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.clean_peaks">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">clean_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peaks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.clean_peaks" title="Permalink to this definition"></a></dt>
+<dd><p>Sort array of peaks and deal with no peaks being found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>peaks</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of found peaks.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>peaks</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Sorted array, first by <cite>peaks[:,1]</cite> (y-coordinate) then by <cite>peaks[:,0]</cite>
+(x-coordinate), of found peaks.</p></li>
+<li><p><strong>NO_PEAKS</strong> (<em>str</em>) – Flag indicating no peaks found.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_local_max">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_local_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_local_max" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate positive peaks in an image by local maximum searching.</p>
+<p>This function wraps <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.peak_local_max()</span></code></a> function and
+sorts the results for consistency with other peak finding methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of image intensities.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Keyword arguments to be passed to the <code class="docutils literal notranslate"><span class="pre">peak_local_max</span></code> method of
+the <code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#peak-local-max">http://scikit-image.org/docs/dev/api/skimage.feature.html#peak-local-max</a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_dog">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_dog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_dog" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate peaks via the Difference of Gaussian Matrices method.</p>
+<p>This function wraps <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_dog()</span></code></a> function and
+sorts the results for consistency with other peak finding methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2-d array of intensities</p></li>
+<li><p><strong>min_sigma</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+<li><p><strong>max_sigma</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+<li><p><strong>sigma_ratio</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+<li><p><strong>threshold</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+<li><p><strong>overlap</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+<li><p><strong>exclude_border</strong> – Additional parameters to be passed to the algorithm. See <cite>blob_dog</cite>
+documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-dog</a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>While highly effective at finding even very faint peaks, this method is</dt><dd><p>sensitive to fluctuations in intensity near the edges of the image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_log">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_log" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate peaks via the Laplacian of Gaussian Matrices method.</p>
+<p>This function wraps <a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_log" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.blob_log()</span></code></a> function and
+sorts the results for consistency with other peak finding methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of image intensities.</p></li>
+<li><p><strong>min_sigma</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>max_sigma</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>num_sigma</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>threshold</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>overlap</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>log_scale</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+<li><p><strong>exclude_border</strong> – Additional parameters to be passed to the <code class="docutils literal notranslate"><span class="pre">blob_log</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library. See its documentation for details:
+<a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log">http://scikit-image.org/docs/dev/api/skimage.feature.html#blob-log</a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_max">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_max" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate positive peaks in an image by local maximum searching.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Only maxima above <cite>alpha * sigma</cite> are found, where <cite>sigma</cite> is the
+standard deviation of the image.</p></li>
+<li><p><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – When a peak is found, all pixels in a square region of side
+<cite>2 * distance</cite> are set to zero so that no further peaks can be found
+in that region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_minmax">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_minmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_minmax" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate the positive peaks in an image by comparing maximum
+and minimum filtered images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a>) – Matrix of image intensities.</p></li>
+<li><p><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Expected distance between peaks.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Minimum difference between maximum and minimum filtered images.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_stat">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_stat" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate positive peaks in an image based on statistical
+refinement and difference with respect to mean intensity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of image intensities.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Only maxima above <cite>alpha * sigma</cite> are found, where <cite>sigma</cite> is the
+local, rolling standard deviation of the image.</p></li>
+<li><p><strong>window_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The pixel radius of the circular window for the calculation of the
+rolling mean and standard deviation.</p></li>
+<li><p><strong>convergence_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The algorithm will stop finding peaks when the proportion of new peaks
+being found is less than <cite>convergence_ratio</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Implemented as described in the PhD thesis of Thomas White, University of
+Cambridge, 2009, with minor modifications to resolve ambiguities.</p>
+<p>The algorithm is as follows:</p>
+<ol class="arabic simple">
+<li><p>Adjust the contrast and intensity bias of the image so that all pixels
+have values between 0 and 1.</p></li>
+<li><p>For each pixel, determine the mean and standard deviation of all pixels
+inside a circle of radius 10 pixels centered on that pixel.</p></li>
+<li><p>If the value of the pixel is greater than the mean of the pixels in the
+circle by more than one standard deviation, set that pixel to have an
+intensity of 1. Otherwise, set the intensity to 0.</p></li>
+<li><p>Smooth the image by convovling it twice with a flat 3x3 kernel.</p></li>
+<li><p>Let k = (1/2 - mu)/sigma where mu and sigma are the mean and standard
+deviations of all the pixel intensities in the image.</p></li>
+<li><p>For each pixel in the image, if the value of the pixel is greater than
+mu + k*sigma set that pixel to have an intensity of 1. Otherwise, set the
+intensity to 0.</p></li>
+<li><p>Detect peaks in the image by locating the centers of gravity of regions
+of adjacent pixels with a value of 1.</p></li>
+<li><p>Repeat #4-7 until the number of peaks found in the previous step
+converges to within the user defined convergence_ratio.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_xc">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_xc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_xc" title="Permalink to this definition"></a></dt>
+<dd><p>Find peaks in the cross correlation between the image and a template by
+using the <a class="reference internal" href="#hyperspy.utils.peakfinders2D.find_peaks_minmax" title="hyperspy.utils.peakfinders2D.find_peaks_minmax"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_peaks_minmax()</span></code></a> function
+to find the peaks on the cross correlation result obtained using the
+<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.match_template" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.match_template()</span></code></a> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of image intensities.</p></li>
+<li><p><strong>template</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em> (</em><em>square</em><em>)</em>) – Array containing a single bright disc, similar to those to detect.</p></li>
+<li><p><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Expected distance between peaks.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Minimum difference between maximum and minimum filtered images.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Keyword arguments to be passed to the
+<a class="reference external" href="https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.match_template" title="(in skimage v0.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">skimage.feature.match_template()</span></code></a> function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Array of peak coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.utils.peakfinders2D.find_peaks_zaefferer">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.utils.peakfinders2D.</span></span><span class="sig-name descname"><span class="pre">find_peaks_zaefferer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.utils.peakfinders2D.find_peaks_zaefferer" title="Permalink to this definition"></a></dt>
+<dd><p>Method to locate positive peaks in an image based on gradient
+thresholding and subsequent refinement within masked regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Matrix of image intensities.</p></li>
+<li><p><strong>grad_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The minimum gradient required to begin a peak search.</p></li>
+<li><p><strong>window_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The size of the square window within which a peak search is
+conducted. If odd, will round down to even. The size must be larger
+than 2.</p></li>
+<li><p><strong>distance_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The maximum distance a peak may be from the initial
+high-gradient point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>peaks</strong> – Peak pixel coordinates.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of shape (n_peaks, 2)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Implemented as described in Zaefferer “New developments of computer-aided
+crystallographic analysis in transmission electron microscopy” J. Ap. Cryst.
+This version by Ben Martineau (2016)</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.utils.parallel_pool.html" class="btn btn-neutral float-left" title="hyperspy.utils.parallel_pool module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.utils.plot.html" class="btn btn-neutral float-right" title="hyperspy.utils.plot module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

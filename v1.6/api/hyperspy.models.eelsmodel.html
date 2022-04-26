@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.models.eelsmodel module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.models.model1d module" href="hyperspy.models.model1d.html" />
+    <link rel="prev" title="hyperspy.models.edstemmodel module" href="hyperspy.models.edstemmodel.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+          <li><a href="hyperspy.models.html">hyperspy.models package</a> &raquo;</li>
+      <li>hyperspy.models.eelsmodel module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.models.eelsmodel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.models.eelsmodel">
+<span id="hyperspy-models-eelsmodel-module"></span><h1>hyperspy.models.eelsmodel module<a class="headerlink" href="#module-hyperspy.models.eelsmodel" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.models.eelsmodel.</span></span><span class="sig-name descname"><span class="pre">EELSModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal1D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_add_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dictionary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.models.model1d.html#hyperspy.models.model1d.Model1D" title="hyperspy.models.model1d.Model1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.models.model1d.Model1D</span></code></a></p>
+<p>Build an EELS model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spectrum</strong> (<em>a Signal1D</em><em> (or </em><em>any Signal1D subclass</em><em>) </em><em>instance</em>) – </p></li>
+<li><p><strong>auto_background</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, and if spectrum is an EELS instance adds automatically
+a powerlaw to the model and estimate the parameters by the
+two-area method.</p></li>
+<li><p><strong>auto_add_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, and if spectrum is an EELS instance, it will
+automatically add the ionization edges as defined in the
+Signal1D instance. Adding a new element to the spectrum using
+the components.EELSSpectrum.add_elements method automatically
+add the corresponding ionisation edges to the model.</p></li>
+<li><p><strong>ll</strong> (<em>{None</em><em>, </em><em>EELSSpectrum}</em>) – If an EELSSPectrum is provided, it will be assumed that it is
+a low-loss EELS spectrum, and it will be used to simulate the
+effect of multiple scattering by convolving it with the EELS
+spectrum.</p></li>
+<li><p><strong>GOS</strong> (<em>{'hydrogenic'</em><em>, </em><em>'Hartree-Slater'</em><em>, </em><em>None}</em>) – The GOS to use when auto adding core-loss EELS edges.
+If None it will use the Hartree-Slater GOS if
+they are available, otherwise it will use the hydrogenic GOS.</p></li>
+<li><p><strong>dictionary</strong> (<em>{dict</em><em>, </em><em>None}</em>) – A dictionary to be used to recreate a model. Usually generated using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">hyperspy.model.as_dictionary()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel._add_edges_from_subshells_names">
+<span class="sig-name descname"><span class="pre">_add_edges_from_subshells_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e_shells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel._add_edges_from_subshells_names" title="Permalink to this definition"></a></dt>
+<dd><p>Create the Edge instances and configure them appropiately
+:param e_shells:
+:type e_shells: list of strings</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel._classify_components">
+<span class="sig-name descname"><span class="pre">_classify_components</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel._classify_components" title="Permalink to this definition"></a></dt>
+<dd><p>Classify components between background and ionization edge
+components.</p>
+<p>This method should be called everytime that components are added and
+removed. An ionization edge becomes background when its onset falls to
+the left of the first non-masked energy channel. The ionization edges
+are stored in a list in the <cite>edges</cite> attribute. They are sorted by
+increasing <cite>onset_energy</cite>. The background components are stored in
+<cite>_background_components</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel._get_first_ionization_edge_energy">
+<span class="sig-name descname"><span class="pre">_get_first_ionization_edge_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel._get_first_ionization_edge_energy" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the first ionization edge energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>iee</strong> – The first ionization edge energy or None if no edge is defined in
+the model.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.append" title="Permalink to this definition"></a></dt>
+<dd><p>Add component to Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>thing</strong> (<cite>Component</cite> instance.) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.disable_background">
+<span class="sig-name descname"><span class="pre">disable_background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the background components.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.disable_edges">
+<span class="sig-name descname"><span class="pre">disable_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the edges listed in edges_list. If edges_list is None (default)
+all the edges with onset in the spectrum energy region will be
+disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure">
+<span class="sig-name descname"><span class="pre">disable_fine_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the fine structure of the edges listed in edges_list.
+If edges_list is None (default) the fine structure of all the edges
+with onset in the spectrum energy region will be disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy">
+<span class="sig-name descname"><span class="pre">disable_free_onset_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the automatic freeing of the onset_energy parameter during a
+smart fit for the edges listed in edges_list.
+If edges_list is None (default) the onset_energy of all the edges
+with onset in the spectrum energy region will not be freed.
+Note that if their atribute edge.onset_energy.free is True, the
+parameter will be free during the smart fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.enable_background">
+<span class="sig-name descname"><span class="pre">enable_background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="Permalink to this definition"></a></dt>
+<dd><p>Enable the background componets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.enable_edges">
+<span class="sig-name descname"><span class="pre">enable_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Enable the edges listed in edges_list. If edges_list is
+None (default) all the edges with onset in the spectrum energy
+region will be enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure">
+<span class="sig-name descname"><span class="pre">enable_fine_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="Permalink to this definition"></a></dt>
+<dd><p>Enable the fine structure of the edges listed in edges_list.
+If edges_list is None (default) the fine structure of all the edges
+with onset in the spectrum energy region will be enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy">
+<span class="sig-name descname"><span class="pre">enable_free_onset_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="Permalink to this definition"></a></dt>
+<dd><p>Enable the automatic freeing of the onset_energy parameter during a
+smart fit for the edges listed in edges_list.
+If edges_list is None (default) the onset_energy of all the edges
+with onset in the spectrum energy region will be freeed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'std'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fits the model to the experimental data.</p>
+<p>Read more in the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kind</strong> (<em>{&quot;std&quot;</em><em>, </em><em>&quot;smart&quot;}</em><em>, </em><em>default &quot;std&quot;</em>) – If “std”, performs standard fit. If “smart”,
+performs a smart_fit - for more details see
+the <a class="reference internal" href="../user_guide/eels.html#eels-fitting"><span class="std std-ref">User Guide</span></a>.</p></li>
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
+<blockquote>
+<div><ul>
+<li><p>”lm” performs least-squares optimization using the
+Levenberg-Marquardt algorithm, and supports bounds
+on parameters.</p></li>
+<li><p>”trf” performs least-squares optimization using the
+Trust Region Reflective algorithm, and supports
+bounds on parameters.</p></li>
+<li><p>”dogbox” performs least-squares optimization using the
+dogleg algorithm with rectangular trust regions, and
+supports bounds on parameters.</p></li>
+<li><p>”odr” performs the optimization using the orthogonal
+distance regression (ODR) algorithm. It does not support
+bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/odr.html#module-scipy.odr" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
+<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
+can be used here. See the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>
+documentation for more details.</p></li>
+<li><p>”Differential Evolution” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
+details on available options.</p></li>
+<li><p>”Dual Annealing” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
+details on available options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+<li><p>”SHGO” (simplicial homology global optimization” is a global
+optimization method. It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
+options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>loss_function</strong> (<em>{&quot;ls&quot;</em><em>, </em><em>&quot;ML-poisson&quot;</em><em>, </em><em>&quot;huber&quot;</em><em>, </em><em>callable}</em><em>, </em><em>default &quot;ls&quot;</em>) – <p>The loss function to use for minimization. Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> is available
+if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is one of <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">&quot;dogbox&quot;,</span> <span class="pre">&quot;odr&quot;]</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>”ls” minimizes the least-squares loss function.</p></li>
+<li><p>”ML-poisson” minimizes the negative log-likelihood for
+Poisson-distributed data. Also known as Poisson maximum
+likelihood estimation (MLE).</p></li>
+<li><p>”huber” minimize the Huber loss function. The delta value
+of the Huber function is controlled by the <code class="docutils literal notranslate"><span class="pre">huber_delta</span></code>
+keyword argument (the default value is 1.0).</p></li>
+<li><p>callable supports passing your own minimization function.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>grad</strong> (<em>{&quot;fd&quot;</em><em>, </em><em>&quot;analytical&quot;</em><em>, </em><em>callable</em><em>, </em><em>None}</em><em>, </em><em>default &quot;fd&quot;</em>) – <p>Whether to use information about the gradient of the loss function
+as part of the optimization. This parameter has no effect if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a derivative-free or global optimization method.</p>
+<blockquote>
+<div><ul>
+<li><p>”fd” uses a finite difference scheme (if available) for numerical
+estimation of the gradient. The scheme can be further controlled
+with the <code class="docutils literal notranslate"><span class="pre">fd_scheme</span></code> keyword argument.</p></li>
+<li><p>”analytical” uses the analytical gradient (if available) to speed
+up the optimization, since the gradient does not need to be estimated.</p></li>
+<li><p>callable should be a function that returns the gradient vector.</p></li>
+<li><p>None means that no gradient information is used or estimated. Not
+available if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is in <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">``&quot;dogbox&quot;</span></code>].</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, performs bounded parameter optimization if
+supported by <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>.</p></li>
+<li><p><strong>update_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, the plot is updated during the optimization
+process. It slows down the optimization, but it enables
+visualization of the optimization progress.</p></li>
+<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, print information about the fitting results, which
+are also stored in <code class="docutils literal notranslate"><span class="pre">model.fit_output</span></code> in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, returns the fitting results in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>fd_scheme</strong> (<em>str {&quot;2-point&quot;</em><em>, </em><em>&quot;3-point&quot;</em><em>, </em><em>&quot;cs&quot;}</em><em>, </em><em>default &quot;2-point&quot;</em>) – If <code class="docutils literal notranslate"><span class="pre">grad='fd'</span></code>, selects the finite difference scheme to use.
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – Any extra keyword argument will be passed to the chosen
+optimizer. For more information, read the docstring of the
+optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">smart_fit()</span></code></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.fit_background">
+<span class="sig-name descname"><span class="pre">fit_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fit_background" title="Permalink to this definition"></a></dt>
+<dd><p>Fit the background to the first active ionization edge
+in the energy range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_energy</strong> (<em>{float</em><em>, </em><em>None}</em><em>, </em><em>optional</em>) – If float, limit the range of energies from the left to the
+given value. Default None.</p></li>
+<li><p><strong>only_current</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, only fit the background at the current coordinates.
+Default True.</p></li>
+<li><p><strong>**kwargs</strong> (<em>extra key word arguments</em>) – All extra key word arguments are passed to fit or
+multifit.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.fix_edges">
+<span class="sig-name descname"><span class="pre">fix_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Fixes all the parameters of the edges given in edges_list.
+If edges_list is None (default) all the edges will be fixed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure">
+<span class="sig-name descname"><span class="pre">fix_fine_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="Permalink to this definition"></a></dt>
+<dd><p>Fixes all the parameters of the edges given in edges_list.
+If edges_list is None (default) all the edges will be fixed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.free_edges">
+<span class="sig-name descname"><span class="pre">free_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Frees all the parameters of the edges given in edges_list.
+If edges_list is None (default) all the edges will be freeed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.free_fine_structure">
+<span class="sig-name descname"><span class="pre">free_fine_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="Permalink to this definition"></a></dt>
+<dd><p>Frees all the parameters of the edges given in edges_list.
+If edges_list is None (default) all the edges will be freeed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.quantify">
+<span class="sig-name descname"><span class="pre">quantify</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.quantify" title="Permalink to this definition"></a></dt>
+<dd><p>Prints the value of the intensity of all the independent
+active EELS core loss edges defined in the model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.remove" title="Permalink to this definition"></a></dt>
+<dd><p>Remove component from model.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You could remove <cite>g</cite> like this</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Gaussian&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or like this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data">
+<span class="sig-name descname"><span class="pre">remove_fine_structure_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.remove_fine_structure_data" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the fine structure data from the fitting routine as
+defined in the fine_structure_width parameter of the
+component.EELSCLEdge</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edges_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or  </em><em>list of EELSCLEdge</em><em> or </em><em>list of edge names</em>) – If None, the operation is performed on all the edges in the model.
+Otherwise, it will be performed only on the listed components.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_edges" title="hyperspy.models.eelsmodel.EELSModel.enable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_edges" title="hyperspy.models.eelsmodel.EELSModel.disable_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_background" title="hyperspy.models.eelsmodel.EELSModel.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_background" title="hyperspy.models.eelsmodel.EELSModel.disable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_background</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.enable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.disable_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unset_all_edges_intensities_positive</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.enable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy" title="hyperspy.models.eelsmodel.EELSModel.disable_free_onset_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_free_onset_energy</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_edges" title="hyperspy.models.eelsmodel.EELSModel.fix_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_edges" title="hyperspy.models.eelsmodel.EELSModel.free_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_edges</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.fix_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.fix_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_fine_structure</span></code></a>, <a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.free_fine_structure" title="hyperspy.models.eelsmodel.EELSModel.free_fine_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_fine_structure</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.resolve_fine_structure">
+<span class="sig-name descname"><span class="pre">resolve_fine_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preedge_safe_window_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.resolve_fine_structure" title="Permalink to this definition"></a></dt>
+<dd><p>Adjust the fine structure of all edges to avoid overlapping</p>
+<p>This function is called automatically everytime the position of an edge
+changes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>preedge_safe_window_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – minimum distance between the fine structure of an ionization edge
+and that of the following one. Default 2 (eV).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.resume_auto_fine_structure_width">
+<span class="sig-name descname"><span class="pre">resume_auto_fine_structure_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.resume_auto_fine_structure_width" title="Permalink to this definition"></a></dt>
+<dd><p>Enable the automatic adjustament of the core-loss edges fine
+structure width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, also execute the automatic adjustment (default).</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width" title="hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">suspend_auto_fine_structure_width</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive">
+<span class="sig-name descname"><span class="pre">set_all_edges_intensities_positive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.set_all_edges_intensities_positive" title="Permalink to this definition"></a></dt>
+<dd><p>Set all edges intensities positive by setting <code class="docutils literal notranslate"><span class="pre">ext_force_positive</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ext_bounded</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.smart_fit">
+<span class="sig-name descname"><span class="pre">smart_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.smart_fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fits EELS edges in a cascade style.</p>
+<p>The fitting procedure acts in iterative manner along
+the energy-loss-axis. First it fits only the background
+up to the first edge. It continues by deactivating all
+edges except the first one, then performs the fit. Then
+it only activates the the first two, fits, and repeats
+this until all edges are fitted simultanously.</p>
+<p>Other, non-EELSCLEdge components, are never deactivated,
+and fitted on every iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_energy</strong> (<em>{float</em><em>, </em><em>None}</em>) – If float, limit the range of energies from the left to the
+given value.</p></li>
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
+<blockquote>
+<div><ul>
+<li><p>”lm” performs least-squares optimization using the
+Levenberg-Marquardt algorithm, and supports bounds
+on parameters.</p></li>
+<li><p>”trf” performs least-squares optimization using the
+Trust Region Reflective algorithm, and supports
+bounds on parameters.</p></li>
+<li><p>”dogbox” performs least-squares optimization using the
+dogleg algorithm with rectangular trust regions, and
+supports bounds on parameters.</p></li>
+<li><p>”odr” performs the optimization using the orthogonal
+distance regression (ODR) algorithm. It does not support
+bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/odr.html#module-scipy.odr" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
+<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
+can be used here. See the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>
+documentation for more details.</p></li>
+<li><p>”Differential Evolution” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
+details on available options.</p></li>
+<li><p>”Dual Annealing” is a global optimization method.
+It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
+details on available options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+<li><p>”SHGO” (simplicial homology global optimization” is a global
+optimization method. It does support bounds on parameters. See
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
+options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>loss_function</strong> (<em>{&quot;ls&quot;</em><em>, </em><em>&quot;ML-poisson&quot;</em><em>, </em><em>&quot;huber&quot;</em><em>, </em><em>callable}</em><em>, </em><em>default &quot;ls&quot;</em>) – <p>The loss function to use for minimization. Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> is available
+if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is one of <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">&quot;dogbox&quot;,</span> <span class="pre">&quot;odr&quot;]</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>”ls” minimizes the least-squares loss function.</p></li>
+<li><p>”ML-poisson” minimizes the negative log-likelihood for
+Poisson-distributed data. Also known as Poisson maximum
+likelihood estimation (MLE).</p></li>
+<li><p>”huber” minimize the Huber loss function. The delta value
+of the Huber function is controlled by the <code class="docutils literal notranslate"><span class="pre">huber_delta</span></code>
+keyword argument (the default value is 1.0).</p></li>
+<li><p>callable supports passing your own minimization function.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>grad</strong> (<em>{&quot;fd&quot;</em><em>, </em><em>&quot;analytical&quot;</em><em>, </em><em>callable</em><em>, </em><em>None}</em><em>, </em><em>default &quot;fd&quot;</em>) – <p>Whether to use information about the gradient of the loss function
+as part of the optimization. This parameter has no effect if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a derivative-free or global optimization method.</p>
+<blockquote>
+<div><ul>
+<li><p>”fd” uses a finite difference scheme (if available) for numerical
+estimation of the gradient. The scheme can be further controlled
+with the <code class="docutils literal notranslate"><span class="pre">fd_scheme</span></code> keyword argument.</p></li>
+<li><p>”analytical” uses the analytical gradient (if available) to speed
+up the optimization, since the gradient does not need to be estimated.</p></li>
+<li><p>callable should be a function that returns the gradient vector.</p></li>
+<li><p>None means that no gradient information is used or estimated. Not
+available if <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is in <code class="docutils literal notranslate"><span class="pre">[&quot;lm&quot;,</span> <span class="pre">&quot;trf&quot;,</span> <span class="pre">``&quot;dogbox&quot;</span></code>].</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, performs bounded parameter optimization if
+supported by <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>.</p></li>
+<li><p><strong>update_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, the plot is updated during the optimization
+process. It slows down the optimization, but it enables
+visualization of the optimization progress.</p></li>
+<li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, print information about the fitting results, which
+are also stored in <code class="docutils literal notranslate"><span class="pre">model.fit_output</span></code> in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, returns the fitting results in the form of
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+<li><p><strong>fd_scheme</strong> (<em>str {&quot;2-point&quot;</em><em>, </em><em>&quot;3-point&quot;</em><em>, </em><em>&quot;cs&quot;}</em><em>, </em><em>default &quot;2-point&quot;</em>) – If <code class="docutils literal notranslate"><span class="pre">grad='fd'</span></code>, selects the finite difference scheme to use.
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
+<code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – Any extra keyword argument will be passed to the chosen
+optimizer. For more information, read the docstring of the
+optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width">
+<span class="sig-name descname"><span class="pre">suspend_auto_fine_structure_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.suspend_auto_fine_structure_width" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the automatic adjustament of the core-loss edges fine
+structure width.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#hyperspy.models.eelsmodel.EELSModel.resume_auto_fine_structure_width" title="hyperspy.models.eelsmodel.EELSModel.resume_auto_fine_structure_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resume_auto_fine_structure_width</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation">
+<span class="sig-name descname"><span class="pre">two_area_background_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">powerlaw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.two_area_background_estimation" title="Permalink to this definition"></a></dt>
+<dd><p>Estimates the parameters of a power law background with the two
+area method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>E1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>E2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>powerlaw</strong> (<em>PowerLaw component</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, it will try to guess the right component from the
+background components of the model</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive">
+<span class="sig-name descname"><span class="pre">unset_all_edges_intensities_positive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.models.eelsmodel.EELSModel.unset_all_edges_intensities_positive" title="Permalink to this definition"></a></dt>
+<dd><p>Unset all edges intensities positive by setting <code class="docutils literal notranslate"><span class="pre">ext_force_positive</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ext_bounded</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.models.edstemmodel.html" class="btn btn-neutral float-left" title="hyperspy.models.edstemmodel module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.models.model1d.html" class="btn btn-neutral float-right" title="hyperspy.models.model1d module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

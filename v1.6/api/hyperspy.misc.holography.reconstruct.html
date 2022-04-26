@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.misc.holography.reconstruct module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.misc.holography.tools module" href="hyperspy.misc.holography.tools.html" />
+    <link rel="prev" title="hyperspy.misc.holography package" href="hyperspy.misc.holography.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+          <li><a href="hyperspy.misc.html">hyperspy.misc package</a> &raquo;</li>
+          <li><a href="hyperspy.misc.holography.html">hyperspy.misc.holography package</a> &raquo;</li>
+      <li>hyperspy.misc.holography.reconstruct module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.misc.holography.reconstruct.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.misc.holography.reconstruct">
+<span id="hyperspy-misc-holography-reconstruct-module"></span><h1>hyperspy.misc.holography.reconstruct module<a class="headerlink" href="#module-hyperspy.misc.holography.reconstruct" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.holography.reconstruct.aperture_function">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.holography.reconstruct.</span></span><span class="sig-name descname"><span class="pre">aperture_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apradius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rsmooth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.holography.reconstruct.aperture_function" title="Permalink to this definition"></a></dt>
+<dd><p>A smooth aperture function that decays from apradius-rsmooth to apradius+rsmooth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>ndarray</em>) – Array of input data (e.g. frequencies)</p></li>
+<li><p><strong>apradius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Radius (center) of the smooth aperture. Decay starts at apradius - rsmooth.</p></li>
+<li><p><strong>rsmooth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Smoothness in halfwidth. rsmooth = 1 will cause a decay from 1 to 0 over 2 pixel.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.holography.reconstruct.estimate_sideband_position">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.holography.reconstruct.</span></span><span class="sig-name descname"><span class="pre">estimate_sideband_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">holo_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holo_sampling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_band_mask_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lower'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_cf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.holography.reconstruct.estimate_sideband_position" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the position of the sideband and returns its position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>holo_data</strong> (<em>ndarray</em>) – The data of the hologram.</p></li>
+<li><p><strong>holo_sampling</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – The sampling rate in both image directions.</p></li>
+<li><p><strong>central_band_mask_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – The aperture radius used to mask out the centerband.</p></li>
+<li><p><strong>sb</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Chooses which sideband is taken. ‘lower’, ‘upper’, ‘left’, or ‘right’.</p></li>
+<li><p><strong>high_cf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If False, the highest carrier frequency allowed for the sideband location is equal to
+half of the Nyquist frequency (Default: True).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple of the sideband position (y, x), referred to the unshifted FFT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.holography.reconstruct.estimate_sideband_size">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.holography.reconstruct.</span></span><span class="sig-name descname"><span class="pre">estimate_sideband_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sb_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holo_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sb_size_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.holography.reconstruct.estimate_sideband_size" title="Permalink to this definition"></a></dt>
+<dd><p>Estimates the size of sideband filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>holo_shape</strong> (<em>array_like</em>) – Holographic data array</p></li>
+<li><p><strong>sb_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – The sideband position (y, x), referred to the non-shifted FFT.</p></li>
+<li><p><strong>sb_size_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Size of sideband as a fraction of the distance to central band</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>sb_size</strong> – Size of sideband filter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.holography.reconstruct.freq_array">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.holography.reconstruct.</span></span><span class="sig-name descname"><span class="pre">freq_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.holography.reconstruct.freq_array" title="Permalink to this definition"></a></dt>
+<dd><p>Makes up a frequency array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – The shape of the array.</p></li>
+<li><p><strong>sampling</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – The sampling rates of the array.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Array of the frequencies.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.holography.reconstruct.reconstruct">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.holography.reconstruct.</span></span><span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">holo_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holo_sampling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sb_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sb_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sb_smoothness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.holography.reconstruct.reconstruct" title="Permalink to this definition"></a></dt>
+<dd><p>Core function for holographic reconstruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>holo_data</strong> (<em>array_like</em>) – Holographic data array</p></li>
+<li><p><strong>holo_sampling</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – Sampling rate of the hologram in y and x direction.</p></li>
+<li><p><strong>sb_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Size of the sideband filter in pixel.</p></li>
+<li><p><strong>sb_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – Sideband position in pixel.</p></li>
+<li><p><strong>sb_smoothness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Smoothness of the aperture in pixel.</p></li>
+<li><p><strong>output_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em>, </em><em>optional</em>) – New output shape.</p></li>
+<li><p><strong>plotting</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Plots the masked sideband used for reconstruction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>wav</strong> – Reconstructed electron wave</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>nparray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.misc.holography.html" class="btn btn-neutral float-left" title="hyperspy.misc.holography package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.misc.holography.tools.html" class="btn btn-neutral float-right" title="hyperspy.misc.holography.tools module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

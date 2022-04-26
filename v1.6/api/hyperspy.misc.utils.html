@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.misc.utils module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.models package" href="hyperspy.models.html" />
+    <link rel="prev" title="hyperspy.misc.tv_denoise module" href="hyperspy.misc.tv_denoise.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._components.html">hyperspy._components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._signals.html">hyperspy._signals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.datasets.html">hyperspy.datasets package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.docstrings.html">hyperspy.docstrings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.drawing.html">hyperspy.drawing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io_plugins.html">hyperspy.io_plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.learn.html">hyperspy.learn package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="hyperspy.misc.html">hyperspy.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.models.html">hyperspy.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire_utils.html">hyperspy.samfire_utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.utils.html">hyperspy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+          <li><a href="hyperspy.misc.html">hyperspy.misc package</a> &raquo;</li>
+      <li>hyperspy.misc.utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.misc.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.misc.utils">
+<span id="hyperspy-misc-utils-module"></span><h1>hyperspy.misc.utils module<a class="headerlink" href="#module-hyperspy.misc.utils" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">DictionaryTreeBrowser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double_lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A class to comfortably browse a dictionary using a CLI.</p>
+<p>In addition to accessing the values using dictionary syntax
+the class enables navigating  a dictionary that constains
+nested dictionaries as attribures of nested classes.
+Also it is an iterator over the (key, value) items. The
+<cite>__repr__</cite> method provides pretty tree printing. Private
+keys, i.e. keys that starts with an underscore, are not
+printed, counted when calling len nor iterated.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">export</span> <span class="pre">:</span> <span class="pre">saves</span> <span class="pre">the</span> <span class="pre">dictionary</span> <span class="pre">in</span> <span class="pre">pretty</span> <span class="pre">tree</span> <span class="pre">printing</span> <span class="pre">format</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">text</span></span></dt>
+<dd><p>file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">keys</span> <span class="pre">:</span> <span class="pre">returns</span> <span class="pre">a</span> <span class="pre">list</span> <span class="pre">of</span> <span class="pre">non-private</span> <span class="pre">keys.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">as_dictionary</span> <span class="pre">:</span> <span class="pre">returns</span> <span class="pre">a</span> <span class="pre">dictionary</span> <span class="pre">representation</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">object.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_item</span> <span class="pre">:</span> <span class="pre">easily</span> <span class="pre">set</span> <span class="pre">items,</span> <span class="pre">creating</span> <span class="pre">any</span> <span class="pre">necessary</span> <span class="pre">node</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">way.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_node</span> <span class="pre">:</span> <span class="pre">adds</span> <span class="pre">a</span> <span class="pre">node.</span></span></dt>
+<dd></dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">DictionaryTreeBrowser</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Branch.Leaf1.color&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Branch.Leaf2.color&quot;</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Branch.Leaf2.caterpillar&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s2">&quot;Branch.Leaf1.caterpillar&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span>
+<span class="go">└── Branch</span>
+<span class="go">    ├── Leaf1</span>
+<span class="go">    │   ├── caterpillar = False</span>
+<span class="go">    │   └── color = green</span>
+<span class="go">    └── Leaf2</span>
+<span class="go">        ├── caterpillar = True</span>
+<span class="go">        └── color = brown</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">Branch</span>
+<span class="go">├── Leaf1</span>
+<span class="go">│   ├── caterpillar = False</span>
+<span class="go">│   └── color = green</span>
+<span class="go">└── Leaf2</span>
+<span class="go">    ├── caterpillar = True</span>
+<span class="go">    └── color = brown</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">Branch</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">leaf</span><span class="o">.</span><span class="n">color</span><span class="p">))</span>
+<span class="go">Leaf1 is green</span>
+<span class="go">Leaf2 is brown</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">Branch</span><span class="o">.</span><span class="n">Leaf2</span><span class="o">.</span><span class="n">caterpillar</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;Leaf1&quot;</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">Branch</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;Leaf3&quot;</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">Branch</span>
+<span class="go">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>When creating a DictionaryTreeBrowser lazily, the dictionary is
+added to the <cite>_lazy_attributes</cite> attribute. The first time a lazy
+attribute is called or the DictionaryTreeBrowser is printed, the
+DictionaryTreeBrowser processes the lazy attributes with the
+<cite>process_lazy_attributes</cite> method.
+DictionaryTreeBrowser is lazy by default, using non-lazy instances
+can be useful for debugging purposes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser._get_html_print_items">
+<span class="sig-name descname"><span class="pre">_get_html_print_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">78</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser._get_html_print_items" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive method that creates a html string for fancy display
+of metadata.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser._get_print_items">
+<span class="sig-name descname"><span class="pre">_get_print_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">78</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser._get_print_items" title="Permalink to this definition"></a></dt>
+<dd><p>Prints only the attributes that are not methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser._process_dictionary">
+<span class="sig-name descname"><span class="pre">_process_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser._process_dictionary" title="Permalink to this definition"></a></dt>
+<dd><p>Process the provided dictionary to set the attributes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.add_dictionary">
+<span class="sig-name descname"><span class="pre">add_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double_lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.add_dictionary" title="Permalink to this definition"></a></dt>
+<dd><p>Add new items from dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Adds all the nodes in the given path if they don’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The nodes must be separated by full stops (periods).</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryTreeBrowser</span><span class="p">({})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;First.Second&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">First</span><span class="o">.</span><span class="n">Second</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span>
+<span class="go">└── First</span>
+<span class="go">    └── Second = 3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.as_dictionary">
+<span class="sig-name descname"><span class="pre">as_dictionary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.as_dictionary" title="Permalink to this definition"></a></dt>
+<dd><p>Returns its dictionary representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf8'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="Permalink to this definition"></a></dt>
+<dd><p>Export the dictionary to a text file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the file without the extension that is
+txt by default</p></li>
+<li><p><strong>encoding</strong> (<em>valid encoding str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.get_item">
+<span class="sig-name descname"><span class="pre">get_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.get_item" title="Permalink to this definition"></a></dt>
+<dd><p>Given a path, return it’s value if it exists, or default
+value if missing.</p>
+<p>The nodes of the path are separated using periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item_path</strong> (<em>Str</em>) – A string describing the path with each item separated by
+full stops (periods)</p></li>
+<li><p><strong>default</strong> – The value to return if the path does not exist.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;To&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;be&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryTreeBrowser</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s1">&#39;To&#39;</span><span class="p">)</span>
+<span class="go">└── be = True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s1">&#39;To.be&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s1">&#39;To.be.or&#39;</span><span class="p">,</span> <span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+<span class="go">&#39;default_value&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.has_item">
+<span class="sig-name descname"><span class="pre">has_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.has_item" title="Permalink to this definition"></a></dt>
+<dd><p>Given a path, return True if it exists.</p>
+<p>The nodes of the path are separated using periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>item_path</strong> (<em>Str</em>) – A string describing the path with each item separated by
+full stops (periods)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;To&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;be&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryTreeBrowser</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s1">&#39;To&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s1">&#39;To.be&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="s1">&#39;To.be.or&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.keys" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of non-private keys.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.process_lazy_attributes">
+<span class="sig-name descname"><span class="pre">process_lazy_attributes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.process_lazy_attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Run the DictionaryTreeBrowser machinery for the lazy attributes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.DictionaryTreeBrowser.set_item">
+<span class="sig-name descname"><span class="pre">set_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.DictionaryTreeBrowser.set_item" title="Permalink to this definition"></a></dt>
+<dd><p>Given the path and value, create the missing nodes in
+the path and assign to the last one the value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>item_path</strong> (<em>Str</em>) – A string describing the path with each item separated by a
+full stops (periods)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span> <span class="o">=</span> <span class="n">DictionaryTreeBrowser</span><span class="p">({})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s1">&#39;First.Second.Third&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict_browser</span>
+<span class="go">└── First</span>
+<span class="go">   └── Second</span>
+<span class="go">        └── Third = 3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.add_key_value">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">add_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.add_key_value" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the metadata value as a html string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.attrsetter">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">attrsetter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.attrsetter" title="Permalink to this definition"></a></dt>
+<dd><p>Sets attribute of the target to specified value, supports nested
+attributes. Only creates a new attribute if the object supports such
+behaviour (e.g. DictionaryTreeBrowser does)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><em>object</em></a>) – </p></li>
+<li><p><strong>attrs</strong> (<em>string</em>) – attributes, separated by periods (e.g.
+‘metadata.Signal.Noise_parameters.variance’ )</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><em>object</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>First create a signal and model pair:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span>
+</pre></div>
+</div>
+<p>Now set the data of the model with attrsetter
+&gt;&gt;&gt; attrsetter(m, ‘signal1D.data’, np.arange(10)+2)
+&gt;&gt;&gt; self.signal.data
+array([2, 3, 4, 5, 6, 7, 8, 9, 10, 10])</p>
+<p>The behaviour is identical to
+&gt;&gt;&gt; self.signal.data = np.arange(10) + 2</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.check_long_string">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">check_long_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.check_long_string" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether string is too long for printing in html metadata</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.create_map_objects">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">create_map_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nav_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterating_kwargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.create_map_objects" title="Permalink to this definition"></a></dt>
+<dd><p>To be used in _map_iterate of BaseSignal and LazySignal.</p>
+<p>Moved to a separate method to reduce code duplication.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.find_subclasses">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">find_subclasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.find_subclasses" title="Permalink to this definition"></a></dt>
+<dd><p>Find all the subclasses in a module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mod</strong> (<em>module</em>) – </p></li>
+<li><p><strong>cls</strong> (<em>class</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictonary in which key, item = subclass name, subclass</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.fsdict">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">fsdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.fsdict" title="Permalink to this definition"></a></dt>
+<dd><p>Populates the dictionary ‘dic’ in a file system-like
+fashion creating a dictionary of dictionaries from the
+items present in the list ‘nodes’ and assigning the value
+‘value’ to the innermost dictionary.</p>
+<p>‘dic’ will be of the type:
+dic[‘node1’][‘node2’][‘node3’]…[‘nodeN’] = value
+where each node is like a directory that contains other
+directories (nodes) or files (values)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.generate_axis">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">generate_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.generate_axis" title="Permalink to this definition"></a></dt>
+<dd><p>Creates an axis given the origin, step and number of channels</p>
+<p>Alternatively, the index of the origin channel can be specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>N</strong> (<em>number of channels</em>) – </p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – index of origin</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.get_object_package_info">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">get_object_package_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.get_object_package_info" title="Permalink to this definition"></a></dt>
+<dd><p>Get info about object package</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>dic</strong> – Dictionary containing <code class="docutils literal notranslate"><span class="pre">package</span></code> and <code class="docutils literal notranslate"><span class="pre">package_version</span></code> (if available)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.guess_output_signal_size">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">guess_output_signal_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ragged</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.guess_output_signal_size" title="Permalink to this definition"></a></dt>
+<dd><p>This function is for guessing the output signal shape and size.
+It will attempt to apply the function to some test signal and then output
+the resulting signal shape and datatype.</p>
+<p>Parameters
+test_signal: BaseSignal</p>
+<blockquote>
+<div><p>A test signal for the function to be applied to. A signal
+with 0 navigation dimensions</p>
+</div></blockquote>
+<dl class="simple">
+<dt>function: function</dt><dd><p>The function to be applied to the dataset</p>
+</dd>
+<dt>ragged: bool</dt><dd><p>If the data is ragged then the output signal size is () and the
+data type is ‘object’</p>
+</dd>
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: dict</dt><dd><p>Any other keyword arguments passed to the function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.is_hyperspy_signal">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">is_hyperspy_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.is_hyperspy_signal" title="Permalink to this definition"></a></dt>
+<dd><p>Check if an object is a Hyperspy Signal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_object</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><em>object</em></a>) – Object to be tests</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If true the object is a subclass of hyperspy.signal.BaseSignal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.multiply">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">multiply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.multiply" title="Permalink to this definition"></a></dt>
+<dd><p>Return product of sequence of numbers.</p>
+<p>Equivalent of functools.reduce(operator.mul, iterable, 1).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">([</span><span class="mi">2</span><span class="o">**</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">])</span>
+<span class="go">274877906944</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">([])</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.nested_dictionary_merge">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">nested_dictionary_merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.nested_dictionary_merge" title="Permalink to this definition"></a></dt>
+<dd><p>Merge dict2 into dict1 recursively</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.ordinal">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">ordinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.ordinal" title="Permalink to this definition"></a></dt>
+<dd><p>Converts zero or a <em>postive</em> integer (or their string
+representations) to an ordinal value.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">ordinal</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">&#39;1st&#39;</span>
+<span class="go">&#39;2nd&#39;</span>
+<span class="go">&#39;3rd&#39;</span>
+<span class="go">&#39;4th&#39;</span>
+<span class="go">&#39;5th&#39;</span>
+<span class="go">&#39;6th&#39;</span>
+<span class="go">&#39;7th&#39;</span>
+<span class="go">&#39;8th&#39;</span>
+<span class="go">&#39;9th&#39;</span>
+<span class="go">&#39;10th&#39;</span>
+<span class="go">&#39;11th&#39;</span>
+<span class="go">&#39;12th&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;111&#39;</span><span class="p">,</span> <span class="s1">&#39;112&#39;</span><span class="p">,</span><span class="mi">1011</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">ordinal</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">&#39;100th&#39;</span>
+<span class="go">&#39;111th&#39;</span>
+<span class="go">&#39;112th&#39;</span>
+<span class="go">&#39;1011th&#39;</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Author:  Serdar Tumgoren
+<a class="reference external" href="http://code.activestate.com/recipes/576888-format-a-number-as-an-ordinal/">http://code.activestate.com/recipes/576888-format-a-number-as-an-ordinal/</a>
+MIT license</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.parse_quantity">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">parse_quantity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'('</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">')'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.parse_quantity" title="Permalink to this definition"></a></dt>
+<dd><p>Parse quantity of the signal outputting quantity and units separately.
+It looks for the last matching opening and closing separator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quantity</strong> (<em>string</em>) – </p></li>
+<li><p><strong>opening</strong> (<em>string</em>) – Separator used to define the beginning of the units</p></li>
+<li><p><strong>closing</strong> (<em>string</em>) – Separator used to define the end of the units</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>quantity_name</strong> (<em>string</em>)</p></li>
+<li><p><strong>quantity_units</strong> (<em>string</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.print_html">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">print_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.print_html" title="Permalink to this definition"></a></dt>
+<dd><p>Print html version when in Jupyter Notebook</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.process_function_blockwise">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">process_function_blockwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nav_indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_signal_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.process_function_blockwise" title="Permalink to this definition"></a></dt>
+<dd><p>Function for processing the function blockwise…
+This gets passed to map_blocks so that the function
+only gets applied to the signal axes.</p>
+<dl class="simple">
+<dt>data: np.array</dt><dd><p>The data for one chunk</p>
+</dd>
+<dt><a href="#id3"><span class="problematic" id="id4">*</span></a>args: tuple</dt><dd><p>Any signal the is iterated alongside the data in. In the
+form ((key1, value1),(key2,value2)…)</p>
+</dd>
+<dt>function: function</dt><dd><p>The function to applied to the signal axis</p>
+</dd>
+<dt>nav_indexes: tuple</dt><dd><p>The indexes of the navigation axes for the dataset.</p>
+</dd>
+<dt>output_signal_shape: tuple</dt><dd><p>The shape of the output signal.  For a ragged signal
+this is equal to 1.</p>
+</dd>
+<dt>block_info: dict</dt><dd><p>The block info as described by the <cite>dask.array.map_blocks</cite> function</p>
+</dd>
+<dt>arg_keys: tuple</dt><dd><p>The list of keys for the passed arguments (args).  Together this makes
+a set of key:value pairs to be passed to the function.</p>
+</dd>
+<dt><a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs: dict</dt><dd><p>Any additional key value pairs to be used by the function
+(Note that these are the constants that are applied.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.replace_html_symbols">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">replace_html_symbols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.replace_html_symbols" title="Permalink to this definition"></a></dt>
+<dd><p>Escapes any &amp;, &lt; and &gt; tags that would become invisible when printing html</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.rollelem">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">rollelem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.rollelem" title="Permalink to this definition"></a></dt>
+<dd><p>Roll the specified axis backwards, until it lies in a given position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Input list.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The index of the item to roll backwards.  The positions of the items
+do not change relative to one another.</p></li>
+<li><p><strong>to_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The item is rolled until it lies before this position.  The default,
+0, results in a “complete” roll.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong> – Output list.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.slugify">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">slugify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_variable_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.slugify" title="Permalink to this definition"></a></dt>
+<dd><p>Normalizes string, converts to lowercase, removes non-alpha characters,
+and converts spaces to hyphens.</p>
+<p>Adapted from Django’s “django/template/defaultfilters.py”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.stack">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_axis_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stack_element'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progressbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.stack" title="Permalink to this definition"></a></dt>
+<dd><p>Concatenate the signals in the list over a given axis or a new axis.</p>
+<p>The title is set to that of the first signal in the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal_list</strong> (<em>list of BaseSignal instances</em>) – List of signals to stack.</p></li>
+<li><p><strong>axis</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>str}</em>) – If None, the signals are stacked over a new axis. The data must
+have the same dimensions. Otherwise the
+signals are stacked over the axis given by its integer index or
+its name. The data must have the same shape, except in the dimension
+corresponding to <cite>axis</cite>.</p></li>
+<li><p><strong>new_axis_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the new axis when <cite>axis</cite> is None.
+If an axis with this name already
+exists it automatically append ‘-i’, where <cite>i</cite> are integers,
+until it finds a name that is not yet in use.</p></li>
+<li><p><strong>lazy</strong> (<em>{bool</em><em>, </em><em>None}</em>) – Returns a LazySignal if True. If None, only returns lazy result if at
+least one is lazy.</p></li>
+<li><p><strong>stack_metadata</strong> (<em>{bool</em><em>, </em><em>int}</em>) – If integer, this value defines the index of the signal in the signal
+list, from which the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> and <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> are taken.
+If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> and <code class="docutils literal notranslate"><span class="pre">metadata</span></code> of each signals
+are stacked and saved in <code class="docutils literal notranslate"><span class="pre">original_metadata.stack_elements</span></code> of the
+returned signal. In this case, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> are copied from the
+first signal in the list.
+If False, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> and <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> are not copied.</p></li>
+<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+the preferences settings is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>signal</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BaseSignal instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span>
+<span class="gp">... </span>              <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">10</span><span class="p">:])])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: Stack of , dimensions: (2, 10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9],</span>
+<span class="go">       [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.str2num">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">str2num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.str2num" title="Permalink to this definition"></a></dt>
+<dd><p>Transform a a table in string form into a numpy array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>string</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.swapelem">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">swapelem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.swapelem" title="Permalink to this definition"></a></dt>
+<dd><p>Swaps element having index i with element having index j in object obj
+IN PLACE.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spwapelem</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="go">[&#39;a&#39;, &#39;c&#39;, &#39;b&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.transpose">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">navigation_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.transpose" title="Permalink to this definition"></a></dt>
+<dd><p>Transposes all passed signals according to the specified options.</p>
+<p>For parameters see <code class="docutils literal notranslate"><span class="pre">BaseSignal.transpose</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">signal_iterable</span> <span class="o">=</span> <span class="p">[</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,)</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="go">                       for i in range(3)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_iterable</span>
+<span class="go">[&lt;BaseSignal, title: , dimensions: (|2)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: , dimensions: (|2, 2)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: , dimensions: (|2, 2, 2)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">*</span><span class="n">signal_iterable</span><span class="p">,</span> <span class="n">signal_axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[&lt;BaseSignal, title: , dimensions: (|2)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: , dimensions: (2|2)&gt;,</span>
+<span class="go"> &lt;BaseSignal, title: , dimensions: (2, 2|2)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span> <span class="n">signal2</span><span class="p">,</span> <span class="n">signal3</span><span class="p">,</span> <span class="n">signal_axes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Energy&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.utils.underline">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.utils.</span></span><span class="sig-name descname"><span class="pre">underline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.utils.underline" title="Permalink to this definition"></a></dt>
+<dd><p>Return the line underlined.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.misc.tv_denoise.html" class="btn btn-neutral float-left" title="hyperspy.misc.tv_denoise module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.models.html" class="btn btn-neutral float-right" title="hyperspy.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

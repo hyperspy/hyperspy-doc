@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.model module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.model module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -168,7 +169,7 @@
 <span id="hyperspy-model-module"></span><h1>hyperspy.model module<a class="headerlink" href="#module-hyperspy.model" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><a class="headerlink" href="#hyperspy.model.BaseModel" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><a class="headerlink" href="#hyperspy.model.BaseModel" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
 <p>Model and data fitting tools applicable to signals of both one and two
 dimensions.</p>
@@ -329,6 +330,12 @@ placing them in their appropriate <cite>component.parameter.value</cite> and <ci
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.model.BaseModel._free_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_free_parameters</span></span><a class="headerlink" href="#hyperspy.model.BaseModel._free_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Get the free parameters of active components.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel._get_variance">
 <span class="sig-name descname"><span class="pre">_get_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">only_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel._get_variance" title="Permalink to this definition"></a></dt>
@@ -336,6 +343,36 @@ placing them in their appropriate <cite>component.parameter.value</cite> and <ci
 If only_current=True, the variance for the current navigation indices
 is returned, otherwise the variance for all navigation indices is
 returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.model.BaseModel._linear_fit">
+<span class="sig-name descname"><span class="pre">_linear_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstsq'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculate_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel._linear_fit" title="Permalink to this definition"></a></dt>
+<dd><p>Multivariate linear fitting</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>default is &quot;lstsq&quot;</em>) – ‘lstsq’ - Default, supports lazy signal
+‘ridge_regression’ - Supports regularisation, doesn’t support lazy
+signal.</p></li>
+<li><p><strong>calculate_errors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default is False</em>) – If True, calculate the errors.</p></li>
+<li><p><strong>only_current</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default is True</em>) – Fit the current index only, instead of the whole navigation space.</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Keywords arguments are passed to
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ridge_regression.html#sklearn.linear_model.ridge_regression" title="(in scikit-learn v1.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.linear_model.ridge_regression()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>More linear optimizers can be added in the future, but note that in order
+to support simultaneous fitting across the dataset, the optimizer must
+support “two-dimensional y” - see the <code class="docutils literal notranslate"><span class="pre">b</span></code> parameter in
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>.</p>
+<p>Currently, the overhead in calculating the component data takes about
+100 times longer than actually running <code class="xref py py-func docutils literal notranslate"><span class="pre">np.linalg.lstsq()</span></code>.
+That means that going pixel-by-pixel, calculating the component data
+each time is not faster than the normal nonlinear methods. Linear
+fitting is hence currently only useful for fitting a dataset in the
+vectorized manner.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -377,11 +414,8 @@ the model plot is updated in the figure update callback.</p>
 <dd class="field-odd"><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, loops through the model components and
 populates the free parameter boundaries.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -395,11 +429,8 @@ populates the free parameter boundaries.</p>
 <dd class="field-odd"><p><strong>bounded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, loops through the model components and
 populates the free parameter boundaries.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -407,7 +438,14 @@ populates the free parameter boundaries.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel._set_p0">
 <span class="sig-name descname"><span class="pre">_set_p0</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel._set_p0" title="Permalink to this definition"></a></dt>
-<dd><p>(Re)sets the initial values for the parameters used in the curve fitting functions</p>
+<dd><p>Sets the initial values for the parameters used in the curve fitting
+functions</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.model.BaseModel.active_components">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_components</span></span><a class="headerlink" href="#hyperspy.model.BaseModel.active_components" title="Permalink to this definition"></a></dt>
+<dd><p>List all nonlinear parameters.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -473,7 +511,7 @@ list is used in making the returned spectrum. The components can
 be specified by name, index or themselves.</p></li>
 <li><p><strong>out_of_range_to_nan</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True the signal range outside of the fitted range is filled with
 nans. Default True.</p></li>
-<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+<li><p><strong>show_progressbar</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
 the preferences settings is used.</p></li>
 <li><p><strong>out</strong> (<em>{None</em><em>, </em><em>BaseSignal}</em>) – The signal where to put the result into. Convenient for parallel
 processing. If None (default), creates a new one. If passed, it is
@@ -509,8 +547,9 @@ assumed to be of correct shape and dtype and not checked.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>component_list</strong> (<em>list of components</em><em>, </em><em>optional</em>) – If a list of components is given, the operation will be performed
 only in the value of the parameters of the given components.
-The components can be specified by name, index or themselves.</p></li>
-<li><p><strong>mask</strong> (<em>boolean numpy array</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – The operation won’t be performed where mask is True.</p></li>
+The components can be specified by name, index or themselves.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the active components will be considered.</p></li>
+<li><p><strong>mask</strong> (<em>boolean numpy array</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – The operation won’t be performed where mask is True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -550,7 +589,7 @@ folder.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The path to the folder where the file will be saved. If <cite>None</cite> the
+<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – The path to the folder where the file will be saved. If <cite>None</cite> the
 current folder is used by default.</p></li>
 <li><p><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The extension of the file format. It must be one of the
 fileformats supported by HyperSpy. The default is “hspy”.</p></li>
@@ -628,7 +667,7 @@ position in the model and component.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
+<li><p><strong>optimizer</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>default None</em>) – <p>The optimization algorithm used to perform the fitting.</p>
 <blockquote>
 <div><ul>
 <li><p>”lm” performs least-squares optimization using the
@@ -642,21 +681,21 @@ dogleg algorithm with rectangular trust regions, and
 supports bounds on parameters.</p></li>
 <li><p>”odr” performs the optimization using the orthogonal
 distance regression (ODR) algorithm. It does not support
-bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/odr.html#module-scipy.odr" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
-<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
+bounds on parameters. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/odr.html#module-scipy.odr" title="(in SciPy v1.8.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.odr</span></code></a> for more details.</p></li>
+<li><p>All of the available methods for <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>
 can be used here. See the <a class="reference internal" href="../user_guide/model.html#id1"><span class="std std-ref">User Guide</span></a>
 documentation for more details.</p></li>
 <li><p>”Differential Evolution” is a global optimization method.
 It does support bounds on parameters. See
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html#scipy.optimize.differential_evolution" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code></a> for more
 details on available options.</p></li>
 <li><p>”Dual Annealing” is a global optimization method.
 It does support bounds on parameters. See
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.dual_annealing.html#scipy.optimize.dual_annealing" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.dual_annealing()</span></code></a> for more
 details on available options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
 <li><p>”SHGO” (simplicial homology global optimization” is a global
 optimization method. It does support bounds on parameters. See
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
 options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
 </ul>
 </div></blockquote>
@@ -699,22 +738,19 @@ process. It slows down the optimization, but it enables
 visualization of the optimization progress.</p></li>
 <li><p><strong>print_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, print information about the fitting results, which
 are also stored in <code class="docutils literal notranslate"><span class="pre">model.fit_output</span></code> in the form of
-a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
 <li><p><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, returns the fitting results in the form of
-a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
+a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object.</p></li>
 <li><p><strong>fd_scheme</strong> (<em>str {&quot;2-point&quot;</em><em>, </em><em>&quot;3-point&quot;</em><em>, </em><em>&quot;cs&quot;}</em><em>, </em><em>default &quot;2-point&quot;</em>) – If <code class="docutils literal notranslate"><span class="pre">grad='fd'</span></code>, selects the finite difference scheme to use.
-See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
+See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> for details. Ignored if
 <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code>.</p></li>
 <li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – Any extra keyword argument will be passed to the chosen
 optimizer. For more information, read the docstring of the
-optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.7.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
+optimizer of your choice in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html#module-scipy.optimize" title="(in SciPy v1.8.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -751,7 +787,7 @@ computed correctly. See the <a class="reference internal" href="../user_guide/si
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -802,14 +838,14 @@ when changing the positon.</p></li>
 <li><p><strong>autosave</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, the result of the fit will be saved automatically
 with a frequency defined by autosave_every.</p></li>
 <li><p><strong>autosave_every</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>default 10</em>) – Save the result of fitting every given number of spectra.</p></li>
-<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+<li><p><strong>show_progressbar</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
 the preferences settings is used.</p></li>
 <li><p><strong>interactive_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, update the plot for every position as they are processed.
 Note that this slows down the fitting by a lot, but it allows for
 interactive monitoring of the fitting (if in interactive mode).</p></li>
 <li><p><strong>iterpath</strong> (<em>{None</em><em>, </em><em>&quot;flyback&quot;</em><em>, </em><em>&quot;serpentine&quot;}</em><em>, </em><em>default None</em>) – <dl class="simple">
 <dt>If “flyback”:</dt><dd><p>At each new row the index begins at the first column,
-in accordance with the way <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndindex.html#numpy.ndindex" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndindex</span></code></a> generates indices.</p>
+in accordance with the way <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndindex.html#numpy.ndindex" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndindex</span></code></a> generates indices.</p>
 </dd>
 <dt>If “serpentine”:</dt><dd><p>Iterate through the signal in a serpentine, “snake-game”-like
 manner instead of beginning each new row at the first index.
@@ -826,11 +862,8 @@ See the documentation for <a class="reference internal" href="#hyperspy.model.Ba
 for a list of valid arguments.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -870,7 +903,7 @@ the file names modify the name attributes.</p>
 <li><p><strong>only_free</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only components with free parameters will be printed. Within these,
 only parameters which are free will be printed.</p></li>
 <li><p><strong>only_active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only values of active components will be printed</p></li>
-<li><p><strong>component_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>list of components.</em>) – If None, print all components.</p></li>
+<li><p><strong>component_list</strong> (<em>None</em><em> or </em><em>list of components.</em>) – If None, print all components.</p></li>
 <li><p><strong>fancy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, attempts to print using html rather than text in the notebook.</p></li>
 </ul>
 </dd>
@@ -879,7 +912,7 @@ only parameters which are free will be printed.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel.red_chisq">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">red_chisq</span></span><a class="headerlink" href="#hyperspy.model.BaseModel.red_chisq" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">red_chisq</span></span><a class="headerlink" href="#hyperspy.model.BaseModel.red_chisq" title="Permalink to this definition"></a></dt>
 <dd><p>Reduced chi-squared.
 Calculated from <code class="docutils literal notranslate"><span class="pre">self.chisq</span></code> and <code class="docutils literal notranslate"><span class="pre">self.dof</span></code>.</p>
 <dl class="field-list simple">
@@ -982,18 +1015,20 @@ If False, will change the parameter value for all the positions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel.set_parameters_free">
-<span class="sig-name descname"><span class="pre">set_parameters_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel.set_parameters_free" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_parameters_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_linear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_nonlinear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel.set_parameters_free" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the parameters in a component in a model to free.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>component_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, or </em><em>list of hyperspy components</em><em>, </em><em>optional</em>) – If None, will apply the function to all components in the model.
+<li><p><strong>component_list</strong> (<em>None</em><em>, or </em><em>list of hyperspy components</em><em>, </em><em>optional</em>) – If None, will apply the function to all components in the model.
 If list of components, will apply the functions to the components
 in the list. The components can be specified by name, index or
 themselves.</p></li>
-<li><p><strong>parameter_name_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>list of strings</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
+<li><p><strong>parameter_name_list</strong> (<em>None</em><em> or </em><em>list of strings</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
 If list of strings, will set all the parameters with the same name
 as the strings in parameter_name_list to not free.</p></li>
+<li><p><strong>only_linear</strong> (<em>Bool</em>) – If True, will only set parameters that are linear to not free.</p></li>
+<li><p><strong>only_nonlinear</strong> (<em>Bool</em>) – If True, will only set parameters that are nonlinear to not free.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1003,6 +1038,7 @@ as the strings in parameter_name_list to not free.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">component_list</span><span class="o">=</span><span class="p">[</span><span class="n">v1</span><span class="p">],</span>
 <span class="go">                          parameter_name_list=[&#39;area&#39;,&#39;centre&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">only_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -1013,18 +1049,20 @@ as the strings in parameter_name_list to not free.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.model.BaseModel.set_parameters_not_free">
-<span class="sig-name descname"><span class="pre">set_parameters_not_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel.set_parameters_not_free" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_parameters_not_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_linear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_nonlinear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.BaseModel.set_parameters_not_free" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the parameters in a component in a model to not free.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>component_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, or </em><em>list of hyperspy components</em><em>, </em><em>optional</em>) – If None, will apply the function to all components in the model.
+<li><p><strong>component_list</strong> (<em>None</em><em>, or </em><em>list of hyperspy components</em><em>, </em><em>optional</em>) – If None, will apply the function to all components in the model.
 If list of components, will apply the functions to the components
 in the list.  The components can be specified by name, index or
 themselves.</p></li>
-<li><p><strong>parameter_name_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>list of strings</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
+<li><p><strong>parameter_name_list</strong> (<em>None</em><em> or </em><em>list of strings</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
 If list of strings, will set all the parameters with the same name
 as the strings in parameter_name_list to not free.</p></li>
+<li><p><strong>only_linear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, will only set parameters that are linear to free.</p></li>
+<li><p><strong>only_nonlinear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, will only set parameters that are nonlinear to free.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1036,6 +1074,7 @@ as the strings in parameter_name_list to not free.</p></li>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">(</span><span class="n">component_list</span><span class="o">=</span><span class="p">[</span><span class="n">v1</span><span class="p">],</span>
 <span class="go">                              parameter_name_list=[&#39;area&#39;,&#39;centre&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">(</span><span class="n">only_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -1119,7 +1158,7 @@ it with the current parameters at the current indices in the array.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.model.ModelComponents">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">ModelComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.ModelComponents" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">ModelComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model.ModelComponents" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Container for model components.</p>
 <p>Useful to provide tab completion when running in IPython.</p>
@@ -1129,6 +1168,25 @@ it with the current parameters at the current indices in the array.</p>
 <dt class="sig sig-object py" id="hyperspy.model._check_deprecated_optimizer">
 <span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">_check_deprecated_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model._check_deprecated_optimizer" title="Permalink to this definition"></a></dt>
 <dd><p>Can be removed in HyperSpy 2.0</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.model._twinned_parameter">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.model.</span></span><span class="sig-name descname"><span class="pre">_twinned_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.model._twinned_parameter" title="Permalink to this definition"></a></dt>
+<dd><p>Used in linear fitting. Since twinned parameters are not free, we need to
+construct a mapping between the twinned parameter and the parameter
+component to which the (non-free) twinned parameter component value needs
+to be added.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>parameter when there is a twin and this twin is free</em></p></li>
+<li><p><em>None when there is no twin or when the twin is not non-free itself, which</em></p></li>
+<li><p><em>implies that the original parameter is not free</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -1144,7 +1202,7 @@ it with the current parameters at the current indices in the array.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

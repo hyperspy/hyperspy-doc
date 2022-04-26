@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.jeol module
+================================
+
+.. automodule:: hyperspy.io_plugins.jeol
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

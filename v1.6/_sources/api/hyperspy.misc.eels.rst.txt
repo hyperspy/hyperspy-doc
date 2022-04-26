@@ -1,0 +1,26 @@
+hyperspy.misc.eels package
+==========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.misc.eels.base_gos
+   hyperspy.misc.eels.eelsdb
+   hyperspy.misc.eels.effective_angle
+   hyperspy.misc.eels.electron_inelastic_mean_free_path
+   hyperspy.misc.eels.hartree_slater_gos
+   hyperspy.misc.eels.hydrogenic_gos
+   hyperspy.misc.eels.tools
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.misc.eels
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

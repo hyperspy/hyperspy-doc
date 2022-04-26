@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.component module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.component module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -168,8 +169,21 @@
 <span id="hyperspy-component-module"></span><h1>hyperspy.component module<a class="headerlink" href="#module-hyperspy.component" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.component.Component">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_parameter_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.component.Component._compute_constant_term">
+<span class="sig-name descname"><span class="pre">_compute_constant_term</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component._compute_constant_term" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the value of any (non-free) constant term, with convolution</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.component.Component._constant_term">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_constant_term</span></span><a class="headerlink" href="#hyperspy.component.Component._constant_term" title="Permalink to this definition"></a></dt>
+<dd><p>Get value of any (non-free) constant term of the component.
+Returns 0 for most components.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.component.Component._load_dictionary">
 <span class="sig-name descname"><span class="pre">_load_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component._load_dictionary" title="Permalink to this definition"></a></dt>
@@ -204,7 +218,7 @@ correct twins.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.component.Component.active_is_multidimensional">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">active_is_multidimensional</span></span><a class="headerlink" href="#hyperspy.component.Component.active_is_multidimensional" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_is_multidimensional</span></span><a class="headerlink" href="#hyperspy.component.Component.active_is_multidimensional" title="Permalink to this definition"></a></dt>
 <dd><p>In multidimensional signals it is possible to store the value of the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> attribute at each navigation
 index.</p>
@@ -215,7 +229,7 @@ index.</p>
 <span class="sig-name descname"><span class="pre">as_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fullcopy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.as_dictionary" title="Permalink to this definition"></a></dt>
 <dd><p>Returns component as a dictionary. For more information on method
 and conventions, see
-py:meth:<cite>~hyperspy.misc.export_dictionary.export_to_dictionary</cite></p>
+<a class="reference internal" href="hyperspy.misc.export_dictionary.html#hyperspy.misc.export_dictionary.export_to_dictionary" title="hyperspy.misc.export_dictionary.export_to_dictionary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export_to_dictionary()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>fullcopy</strong> (<em>Bool</em><em> (</em><em>optional</em><em>, </em><em>False</em><em>)</em>) – Copies of objects are stored, not references. If any found,
@@ -246,7 +260,7 @@ attributes, for more information, see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The path to the folder where the file will be saved. If
+<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – The path to the folder where the file will be saved. If
 <cite>None</cite> the current folder is used by default.</p></li>
 <li><p><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The extension of the file format, default “hspy”.</p></li>
 <li><p><strong>save_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, also the standard deviation will be saved.</p></li>
@@ -287,11 +301,28 @@ deviation from <cite>p_std</cite>. Places them <cite>component.parameter.value</
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.component.Component.init_parameters">
+<span class="sig-name descname"><span class="pre">init_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_parameter_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.init_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Initialise the parameters of the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameter_name_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The list of parameter names.</p></li>
+<li><p><strong>linear_parameter_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>, </em><em>optional</em>) – The list of linear parameter. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -314,28 +345,37 @@ all listed toolkits are displayed or returned.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.component.Component.print_current_values">
 <span class="sig-name descname"><span class="pre">print_current_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">only_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fancy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.print_current_values" title="Permalink to this definition"></a></dt>
-<dd><p>Prints the current values of the component’s parameters.
-:param only_free: If True, only free parameters will be printed.
-:type only_free: bool
-:param fancy: If True, attempts to print using html rather than text in the notebook.
-:type fancy: bool</p>
+<dd><p>Prints the current values of the component’s parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>only_free</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only free parameters will be printed.</p></li>
+<li><p><strong>fancy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, attempts to print using html rather than text in the notebook.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.component.Component.set_parameters_free">
-<span class="sig-name descname"><span class="pre">set_parameters_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.set_parameters_free" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_parameters_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_linear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_nonlinear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.set_parameters_free" title="Permalink to this definition"></a></dt>
 <dd><p>Sets parameters in a component to free.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parameter_name_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>list of str</em><em>, </em><em>optional</em>) – If None, will set all the parameters to free.
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameter_name_list</strong> (<em>None</em><em> or </em><em>list of str</em><em>, </em><em>optional</em>) – If None, will set all the parameters to free.
 If list of strings, will set all the parameters with the same name
-as the strings in parameter_name_list to free.</p>
+as the strings in parameter_name_list to free.</p></li>
+<li><p><strong>only_linear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only sets a parameter free if it is linear</p></li>
+<li><p><strong>only_nonlinear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only sets a parameter free if it is nonlinear</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Voigt</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">parameter_name_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">,</span><span class="s1">&#39;centre&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_free</span><span class="p">(</span><span class="n">linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -346,19 +386,24 @@ as the strings in parameter_name_list to free.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.component.Component.set_parameters_not_free">
-<span class="sig-name descname"><span class="pre">set_parameters_not_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.set_parameters_not_free" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_parameters_not_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter_name_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_linear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_nonlinear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.Component.set_parameters_not_free" title="Permalink to this definition"></a></dt>
 <dd><p>Sets parameters in a component to not free.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parameter_name_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>list of str</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameter_name_list</strong> (<em>None</em><em> or </em><em>list of str</em><em>, </em><em>optional</em>) – If None, will set all the parameters to not free.
 If list of strings, will set all the parameters with the same name
-as the strings in parameter_name_list to not free.</p>
+as the strings in parameter_name_list to not free.</p></li>
+<li><p><strong>only_linear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only sets a parameter not free if it is linear</p></li>
+<li><p><strong>only_nonlinear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, only sets a parameter not free if it is nonlinear</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Voigt</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">(</span><span class="n">parameter_name_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">,</span><span class="s1">&#39;centre&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span><span class="o">.</span><span class="n">set_parameters_not_free</span><span class="p">(</span><span class="n">only_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -371,7 +416,7 @@ as the strings in parameter_name_list to not free.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.component.NoneFloat">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">NoneFloat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">**metadata</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.NoneFloat" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">NoneFloat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.NoneFloat" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_types.CFloat</span></code></p>
 <p>TraitType initializer</p>
 <p>This is the only method normally called directly by client code.
@@ -381,7 +426,7 @@ unvalidated default value, and caller-supplied trait metadata.</p>
 validated default value is needed.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hyperspy.component.NoneFloat.default_value">
-<span class="sig-name descname"><span class="pre">default_value</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#hyperspy.component.NoneFloat.default_value" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">default_value</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hyperspy.component.NoneFloat.default_value" title="Permalink to this definition"></a></dt>
 <dd><p>The default value for the trait:</p>
 </dd></dl>
 
@@ -396,7 +441,7 @@ validated default value is needed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.component.Parameter">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><a class="headerlink" href="#hyperspy.component.Parameter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><a class="headerlink" href="#hyperspy.component.Parameter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Model parameter</p>
 <dl class="py attribute">
@@ -639,9 +684,9 @@ mask is False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The path to the folder where the file will be saved.
+<li><p><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – The path to the folder where the file will be saved.
 If <cite>None</cite> the current folder is used by default.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The name of the file. If <cite>None</cite> the Components name followed
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – The name of the file. If <cite>None</cite> the Components name followed
 by the Parameter <cite>name</cite> attributes will be used by default.
 If a file with the same name exists the name will be
 modified by appending a number to the file path.</p></li>
@@ -678,7 +723,7 @@ previous values, i.e. from a fit in a previous pixel.</p>
 <li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
 widgets container in a dictionary, usually for customisation or
 testing.</p></li>
-<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><em>None</em>) – If None (default), all available widgets are displayed or returned.
 If string, only the widgets of the selected toolkit are displayed
 if available. If an interable of toolkit strings, the widgets of
 all listed toolkits are displayed or returned.</p></li>
@@ -718,6 +763,34 @@ all listed toolkits are displayed or returned.</p></li>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.component._get_scaling_factor">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">_get_scaling_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component._get_scaling_factor" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to get the scaling factor required to take into
+account binned and/or non-uniform axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a>) – </p></li>
+<li><p><strong>axis</strong> (<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.BaseDataAxis" title="hyperspy.axes.BaseDataAxis"><em>BaseDataAxis</em></a>) – </p></li>
+<li><p><strong>parameter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><em>numpy array</em>) – The axis value at which scaling factor is evaluated (ignored if the axis
+is uniform)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>scaling_factor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.component.convolve_component_values">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.component.</span></span><span class="sig-name descname"><span class="pre">convolve_component_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.component.convolve_component_values" title="Permalink to this definition"></a></dt>
+<dd><p>Convolve component with model convolution axis.</p>
+<p>Multiply by np.ones in order to handle case where component_values is a
+single constant</p>
+</dd></dl>
+
 </section>
 
 
@@ -731,7 +804,7 @@ all listed toolkits are displayed or returned.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

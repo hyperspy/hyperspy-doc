@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.samfire module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.signal module" href="hyperspy.signal.html" />
+    <link rel="prev" title="hyperspy.roi module" href="hyperspy.roi.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.Release.html">hyperspy.Release module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._lazy_signals.html">hyperspy._lazy_signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api.html">hyperspy.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api_nogui.html">hyperspy.api_nogui module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.axes.html">hyperspy.axes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.component.html">hyperspy.component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components1d.html">hyperspy.components1d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components2d.html">hyperspy.components2d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.conftest.html">hyperspy.conftest module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.decorators.html">hyperspy.decorators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.events.html">hyperspy.events module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.extensions.html">hyperspy.extensions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.interactive.html">hyperspy.interactive module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.logger.html">hyperspy.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.model.html">hyperspy.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.roi.html">hyperspy.roi module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.samfire module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal.html">hyperspy.signal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal_tools.html">hyperspy.signal_tools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signals.html">hyperspy.signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.ui_registry.html">hyperspy.ui_registry module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+      <li>hyperspy.samfire module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.samfire.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.samfire">
+<span id="hyperspy-samfire-module"></span><h1>hyperspy.samfire module<a class="headerlink" href="#module-hyperspy.samfire" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.samfire.</span></span><span class="sig-name descname"><span class="pre">Samfire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Smart Adaptive Multidimensional Fitting (SAMFire) object</p>
+<p>SAMFire is a more robust way of fitting multidimensional datasets. By
+extracting starting values for each pixel from already fitted pixels,
+SAMFire stops the fitting algorithm from getting lost in the parameter
+space by always starting close to the optimal solution.</p>
+<p>SAMFire only picks starting parameters and the order the pixels (in the
+navigation space) are fitted, and does not provide any new minimisation
+algorithms.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.model" title="Permalink to this definition"></a></dt>
+<dd><p>The complete model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Model instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.optional_components">
+<span class="sig-name descname"><span class="pre">optional_components</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.optional_components" title="Permalink to this definition"></a></dt>
+<dd><p>A list of components that can be switched off at some pixels if it
+returns a better Akaike’s Information Criterion with correction (AICc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.workers">
+<span class="sig-name descname"><span class="pre">workers</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.workers" title="Permalink to this definition"></a></dt>
+<dd><p>A number of processes that will perform the fitting parallely</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.pool">
+<span class="sig-name descname"><span class="pre">pool</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.pool" title="Permalink to this definition"></a></dt>
+<dd><p>A proxy object that manages either multiprocessing or ipyparallel pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>samfire_pool instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.strategies">
+<span class="sig-name descname"><span class="pre">strategies</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.strategies" title="Permalink to this definition"></a></dt>
+<dd><p>A list of strategies that will be used to select pixel fitting order
+and calculate required starting parameters. Strategies come in two
+“flavours” - local and global. Local strategies spread the starting
+values to the nearest pixels and forces certain pixel fitting order.
+Global strategies look for clusters in parameter values, and suggests
+most frequent values. Global strategy do not depend on pixel fitting
+order, hence it is randomised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>strategy list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.metadata" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary for important samfire parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.active_strategy">
+<span class="sig-name descname"><span class="pre">active_strategy</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.active_strategy" title="Permalink to this definition"></a></dt>
+<dd><p>The currently active strategy from the strategies list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>strategy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.update_every">
+<span class="sig-name descname"><span class="pre">update_every</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.update_every" title="Permalink to this definition"></a></dt>
+<dd><p>If segmenter strategy is running, updates the historams every time
+update_every good fits are found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.plot_every">
+<span class="sig-name descname"><span class="pre">plot_every</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.plot_every" title="Permalink to this definition"></a></dt>
+<dd><p>When running, samfire plots results every time plot_every good fits are
+found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.save_every">
+<span class="sig-name descname"><span class="pre">save_every</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.save_every" title="Permalink to this definition"></a></dt>
+<dd><p>When running, samfire saves results every time save_every good fits are
+found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.random_state">
+<span class="sig-name descname"><span class="pre">random_state</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.random_state" title="Permalink to this definition"></a></dt>
+<dd><p>Random seed used to select the next pixels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a> or RandomState instance, default None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire._setup">
+<span class="sig-name descname"><span class="pre">_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire._setup" title="Permalink to this definition"></a></dt>
+<dd><p>Set up SAMFire - configure models, set up pool if necessary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.append" title="Permalink to this definition"></a></dt>
+<dd><p>Append the given strategy to the end of the strategies list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>strategy</strong> (<em>strategy instance</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.backup">
+<span class="sig-name descname"><span class="pre">backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.backup" title="Permalink to this definition"></a></dt>
+<dd><p>Backup the samfire results in a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>{str</em><em>, </em><em>None}</em>) – the filename. If None, a default value of <code class="docutils literal notranslate"><span class="pre">backup_</span></code> + signal_title
+is used.</p></li>
+<li><p><strong>on_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True (default), only saves on the required count of steps</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.change_strategy">
+<span class="sig-name descname"><span class="pre">change_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_strat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.change_strategy" title="Permalink to this definition"></a></dt>
+<dd><p>Changes current strategy to a new one. Certain rules apply:
+diffusion -&gt; diffusion : resets all “ignored” pixels
+diffusion -&gt; segmenter : saves already calculated pixels to be ignored
+when(if) subsequently diffusion strategy is run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_strat</strong> (<em>{int</em><em> | </em><em>strategy}</em>) – index of the new strategy from the strategies list or the
+strategy object itself</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.extend" title="Permalink to this definition"></a></dt>
+<dd><p>Extend the strategies list by the given iterable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>an iterable of strategy instances</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.generate_values">
+<span class="sig-name descname"><span class="pre">generate_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">need_inds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.generate_values" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an iterator that yields the index of the pixel and the
+value dictionary to be sent to the workers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>need_inds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the number of pixels to be returned in the generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.log" title="Permalink to this definition"></a></dt>
+<dd><p>If has a list named “_log” as attribute, appends the arguments there</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.pixels_done">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">pixels_done</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.pixels_done" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of pixels that have been solved</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.pixels_left">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">pixels_left</span></span><a class="headerlink" href="#hyperspy.samfire.Samfire.pixels_left" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of pixels that are left to solve. This number can
+increase as SAMFire learns more information about the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.plot" title="Permalink to this definition"></a></dt>
+<dd><p>If possible, plot current strategy plot. Local strategies plot
+grayscale navigation signal with brightness representing order of the
+pixel selection. Global strategies plot a collection of histograms,
+one per parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>on_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True, only tries to plot every speficied count, otherwise
+(default) always plots if possible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.refresh_database">
+<span class="sig-name descname"><span class="pre">refresh_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.refresh_database" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh currently selected strategy without preserving any
+“ignored” pixels; no previous structure is preserved.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.remove" title="Permalink to this definition"></a></dt>
+<dd><p>removes given strategy from the strategies list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>thing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><em>strategy instance</em>) – Strategy that is in current strategies list or its index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.start" title="Permalink to this definition"></a></dt>
+<dd><p>Start SAMFire.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Any keyword arguments to be passed to
+<a class="reference internal" href="hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.stop" title="Permalink to this definition"></a></dt>
+<dd><p>Stop SAMFire.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.Samfire.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ind</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isgood</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.Samfire.update" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the current model with the results, received from the
+workers. Results are only stored if the results are good enough</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – contains the index of the pixel of the results</p></li>
+<li><p><strong>results</strong> (<em>{dict</em><em>, </em><em>None}</em>) – dictionary of the results. If None, means we are updating in-place
+(e.g. refreshing the marker or strategies)</p></li>
+<li><p><strong>isgood</strong> (<em>{bool</em><em>, </em><em>None}</em>) – if it is known if the results are good according to the
+goodness-of-fit test. If None, the pixel is tested</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.samfire.StrategyList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.samfire.</span></span><span class="sig-name descname"><span class="pre">StrategyList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.StrategyList" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.StrategyList.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.StrategyList.append" title="Permalink to this definition"></a></dt>
+<dd><p>Append object to the end of the list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.StrategyList.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.StrategyList.extend" title="Permalink to this definition"></a></dt>
+<dd><p>Extend list by appending elements from the iterable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.samfire.StrategyList.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.samfire.StrategyList.remove" title="Permalink to this definition"></a></dt>
+<dd><p>Remove first occurrence of value.</p>
+<p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.roi.html" class="btn btn-neutral float-left" title="hyperspy.roi module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.signal.html" class="btn btn-neutral float-right" title="hyperspy.signal module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.\_hierarchical module
+==========================================
+
+.. automodule:: hyperspy.io_plugins._hierarchical
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

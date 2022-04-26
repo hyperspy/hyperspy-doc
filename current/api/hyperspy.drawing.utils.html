@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.drawing.utils module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.drawing.utils module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -155,15 +156,22 @@
   <section id="module-hyperspy.drawing.utils">
 <span id="hyperspy-drawing-utils-module"></span><h1>hyperspy.drawing.utils module<a class="headerlink" href="#module-hyperspy.drawing.utils" title="Permalink to this headline"></a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.drawing.utils._parse_array">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.drawing.utils.</span></span><span class="sig-name descname"><span class="pre">_parse_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils._parse_array" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to parse array from a signal.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.drawing.utils.animate_legend">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.drawing.utils.</span></span><span class="sig-name descname"><span class="pre">animate_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.animate_legend" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.drawing.utils.</span></span><span class="sig-name descname"><span class="pre">animate_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spectra'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.animate_legend" title="Permalink to this definition"></a></dt>
 <dd><p>Animate the legend of a figure.</p>
-<p>A spectrum can be toggled on and off by clicking on the line in the legend.</p>
+<p>A spectrum or image can be toggled on and off by clicking on the line in
+the legend.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fig</strong> (<em>{None</em><em>, </em><em>matplotlib.figure}</em><em>, </em><em>optional</em>) – If None pick the current figure using “plt.gcf”.</p></li>
-<li><p><strong>ax</strong> (<em>{None</em><em>, </em><em>matplotlib.axes}</em><em>, </em><em>optional</em>) – If None pick the current axes using “plt.gca”.</p></li>
+<li><p><strong>fig</strong> (<em>None</em><em>, </em><em>matplotlib.figure</em><em>, </em><em>optional</em>) – If None (default), pick the current figure using “plt.gcf”.</p></li>
+<li><p><strong>ax</strong> (<em>{None</em><em>, </em><em>matplotlib.axes}</em><em>, </em><em>optional</em>) – If None (Default), pick the current axes using “plt.gca”.</p></li>
 </ul>
 </dd>
 </dl>
@@ -201,20 +209,20 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>numpy array</em>) – </p></li>
-<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>None</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
 of the highest value will be ignored in the estimation of the maximum
-value. See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+value. See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
 If None, use the percentiles value set in the preferences.
 If float of integer, keep this value as bounds.</p></li>
-<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>None</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
 of the highest value will be ignored in the estimation of the maximum
-value. See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+value. See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
 If None, use the percentiles value set in the preferences.
 If float of integer, keep this value as bounds.</p></li>
 </ul>
@@ -242,8 +250,8 @@ keyword argument is passed to the plt.figure function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>window_title</strong> (<em>{None</em><em>, </em><em>string}</em><em>, </em><em>optional</em>) – </p></li>
-<li><p><strong>_on_figure_window_close</strong> (<em>{None</em><em>, </em><em>function}</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>window_title</strong> (<em>None</em><em>, </em><em>string</em><em>, </em><em>optional</em>) – Default None.</p></li>
+<li><p><strong>_on_figure_window_close</strong> (<em>None</em><em>, </em><em>function</em><em>, </em><em>optional</em>) – Default None.</p></li>
 <li><p><strong>disable_xyscale_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Disable the <cite>k</cite>, <cite>l</cite> and <cite>L</cite> shortcuts which toggle the x or y axis
 between linear and log scale. Default False.</p></li>
 </ul>
@@ -263,7 +271,7 @@ between linear and log scale. Default False.</p></li>
 <dd><p>Create a matplotlib colormap with customized colors, optionally registering
 it with matplotlib for simplified use.</p>
 <p>Adapted from Chris Slocum’s code at:
-<a class="reference external" href="https://github.com/CSlocumWX/custom_colormap/blob/master/custom_colormaps.py">https://github.com/CSlocumWX/custom_colormap/blob/master/custom_colormaps.py</a>
+<a class="reference external" href="https://github.com/CSlocumWX/custom_colormap/blob/master/custom_colormaps/custom_colormaps.py">https://github.com/CSlocumWX/custom_colormap/blob/master/custom_colormaps/custom_colormaps.py</a>
 and used under the terms of that code’s BSD-3 license</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -271,14 +279,16 @@ and used under the terms of that code’s BSD-3 license</p>
 <li><p><strong>colors</strong> (<em>iterable</em>) – list of either tuples containing rgb values, or html strings
 Colors should be arranged so that the first color is the lowest
 value for the colorbar and the last is the highest.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name of colormap to use when registering with matplotlib</p></li>
-<li><p><strong>position</strong> (<em>{None</em><em>, </em><em>iterable}</em><em>, </em><em>optional</em>) – list containing the values (from [0,1]) that dictate the position
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Name of colormap to use when registering with matplotlib. Default
+‘my_colormap’.</p></li>
+<li><p><strong>position</strong> (<em>None</em><em>, </em><em>iterable</em><em>, </em><em>optional</em>) – List containing the values (from [0,1]) that dictate the position
 of each color within the colormap. If None (default), the colors
 will be equally-spaced within the colorbar.</p></li>
 <li><p><strong>bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – True if RGB colors are given in 8-bit [0 to 255] or False if given
 in arithmetic basis [0 to 1] (default).</p></li>
-<li><p><strong>register</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Wwitch to control whether or not to register the custom colormap
-with matplotlib in order to enable use by just the name string.</p></li>
+<li><p><strong>register</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Switch to control whether or not to register the custom colormap
+with matplotlib in order to enable use by just the name string.
+Default True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -306,7 +316,7 @@ with matplotlib in order to enable use by just the name string.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im_list</strong> (<em>list of Signal2D instances</em>) – </p></li>
-<li><p><strong>normalization</strong> (<em>{'single'</em><em>, </em><em>'global'}</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>normalization</strong> (<em>'single'</em><em>, </em><em>'global'</em><em>, </em><em>optional</em>) – Default ‘single’.</p></li>
 <li><p><strong>dont_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Default False.</p></li>
 </ul>
 </dd>
@@ -352,11 +362,11 @@ spectra to plot, linestyle will be cycled.
 If <cite>None</cite>, use continuous lines (same as <code class="docutils literal notranslate"><span class="pre">'-'</span></code>).</p></li>
 <li><p><strong>legend</strong> (<em>{None</em><em>, </em><em>list of str</em><em>, </em><em>'auto'}</em><em>, </em><em>optional</em>) – Display a legend. If ‘auto’, the title of each spectra
 (metadata.General.title) is used.</p></li>
-<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a spectrum can be toggled on and off by clicking on
+<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, a spectrum can be toggled on and off by clicking on
 the line in the legend.</p></li>
-<li><p><strong>fig</strong> (<em>{None</em><em>, </em><em>matplotlib figure}</em><em>, </em><em>optional</em>) – If None, a default figure will be created.</p></li>
+<li><p><strong>fig</strong> (<em>None</em><em>, </em><em>matplotlib figure</em><em>, </em><em>optional</em>) – If None (default), a default figure will be created.</p></li>
 <li><p><strong>**kwargs</strong> – other keyword arguments (weight and density) are described in
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a>.</p></li>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -369,7 +379,7 @@ the line in the legend.</p></li>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>ax</strong> – An array is returned when <cite>style</cite> is “mosaic”.</p>
+<dd class="field-odd"><p><strong>ax</strong> – An array is returned when <cite>style</cite> is ‘mosaic’.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>matplotlib axes or list of matplotlib axes</p>
@@ -379,19 +389,19 @@ the line in the legend.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.drawing.utils.plot_images">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.drawing.utils.</span></span><span class="sig-name descname"><span class="pre">plot_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_nans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelwrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suptitle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suptitle_fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">18</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'multi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centre_colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_decor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_asp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namefrac_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_images" title="Permalink to this definition"></a></dt>
-<dd><p>Plot multiple images as sub-images in one figure.</p>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.drawing.utils.</span></span><span class="sig-name descname"><span class="pre">plot_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_nans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelwrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suptitle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suptitle_fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">18</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centre_colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_decor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_asp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namefrac_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_picking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'upper</span> <span class="pre">right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.drawing.utils.plot_images" title="Permalink to this definition"></a></dt>
+<dd><p>Plot multiple images either as sub-images or overlayed in one figure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>images</strong> (<em>list of Signal2D</em><em> or </em><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a>) – <cite>images</cite> should be a list of Signals to plot. For <cite>BaseSignal</cite> with
 navigation dimensions 2 and signal dimension 0, the signal will be
-tranposed to form a <cite>Signal2D</cite>.
+transposed to form a <cite>Signal2D</cite>.
 Multi-dimensional images will have each plane plotted as a separate
 image.
 If any of the signal shapes is not suitable, a ValueError will be
 raised.</p></li>
-<li><p><strong>cmap</strong> ({matplotlib colormap, list, <code class="docutils literal notranslate"><span class="pre">'mpl_colors'</span></code>}, optional) – The colormap used for the images, by default uses the setting
+<li><p><strong>cmap</strong> (<em>matplotlib colormap</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>, </em><em>'mpl_colors'</em><em>, </em><em>optional</em>) – The colormap used for the images, by default uses the setting
 <code class="docutils literal notranslate"><span class="pre">color</span> <span class="pre">map</span> <span class="pre">signal</span></code> from the plot preferences. A list of colormaps can
 also be provided, and the images will cycle through them. Optionally,
 the value <code class="docutils literal notranslate"><span class="pre">'mpl_colors'</span></code> will cause the cmap to loop through the
@@ -401,7 +411,7 @@ Note: if using more than one colormap, using the <code class="docutils literal n
 option for <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> is disallowed.</p></li>
 <li><p><strong>no_nans</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, set nans to zero for plotting.</p></li>
 <li><p><strong>per_row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The number of plots in each row.</p></li>
-<li><p><strong>label</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of str}</em><em>, </em><em>optional</em>) – Control the title labeling of the plotted images.
+<li><p><strong>label</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of str</em><em>, </em><em>optional</em>) – Control the title labeling of the plotted images.
 If None, no titles will be shown.
 If ‘auto’ (default), function will try to determine suitable titles
 using Signal2D titles, falling back to the ‘titles’ option if no good
@@ -421,37 +431,39 @@ value to reduce overlap of the labels between figures.</p></li>
 <li><p><strong>suptitle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Title to use at the top of the figure. If called with label=’auto’,
 this parameter will override the automatically determined title.</p></li>
 <li><p><strong>suptitle_fontsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Font size to use for super title at top of figure.</p></li>
-<li><p><strong>colorbar</strong> (<em>{'multi'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>'single'}</em>) – Controls the type of colorbars that are plotted.
-If None, no colorbar is plotted.
-If ‘multi’ (default), individual colorbars are plotted for each
-(non-RGB) image
+<li><p><strong>colorbar</strong> (<em>'default'</em><em>, </em><em>'multi'</em><em>, </em><em>'single'</em><em>, </em><em>None</em><em>, </em><em>optional</em>) – Controls the type of colorbars that are plotted, incompatible with
+<code class="docutils literal notranslate"><span class="pre">overlay=True</span></code>.
+If ‘default’, same as ‘multi’ when <code class="docutils literal notranslate"><span class="pre">overlay=False</span></code>, otherwise same
+as <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+If ‘multi’, individual colorbars are plotted for each (non-RGB) image.
 If ‘single’, all (non-RGB) images are plotted on the same scale,
-and one colorbar is shown for all</p></li>
-<li><p><strong>centre_colormap</strong> (<em>{&quot;auto&quot;</em><em>, </em><em>True</em><em>, </em><em>False}</em>) – If True, the centre of the color scheme is set to zero. This is
-particularly useful when using diverging color schemes. If “auto”
+and one colorbar is shown for all.
+If None, no colorbar is plotted.</p></li>
+<li><p><strong>centre_colormap</strong> (<em>'auto'</em><em>, </em><em>True</em><em>, </em><em>False</em><em>, </em><em>optional</em>) – If True, the centre of the color scheme is set to zero. This is
+particularly useful when using diverging color schemes. If ‘auto’
 (default), diverging color schemes are automatically centred.</p></li>
-<li><p><strong>scalebar</strong> (<em>{None</em><em>, </em><em>'all'</em><em>, </em><em>list of ints}</em><em>, </em><em>optional</em>) – If None (or False), no scalebars will be added to the images.
+<li><p><strong>scalebar</strong> (<em>None</em><em>, </em><em>'all'</em><em>, </em><em>list of ints</em><em>, </em><em>optional</em>) – If None (or False), no scalebars will be added to the images.
 If ‘all’, scalebars will be added to all images.
 If list of ints, scalebars will be added to each image specified.</p></li>
 <li><p><strong>scalebar_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – A valid MPL color string; will be used as the scalebar color.</p></li>
-<li><p><strong>axes_decor</strong> (<em>{'all'</em><em>, </em><em>'ticks'</em><em>, </em><em>'off'</em><em>, </em><em>None}</em><em>, </em><em>optional</em>) – Controls how the axes are displayed on each image; default is ‘all’.
+<li><p><strong>axes_decor</strong> (<em>'all'</em><em>, </em><em>'ticks'</em><em>, </em><em>'off'</em><em>, </em><em>None</em><em>, </em><em>optional</em>) – Controls how the axes are displayed on each image; default is ‘all’.
 If ‘all’, both ticks and axis labels will be shown.
 If ‘ticks’, no axis labels will be shown, but ticks/labels will.
 If ‘off’, all decorations and frame will be disabled.
 If None, no axis decorations will be shown, but ticks/frame will.</p></li>
-<li><p><strong>padding</strong> (<em>{None</em><em>, </em><em>dict}</em><em>, </em><em>optional</em>) – This parameter controls the spacing between images.
+<li><p><strong>padding</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – This parameter controls the spacing between images.
 If None, default options will be used.
 Otherwise, supply a dictionary with the spacing options as
 keywords and desired values as values.
 Values should be supplied as used in
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots_adjust.html#matplotlib.pyplot.subplots_adjust" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots_adjust()</span></code></a>,
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots_adjust.html#matplotlib.pyplot.subplots_adjust" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots_adjust()</span></code></a>,
 and can be ‘left’, ‘bottom’, ‘right’, ‘top’, ‘wspace’ (width) and
 ‘hspace’ (height).</p></li>
 <li><p><strong>tight_layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, hyperspy will attempt to improve image placement in
 figure using matplotlib’s tight_layout.
 If false, repositioning images inside the figure will be left as
 an exercise for the user.</p></li>
-<li><p><strong>aspect</strong> (<em>{str</em><em>, </em><em>numeric}</em><em>, </em><em>optional</em>) – If ‘auto’, aspect ratio is auto determined, subject to min_asp.
+<li><p><strong>aspect</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – If ‘auto’, aspect ratio is auto determined, subject to min_asp.
 If ‘square’, image will be forced onto square display.
 If ‘equal’, aspect ratio of 1 will be enforced.
 If float (or int/long), given value will be used.</p></li>
@@ -462,27 +474,44 @@ labels to activate. Can vary from 0 to 1. Smaller values
 encourage shortening of titles by auto-labeling, while larger
 values will require more overlap in titles before activing the
 auto-label code.</p></li>
-<li><p><strong>fig</strong> (<em>mpl figure</em><em>, </em><em>optional</em>) – If set, the images will be plotted to an existing MPL figure</p></li>
-<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+<li><p><strong>fig</strong> (<em>mpl figure</em><em>, </em><em>optional</em>) – If set, the images will be plotted to an existing matplotlib figure.</p></li>
+<li><p><strong>vmin</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>None</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
 of the highest value will be ignored in the estimation of the maximum
-value. It must be in the range [0, 100]
-See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+value. It must be in the range [0, 100].
+See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
 If None, use the percentiles value set in the preferences.
-If float of integer, keep this value as bounds.</p></li>
-<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If str, formatted as ‘xth’, use this value to calculate the percentage
+If float or integer, keep this value as bounds.
+Note: vmin is ignored when overlaying images.</p></li>
+<li><p><strong>vmax</strong> (<em>scalar</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>None</em>) – If str, formatted as ‘xth’, use this value to calculate the percentage
 of pixels that are left out of the lower and upper bounds.
 For example, for a vmin of ‘1th’, 1% of the lowest will be ignored to
 estimate the minimum value. Similarly, for a vmax value of ‘1th’, 1%
 of the highest value will be ignored in the estimation of the maximum
-value. It must be in the range [0, 100]
-See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
+value. It must be in the range [0, 100].
+See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html#numpy.percentile" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.percentile()</span></code></a> for more explanation.
 If None, use the percentiles value set in the preferences.
-If float of integer, keep this value as bounds.</p></li>
-<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to matplotlib.imshow()</p></li>
-<li><p><strong>optional</strong> – Additional keyword arguments passed to matplotlib.imshow()</p></li>
+If float or integer, keep this value as bounds.
+Note: vmin is ignored when overlaying images.</p></li>
+<li><p><strong>overlay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, overlays the images with different colors rather than plotting
+each image as a subplot.</p></li>
+<li><p><strong>colors</strong> (<em>'auto'</em><em>, </em><em>list of char</em><em>, </em><em>list of hex str</em><em>, </em><em>optional</em>) – If list, it must contains colors acceptable to matplotlib <a class="footnote-reference brackets" href="#id2" id="id1">1</a>.
+If <code class="docutils literal notranslate"><span class="pre">'auto'</span></code>, colors will be taken from matplotlib.colors.BASE_COLORS.</p></li>
+<li><p><strong>alphas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><em>list of floats</em><em>, </em><em>optional</em>) – Float value or a list of floats corresponding to the alpha value of
+each color.</p></li>
+<li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), an image can be toggled on and off by clicking on
+the legended line. For <code class="docutils literal notranslate"><span class="pre">overlay=True</span></code> only.</p></li>
+<li><p><strong>legend_loc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – This parameter controls where the legend is placed on the figure
+see the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> docstring for valid values</p></li>
+<li><p><strong>pixel_size_factor</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the size of the figure is taken from the
+matplotlib <code class="docutils literal notranslate"><span class="pre">rcParams</span></code>. Otherwise sets the size of the figure when
+plotting an overlay image. The higher the number the larger the figure
+and therefore a greater number of pixels are used. This value will be
+ignored if a Figure is provided.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.imshow()</span></code></a>.</p></li>
+<li><p><strong>optional</strong> – Additional keyword arguments passed to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.imshow()</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -503,6 +532,12 @@ If float of integer, keep this value as bounds.</p></li>
 </dd>
 </dl>
 </div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Matplotlib colors API: <a class="reference external" href="https://matplotlib.org/stable/api/colors_api.html">https://matplotlib.org/stable/api/colors_api.html</a>.</p>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p><cite>interpolation</cite> is a useful parameter to provide as a keyword
 argument to control how the space between pixels is interpolated. A
@@ -521,15 +556,14 @@ or try adjusting <cite>label</cite>, <cite>labelwrap</cite>, or <cite>per_row</c
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>signal_list</strong> (<em>list of BaseSignal instances</em>) – If sync is set to True, the signals must have the
 same navigation shape, but not necessarily the same signal shape.</p></li>
-<li><p><strong>sync</strong> (<em>{True</em><em>, </em><em>False}</em><em>, </em><em>default &quot;True&quot;</em><em>, </em><em>optional</em>) – If True: the signals will share navigation, all the signals
+<li><p><strong>sync</strong> (<em>True</em><em>, </em><em>False</em><em>, </em><em>optional</em>) – If True (default), the signals will share navigation. All the signals
 must have the same navigation shape for this to work, but not
 necessarily the same signal shape.</p></li>
-<li><p><strong>navigator</strong> (<em>{&quot;auto&quot;</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>&quot;spectrum&quot;</em><em>, </em><em>&quot;slider&quot;</em><em>, </em><em>BaseSignal}</em><em>, </em><em>optional</em><em>,</em>) – </p></li>
-<li><p><strong>&quot;auto&quot;</strong> (<em>default</em>) – See signal.plot docstring for full description.</p></li>
-<li><p><strong>navigator_list</strong> (<em>{None</em><em>, </em><em>list of navigator arguments}</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – Set different navigator options for the signals. Must use valid
-navigator arguments: “auto”, None, “spectrum”, “slider”, or a
+<li><p><strong>navigator</strong> (<em>'auto'</em><em>, </em><em>None</em><em>, </em><em>'spectrum'</em><em>, </em><em>'slider'</em><em>, </em><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a><em>, </em><em>optional</em>) – Default ‘auto’. See signal.plot docstring for full description.</p></li>
+<li><p><strong>navigator_list</strong> (<em>None</em><em>, </em><em>list of navigator arguments</em><em>, </em><em>optional</em>) – Set different navigator options for the signals. Must use valid
+navigator arguments: ‘auto’, None, ‘spectrum’, ‘slider’, or a
 HyperSpy Signal. The list must have the same size as signal_list.
-If None, the argument specified in navigator will be used.</p></li>
+If None (default), the argument specified in navigator will be used.</p></li>
 <li><p><strong>**kwargs</strong> – Any extra keyword arguments are passed to each signal <cite>plot</cite> method.</p></li>
 </ul>
 </dd>
@@ -567,12 +601,13 @@ If None, the argument specified in navigator will be used.</p></li>
 <li><p><strong>spectra</strong> (<em>list of Signal1D</em><em> or </em><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a>) – Ordered spectra list of signal to plot. If <cite>style</cite> is “cascade” or
 “mosaic”, the spectra can have different size and axes. For <cite>BaseSignal</cite>
 with navigation dimensions 1 and signal dimension 0, the signal will be
-tranposed to form a <cite>Signal1D</cite>.</p></li>
-<li><p><strong>style</strong> (<em>{'overlap'</em><em>, </em><em>'cascade'</em><em>, </em><em>'mosaic'</em><em>, </em><em>'heatmap'}</em>) – The style of the plot.</p></li>
-<li><p><strong>color</strong> (<em>{None</em><em>, </em><em>matplotlib color</em><em>, </em><em>list of colors}</em><em>, </em><em>optional</em>) – Sets the color of the lines of the plots (no action on ‘heatmap’).
+transposed to form a <cite>Signal1D</cite>.</p></li>
+<li><p><strong>style</strong> (<em>'overlap'</em><em>, </em><em>'cascade'</em><em>, </em><em>'mosaic'</em><em>, </em><em>'heatmap'</em><em>, </em><em>optional</em>) – The style of the plot: ‘overlap’ (default), ‘cascade’, ‘mosaic’, or
+‘heatmap’.</p></li>
+<li><p><strong>color</strong> (<em>None</em><em>, </em><em>matplotlib color</em><em>, </em><em>list of colors</em><em>, </em><em>optional</em>) – Sets the color of the lines of the plots (no action on ‘heatmap’).
 For a list, if its length is less than the number of spectra to plot,
-the colors will be cycled. If <cite>None</cite>, use default matplotlib color
-cycle.</p></li>
+the colors will be cycled. If <cite>None</cite> (default), use default matplotlib
+color cycle.</p></li>
 <li><p><strong>linestyle</strong> (<em>{None</em><em>, </em><em>matplotlib line style</em><em>, </em><em>list of linestyles}</em><em>, </em><em>optional</em>) – Sets the line style of the plots (no action on ‘heatmap’).
 The main line style are <code class="docutils literal notranslate"><span class="pre">'-'</span></code>, <code class="docutils literal notranslate"><span class="pre">'--'</span></code>, <code class="docutils literal notranslate"><span class="pre">'-.'</span></code>, <code class="docutils literal notranslate"><span class="pre">':'</span></code>.
 For a list, if its length is less than the number of
@@ -581,32 +616,32 @@ If <cite>None</cite>, use continuous lines (same as <code class="docutils litera
 <li><p><strong>drawstyle</strong> (<em>{'default'</em><em>, </em><em>'steps'</em><em>, </em><em>'steps-pre'</em><em>, </em><em>'steps-mid'</em><em>, </em><em>'steps-post'}</em><em>,</em>) – default ‘default’
 The drawstyle determines how the points are connected, no action with
 <code class="docutils literal notranslate"><span class="pre">style='heatmap'</span></code>. See
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_drawstyle" title="(in Matplotlib v3.4.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.lines.Line2D.set_drawstyle()</span></code></a> for more information.
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_drawstyle" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.lines.Line2D.set_drawstyle()</span></code></a> for more information.
 The <code class="docutils literal notranslate"><span class="pre">'default'</span></code> value is defined by matplotlib.</p></li>
 <li><p><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em><em>, </em><em>default 1.0</em>) – Option for “cascade”. 1 guarantees that there is no overlapping.
 However, in many cases, a value between 0 and 1 can produce a tighter
 plot without overlapping. Negative values have the same effect but
 reverse the order of the spectra without reversing the order of the
 colors.</p></li>
-<li><p><strong>legend</strong> (<em>{None</em><em>, </em><em>list of str</em><em>, </em><em>'auto'}</em><em>, </em><em>optional</em>) – If list of string, legend for “cascade” or title for “mosaic” is
+<li><p><strong>legend</strong> (<em>None</em><em>, </em><em>list of str</em><em>, </em><em>'auto'</em><em>, </em><em>optional</em>) – If list of string, legend for ‘cascade’ or title for ‘mosaic’ is
 displayed. If ‘auto’, the title of each spectra (metadata.General.title)
-is used.</p></li>
+is used. Default None.</p></li>
 <li><p><strong>legend_picking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), a spectrum can be toggled on and off by clicking on
 the legended line.</p></li>
-<li><p><strong>legend_loc</strong> (<em>{str</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – This parameter controls where the legend is placed on the figure;
-see the pyplot.legend docstring for valid values</p></li>
-<li><p><strong>fig</strong> (<em>{None</em><em>, </em><em>matplotlib figure}</em><em>, </em><em>optional</em>) – If None, a default figure will be created. Specifying fig will
+<li><p><strong>legend_loc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – This parameter controls where the legend is placed on the figure;
+see the pyplot.legend docstring for valid values. Default ‘upper right’.</p></li>
+<li><p><strong>fig</strong> (<em>None</em><em>, </em><em>matplotlib figure</em><em>, </em><em>optional</em>) – If None (default), a default figure will be created. Specifying <cite>fig</cite> will
 not work for the ‘heatmap’ style.</p></li>
-<li><p><strong>ax</strong> (<em>{none</em><em>, </em><em>matplotlib ax</em><em> (</em><em>subplot</em><em>)</em><em>}</em><em>, </em><em>optional</em>) – If None, a default ax will be created. Will not work for ‘mosaic’
+<li><p><strong>ax</strong> (<em>none</em><em>, </em><em>matplotlib ax</em><em> (</em><em>subplot</em><em>)</em><em>, </em><em>optional</em>) – If None (default), a default ax will be created. Will not work for ‘mosaic’
 or ‘heatmap’ style.</p></li>
-<li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If True, the plot will update when the data are changed. Only supported
+<li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – If True, the plot will update when the data are changed. Only supported
 with style=’overlap’ and a list of signal with navigation dimension 0.
 If None (default), update the plot only for style=’overlap’.</p></li>
-<li><p><strong>**kwargs</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
+<li><p><strong>**kwargs</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
 Has no effect on ‘heatmap’ style.</p></li>
-<li><p><strong>optional</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
+<li><p><strong>optional</strong> – Keywords arguments passed to <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.figure()</span></code></a> or
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> if style=’mosaic’.
 Has no effect on ‘heatmap’ style.</p></li>
 </ul>
 </dd>
@@ -622,7 +657,7 @@ Has no effect on ‘heatmap’ style.</p></li>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>ax</strong> – An array is returned when <cite>style</cite> is “mosaic”.</p>
+<dd class="field-odd"><p><strong>ax</strong> – An array is returned when <cite>style</cite> is ‘mosaic’.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>matplotlib axes or list of matplotlib axes</p>
@@ -637,7 +672,7 @@ Has no effect on ‘heatmap’ style.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mpl_ax</strong> (<a class="reference external" href="https://matplotlib.org/api/axis_api.html#matplotlib.axis.Axis" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axis.Axis</span></code></a>) – The <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> axis to change.</p></li>
+<li><p><strong>mpl_ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/axis_api.html#matplotlib.axis.Axis" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axis.Axis</span></code></a>) – The <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> axis to change.</p></li>
 <li><p><strong>hs_axis</strong> (<a class="reference internal" href="hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>) – The data axis that contains the values which control the scaling.</p></li>
 </ul>
 </dd>
@@ -674,7 +709,7 @@ Has no effect on ‘heatmap’ style.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

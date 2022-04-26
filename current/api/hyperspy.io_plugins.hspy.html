@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io_plugins.hspy module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.io_plugins.hspy module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -154,15 +155,46 @@
              
   <section id="module-hyperspy.io_plugins.hspy">
 <span id="hyperspy-io-plugins-hspy-module"></span><h1>hyperspy.io_plugins.hspy module<a class="headerlink" href="#module-hyperspy.io_plugins.hspy" title="Permalink to this headline"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.dict2hdfgroup">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">dict2hdfgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.dict2hdfgroup" title="Permalink to this definition"></a></dt>
-<dd><p>Recursive writer of dicts and signals</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.HyperspyReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">HyperspyReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.HyperspyReader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.io_plugins._hierarchical.html#hyperspy.io_plugins._hierarchical.HierarchicalReader" title="hyperspy.io_plugins._hierarchical.HierarchicalReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.io_plugins._hierarchical.HierarchicalReader</span></code></a></p>
+<p>Initializes a general reader for hierarchical signals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A file to be read.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.HyperspyWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">HyperspyWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.HyperspyWriter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hyperspy.io_plugins._hierarchical.html#hyperspy.io_plugins._hierarchical.HierarchicalWriter" title="hyperspy.io_plugins._hierarchical.HierarchicalWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.io_plugins._hierarchical.HierarchicalWriter</span></code></a></p>
+<p>An object used to simplify and organize the process for
+writing a hyperspy signal.  (.hspy format)</p>
+<p>Initialize a generic file writer for hierachical data storage types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The file where the signal is to be saved</p></li>
+<li><p><strong>signal</strong> (<a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><em>BaseSignal</em></a>) – A BaseSignal to be saved</p></li>
+<li><p><strong>group</strong> (<em>Group</em>) – A group to where the experimental data will be saved.</p></li>
+<li><p><strong>kwds</strong> – Any additional keywords used for saving the data.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.HyperspyWriter._get_object_dset">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_object_dset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunks</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.HyperspyWriter._get_object_dset" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a h5py dataset object for saving ragged data</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.file_reader">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backing_store</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.file_reader" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.file_reader" title="Permalink to this definition"></a></dt>
 <dd><p>Read data from hdf5 files saved with the hyperspy hdf5 format specification</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -178,43 +210,24 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.file_writer">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">file_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.file_writer" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">file_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.file_writer" title="Permalink to this definition"></a></dt>
 <dd><p>Writes data to hyperspy’s hdf5 format</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>signal</strong> (<em>a BaseSignal instance</em>) – </p></li>
-<li><p><strong>*args</strong> – </p></li>
-<li><p><strong>optional</strong> – </p></li>
-<li><p><strong>**kwds</strong> – </p></li>
-<li><p><strong>optional</strong> – </p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the file used to save the signal.</p></li>
+<li><p><strong>signal</strong> (<em>a BaseSignal instance</em>) – The signal to save.</p></li>
+<li><p><strong>chunks</strong> (<em>tuple of integer</em><em> or </em><em>None</em><em>, </em><em>default: None</em>) – Define the chunking used for saving the dataset. If None, calculates
+chunks for the signal, with preferably at least one chunk per signal
+space.</p></li>
+<li><p><strong>close_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default: True</em>) – Close the file after writing.</p></li>
+<li><p><strong>write_dataset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default: True</em>) – If True, write the data, otherwise, don’t write it. Useful to
+save attributes without having to write the whole dataset.</p></li>
+<li><p><strong>**kwds</strong> – The keyword argument are passed to the
+<a class="reference external" href="https://docs.h5py.org/en/stable/high/group.html#h5py.Group.require_dataset" title="(in h5py v3.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">h5py.Group.require_dataset()</span></code></a> function.</p></li>
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.get_signal_chunks">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">get_signal_chunks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.get_signal_chunks" title="Permalink to this definition"></a></dt>
-<dd><p>Function that calculates chunks for the signal, preferably at least one
-chunk per signal space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – the shape of the dataset to be sored / chunked</p></li>
-<li><p><strong>dtype</strong> (<em>{dtype</em><em>, </em><em>string}</em>) – the numpy dtype of the data</p></li>
-<li><p><strong>signal_axes</strong> (<em>{None</em><em>, </em><em>iterable of ints}</em>) – the axes defining “signal space” of the dataset. If None, the default
-h5py chunking is performed.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="hyperspy.io_plugins.hspy.write_signal">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.hspy.</span></span><span class="sig-name descname"><span class="pre">write_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.hspy.write_signal" title="Permalink to this definition"></a></dt>
-<dd><p>Writes a hyperspy signal to a hdf5 group</p>
 </dd></dl>
 
 </section>
@@ -230,7 +243,7 @@ h5py chunking is performed.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

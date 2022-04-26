@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io_plugins.usid_hdf5 module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.io_plugins.usid_hdf5 module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="hyperspy.learn package" href="hyperspy.learn.html" />
-    <link rel="prev" title="hyperspy.io_plugins.unbcf_fast module" href="hyperspy.io_plugins.unbcf_fast.html" />
+    <link rel="next" title="hyperspy.io_plugins.zspy module" href="hyperspy.io_plugins.zspy.html" />
+    <link rel="prev" title="hyperspy.io_plugins.tvips module" href="hyperspy.io_plugins.tvips.html" />
  
 <script type="text/javascript">
 
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -184,7 +185,7 @@ objects</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ndim_form</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a>) – N-dimensional form of the main dataset</p></li>
+<li><p><strong>ndim_form</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a>) – N-dimensional form of the main dataset</p></li>
 <li><p><strong>quantity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Physical quantity of the measurement</p></li>
 <li><p><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Corresponding units</p></li>
 <li><p><strong>dim_dict_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of dictionaries that instruct the axes corresponding to the main
@@ -225,7 +226,7 @@ dictionaries-compressing-keys</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.usid_hdf5._get_dim_dict">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">_get_dim_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_linear_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5._get_dim_dict" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">_get_dim_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_uniform_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5._get_dim_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a list of dictionaries that correspond to axes for HyperSpy Signal
 objects</p>
 <dl class="field-list simple">
@@ -234,8 +235,8 @@ objects</p>
 <li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of strings denoting the names of the dimension</p></li>
 <li><p><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of strings denoting the units for the dimensions</p></li>
 <li><p><strong>val_func</strong> (<em>callable</em>) – Function that will return the values over which a dimension was varied</p></li>
-<li><p><strong>ignore_non_linear_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional. Default = True</em>) – If set to True, a warning will be raised instead of a ValueError when a
-dimension is encountered which was non-linearly.</p></li>
+<li><p><strong>ignore_non_uniform_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional. Default = True</em>) – If set to True, a warning will be raised instead of a ValueError when a
+dimension is encountered which was non-uniformly.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -248,7 +249,7 @@ objects</p>
 </dl>
 <p class="rubric">Notes</p>
 <p>For a future release of HyperSpy:
-If a dimension was varied non-linearly, one would need to set the
+If a dimension was varied non-uniformly, one would need to set the
 appropriate quantity in the quantity equal to dim_vals. At that point,
 the typical offset and scale parameters would be (hopefully) ignored.</p>
 </dd></dl>
@@ -274,16 +275,16 @@ quantity and unit strings</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.usid_hdf5._usidataset_to_signal">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">_usidataset_to_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_main</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_linear_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5._usidataset_to_signal" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">_usidataset_to_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_main</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_uniform_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5._usidataset_to_signal" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a single specified USIDataset object to one or more Signal objects</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>h5_main</strong> (<em>pyUSID.USIDataset object</em>) – USID Main dataset</p></li>
-<li><p><strong>ignore_non_linear_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional</em>) – If True, parameters that were varied non-linearly in the desired
+<li><p><strong>ignore_non_uniform_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional</em>) – If True, parameters that were varied non-uniformly in the desired
 dataset will result in Exceptions.
-Else, all such non-linearly varied parameters will be treated as
-linearly varied parameters and
+Else, all such non-uniformly varied parameters will be treated as
+uniformly varied parameters and
 a Signal object will be generated.</p></li>
 <li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional</em>) – If set to True, data will be read as a Dask array.
 Else, data will be read in as a numpy array</p></li>
@@ -301,7 +302,7 @@ objects.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.usid_hdf5.file_reader">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_linear_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5.file_reader" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.usid_hdf5.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_non_uniform_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.usid_hdf5.file_reader" title="Permalink to this definition"></a></dt>
 <dd><p>Reads a USID Main dataset present in an HDF5 file into a HyperSpy Signal</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -313,17 +314,14 @@ can accommodate very large datasets, lazy reading is strongly
 recommended.
 If a string like <code class="docutils literal notranslate"><span class="pre">'/Measurement_000/Channel_000/My_Dataset'</span></code> is
 provided, the specific dataset will be loaded.</p></li>
-<li><p><strong>ignore_non_linear_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional</em>) – If True, parameters that were varied non-linearly in the desired
+<li><p><strong>ignore_non_uniform_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>Optional</em>) – If True, parameters that were varied non-uniformly in the desired
 dataset will result in Exceptions.
-Else, all such non-linearly varied parameters will be treated as
-linearly varied parameters and a Signal object will be generated.</p></li>
+Else, all such non-uniformly varied parameters will be treated as
+uniformly varied parameters and a Signal object will be generated.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list of hyperspy.signals.Signal object</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of hyperspy.signals.Signal object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -348,14 +346,14 @@ linearly varied parameters and a Signal object will be generated.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="hyperspy.io_plugins.unbcf_fast.html" class="btn btn-neutral float-left" title="hyperspy.io_plugins.unbcf_fast module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="hyperspy.learn.html" class="btn btn-neutral float-right" title="hyperspy.learn package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="hyperspy.io_plugins.tvips.html" class="btn btn-neutral float-left" title="hyperspy.io_plugins.tvips module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.io_plugins.zspy.html" class="btn btn-neutral float-right" title="hyperspy.io_plugins.zspy module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

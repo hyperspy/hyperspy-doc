@@ -1,0 +1,48 @@
+hyperspy.\_components package
+=============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy._components.arctan
+   hyperspy._components.bleasdale
+   hyperspy._components.doniach
+   hyperspy._components.eels_arctan
+   hyperspy._components.eels_cl_edge
+   hyperspy._components.eels_double_power_law
+   hyperspy._components.eels_vignetting
+   hyperspy._components.error_function
+   hyperspy._components.exponential
+   hyperspy._components.expression
+   hyperspy._components.gaussian
+   hyperspy._components.gaussian2d
+   hyperspy._components.gaussianhf
+   hyperspy._components.heaviside
+   hyperspy._components.logistic
+   hyperspy._components.lorentzian
+   hyperspy._components.offset
+   hyperspy._components.pes_core_line_shape
+   hyperspy._components.pes_see
+   hyperspy._components.pes_voigt
+   hyperspy._components.polynomial
+   hyperspy._components.polynomial_deprecated
+   hyperspy._components.power_law
+   hyperspy._components.rc
+   hyperspy._components.scalable_fixed_pattern
+   hyperspy._components.skew_normal
+   hyperspy._components.split_voigt
+   hyperspy._components.voigt
+   hyperspy._components.volume_plasmon_drude
+
+Module contents
+---------------
+
+.. automodule:: hyperspy._components
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

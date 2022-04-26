@@ -1,0 +1,9 @@
+hyperspy.drawing.\_markers.ellipse module
+=========================================
+
+.. automodule:: hyperspy.drawing._markers.ellipse
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

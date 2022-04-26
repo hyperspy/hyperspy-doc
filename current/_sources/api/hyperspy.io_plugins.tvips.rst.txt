@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.tvips module
+=================================
+
+.. automodule:: hyperspy.io_plugins.tvips
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

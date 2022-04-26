@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.misc.array_tools module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.misc.array_tools module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -156,7 +157,7 @@
 <span id="hyperspy-misc-array-tools-module"></span><h1>hyperspy.misc.array_tools module<a class="headerlink" href="#module-hyperspy.misc.array_tools" title="Permalink to this headline"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.misc.array_tools._linear_bin">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">_linear_bin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools._linear_bin" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">_linear_bin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools._linear_bin" title="Permalink to this definition"></a></dt>
 <dd><p>Binning of the spectrum image by a non-integer pixel value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -233,17 +234,14 @@ counts before and after binning.</em></p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – </p></li>
-<li><p><strong>sarray</strong> (<em>struct array</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Either sarray or dtype must be given. If sarray is given, it is
+<li><p><strong>sarray</strong> (<em>struct array</em><em> or </em><em>None</em>) – Either sarray or dtype must be given. If sarray is given, it is
 populated from the dictionary.</p></li>
-<li><p><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>numpy dtype</em><em> or </em><em>dtype list</em>) – If sarray is None, dtype must be given. If so, a new struct array
+<li><p><strong>dtype</strong> (<em>None</em><em>, </em><em>numpy dtype</em><em> or </em><em>dtype list</em>) – If sarray is None, dtype must be given. If so, a new struct array
 is created according to the dtype, which is then populated.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Structure array</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Structure array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -292,6 +290,63 @@ reshaped by adding facing dimensions of size 1.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.array_tools.numba_closest_index_ceil">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">numba_closest_index_ceil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.numba_closest_index_ceil" title="Permalink to this definition"></a></dt>
+<dd><p>For each value in value_array, find the closest larger value in
+axis_array and return the result as a numpy array of the same shape
+as value_array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_array</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>value_array</strong> (<em>numpy array</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.array_tools.numba_closest_index_floor">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">numba_closest_index_floor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.numba_closest_index_floor" title="Permalink to this definition"></a></dt>
+<dd><p>For each value in value_array, find the closest smaller value in
+axis_array and return the result as a numpy array of the same shape
+as value_array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_array</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>value_array</strong> (<em>numpy array</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.array_tools.numba_closest_index_round">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">numba_closest_index_round</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.numba_closest_index_round" title="Permalink to this definition"></a></dt>
+<dd><p>For each value in value_array, find the closest value in axis_array and
+return the result as a numpy array of the same shape as value_array.
+Use round half towards zero strategy for rounding float to interger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis_array</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>value_array</strong> (<em>numpy array</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.misc.array_tools.numba_histogram">
 <span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">numba_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.numba_histogram" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -313,42 +368,42 @@ reshaped by adding facing dimensions of size 1.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.misc.array_tools.rebin">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">rebin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.rebin" title="Permalink to this definition"></a></dt>
-<dd><p>Rebin array.</p>
-<p>rebin ndarray data into a smaller or larger array based on a linear
-interpolation. Specify either a new_shape or a scale. Scale of 1== no
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">rebin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.rebin" title="Permalink to this definition"></a></dt>
+<dd><p>Rebin data into a smaller or larger array based on a linear
+interpolation. Specify either a new_shape or a scale. Scale of 1 means no
 binning. Scale less than one results in up-sampling.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>numpy array</em>) – </p></li>
-<li><p><strong>new_shape</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new_shape of the np.array. This will
-then be converted into a scale.</p></li>
-<li><p><strong>scale</strong> (<em>a list of floats</em><em> or </em><em>integer</em><em>, </em><em>default None</em>) – For each dimension specify the new:old pixel ratio, e.g. a ratio of 1
-is no binning and a ratio of 2 means that each pixel in the new
+<li><p><strong>a</strong> (<em>numpy array</em>) – The array to rebin.</p></li>
+<li><p><strong>new_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><em>None</em>) – For each dimension specify the new_shape. This will internally be
+converted into a <code class="docutils literal notranslate"><span class="pre">scale</span></code> parameter.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> (</em><em>of floats</em><em> or </em><em>integer</em><em>) or </em><em>None</em>) – For each dimension, specify the new:old pixel ratio, e.g. a ratio
+of 1 is no binning and a ratio of 2 means that each pixel in the new
 spectrum is twice the size of the pixels in the old spectrum.
-The length of the list should match the dimension of the numpy array.
-<strong>*Note : Only one of scale or new_shape should be specified otherwise
-the function will not run*</strong></p></li>
-<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default True</em>) – <p>When binning by a non-integer number of pixels it is likely that
-the final row in each dimension contains less than the full quota to
-fill one pixel.</p>
-<p>e.g. 5*5 array binned by 2.1 will produce two rows containing 2.1
-pixels and one row containing only 0.8 pixels worth. Selection of
-crop=’True’ or crop=’False’ determines whether or not this
-‘black’ line is cropped from the final binned array or not.</p>
-<p><em>Please note that if crop=False is used, the final row in each
-dimension may appear black, if a fractional number of pixels are left
+The length of the list should match the dimension of the
+Signal’s underlying data array.
+<em>Note : Only one of `scale` or `new_shape` should be specified,
+otherwise the function will not run</em></p></li>
+<li><p><strong>crop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether or not to crop the resulting rebinned data (default is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>). When binning by a non-integer number of
+pixels it is likely that the final row in each dimension will
+contain fewer than the full quota to fill one pixel. For example,
+a 5*5 array binned by 2.1 will produce two rows containing
+2.1 pixels and one row containing only 0.8 pixels. Selection of
+<code class="docutils literal notranslate"><span class="pre">crop=True</span></code> or <code class="docutils literal notranslate"><span class="pre">crop=False</span></code> determines whether or not this
+<cite>“black”</cite> line is cropped from the final binned array or not.
+<em>Please note that if ``crop=False`` is used, the final row in each
+dimension may appear black if a fractional number of pixels are left
 over. It can be removed but has been left to preserve total counts
-before and after binning.</em></p>
-</p></li>
+before and after binning.</em></p></li>
+<li><p><strong>dtype</strong> (<em>{None</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><em>numpy.dtype</em></a><em>, </em><em>&quot;same&quot;}</em>) – Specify the dtype of the output. If None, the dtype will be
+determined by the behaviour of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.sum.html#numpy.sum" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.sum()</span></code></a>, if “same”,
+the dtype will be kept the same. Default is None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy array</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -357,10 +412,50 @@ before and after binning.</em></p>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
-<p>Fast re_bin function Adapted from scipy cookbook
+<p>Fast <code class="docutils literal notranslate"><span class="pre">re_bin</span></code> function Adapted from scipy cookbook
 If rebin function fails with error stating that the function is ‘not binned
-and therefore cannot be rebinned’, add binned to metadata with:
-&gt;&gt;&gt; s.metadata.Signal.binned = True</p>
+and therefore cannot be rebinned’, add binned to axes parameters with:
+&gt;&gt;&gt; s.axes_manager[axis].is_binned = True</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.array_tools.round_half_away_from_zero">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">round_half_away_from_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.round_half_away_from_zero" title="Permalink to this definition"></a></dt>
+<dd><p>Round input array using “half away from zero” strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>ndarray</em>) – Input array.</p></li>
+<li><p><strong>decimals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Number of decimal places to round to (default: 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rounded_array</strong> – An array of the same type as a, containing the rounded values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.array_tools.round_half_towards_zero">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.array_tools.</span></span><span class="sig-name descname"><span class="pre">round_half_towards_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.array_tools.round_half_towards_zero" title="Permalink to this definition"></a></dt>
+<dd><p>Round input array using “half towards zero” strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>ndarray</em>) – Input array.</p></li>
+<li><p><strong>decimals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Number of decimal places to round to (default: 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rounded_array</strong> – An array of the same type as a, containing the rounded values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -371,15 +466,12 @@ and therefore cannot be rebinned’, add binned to metadata with:
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sarray</strong> (<em>struct array</em>) – </p></li>
-<li><p><strong>dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If dictionary is not None the content of sarray will be appended to the
+<li><p><strong>dictionary</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If dictionary is not None the content of sarray will be appended to the
 given dictonary</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Ordered dictionary</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Ordered dictionary</p>
 </dd>
 </dl>
 </dd></dl>
@@ -397,7 +489,7 @@ given dictonary</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

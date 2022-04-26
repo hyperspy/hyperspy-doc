@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.zspy module
+================================
+
+.. automodule:: hyperspy.io_plugins.zspy
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

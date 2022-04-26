@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io_plugins.bruker module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.io_plugins.bruker module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -156,7 +157,7 @@
 <span id="hyperspy-io-plugins-bruker-module"></span><h1>hyperspy.io_plugins.bruker module<a class="headerlink" href="#module-hyperspy.io_plugins.bruker" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.BCF_reader">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">BCF_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.BCF_reader" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">BCF_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.BCF_reader" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyperspy.io_plugins.bruker.SFS_reader" title="hyperspy.io_plugins.bruker.SFS_reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.io_plugins.bruker.SFS_reader</span></code></a></p>
 <p>Class to read bcf (Bruker hypermapping) file.</p>
 <p>Inherits SFS_reader and all its attributes and methods.</p>
@@ -189,14 +190,20 @@ cython/memoryview/numpy implimentation if compilied and present
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The index of hypermap in bcf if there is more than one
+<li><p><strong>index</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The index of hypermap in bcf if there is more than one
 hyper map in file.</p></li>
 <li><p><strong>downsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Downsampling factor. Differently than block_reduce from
 skimage.measure, the parser populates reduced array by suming
 results of pixels, thus having lower memory requiriments. Default
 is 1.</p></li>
-<li><p><strong>cutoff_at_kV</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Value in keV to truncate the array at. Helps reducing size of
-array. Default is None.</p></li>
+<li><p><strong>cutoff_at_kV</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>Value or method to truncate the array at energy in kV. Helps reducing size of the returned
+array. Default value is None (does not truncate). Numerical value should be in kV.
+Two methods for automatic cutoff is available:</p>
+<blockquote>
+<div><p>”zealous” - truncates to the last non zero channel (should not be used for stacks).
+“auto” - truncates to hv of electron microscope (good for stacks if hv is consistent).</p>
+</div></blockquote>
+</p></li>
 <li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – It True, returns dask.array otherwise a numpy.array. Default is
 False.</p></li>
 </ul>
@@ -205,7 +212,7 @@ False.</p></li>
 <dd class="field-even"><p><strong>result</strong> – Bruker hypermap, with (y,x,E) shape.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a> or dask.array.array</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a> or dask.array.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -214,7 +221,7 @@ False.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.HyperHeader">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">HyperHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">HyperHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Wrap Bruker HyperMaping xml header into python object.</p>
 <p>Arguments:
@@ -226,9 +233,10 @@ estimate_map_channels, estimate_map_depth</p>
 <p>If Bcf is version 2, the bcf can contain stacks
 of hypermaps - thus header part  can contain multiply sum eds spectras
 and it’s metadata per hypermap slice which can be selected using index.
-Bcf can record number of imagery from different
-imagining detectors (BSE, SEI, ARGUS, etc…): access to imagery
-is throught image index.</p>
+Bcf can record number of images from different single dimentional value
+detectors (BSE, SEI, ARGUS, etc…). images representing signals are
+internaly ordered and right signal image can be accessed using image
+index (do not confuse with dataset index).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.HyperHeader._parse_image">
 <span class="sig-name descname"><span class="pre">_parse_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader._parse_image" title="Permalink to this definition"></a></dt>
@@ -269,24 +277,6 @@ in seconds</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.HyperHeader.estimate_map_channels">
-<span class="sig-name descname"><span class="pre">estimate_map_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader.estimate_map_channels" title="Permalink to this definition"></a></dt>
-<dd><p>Estimate minimal size of energy axis so any spectra from any pixel
-would not be truncated.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of the map if multiply hypermaps are present in the same bcf.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>optimal channel number</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.HyperHeader.estimate_map_depth">
 <span class="sig-name descname"><span class="pre">estimate_map_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">for_numpy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader.estimate_map_depth" title="Permalink to this definition"></a></dt>
 <dd><p>Estimate minimal dtype of array using cumulative spectra
@@ -311,7 +301,7 @@ dtypes can be safely unsigned. (default False)</p></li>
 <dd class="field-even"><p><strong>depth</strong> – numpy dtype large enought to use in final hypermap numpy array.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.21)">numpy.dtype</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)">numpy.dtype</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -321,6 +311,24 @@ dtypes can be safely unsigned. (default False)</p></li>
 <span class="sig-name descname"><span class="pre">get_acq_instrument_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader.get_acq_instrument_dict" title="Permalink to this definition"></a></dt>
 <dd><p>return python dictionary with aquisition instrument
 mandatory data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.HyperHeader.get_consistent_min_channels">
+<span class="sig-name descname"><span class="pre">get_consistent_min_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.HyperHeader.get_consistent_min_channels" title="Permalink to this definition"></a></dt>
+<dd><p>Estimate consistent minimal size of energy axis by comparing energy
+at last recorded channel vs electron beam potential and return channel
+number corresponding to least energy. This method is safe to use with
+sliced datasets (consistent between slices) which were acquired using
+the same electron potential.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of the map if multiple hypermaps are present in the same bcf.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>optimal channel number</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -335,7 +343,7 @@ index – index of hypermap/spectra (default 0)</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.SFSTreeItem">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">SFSTreeItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_raw_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.SFSTreeItem" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">SFSTreeItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_raw_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.SFSTreeItem" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to manage one internal sfs file.</p>
 <p>Reading, reading in chunks, reading and extracting, reading without
@@ -434,7 +442,7 @@ self.uncompressed_blk_size, self.no_of_compr_blk</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.bruker.SFS_reader">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">SFS_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.SFS_reader" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.bruker.</span></span><span class="sig-name descname"><span class="pre">SFS_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.bruker.SFS_reader" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to read sfs file.
 SFS is AidAim software’s(tm) single file system.
@@ -528,19 +536,19 @@ used by hyperspy.api.load() method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>select_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – One of: spectrum_image, image. If none specified, then function
+<li><p><strong>select_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – One of: spectrum_image, image. If none specified, then function
 loads everything, else if specified, loads either just sem imagery,
 or just hyper spectral mapping data (default None).</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Index of dataset in bcf v2 can be None integer and ‘all’
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Index of dataset in bcf v2 can be None integer and ‘all’
 (default None); None will select first available mapping if more than
 one. ‘all’ will return all maps if more than one present;
 integer will return only selected map.</p></li>
 <li><p><strong>downsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the downsample ratio of hyperspectral array (downsampling
 height and width only), can be integer from 1 to inf, where ‘1’ means
 no downsampling will be applied. (default 1)</p></li>
-<li><p><strong>cutoff_at_kV</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – if set (can be int of float &gt;= 0) can be used either, to
+<li><p><strong>cutoff_at_kV</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><em>None</em>) – if set (can be int of float &gt;= 0) can be used either, to
 crop or enlarge energy range at max values. (default None)</p></li>
-<li><p><strong>instrument</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Can be either ‘TEM’ or ‘SEM’. Default is None.</p></li>
+<li><p><strong>instrument</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – Can be either ‘TEM’ or ‘SEM’. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -596,11 +604,8 @@ reason c (generated with cython) version of the parser is not compiled.</p>
 <li><p><strong>expected</strong> (<em>is</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy array of bruker hypermap, with (y, x, E) shape.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array of bruker hypermap, with (y, x, E) shape.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -618,7 +623,7 @@ reason c (generated with cython) version of the parser is not compiled.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,0 +1,25 @@
+hyperspy.models package
+=======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.models.edsmodel
+   hyperspy.models.edssemmodel
+   hyperspy.models.edstemmodel
+   hyperspy.models.eelsmodel
+   hyperspy.models.model1d
+   hyperspy.models.model2d
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.models
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

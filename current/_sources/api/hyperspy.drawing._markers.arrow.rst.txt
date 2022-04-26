@@ -1,0 +1,9 @@
+hyperspy.drawing.\_markers.arrow module
+=======================================
+
+.. automodule:: hyperspy.drawing._markers.arrow
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

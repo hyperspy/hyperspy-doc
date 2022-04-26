@@ -1,0 +1,21 @@
+hyperspy.misc.holography package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.misc.holography.reconstruct
+   hyperspy.misc.holography.tools
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.misc.holography
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Model fitting &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Model fitting &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
@@ -96,6 +97,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#using-gradient-information">Using gradient information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bounded-optimization">Bounded optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linear-least-squares">Linear least squares</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimization-results">Optimization results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#goodness-of-fit">Goodness of fit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#visualizing-the-model">Visualizing the model</a></li>
@@ -111,6 +113,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#batch-setting-of-parameter-attributes">Batch setting of parameter attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitting-big-data">Fitting big data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#smart-adaptive-multi-dimensional-fitting-samfire">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-idea">The idea</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#strategies">Strategies</a></li>
@@ -201,8 +204,8 @@ implemented for the <a class="reference internal" href="../api/hyperspy.models.m
 <h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Before creating a model verify that the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">binned</span></code> metadata
-attribute of the signal is set to the correct value because the resulting
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">is_binned</span></code> attribute
+of the signal axis is set to the correct value because the resulting
 model depends on this parameter. See <a class="reference internal" href="signal.html#signal-binned"><span class="std std-ref">Binned and unbinned signals</span></a> for more details.</p></li>
 <li><p>When importing data that has been binned using other software, in
 particular Gatan’s DM, the stored values may be the averages of the
@@ -778,15 +781,16 @@ the question “Do you want to…”:</p>
 currently available in HyperSpy, including whether they support parameter
 bounds, gradients and parameter error estimation. The “Type” column indicates
 whether the optimizers find a local or global optima.</p>
-<span id="optimizers-table"></span><table class="docutils align-default" id="id2">
-<caption><span class="caption-text">Features of supported curve-fitting optimizers.</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<span id="optimizers-table"></span><table class="docutils align-default" id="id11">
+<caption><span class="caption-text">Features of supported curve-fitting optimizers.</span><a class="headerlink" href="#id11" title="Permalink to this table"></a></caption>
 <colgroup>
-<col style="width: 43%" />
-<col style="width: 9%" />
-<col style="width: 12%" />
-<col style="width: 9%" />
-<col style="width: 18%" />
-<col style="width: 9%" />
+<col style="width: 36%" />
+<col style="width: 10%" />
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Optimizer</p></th>
@@ -795,6 +799,7 @@ whether the optimizers find a local or global optima.</p>
 <th class="head"><p>Errors</p></th>
 <th class="head"><p>Loss function</p></th>
 <th class="head"><p>Type</p></th>
+<th class="head"><p>Linear</p></th>
 </tr>
 </thead>
 <tbody>
@@ -804,6 +809,7 @@ whether the optimizers find a local or global optima.</p>
 <td><p>Yes</p></td>
 <td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
 <td><p>local</p></td>
+<td><p>No</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code></p></td>
 <td><p>Yes</p></td>
@@ -811,6 +817,7 @@ whether the optimizers find a local or global optima.</p>
 <td><p>Yes</p></td>
 <td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
 <td><p>local</p></td>
+<td><p>No</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code></p></td>
 <td><p>Yes</p></td>
@@ -818,6 +825,7 @@ whether the optimizers find a local or global optima.</p>
 <td><p>Yes</p></td>
 <td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
 <td><p>local</p></td>
+<td><p>No</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;odr&quot;</span></code></p></td>
 <td><p>No</p></td>
@@ -825,13 +833,31 @@ whether the optimizers find a local or global optima.</p>
 <td><p>Yes</p></td>
 <td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
 <td><p>local</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
-<td><p>Yes *</p></td>
-<td><p>Yes *</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;lstsq&quot;</span></code></p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id2">1</a></p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>global</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;ridge_regression&quot;</span></code></p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id3">1</a></p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>global</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id9" id="id4">2</a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id9" id="id5">2</a></p></td>
 <td><p>No</p></td>
 <td><p>All</p></td>
 <td><p>local</p></td>
+<td><p>No</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;Differential</span> <span class="pre">Evolution&quot;</span></code></p></td>
 <td><p>Yes</p></td>
@@ -839,30 +865,42 @@ whether the optimizers find a local or global optima.</p>
 <td><p>No</p></td>
 <td><p>All</p></td>
 <td><p>global</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;Dual</span> <span class="pre">Annealing&quot;</span></code> **</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;Dual</span> <span class="pre">Annealing&quot;</span></code> <a class="footnote-reference brackets" href="#id10" id="id6">3</a></p></td>
 <td><p>Yes</p></td>
 <td><p>No</p></td>
 <td><p>No</p></td>
 <td><p>All</p></td>
 <td><p>global</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;SHGO&quot;</span></code> **</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;SHGO&quot;</span></code> <a class="footnote-reference brackets" href="#id10" id="id7">3</a></p></td>
 <td><p>Yes</p></td>
 <td><p>No</p></td>
 <td><p>No</p></td>
 <td><p>All</p></td>
 <td><p>global</p></td>
+<td><p>No</p></td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>* <strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.7.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets">1</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id3">2</a>)</span></dt>
+<dd><p>Requires the <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> <code class="docutils literal notranslate"><span class="pre">calculate_errors</span> <span class="pre">=</span> <span class="pre">True</span></code> argument
+in most cases. See the documentation below on <a class="reference internal" href="#linear-fitting-label"><span class="std std-ref">linear least square fitting</span></a>
+for more info.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets">2</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id5">2</a>)</span></dt>
+<dd><p><strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
 supported by HyperSpy; however, only some of them support bounds and/or gradients. For more information,
 please see the <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy documentation</a>.</p>
-<p>** Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p>
-</div>
+</dd>
+<dt class="label" id="id10"><span class="brackets">3</span><span class="fn-backref">(<a href="#id6">1</a>,<a href="#id7">2</a>)</span></dt>
+<dd><p>Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p>
+</dd>
+</dl>
 <p>The default optimizer in HyperSpy is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, which stands for the <a class="reference external" href="https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm">Levenberg-Marquardt
 algorithm</a>. In
 earlier versions of HyperSpy (&lt; 1.6) this was known as <code class="docutils literal notranslate"><span class="pre">&quot;leastsq&quot;</span></code>.</p>
@@ -920,7 +958,7 @@ provided. See <a class="reference internal" href="signal.html#signal-noise-prope
 </div>
 </section>
 <section id="weighted-least-squares-with-error-estimation">
-<h4>Weighted least squares with error estimation<a class="headerlink" href="#weighted-least-squares-with-error-estimation" title="Permalink to this headline"></a></h4>
+<span id="weighted-least-squares-label"></span><h4>Weighted least squares with error estimation<a class="headerlink" href="#weighted-least-squares-with-error-estimation" title="Permalink to this headline"></a></h4>
 <p>In the following example, we add Poisson noise to the data instead of
 Gaussian noise, and proceed to fit as in the previous example.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>
@@ -1129,7 +1167,7 @@ component using the Levenberg-Marquardt (“lm”) optimizer and bounds
 on the <code class="docutils literal notranslate"><span class="pre">centre</span></code> parameter.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">))</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">Signal</span><span class="o">.</span><span class="n">binned</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_binned</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
@@ -1149,11 +1187,91 @@ on the <code class="docutils literal notranslate"><span class="pre">centre</span
 </pre></div>
 </div>
 </section>
+<section id="linear-least-squares">
+<span id="linear-fitting-label"></span><h3>Linear least squares<a class="headerlink" href="#linear-least-squares" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.7.</span></p>
+</div>
+<p>Linear fitting can be used to address some of the drawbacks of non-linear optimization:</p>
+<ul class="simple">
+<li><p>it doesn’t suffer from the <em>starting parameters</em> issue, which can sometimes be problematic
+with nonlinear fitting. Since linear fitting uses linear algebra to find the
+solution (find the parameter values of the model), the solution is a unique solution,
+while nonlinear optimization uses an iterative approach and therefore relies
+on the initial values of the parameters.</p></li>
+<li><p>it is fast, because i) in favorable situations, the signal can be fitted in a vectorized
+fashion, i.e. the signal is fitted in a single run instead of iterating over
+the navigation dimension; ii) it is not iterative, <cite>i.e.</cite> it does the
+calculation only one time instead of 10-100 iterations, depending on how
+quickly the non-linear optimizer will converge.</p></li>
+</ul>
+<p>However, linear fitting can <em>only</em> fit linear models and will not be able to fit
+parameters which vary <em>non-linearly</em>.</p>
+<p>A component is considered linear when its free parameters scale the component only
+in the y-axis. For the exemplary function <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x**b</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span></code> is a linear parameter, whilst <code class="docutils literal notranslate"><span class="pre">b</span></code>
+is not. If <code class="docutils literal notranslate"><span class="pre">b.free</span> <span class="pre">=</span> <span class="pre">False</span></code>, then the component is linear.
+Components can also be made up of several linear parts. For instance,
+the 2D-polynomial <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x**2+b*y**2+c*x+d*y+e</span></code> is entirely linear.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After creating a model with values for the nonlinear parameters, a quick way to set
+all nonlinear parameters to be <code class="docutils literal notranslate"><span class="pre">free</span> <span class="pre">=</span> <span class="pre">False</span></code> is to use <code class="docutils literal notranslate"><span class="pre">m.set_parameters_not_free(only_nonlinear=True)</span></code></p>
+</div>
+<p>To check if a parameter is linear, use the model or component method
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.print_current_values" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a>. For a component to be
+considered linear, it can hold only one free parameter, and that parameter
+must be linear.</p>
+<p>If all components in a model are linear, then a linear optimizer can be used to
+solve the problem as a linear regression problem! This can be done using two approaches:</p>
+<ul class="simple">
+<li><p>the standard pixel-by-pixel approach as used by the <em>nonlinear</em> optimizers</p></li>
+<li><p>fit the entire dataset in one <em>vectorised</em> operation, which will be much faster (up to 1000 times).
+However, there is a caveat: all fixed parameters must have the same value across the dataset in
+order to avoid creating a very large array whose size will scale with the number of different
+values of the non-free parameters.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A good example of a linear model in the electron-microscopy field is an Energy-Dispersive
+X-ray Spectroscopy (EDS) dataset, which typically consists of a polynomial background and
+Gaussian peaks with well-defined energy (<code class="docutils literal notranslate"><span class="pre">Gaussian.centre</span></code>) and peak widths
+(<code class="docutils literal notranslate"><span class="pre">Gaussian.sigma</span></code>). This dataset can be fit extremely fast with a linear optimizer.</p>
+</div>
+<p>There are two implementations of linear least squares fitting in hyperspy:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer, which uses <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>, or
+<a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.linalg.lstsq.html#dask.array.linalg.lstsq" title="(in Dask)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.lstsq()</span></code></a> for lazy signals.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'ridge_regression'</span></code> optimizer, which supports regularization
+(see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a> for arguments to pass to
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>), but does not support lazy signals.</p></li>
+</ul>
+<p>As for non-linear least squares fitting, <a class="reference internal" href="#weighted-least-squares-label"><span class="std std-ref">weighted least squares</span></a>
+is supported.</p>
+<p>In the following example, we first generate a 300x300 navigation signal of varying total intensity,
+and then populate it with an EDS spectrum at each point. The signal can be fitted with a polynomial
+background and a Gaussian for each peak. Hyperspy automatically adds these to the model, and fixes
+the <code class="docutils literal notranslate"><span class="pre">centre</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma</span></code> parameters to known values. Fitting this model with a non-linear optimizer
+can about half an hour on a decent workstation. With a linear optimizer, it takes seconds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span> <span class="o">*</span> <span class="n">nav</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;lstsq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Standard errors for the parameters are by default not calculated when the dataset
+is fitted in vectorized fashion, because it has large memory requirement.
+If errors are required, either pass <code class="docutils literal notranslate"><span class="pre">calculate_errors=True</span></code> as an argument
+to <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a>, or rerun
+<a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> with a nonlinear optimizer,
+which should run fast since the parameters are already optimized.</p>
+<p>None of the linear optimizers currently support bounds.</p>
+</section>
 <section id="optimization-results">
 <h3>Optimization results<a class="headerlink" href="#optimization-results" title="Permalink to this headline"></a></h3>
 <p>After fitting the model, details about the optimization
 procedure, including whether it finished successfully,
-are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
+are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
 according to the keyword argument <code class="docutils literal notranslate"><span class="pre">return_info=True</span></code>.
 These details are often useful for diagnosing problems such
 as a poorly-fitted model or a convergence failure.
@@ -1242,23 +1360,23 @@ conveniently adjust the parameter values by running
 <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.gui" title="hyperspy.model.BaseModel.gui"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gui()</span></code></a> for <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a>,
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> and
 <a class="reference internal" href="../api/hyperspy.component.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>.</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/notebook_widgets.png"><img alt="../_images/notebook_widgets.png" src="../_images/notebook_widgets.png" style="width: 985px;" /></a>
 <figcaption>
 <p><span class="caption-text">Interactive widgets for the full model in a Jupyter notebook. Drag the
 sliders to adjust current parameter values. Typing different minimum and
-maximum values changes the boundaries of the slider.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+maximum values changes the boundaries of the slider.</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>Also, <a class="reference internal" href="../api/hyperspy.models.model1d.html#hyperspy.models.model1d.Model1D.enable_adjust_position" title="hyperspy.models.model1d.Model1D.enable_adjust_position"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enable_adjust_position()</span></code></a> provides an
 interactive way of setting the position of the components with a
 well-defined position.
 <a class="reference internal" href="../api/hyperspy.models.model1d.html#hyperspy.models.model1d.Model1D.disable_adjust_position" title="hyperspy.models.model1d.Model1D.disable_adjust_position"><code class="xref py py-meth docutils literal notranslate"><span class="pre">disable_adjust_position()</span></code></a> disables the tool.</p>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/model_adjust_position.png"><img alt="../_images/model_adjust_position.png" src="../_images/model_adjust_position.png" style="width: 500px;" /></a>
 <figcaption>
 <p><span class="caption-text">Interactive component position adjustment tool. Drag the vertical lines
-to set the initial value of the position parameter.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+to set the initial value of the position parameter.</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -1325,7 +1443,7 @@ top-left pixel will typically be an empty signal).</p>
 <p>To get sensible starting parameters, you can do a single
 <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a> after changing the active position
 within the spectrum image (either using the plotting GUI or by directly
-modifying <code class="docutils literal notranslate"><span class="pre">s.axes_manager.indices</span></code> as in <a class="reference internal" href="getting_started.html#setting-axis-properties"><span class="std std-ref">Setting axis properties</span></a>).</p>
+modifying <code class="docutils literal notranslate"><span class="pre">s.axes_manager.indices</span></code> as in <a class="reference internal" href="axes.html#setting-axis-properties"><span class="std std-ref">Setting axis properties</span></a>).</p>
 <p>After doing this, you can initialize the model at every pixel to the
 values from the single pixel fit using <code class="docutils literal notranslate"><span class="pre">m.assign_current_values_to_all()</span></code>,
 and then use <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> to perform the fit over
@@ -1336,7 +1454,7 @@ the entire spectrum image.</p>
 </div>
 <p>Typically, curve fitting on a multidimensional dataset happens in the following
 manner: Pixels are fit along the row from the first index in the first row, and once the
-final pixel is reached, one proceeds from the first index in the second row.
+last pixel in the row is reached, one proceeds from the first index in the second row.
 Since the fitting procedure typically uses the fit of the previous pixel
 as the starting point for the next, a common problem with this fitting iteration
 path is that the fitting fails going from the end of one row to the beginning of
@@ -1350,14 +1468,16 @@ This alternate iteration method can be enabled by the <a class="reference intern
 <code class="docutils literal notranslate"><span class="pre">iterpath='serpentine'</span></code> argument. The serpentine pattern supports n-dimensional
 navigation space, so the first index in the second frame of a three-dimensional
 navigation space will be at the last position of the previous frame.</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/FlybackVsSerpentine.png"><img alt="../_images/FlybackVsSerpentine.png" src="../_images/FlybackVsSerpentine.png" style="width: 500px;" /></a>
 <figcaption>
 <p><span class="caption-text">Comparing the scan patterns generated by the  <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code> and <code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code>
 iterpath options for a 2D navigation space. The pixel intensity and number refers
-to the order that the signal is fitted in.</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+to the order that the signal is fitted in.</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
+<p>In addition to <code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code> and <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code>, <code class="docutils literal notranslate"><span class="pre">iterpath</span></code> can take as argument any list
+or array of indices, or a generator of such, as explained in the <a class="reference internal" href="axes.html#iterating-axesmanager"><span class="std std-ref">Iterating AxesManager</span></a> section.</p>
 <p>Sometimes one may like to store and fetch the value of the parameters at a
 given position manually. This is possible using
 <a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.store_current_values" title="hyperspy.model.BaseModel.store_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store_current_values()</span></code></a> and
@@ -1489,6 +1609,10 @@ on individual components.</p>
 <li><p><a class="reference internal" href="../api/hyperspy.model.html#hyperspy.model.BaseModel.set_parameters_value" title="hyperspy.model.BaseModel.set_parameters_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_parameters_value()</span></code></a></p></li>
 </ul>
 </section>
+<section id="fitting-big-data">
+<span id="modelfitbigdata-label"></span><h2>Fitting big data<a class="headerlink" href="#fitting-big-data" title="Permalink to this headline"></a></h2>
+<p>See the section in <a class="reference internal" href="signal.html#signal-binned"><span class="std std-ref">Binned and unbinned signals</span></a> working with big data.</p>
+</section>
 <section id="smart-adaptive-multi-dimensional-fitting-samfire">
 <span id="samfire-label"></span><h2>Smart Adaptive Multi-dimensional Fitting (SAMFire)<a class="headerlink" href="#smart-adaptive-multi-dimensional-fitting-samfire" title="Permalink to this headline"></a></h2>
 <p>SAMFire (Smart Adaptive Multi-dimensional Fitting) is an algorithm created to
@@ -1515,7 +1639,7 @@ different strategy families that SAMFfire uses while operating.</p>
 <h3>Strategies<a class="headerlink" href="#strategies" title="Permalink to this headline"></a></h3>
 <p>During operation SAMFire uses a list of strategies to determine how to select
 the next pixel and estimate its starting parameters. Only one strategy is used
-at a time. Next strategy is chosen when no new pixels are can be fitted with
+at a time. Next strategy is chosen when no new pixels can be fitted with
 the current strategy. Once either the strategy list is exhausted or the full
 dataset fitted, the algorithm terminates.</p>
 <p>There are two families of strategies. In each family there may be many
@@ -1574,7 +1698,7 @@ multiprocessing instead.  However, if you are not planning to use ipyparallel,
 it’s recommended specify it explicitly via the <code class="docutils literal notranslate"><span class="pre">ipyparallel=False</span></code> argument,
 to use the fall-back option of <cite>multiprocessing</cite>.</p>
 <p>By default a new SAMFire object already has two (and currently only) strategies
-added to its strategist list:</p>
+added to its <code class="docutils literal notranslate"><span class="pre">strategies</span></code> list:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">samf</span><span class="o">.</span><span class="n">strategies</span>
 <span class="go">  A |    # | Strategy</span>
 <span class="go"> -- | ---- | -------------------------</span>
@@ -1618,7 +1742,7 @@ the underlying (i.e. usual) <a class="reference internal" href="../api/hyperspy.
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

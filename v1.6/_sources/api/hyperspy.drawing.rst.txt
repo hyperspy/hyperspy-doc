@@ -1,0 +1,40 @@
+hyperspy.drawing package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.drawing._markers
+   hyperspy.drawing._widgets
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.drawing.figure
+   hyperspy.drawing.image
+   hyperspy.drawing.marker
+   hyperspy.drawing.mpl_he
+   hyperspy.drawing.mpl_hie
+   hyperspy.drawing.mpl_hse
+   hyperspy.drawing.signal
+   hyperspy.drawing.signal1d
+   hyperspy.drawing.tiles
+   hyperspy.drawing.utils
+   hyperspy.drawing.widget
+   hyperspy.drawing.widgets
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.drawing
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

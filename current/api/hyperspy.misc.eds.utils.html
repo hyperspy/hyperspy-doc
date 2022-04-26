@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.misc.eds.utils module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.misc.eds.utils module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -186,7 +187,7 @@ a tuple.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>intensities</strong> (<em>numpy.array</em>) – the intensities for each X-ray lines. The first axis should be the
 elements axis.</p></li>
-<li><p><strong>absorption_correction</strong> (<em>numpy.array</em>) – value between 0 and 1 in order to correct the intensities based on
+<li><p><strong>absorption_correction</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a>) – value between 0 and 1 in order to correct the intensities based on
 estimated absorption.</p></li>
 <li><p><strong>kfactors</strong> (<em>list of float</em>) – The list of kfactor in same order as  intensities eg. kfactors =
 [1, 1.47, 1.72] for [‘Al_Ka’,’Cr_Ka’, ‘Ni_Ka’]</p></li>
@@ -242,11 +243,8 @@ the pure element is used.</p></li>
 <li><p><strong>tilt</strong> (<em>float.</em>) – The tilt of the sample in degrees.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Electron range in micrometers.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Electron range in micrometers.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -337,11 +335,8 @@ i.e. a value of 0.2 keV (the default) means to search +/- 0.1 keV.</p></li>
 <li><p><strong>only_lines</strong> – If not None, only the given lines will be added (eg. (‘a’,’Kb’)).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List of xray-lines sorted by energy difference to given energy.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List of xray-lines sorted by energy difference to given energy.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -357,7 +352,10 @@ i.e. a value of 0.2 keV (the default) means to search +/- 0.1 keV.</p></li>
 elements axis.</p></li>
 <li><p><strong>kfactors</strong> (<em>list of float</em>) – The list of kfactor in same order as intensities eg. kfactors =
 [1, 1.47, 1.72] for [‘Al_Ka’,’Cr_Ka’, ‘Ni_Ka’]</p></li>
-<li><p><strong>mask</strong> (<em>array of bool</em>) – The mask with the dimension of intensities[0]. If a pixel is True,
+<li><p><strong>absorption_correction</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a><em> or </em><em>None</em>) – If None (default), absorption correction is ignored, otherwise, the
+array must contain values between 0 and 1 to correct the intensities
+based on estimated absorption.</p></li>
+<li><p><strong>mask</strong> (<em>array of bool</em><em>, </em><em>signal of bool</em><em> or </em><em>None</em>) – The mask with the dimension of intensities[0]. If a pixel is True,
 the composition is set to zero.</p></li>
 </ul>
 </dd>
@@ -380,13 +378,16 @@ from the raw X-ray intensity</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a>) – The integrated intensity for each X-ray line, where the first axis
+<li><p><strong>intensity</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a>) – The integrated intensity for each X-ray line, where the first axis
 is the element axis.</p></li>
 <li><p><strong>cross_sections</strong> (<em>list of floats</em>) – List of X-ray scattering cross-sections in the same order as the
 intensities.</p></li>
 <li><p><strong>dose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – the dose per unit area given by i*t*N/A, i the current,
 t the acquisition time, and
 N the number of electron by unit electric charge.</p></li>
+<li><p><strong>absorption_correction</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a><em> or </em><em>None</em>) – If None (default), absorption correction is ignored, otherwise, the
+array must contain values between 0 and 1 to correct the intensities
+based on estimated absorption.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -415,6 +416,9 @@ e.g. zfactors = [628.10, 539.89] for [‘As_Ka’, ‘Ga_Ka’].</p></li>
 <li><p><strong>dose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The total electron dose given by i*t*N, i the current,
 t the acquisition time and
 N the number of electrons per unit electric charge (1/e).</p></li>
+<li><p><strong>absorption_correction</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a><em> or </em><em>None</em>) – If None (default), absorption correction is ignored, otherwise, the
+array must contain values between 0 and 1 to correct the intensities
+based on estimated absorption.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -500,11 +504,8 @@ Anderson-Hasler parameterization.</p>
 of the pure element is used.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>X-ray range in micrometer.</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>X-ray range in micrometer.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -560,7 +561,7 @@ cross sections e.g. [‘Al’,’Zn’]</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

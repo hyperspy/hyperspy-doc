@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with big data &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Working with big data &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
@@ -88,6 +89,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#machine-learning">Machine learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#navigator-plot">Navigator plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gpu-support">GPU support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-fitting">Model fitting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#practical-tips">Practical tips</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#chunking">Chunking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#computing-lazy-signals">Computing lazy signals</a></li>
@@ -97,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#limitations">Limitations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#immutable-signals">Immutable signals</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#other-minor-differences">Other minor differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saving-big-data">Saving Big Data</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#behind-the-scenes-technical-details">Behind the scenes –technical details</a></li>
@@ -389,6 +393,55 @@ instead:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">navigator</span><span class="o">=</span><span class="s1">&#39;slider&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.7.</span></p>
+</div>
+</section>
+<section id="gpu-support">
+<span id="big-data-gpu"></span><h2>GPU support<a class="headerlink" href="#gpu-support" title="Permalink to this headline"></a></h2>
+<p>Lazy data processing on GPUs requires explicitly transferring the data to the
+GPU.</p>
+<p>On linux, it is recommended to use the
+<a class="reference external" href="https://docs.rapids.ai/api/dask-cuda/stable/index.html">dask_cuda</a> library
+(not supported on windows) to manage the dask scheduler. As for CPU lazy
+processing, if the dask scheduler is not specified, the default scheduler
+will be used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dask_cuda</span> <span class="kn">import</span> <span class="n">LocalCUDACluster</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCUDACluster</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a dask array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">random_sample</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">chunktype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># convert the dask chunks from numpy array to cupy array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map_blocks</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">random_sample</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">chunktype</span><span class="o">=</span><span class="n">cupy</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create the signal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See the dask blog on <a class="reference external" href="https://blog.dask.org/2020/11/12/deconvolution">Richardson Lucy (RL) deconvolution</a>
+for an example of lazy processing on GPUs using dask and cupy</p>
+</div>
+</section>
+<section id="model-fitting">
+<span id="fitbigdata-label"></span><h2>Model fitting<a class="headerlink" href="#model-fitting" title="Permalink to this headline"></a></h2>
+<p>Most curve-fitting functionality will automatically work on models created from
+lazily loaded signals. HyperSpy extracts the relevant chunk from the signal and fits to that.</p>
+<p>The linear <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer supports fitting the entire dataset in a vectorised manner
+using <a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.linalg.lstsq.html#dask.array.linalg.lstsq" title="(in Dask)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.lstsq()</span></code></a>. This can give potentially enormous performance benefits over fitting
+with a nonlinear fitter, but comes with the restrictions explained in the <a class="reference internal" href="model.html#linear-fitting-label"><span class="std std-ref">linear fitting</span></a> section.</p>
 </section>
 <section id="practical-tips">
 <h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this headline"></a></h2>
@@ -405,18 +458,31 @@ match the dask array chunks in <code class="docutils literal notranslate"><span 
 Chunk shape should follow the axes order of the numpy shape (<code class="docutils literal notranslate"><span class="pre">s.data.shape</span></code>), not the hyperspy shape.
 The following example shows how to chunk one of the two navigation dimensions into smaller chunks:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">chunksize</span>
 <span class="go">(10, 200, 300)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="c1"># Note the reversed order of navigation dimensions</span>
-<span class="go">&lt;Signal1D, title: , dimensions: (200, 10|300)&gt;</span>
+<span class="go">&lt;LazSignal1D, title: , dimensions: (200, 10|300)&gt;</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;chunked_signal.hspy&#39;</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span> <span class="c1"># Chunking first hyperspy dimension (second array dimension)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;chunked_signal.hspy&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">chunksize</span>
 <span class="go">(10, 100, 300)</span>
+</pre></div>
+</div>
+<p>To get the chunk size of given axes, the <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.get_chunk_size" title="hyperspy._signals.lazy.LazySignal.get_chunk_size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_chunk_size()</span></code></a>
+method can be used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">chunksize</span>
+<span class="go">(10, 200, 300)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_chunk_size</span><span class="p">()</span> <span class="c1"># All navigation axes</span>
+<span class="go">((10,), (200,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">get_chunk_size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># The first navigation axis</span>
+<span class="go">((200,),)</span>
 </pre></div>
 </div>
 <div class="versionadded">
@@ -426,6 +492,23 @@ The following example shows how to chunk one of the two navigation dimensions in
 it is sometimes possible to manually set a more optimal chunking manually. Therefore,
 many operations take a <code class="docutils literal notranslate"><span class="pre">rechunk</span></code> or <code class="docutils literal notranslate"><span class="pre">optimize</span></code> keyword argument to disable
 automatic rechunking.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.7.0.</span></p>
+</div>
+<p id="lazy-repr-html">For more recent versions of dask (dask&gt;2021.11) when using hyperspy in a jupyter
+notebook a helpful html representation is available.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="../_images/chunks.png" src="../_images/chunks.png" />
+</figure>
+<p>This helps to visualize the chunk structure and identify axes where the chunk spans the entire
+axis (bolded axes).</p>
 </section>
 <section id="computing-lazy-signals">
 <h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Permalink to this headline"></a></h3>
@@ -502,6 +585,12 @@ convenience, <code class="docutils literal notranslate"><span class="pre">nansum
 added to mimic the workflow as closely as possible.</p></li>
 </ul>
 </section>
+<section id="saving-big-data">
+<span id="big-data-saving"></span><h3>Saving Big Data<a class="headerlink" href="#saving-big-data" title="Permalink to this headline"></a></h3>
+<p>The most efficient format supported by HyperSpy to write data is the <a class="reference internal" href="io.html#zspy-format"><span class="std std-ref">zspy format</span></a>,
+mainly because it supports writing currently from concurrently from multiple threads or processes.
+This also allows for smooth interaction with dask-distributed for efficient scaling.</p>
+</section>
 </section>
 <section id="behind-the-scenes-technical-details">
 <span id="lazy-details"></span><h2>Behind the scenes –technical details<a class="headerlink" href="#behind-the-scenes-technical-details" title="Permalink to this headline"></a></h2>
@@ -556,7 +645,7 @@ than on a single machine.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

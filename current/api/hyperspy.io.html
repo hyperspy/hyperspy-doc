@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.io module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -197,13 +198,14 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io._infer_file_reader">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io.</span></span><span class="sig-name descname"><span class="pre">_infer_file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extension</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io._infer_file_reader" title="Permalink to this definition"></a></dt>
-<dd><p>Return a file reader from the plugins list based on the file extension.</p>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io.</span></span><span class="sig-name descname"><span class="pre">_infer_file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io._infer_file_reader" title="Permalink to this definition"></a></dt>
+<dd><p>Return a file reader from the plugins list based on the format name or
+the file extension.</p>
 <p>If the extension is not found or understood, returns
 the Python imaging library as the file reader.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File extension, without initial “.” separator</p>
+<dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File extension, without initial “.” separator</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>reader</strong> – The inferred file reader.</p>
@@ -212,6 +214,12 @@ the Python imaging library as the file reader.</p>
 <dd class="field-odd"><p>func</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.io._parse_path">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io.</span></span><span class="sig-name descname"><span class="pre">_parse_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io._parse_path" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to get the path from zarr store or string.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -224,17 +232,14 @@ and the developer guide for details on how to add new signal_types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – Signal dtype</p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – Signal dtype</p></li>
 <li><p><strong>signal_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Signal dimension</p></li>
 <li><p><strong>signal_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Signal type. Default ‘’. Will log a warning if it is unknown to HyperSpy.</p></li>
 <li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, returns the matching LazySignal subclass. Default is False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal class or subclass</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Signal class or subclass</p>
 </dd>
 </dl>
 </dd></dl>
@@ -270,7 +275,7 @@ available options, see their individual documentation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>)</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>)</em>) – The filename to be loaded. If None, a window will open to select
+<li><p><strong>filenames</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>)</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>)</em>) – The filename to be loaded. If None, a window will open to select
 a file to load. If a valid filename is passed, that single
 file is loaded. If multiple file names are passed in
 a list, a list of objects or a single object containing multiple
@@ -281,7 +286,7 @@ e.g. ‘my_file*.msa’ loads all the files that start
 by ‘my_file’ and have the ‘.msa’ extension. Alternatively, regular
 expression type character classes can be used (e.g. <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> matches
 lowercase letters). See also the <cite>escape_square_brackets</cite> parameter.</p></li>
-<li><p><strong>signal_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>''</em><em>, </em><em>optional</em>) – The acronym that identifies the signal type. May be any signal type
+<li><p><strong>signal_type</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>''</em><em>, </em><em>optional</em>) – The acronym that identifies the signal type. May be any signal type
 provided by HyperSpy or by installed extensions as listed by
 <cite>hs.print_known_signal_types()</cite>. The value provided may determines the
 Signal subclass assigned to the data.
@@ -295,14 +300,14 @@ the data into a single object is attempted. All files must match
 in shape. If each file contains multiple (N) signals, N stacks will be
 created, with the requirement that each file contains the same number
 of signals.</p></li>
-<li><p><strong>stack_axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – If None (default), the signals are stacked over a new axis. The data
+<li><p><strong>stack_axis</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – If None (default), the signals are stacked over a new axis. The data
 must have the same dimensions. Otherwise, the signals are stacked over
 the axis given by its integer index or its name. The data must have the
 same shape, except in the dimension corresponding to <cite>axis</cite>.</p></li>
 <li><p><strong>new_axis_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – The name of the new axis (default ‘stack_element’), when <cite>axis</cite> is None.
 If an axis with this name already exists, it automatically appends ‘-i’,
 where <cite>i</cite> are integers, until it finds a name that is not yet in use.</p></li>
-<li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Open the data lazily - i.e. without actually reading the data from the
+<li><p><strong>lazy</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Open the data lazily - i.e. without actually reading the data from the
 disk until required. Allows opening arbitrary-sized datasets. The default
 is False.</p></li>
 <li><p><strong>convert_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, convert the units using the <cite>convert_to_units</cite> method of
@@ -318,12 +323,12 @@ are stacked and saved in <code class="docutils literal notranslate"><span class=
 returned signal. In this case, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> are copied from the
 first signal in the list.
 If False, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> and <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code> are not copied.</p></li>
-<li><p><strong>show_progressbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
+<li><p><strong>show_progressbar</strong> (<em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, display a progress bar. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default from
 the preferences settings is used. Only used with <code class="docutils literal notranslate"><span class="pre">stack=True</span></code>.</p></li>
 <li><p><strong>load_original_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, all metadata contained in the input file will be added
 to <code class="docutils literal notranslate"><span class="pre">original_metadata</span></code>.
 This does not affect parsing the metadata to <code class="docutils literal notranslate"><span class="pre">metadata</span></code>.</p></li>
-<li><p><strong>reader</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>custom file reader object</em><em>, </em><em>optional</em>) – Specify the file reader to use when loading the file(s). If None
+<li><p><strong>reader</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>custom file reader object</em><em>, </em><em>optional</em>) – Specify the file reader to use when loading the file(s). If None
 (default), will use the file extension to infer the file type and
 appropriate reader. If str, will select the appropriate file reader
 from the list of available readers in HyperSpy. If a custom reader
@@ -338,18 +343,26 @@ bcf is parsed into down-sampled size array by given integer factor,
 multiple values from original bcf pixels are summed forming downsampled
 pixel. This allows to improve signal and conserve the memory with the
 cost of lower resolution.</p></li>
-<li><p><strong>cutoff_at_kV</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – For Bruker bcf files, if set to numerical (default is None),
-bcf is parsed into array with depth cutoff at coresponding given energy.
+<li><p><strong>cutoff_at_kV</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – For Bruker bcf files and Jeol, if set to numerical (default is None),
+hypermap is parsed into array with depth cutoff at set energy value.
 This allows to conserve the memory by cutting-off unused spectral
-tails, or force enlargement of the spectra size.</p></li>
-<li><p><strong>select_type</strong> (<em>'spectrum_image'</em><em>, </em><em>'image'</em><em>, </em><em>'single_spectrum'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – If None (default), all data are loaded.
+tails, or force enlargement of the spectra size.
+Bruker bcf reader accepts additional values for semi-automatic cutoff.
+“zealous” value truncates to the last non zero channel (this option
+should not be used for stacks, as low beam current EDS can have different
+last non zero channel per slice).
+“auto” truncates channels to SEM/TEM acceleration voltage or
+energy at last channel, depending which is smaller.
+In case the hv info is not there or hv is off (0 kV) then it fallbacks to
+full channel range.</p></li>
+<li><p><strong>select_type</strong> (<em>'spectrum_image'</em><em>, </em><em>'image'</em><em>, </em><em>'single_spectrum'</em><em>, </em><em>None</em><em>, </em><em>optional</em>) – If None (default), all data are loaded.
 For Bruker bcf and Velox emd files: if one of ‘spectrum_image’, ‘image’
 or ‘single_spectrum’, the loader returns either only the spectrum image,
 only the images (including EDS map for Velox emd files), or only
 the single spectra (for Velox emd files).</p></li>
 <li><p><strong>first_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: load only the data acquired after the
 specified fname. Default 0.</p></li>
-<li><p><strong>last_frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: load only the data acquired up to specified
+<li><p><strong>last_frame</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: load only the data acquired up to specified
 fname. If None (default), load the data up to the end.</p></li>
 <li><p><strong>sum_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: if False, load each EDS frame individually.
 Default is True.</p></li>
@@ -359,12 +372,12 @@ for each EDS detectors.</p></li>
 <li><p><strong>rebin_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: rebin the energy axis by the integer provided
 during loading in order to save memory space. Needs to be a multiple of
 the length of the energy dimension (default 1).</p></li>
-<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.21)"><em>numpy.dtype</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: set the dtype of the spectrum image data in
+<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><em>numpy.dtype</em></a><em>, </em><em>None</em><em>, </em><em>optional</em>) – Only for Velox emd files: set the dtype of the spectrum image data in
 order to save memory space. If None, the default dtype from the Velox emd
 file is used.</p></li>
 <li><p><strong>load_SI_image_stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: if True, load the stack of STEM images
 acquired simultaneously as the EDS spectrum image. Default is False.</p></li>
-<li><p><strong>dataset_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of str</em><em>, </em><em>optional</em>) – For filetypes which support several datasets in the same file, this
+<li><p><strong>dataset_path</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of str</em><em>, </em><em>optional</em>) – For filetypes which support several datasets in the same file, this
 will only load the specified dataset. Several datasets can be loaded
 by using a list of strings. Only for EMD (NCEM) and hdf5 (USID) files.</p></li>
 <li><p><strong>stack_group</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for EMD NCEM. Stack datasets of groups with common name. Relevant
@@ -380,11 +393,8 @@ data. If False, fill empty data with zeros. Default is False and this
 default value will change to True in version 2.0.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Signal instance or list of signal instances</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Signal instance or list of signal instances</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -458,19 +468,16 @@ io_plugin. For available options, see their individual documentation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – The filename to save the signal to.</p></li>
+<li><p><strong>filename</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – The filename to save the signal to.</p></li>
 <li><p><strong>signal</strong> (<em>Hyperspy signal</em>) – The signal to be saved to the file.</p></li>
-<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If None (default) and a file exists, the user will be prompted whether
+<li><p><strong>overwrite</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If None (default) and a file exists, the user will be prompted whether
 to overwrite. If False and a file exists, the file will not be written.
 If True and a file exists, the file will be overwritten without
 prompting</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -488,7 +495,7 @@ prompting</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

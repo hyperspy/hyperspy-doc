@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data visualization &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Data visualization &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
@@ -84,7 +85,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#markers">Markers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#permanent-markers">Permanent markers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supported-markers">Supported markers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#marker-properties">Marker properties</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mva.html">Machine learning</a></li>
@@ -342,8 +348,7 @@ a spectrum or an image obtained by summing over the image dimensions:</p>
 <span id="plot-customize-images"></span><h2>Customising image plot<a class="headerlink" href="#customising-image-plot" title="Permalink to this headline"></a></h2>
 <p>The image plot can be customised by passing additional arguments when plotting.
 Colorbar, scalebar and contrast controls are HyperSpy-specific, however
-<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.imshow">matplotlib.imshow</a>
-arguments are supported as well:</p>
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html#matplotlib.axes.Axes.imshow" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.imshow()</span></code></a> arguments are supported as well:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">ascent</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scalebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -465,13 +470,13 @@ the section <a class="reference internal" href="#plot-customize-images"><span cl
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>See also the
-<a class="reference external" href="http://nbviewer.ipython.org/github/hyperspy/hyperspy-demos/blob/master/electron_microscopy/EDS/">SEM EDS tutorials</a> .</p>
+<a class="reference external" href="https://nbviewer.org/github/hyperspy/hyperspy-demos/tree/main/electron_microscopy/EDS/">SEM EDS tutorials</a> .</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The sample and the data used in this chapter are described in
 P. Burdet, <cite>et al.</cite>, Acta Materialia, 61, p. 3090-3098 (2013) (see
-<a class="reference external" href="http://infoscience.epfl.ch/record/185861/">abstract</a>).</p>
+<a class="reference external" href="https://infoscience.epfl.ch/record/185861/">abstract</a>).</p>
 </div>
 <p>Stack of 2D images can be imported as an 3D image and plotted with a slider
 instead of the 2D navigator as in the previous example.</p>
@@ -552,12 +557,12 @@ The navigator is the “maximum spectrum”.</span><a class="headerlink" href="#
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>See also the
-<a class="reference external" href="http://nbviewer.ipython.org/github/hyperspy/hyperspy-demos/blob/master/electron_microscopy/EDS/">EDS tutorials</a> .</p>
+<a class="reference external" href="https://nbviewer.org/github/hyperspy/hyperspy-demos/tree/main/electron_microscopy/EDS/">EDS tutorials</a> .</p>
 </div>
 <p>Although HyperSpy does not currently support plotting when signal_dimension is
-greater than 2, <a class="reference external" href="http://docs.enthought.com/mayavi/mayavi/">Mayavi</a> can be
+greater than 2, <a class="reference external" href="https://docs.enthought.com/mayavi/mayavi/">Mayavi</a> can be
 used for this purpose.</p>
-<p>In the following example we also use <a class="reference external" href="http://scikit-image.org/">scikit-image</a>
+<p>In the following example we also use <a class="reference external" href="https://scikit-image.org/">scikit-image</a>
 for noise reduction. More details about
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code> method can be
 found in <a class="reference internal" href="eds.html#get-lines-intensity"><span class="std std-ref">EDS lines intensity</span></a>.</p>
@@ -577,7 +582,7 @@ found in <a class="reference internal" href="eds.html#get-lines-intensity"><span
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>See also the
-<a class="reference external" href="http://nbviewer.ipython.org/github/hyperspy/hyperspy-demos/blob/master/electron_microscopy/EDS/">SEM EDS tutorials</a> .</p>
+<a class="reference external" href="https://nbviewer.org/github/hyperspy/hyperspy-demos/tree/main/electron_microscopy/EDS/">SEM EDS tutorials</a> .</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -596,7 +601,7 @@ other signals): <a class="reference internal" href="../api/hyperspy.drawing.util
 <p><a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_images()</span></code></a> is used to plot several images in the
 same figure. It supports many configurations and has many options available
 to customize the resulting output. The function returns a list of
-<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.axes">matplotlib axes</a>,
+<a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></a>,
 which can be used to further customize the figure. Some examples are given
 below. Plots generated from another installation may look slightly different
 due to <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> GUI backends and default font sizes. To change the
@@ -706,8 +711,7 @@ to get a representative figure of the X-ray line intensities of an EDS
 spectrum image. This example also demonstrates changing the colormap (with
 <cite>cmap</cite>), adding scalebars to the plots (with <cite>scalebar</cite>), and changing the
 <cite>padding</cite> between the images. The padding is specified as a dictionary,
-which is used to call subplots_adjust method of matplotlib
-(see <a class="reference external" href="http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust">documentation</a>).</p>
+which is passed to <a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.figure.Figure.subplots_adjust()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;core_shell.hdf5&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span>
@@ -806,6 +810,22 @@ other iterable type for the <code class="docutils literal notranslate"><span cla
 for the <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> argument. Such an input will cause a warning and
 instead set the <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> argument to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </div>
+<p>It is also possible to plot multiple images overlayed on the same figure by
+passing the argument <code class="docutils literal notranslate"><span class="pre">overlay=True</span></code> to the
+<a class="reference internal" href="../api/hyperspy.drawing.utils.html#hyperspy.drawing.utils.plot_images" title="hyperspy.drawing.utils.plot_images"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_images()</span></code></a> function. This should only be done when
+images have the same scale (eg. for elemental maps from the same dataset).
+Using the same data as above, the Fe and Pt signals can be plotted using
+different colours. Any color can be input via matplotlib color characters or
+hex values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">si_EDS</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;core_shell.hdf5&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">si_EDS</span><span class="o">.</span><span class="n">get_lines_intensity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">scalebar</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">suptitle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="n">axes_decor</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/plot_images_overlay.png"><img alt="../_images/plot_images_overlay.png" src="../_images/plot_images_overlay.png" style="width: 500px;" /></a>
+</figure>
 </section>
 <section id="plotting-several-spectra">
 <span id="id5"></span><h3>Plotting several spectra<a class="headerlink" href="#plotting-several-spectra" title="Permalink to this headline"></a></h3>
@@ -942,7 +962,7 @@ a colormap.</span><a class="headerlink" href="#id32" title="Permalink to this im
 </figcaption>
 </figure>
 <p>For the “heatmap” style, different
-<a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">matplotlib color schemes</a>
+<a class="reference external" href="https://matplotlib.org/stable/gallery/color/colormap_reference.html">matplotlib color schemes</a>
 can be used:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.cm</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.misc</span>
@@ -1177,6 +1197,8 @@ Each slice is indicated with the same text on the navigator.</p>
 <p><span class="caption-text">Multi-dimensional markers.</span><a class="headerlink" href="#id46" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
+<section id="permanent-markers">
+<h3>Permanent markers<a class="headerlink" href="#permanent-markers" title="Permalink to this headline"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2: </span>Permanent markers.</p>
 </div>
@@ -1311,6 +1333,72 @@ navigation index.</span><a class="headerlink" href="#id51" title="Permalink to t
 </pre></div>
 </div>
 </section>
+<section id="supported-markers">
+<h3>Supported markers<a class="headerlink" href="#supported-markers" title="Permalink to this headline"></a></h3>
+<p>The markers currently supported in HyperSpy are:</p>
+<table class="colwidths-given docutils align-default" id="id52">
+<caption><span class="caption-text">List of supported markers, their signature and their corresponding matplotlib objects.</span><a class="headerlink" href="#id52" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HyperSpy markers</p></th>
+<th class="head"><p>Signature</p></th>
+<th class="head"><p>Matplotlib objects</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.arrow.html#hyperspy.drawing._markers.arrow.Arrow" title="hyperspy.drawing._markers.arrow.Arrow"><code class="xref py py-class docutils literal notranslate"><span class="pre">Arrow</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x1,</span> <span class="pre">y1,</span> <span class="pre">x2,</span> <span class="pre">y2,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.FancyArrowPatch.html#matplotlib.patches.FancyArrowPatch" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.patches.FancyArrowPatch</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.ellipse.html#hyperspy.drawing._markers.ellipse.Ellipse" title="hyperspy.drawing._markers.ellipse.Ellipse"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ellipse</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">width,</span> <span class="pre">height,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Ellipse.html#matplotlib.patches.Ellipse" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.patches.Ellipse</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.horizontal_line.html#hyperspy.drawing._markers.horizontal_line.HorizontalLine" title="hyperspy.drawing._markers.horizontal_line.HorizontalLine"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizontalLine</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hlines.html#matplotlib.axes.Axes.hlines" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.hlines()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.horizontal_line_segment.html#hyperspy.drawing._markers.horizontal_line_segment.HorizontalLineSegment" title="hyperspy.drawing._markers.horizontal_line_segment.HorizontalLineSegment"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizontalLineSegment</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x1,</span> <span class="pre">x2,</span> <span class="pre">y,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hlines.html#matplotlib.axes.Axes.hlines" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.hlines()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.line_segment.html#hyperspy.drawing._markers.line_segment.LineSegment" title="hyperspy.drawing._markers.line_segment.LineSegment"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSegment</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x1,</span> <span class="pre">y1,</span> <span class="pre">x2,</span> <span class="pre">y2,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.plot()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.point.html#hyperspy.drawing._markers.point.Point" title="hyperspy.drawing._markers.point.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x1,</span> <span class="pre">y1,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html#matplotlib.axes.Axes.scatter" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.scatter()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.rectangle.html#hyperspy.drawing._markers.rectangle.Rectangle" title="hyperspy.drawing._markers.rectangle.Rectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rectangle</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x1,</span> <span class="pre">y1,</span> <span class="pre">x2,</span> <span class="pre">y2,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Rectangle.html#matplotlib.patches.Rectangle" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.patches.Rectangle</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.text.html#hyperspy.drawing._markers.text.Text" title="hyperspy.drawing._markers.text.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">text,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.text.html#matplotlib.axes.Axes.text" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.text()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.vertical_line.html#hyperspy.drawing._markers.vertical_line.VerticalLine" title="hyperspy.drawing._markers.vertical_line.VerticalLine"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalLine</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.axvline.html#matplotlib.axes.Axes.axvline" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.axvline()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.drawing._markers.vertical_line_segment.html#hyperspy.drawing._markers.vertical_line_segment.VerticalLineSegment" title="hyperspy.drawing._markers.vertical_line_segment.VerticalLineSegment"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalLineSegment</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y1,</span> <span class="pre">y2,</span> <span class="pre">**kwargs</span></code></p></td>
+<td><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.axvline.html#matplotlib.axes.Axes.axvline" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.axvline()</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="marker-properties">
+<h3>Marker properties<a class="headerlink" href="#marker-properties" title="Permalink to this headline"></a></h3>
+<p>The optional parameters (<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, keyword arguments) can be used for extra parameters used in matplotlib.
+(The <code class="docutils literal notranslate"><span class="pre">color</span></code> property in rectangle marker is an alias of <code class="docutils literal notranslate"><span class="pre">edgecolor</span></code> for backward compatibility)</p>
+</section>
+</section>
 </section>
 
 
@@ -1324,7 +1412,7 @@ navigation index.</span><a class="headerlink" href="#id51" title="Permalink to t
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

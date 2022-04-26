@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io_plugins.nexus module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.io_plugins.nexus module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -185,17 +186,17 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>A signal dictionary which can be used to instantiate a signal.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dask or numpy array</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus._find_data">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_find_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._find_data" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_find_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._find_data" title="Permalink to this definition"></a></dt>
 <dd><p>Read from a nexus or hdf file and return a list of the dataset entries.</p>
 <p>The method iterates through group attributes and returns NXdata or
 hdf datasets of size &gt;=2 if they’re not already NXdata blocks
@@ -209,10 +210,11 @@ search is required. See <a class="reference external" href="https://github.com/h
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>group</strong> (<em>hdf group</em><em> or </em><em>File</em>) – </p></li>
-<li><p><strong>search_keys</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>default: None</em>) – Only return items which contain the strings
+<li><p><strong>search_keys</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>None</em><em>, </em><em>default: None</em>) – Only return items which contain the strings
 .e.g search_list = [“instrument”,”Fe”] will return
 hdf entries with instrument or Fe in their hdf path.</p></li>
 <li><p><strong>hardlinks_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> , </em><em>default : False</em>) – Option to ignore links (soft or External) within the file.</p></li>
+<li><p><strong>absolute_path</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>None</em><em>, </em><em>default: None</em>) – Return items with the exact specified absolute path</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -263,11 +265,28 @@ still present to work around this issue</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
 </dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.io_plugins.nexus._get_nav_list">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_get_nav_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataentry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._get_nav_list" title="Permalink to this definition"></a></dt>
+<dd><p>Get the list with information of each axes of the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>hdf dataset</em>) – the dataset to be loaded.</p></li>
+<li><p><strong>dataentry</strong> (<em>hdf group</em>) – the group with corresponding attributes.</p></li>
+</ul>
+</dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p><strong>nav_list</strong> – contains information about each axes.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -342,7 +361,7 @@ return None.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus._load_metadata">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_load_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._load_metadata" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_load_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_array_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._load_metadata" title="Permalink to this definition"></a></dt>
 <dd><p>Search through a hdf group and return the group structure.</p>
 <p>h5py.visit or visititems does not visit soft
 links or external links so an implementation of a recursive
@@ -352,6 +371,7 @@ search is required. See <a class="reference external" href="https://github.com/h
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>group</strong> (<em>hdf group</em>) – location to load the metadata from</p></li>
 <li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> , </em><em>default : False</em>) – Option for lazy loading</p></li>
+<li><p><strong>skip_array_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – whether to skip loading array metadata</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -419,11 +439,8 @@ byte strings is required.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>file</strong> (<em>value - input object to write to the hdf</em>) – </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>parsed value</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>parsed value</p>
 </dd>
 </dl>
 </dd></dl>
@@ -450,7 +467,7 @@ byte strings is required.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus._write_nexus_attr">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_write_nexus_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._write_nexus_attr" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_write_nexus_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._write_nexus_attr" title="Permalink to this definition"></a></dt>
 <dd><p>Recursively iterate through dictionary and write “attrs” dictionaries.</p>
 <p>This step is called after the groups and datasets have been created</p>
 <dl class="field-list simple">
@@ -465,13 +482,14 @@ byte strings is required.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus._write_nexus_groups">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_write_nexus_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._write_nexus_groups" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">_write_nexus_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus._write_nexus_groups" title="Permalink to this definition"></a></dt>
 <dd><p>Recursively iterate throuh dictionary and write groups to nexus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – dictionary contents to store to hdf group</p></li>
 <li><p><strong>group</strong> (<em>hdf group</em>) – location to store dictionary</p></li>
+<li><p><strong>skip_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>list of str</em>) – the key(s) to skip when writing into the group</p></li>
 <li><p><strong>**kwds</strong> (<em>additional keywords</em>) – additional keywords to pass to h5py.create_dataset method</p></li>
 </ul>
 </dd>
@@ -495,12 +513,12 @@ byte strings is required.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus.file_reader">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nxdata_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.file_reader" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">file_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_array_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nxdata_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.file_reader" title="Permalink to this definition"></a></dt>
 <dd><p>Read NXdata class or hdf datasets from a file and return signal(s).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Loading all datasets can result in a large number of signals
-Please review your datasets and use the dataset_keys to target
+Please review your datasets and use the dataset_key to target
 the datasets of interest.
 “keys” is a special keywords and prepended with “fix” in the metadata
 structure to avoid any issues.</p>
@@ -510,14 +528,23 @@ structure to avoid any issues.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Input filename</p></li>
-<li><p><strong>dataset_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em>, </em><em>default : None</em>) – If None all datasets are returned.
+<li><p><strong>dataset_key</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em>, </em><em>default : None</em>) – If None all datasets are returned.
 If a string or list of strings is provided only items
 whose path contain the string(s) are returned. For example
-dataset_keys = [“instrument”, “Fe”] will return
+dataset_key = [“instrument”, “Fe”] will return
 data entries with instrument or Fe in their hdf path.</p></li>
-<li><p><strong>metadata_keys</strong> (<em>: None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em>, </em><em>default : None</em>) – Only return items from the original metadata whose path contain the
-strings .e.g metadata_keys = [“instrument”, “Fe”] will return
+<li><p><strong>dataset_path</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em>, </em><em>default : None</em>) – If None, no absolute path is searched.
+If a string or list of strings is provided items with the absolute
+paths specified will be returned. For example, dataset_path =
+[‘/data/spectrum/Mn’], it returns the exact dataset with this path.
+It is not filtered by dataset_key, i.e. with dataset_key = [‘Fe’],
+it still returns the specific dataset at ‘/data/spectrum/Mn’. It is
+empty if no dataset matching the absolute path provided is present.</p></li>
+<li><p><strong>metadata_key</strong> (<em>: None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em>, </em><em>default : None</em>) – Only return items from the original metadata whose path contain the
+strings .e.g metadata_key = [“instrument”, “Fe”] will return
 all metadata entries with “instrument” or “Fe” in their hdf path.</p></li>
+<li><p><strong>skip_array_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – Whether to skip loading metadata with an array entry. This is useful
+as metadata may contain large array that is redundant with the data.</p></li>
 <li><p><strong>nxdata_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – If True only NXdata will be converted into a signal
 if False NXdata and any hdf datasets will be loaded as signals</p></li>
 <li><p><strong>hardlinks_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – If True any links (soft or External) will be ignored when loading.</p></li>
@@ -545,7 +572,7 @@ the keyword options.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus.file_writer">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">file_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_original_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.file_writer" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">file_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_original_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_metadata_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.file_writer" title="Permalink to this definition"></a></dt>
 <dd><p>Write the signal and metadata as a nexus file.</p>
 <p>This will save the signal in NXdata format in the file.
 As the form of the metadata can vary and is not validated it will
@@ -558,6 +585,8 @@ be stored as an NXcollection (an unvalidated collection)</p>
 <li><p><strong>save_original_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> , </em><em>default : False</em>) – Option to save hyperspy.original_metadata with the signal.
 A loaded Nexus file may have a large amount of data
 when loaded which you may wish to omit on saving</p></li>
+<li><p><strong>skip_metadata_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>list of str</em><em>, </em><em>default : None</em>) – the key(s) to skip when it is saving original metadata. This is useful
+when some metadata’s keys are to be ignored.</p></li>
 <li><p><strong>use_default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> , </em><em>default : False</em>) – Option to define the default dataset in the file.
 If set to True the signal or first signal in the list of signals
 will be defined as the default (following Nexus v3 data rules).</p></li>
@@ -576,7 +605,7 @@ will be defined as the default (following Nexus v3 data rules).</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus.list_datasets_in_file">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">list_datasets_in_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.list_datasets_in_file" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">list_datasets_in_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlinks_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.list_datasets_in_file" title="Permalink to this definition"></a></dt>
 <dd><p>Read from a nexus or hdf file and return a list of the dataset paths.</p>
 <p>This method is used to inspect the contents of a Nexus file.
 The method iterates through group attributes and returns NXdata or
@@ -588,9 +617,9 @@ present rather than loading all the datasets in the file as signals.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – path of the file to read</p></li>
-<li><p><strong>dataset_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> , </em><em>default: None</em>) – If a str or list of strings is provided only return items whose
+<li><p><strong>dataset_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>list of strings</em><em> or </em><em>None</em><em> , </em><em>default: None</em>) – If a str or list of strings is provided only return items whose
 path contain the strings.
-For example, dataset_keys = [“instrument”, “Fe”] will only return
+For example, dataset_key = [“instrument”, “Fe”] will only return
 hdf entries with “instrument” or “Fe” somewhere in their hdf path.</p></li>
 <li><p><strong>hardlinks_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – If true any links (soft or External) will be ignored when loading.</p></li>
 <li><p><strong>verbose</strong> (<em>boolean</em><em>, </em><em>default : True</em>) – Prints the results to screen</p></li>
@@ -615,7 +644,7 @@ hdf entries with “instrument” or “Fe” somewhere in their hdf path.</p></
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.io_plugins.nexus.read_metadata_from_file">
-<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">read_metadata_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.read_metadata_from_file" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hyperspy.io_plugins.nexus.</span></span><span class="sig-name descname"><span class="pre">read_metadata_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_array_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.io_plugins.nexus.read_metadata_from_file" title="Permalink to this definition"></a></dt>
 <dd><p>Read the metadata from a nexus or hdf file.</p>
 <p>This method iterates through the file and returns a dictionary of
 the entries.
@@ -625,12 +654,15 @@ rather than loading the file as a signal.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – path of the file to read</p></li>
-<li><p><strong>metadata_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>,</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>list_of_strings</em><em> , </em><em>default : None</em>) – None will return all datasets found including linked data.
+<li><p><strong>metadata_key</strong> (<em>None</em><em>,</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>list_of_strings</em><em> , </em><em>default : None</em>) – None will return all datasets found including linked data.
 Providing a string or list of strings will only return items
 which contain the string(s).
 For example, search_keys = [“instrument”,”Fe”] will return
 hdf entries with “instrument” or “Fe” in their hdf path.</p></li>
 <li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – Pretty Print the results to screen</p></li>
+<li><p><strong>skip_array_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default : False</em>) – Whether to skip loading array metadata. This is useful as a lot of
+large array may be present in the metadata and it is redundant with
+dataset itself.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -663,7 +695,7 @@ hdf entries with “instrument” or “Fe” in their hdf path.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

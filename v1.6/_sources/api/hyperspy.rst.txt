@@ -1,0 +1,61 @@
+hyperspy package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy._components
+   hyperspy._signals
+   hyperspy.datasets
+   hyperspy.docstrings
+   hyperspy.drawing
+   hyperspy.io_plugins
+   hyperspy.learn
+   hyperspy.misc
+   hyperspy.models
+   hyperspy.samfire_utils
+   hyperspy.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.Release
+   hyperspy._lazy_signals
+   hyperspy.api
+   hyperspy.api_nogui
+   hyperspy.axes
+   hyperspy.component
+   hyperspy.components1d
+   hyperspy.components2d
+   hyperspy.conftest
+   hyperspy.decorators
+   hyperspy.defaults_parser
+   hyperspy.events
+   hyperspy.exceptions
+   hyperspy.extensions
+   hyperspy.interactive
+   hyperspy.io
+   hyperspy.logger
+   hyperspy.model
+   hyperspy.roi
+   hyperspy.samfire
+   hyperspy.signal
+   hyperspy.signal_tools
+   hyperspy.signals
+   hyperspy.ui_registry
+
+Module contents
+---------------
+
+.. automodule:: hyperspy
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

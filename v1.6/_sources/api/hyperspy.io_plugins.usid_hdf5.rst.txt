@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.usid\_hdf5 module
+======================================
+
+.. automodule:: hyperspy.io_plugins.usid_hdf5
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

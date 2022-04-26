@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metadata structure &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Metadata structure &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
@@ -80,7 +81,10 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="big_data.html">Working with big data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Metadata structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general">General</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fileio">FileIO</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#acquisition-instrument">Acquisition_instrument</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tem">TEM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sem">SEM</a></li>
@@ -105,6 +109,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#internal-parameters">_Internal_parameters</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#stacking-history">Stacking_history</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#folding">Folding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-to-handle-the-metadata">Functions to handle the metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-items">Adding items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-metadata">Output metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#searching-for-keys">Searching for keys</a></li>
 </ul>
 </li>
 </ul>
@@ -160,11 +170,12 @@
   <section id="metadata-structure">
 <span id="id1"></span><h1>Metadata structure<a class="headerlink" href="#metadata-structure" title="Permalink to this headline"></a></h1>
 <p>The <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> class stores metadata in the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> attribute that has a tree structure. By
-convention, the nodes labels are capitalized and the leaves are not
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.metadata" title="hyperspy.signal.BaseSignal.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> attribute that has a tree structure. By
+convention, the node labels are capitalized and the leaves are not
 capitalized.</p>
 <p>When a leaf contains a quantity that is not dimensionless, the units can be
-given in an extra leaf with the same label followed by the “_units” suffix.</p>
+given in an extra leaf with the same label followed by the “_units” suffix.
+For example, an “energy” leaf should be accompanied by an “energy_units” leaf.</p>
 <p>The metadata structure is represented in the following tree diagram. The
 default units are given in parentheses. Details about the leaves can be found
 in the following sections of this chapter.</p>
@@ -227,6 +238,18 @@ in the following sections of this chapter.</p>
 │           ├── y (mm)
 │           └── z (mm)
 ├── General
+|   |── FileIO
+|   |   ├── 0
+|   |   |   ├── operation
+|   |   |   ├── hyperspy_version
+|   |   |   ├── io_plugin
+|   │   |   └── timestamp
+|   |   ├── 1
+|   |   |   ├── operation
+|   |   |   ├── hyperspy_version
+|   |   |   ├── io_plugin
+|   │   |   └── timestamp
+|   |   └── ...
 │   ├── authors
 │   ├── date
 │   ├── doi
@@ -251,7 +274,6 @@ in the following sections of this chapter.</p>
     │   │   ├── gain_offset
     │   │   └── parameters_estimation_method
     │   └── variance
-    ├── binned
     ├── quantity
     ├── signal_type
     └── signal_origin
@@ -290,6 +312,38 @@ Name2, etc.</p>
 <p>Notes about the data.</p>
 </dd>
 </dl>
+<section id="fileio">
+<span id="general-file-metadata"></span><h3>FileIO<a class="headerlink" href="#fileio" title="Permalink to this headline"></a></h3>
+<p>Contains information about the software packages and versions used any time the
+Signal was created by reading the original data format (added in HyperSpy
+v1.7) or saved by one of HyperSpy’s IO tools. If the signal is saved to one
+of the <code class="docutils literal notranslate"><span class="pre">hspy</span></code>, <code class="docutils literal notranslate"><span class="pre">zspy</span></code> or <code class="docutils literal notranslate"><span class="pre">nxs</span></code> formats, the metadata within the <code class="docutils literal notranslate"><span class="pre">FileIO</span></code>
+node will represent a history of the software configurations used when the
+conversion was made from the proprietary/original format to HyperSpy’s
+format, as well as any time the signal was subsequently loaded from and saved
+to disk. Under the <code class="docutils literal notranslate"><span class="pre">FileIO</span></code> node will be one or more nodes named <code class="docutils literal notranslate"><span class="pre">0</span></code>,
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, etc., each with the following structure:</p>
+<dl>
+<dt>operation</dt><dd><p>type: Str</p>
+<p>This value will be either <code class="docutils literal notranslate"><span class="pre">&quot;load&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;save&quot;</span></code> to indicate whether
+this node represents a load from, or save to disk operation, respectively.</p>
+</dd>
+<dt>hyperspy_version</dt><dd><p>type: Str</p>
+<p>The version number of the HyperSpy software used to extract a Signal from
+this data file or save this Signal to disk</p>
+</dd>
+<dt>io_plugin</dt><dd><p>type: Str</p>
+<p>The specific input/output plugin used to originally extract this data file
+into a HyperSpy Signal or save it to disk – will be of the form
+<code class="docutils literal notranslate"><span class="pre">hyperspy.io_plugins.&lt;plugin_name&gt;</span></code>.</p>
+</dd>
+<dt>timestamp</dt><dd><p>type: Str</p>
+<p>The timestamp of the computer running the data loading/saving process (in a
+timezone-aware format). The timestamp will be in ISO 8601 format, as
+produced by the <code class="docutils literal notranslate"><span class="pre">isoformat()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">datetime</span></code> class.</p>
+</dd>
+</dl>
+</section>
 </section>
 <section id="acquisition-instrument">
 <h2>Acquisition_instrument<a class="headerlink" href="#acquisition-instrument" title="Permalink to this headline"></a></h2>
@@ -488,7 +542,7 @@ and the L beta line of Nickel.</p>
 <dt>signal_type</dt><dd><p>type: Str</p>
 <p>A term that describes the signal type, e.g. EDS, PES… This information
 can be used by HyperSpy to load the file as a specific signal class and
-therefore the naming should be standarised. Currently HyperSpy provides
+therefore the naming should be standardised. Currently, HyperSpy provides
 special signal class for photoemission spectroscopy, electron energy
 loss spectroscopy and energy dispersive spectroscopy. The signal_type in
 these cases should be respectively PES, EELS and EDS_TEM (EDS_SEM).</p>
@@ -501,7 +555,7 @@ these cases should be respectively PES, EELS and EDS_TEM (EDS_SEM).</p>
 </div>
 <p>type: Str</p>
 <p>One of ‘spectrum’ or ‘image’. It describes how the data is stored in memory.
-If ‘spectrum’ the spectral data is stored in the faster index.</p>
+If ‘spectrum’, the spectral data is stored in the faster index.</p>
 </dd>
 <dt>quantity</dt><dd><p>type: Str</p>
 <p>The name of the quantity of the “intensity axis” with the units in round
@@ -548,8 +602,7 @@ linear model: <code class="docutils literal notranslate"><span class="pre">varia
 <section id="internal-parameters">
 <h2>_Internal_parameters<a class="headerlink" href="#internal-parameters" title="Permalink to this headline"></a></h2>
 <p>This node is “private” and therefore is not displayed when printing the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> attribute. For example, an “energy” leaf
-should be accompanied by an “energy_units” leaf.</p>
+<a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.metadata" title="hyperspy.signal.BaseSignal.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> attribute.</p>
 <section id="stacking-history">
 <h3>Stacking_history<a class="headerlink" href="#stacking-history" title="Permalink to this headline"></a></h3>
 <p>Generated when using <code class="xref py py-meth docutils literal notranslate"><span class="pre">stack()</span></code>. Used by
@@ -570,6 +623,71 @@ should be accompanied by an “energy_units” leaf.</p>
 <p>Constains parameters that related to the folding/unfolding of signals.</p>
 </section>
 </section>
+<section id="functions-to-handle-the-metadata">
+<h2>Functions to handle the metadata<a class="headerlink" href="#functions-to-handle-the-metadata" title="Permalink to this headline"></a></h2>
+<p>Existing nodes can be directly read out or set by adding the path in the
+metadata tree:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;FlyingCircus&#39;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div>
+<p>The following functions can operate on the metadata tree. An example with the
+same functionality as the above would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="s1">&#39;General.title&#39;</span><span class="p">,</span> <span class="s1">&#39;FlyingCircus&#39;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s1">&#39;General.title&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="adding-items">
+<h3>Adding items<a class="headerlink" href="#adding-items" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.set_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.set_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_item()</span></code></a></dt><dd><p>Given a <code class="docutils literal notranslate"><span class="pre">path</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code>, easily set metadata items, creating any
+necessary nodes on the way.</p>
+</dd>
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.add_dictionary" title="hyperspy.misc.utils.DictionaryTreeBrowser.add_dictionary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dictionary()</span></code></a></dt><dd><p>Add new items from a given <code class="docutils literal notranslate"><span class="pre">dictionary</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="output-metadata">
+<h3>Output metadata<a class="headerlink" href="#output-metadata" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.get_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.get_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_item()</span></code></a></dt><dd><p>Given an <code class="docutils literal notranslate"><span class="pre">item_path</span></code>, return the <code class="docutils literal notranslate"><span class="pre">value</span></code> of the metadata item.</p>
+</dd>
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.as_dictionary" title="hyperspy.misc.utils.DictionaryTreeBrowser.as_dictionary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_dictionary()</span></code></a></dt><dd><p>Returns a dictionary representation of the metadata tree.</p>
+</dd>
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.export" title="hyperspy.misc.utils.DictionaryTreeBrowser.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a></dt><dd><p>Saves the metadata tree in pretty tree printing format in a text file.
+Takes <code class="docutils literal notranslate"><span class="pre">filename</span></code> as parameter.</p>
+</dd>
+</dl>
+</section>
+<section id="searching-for-keys">
+<h3>Searching for keys<a class="headerlink" href="#searching-for-keys" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.has_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.has_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_item()</span></code></a></dt><dd><p>Given an <code class="docutils literal notranslate"><span class="pre">item_path</span></code>, returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the item exists anywhere
+in the metadata tree.</p>
+</dd>
+</dl>
+<p>Using the option <code class="docutils literal notranslate"><span class="pre">full_path=False</span></code>, the functions
+<a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.has_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.has_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_item()</span></code></a> and
+<a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.get_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.get_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_item()</span></code></a> can also find items by
+their key in the metadata when the exact path is not known. By default, only
+an exact match of the search string with the item key counts. The additional
+setting <code class="docutils literal notranslate"><span class="pre">wild=True</span></code> allows to search for a case-insensitive substring of the
+item key. The search functionality also accepts item keys preceded by one or
+several nodes of the path (separated by the usual full stop).</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.has_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.has_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_item()</span></code></a></dt><dd><p>For <code class="docutils literal notranslate"><span class="pre">full_path=False</span></code>, given a <code class="docutils literal notranslate"><span class="pre">item_key</span></code>, returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the item
+exists anywhere in the metadata tree.</p>
+</dd>
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.has_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.has_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_item()</span></code></a></dt><dd><p>For <code class="docutils literal notranslate"><span class="pre">full_path=False,</span> <span class="pre">return_path=True</span></code>, returns the path or list of
+paths to any matching item(s).</p>
+</dd>
+<dt><a class="reference internal" href="../api/hyperspy.misc.utils.html#hyperspy.misc.utils.DictionaryTreeBrowser.get_item" title="hyperspy.misc.utils.DictionaryTreeBrowser.get_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_item()</span></code></a></dt><dd><p>For <code class="docutils literal notranslate"><span class="pre">full_path=False</span></code>, returns the value or list of values for any
+matching item(s). Setting <code class="docutils literal notranslate"><span class="pre">return_path=True</span></code>, a tuple (value, path) is
+returned – or lists of tuples for multiple occurences.</p>
+</dd>
+</dl>
+</section>
+</section>
 </section>
 
 
@@ -583,7 +701,7 @@ should be accompanied by an “energy_units” leaf.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

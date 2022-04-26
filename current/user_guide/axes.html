@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axes handling &mdash; HyperSpy 1.7.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interactive Operations and Region of Interest (ROI)" href="interactive_operations_ROIs.html" />
+    <link rel="prev" title="The Signal class" href="signal.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.7.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Axes handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-navigation-and-signal-dimensions">The navigation and signal dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-axis-properties">Setting axis properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary-of-axis-properties">Summary of axis properties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#types-of-data-axes">Types of data axes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uniform-data-axis">Uniform data axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functional-data-axis">Functional data axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-uniform-data-axis">(non-uniform) Data axis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-a-new-axis">Defining a new axis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-removing-axes-to-from-a-signal">Adding/Removing axes to/from a signal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-quantity-and-converting-units">Using quantity and converting units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#axes-storage-and-ordering">Axes storage and ordering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iterating-over-the-axesmanager">Iterating over the AxesManager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">hyperspy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Axes handling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_guide/axes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="axes-handling">
+<h1>Axes handling<a class="headerlink" href="#axes-handling" title="Permalink to this headline"></a></h1>
+<section id="the-navigation-and-signal-dimensions">
+<h2>The navigation and signal dimensions<a class="headerlink" href="#the-navigation-and-signal-dimensions" title="Permalink to this headline"></a></h2>
+<p>HyperSpy distinguishes between <em>signal</em> and <em>navigation</em> axes and most
+functions operate on the <em>signal</em> axes and iterate over the <em>navigation</em> axes.
+Take an EELS spectrum image as specific example. It is a 2D array of spectra
+and has three dimensions: X, Y and energy-loss. In HyperSpy, X and Y are the
+<em>navigation</em> dimensions and the energy-loss is the <em>signal</em> dimension. To make
+this distinction more explicit, the representation of the object includes a
+separator <code class="docutils literal notranslate"><span class="pre">|</span></code> between the navigation and signal dimensions. In analogy, the
+<em>signal</em> dimension in EDX would be the X-ray energy, in optical spectra the
+wavelength axis, etc. However, HyperSpy can also handle data with more than one
+<em>signal</em> dimension, such as a stack or even map of diffraction images or
+electron-holograms in TEM.</p>
+<p>For example: A spectrum image has signal dimension 1 and navigation dimension 2
+and is stored in the Signal1D subclass.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (20, 10|30)&gt;</span>
+</pre></div>
+</div>
+<p>An image stack has signal dimension 2 and navigation dimension 1 and is stored
+in the Signal2D subclass.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (30|20, 10)&gt;</span>
+</pre></div>
+</div>
+<p>A map of images has signal dimension 2 and navigation dimension 2 and is stored
+in the Signal2D subclass.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (10, 30|20, 10)&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="setting-axis-properties">
+<span id="id1"></span><h2>Setting axis properties<a class="headerlink" href="#setting-axis-properties" title="Permalink to this headline"></a></h2>
+<p>The axes are managed and stored by the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> class
+that is stored in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">axes_manager</span></code> attribute of
+the signal class. The individual axes can be accessed by indexing the
+<a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span> <span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (20, 10|100)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt;Axes manager, axes: (&lt;Unnamed 0th axis, size: 20, index: 0&gt;, &lt;Unnamed 1st</span>
+<span class="go">axis, size: 10, index: 0&gt;|&lt;Unnamed 2nd axis, size: 100&gt;)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 0th axis, size: 20, index: 0&gt;</span>
+</pre></div>
+</div>
+<p>The navigation axes come first, followed by the signal axes. Alternatively,
+it is possible to selectively access the navigation or signal dimensions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">navigation_axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 1st axis, size: 10, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 2nd axis, size: 100&gt;</span>
+</pre></div>
+</div>
+<p>For the given example of two navigation and one signal dimensions, all the
+following commands will access the same axis:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The axis properties can be set by setting the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.BaseDataAxis" title="hyperspy.axes.BaseDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataAxis</span></code></a>
+attributes, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;X&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;X axis, size: 20, index: 0&gt;</span>
+</pre></div>
+</div>
+<p>Once the name of an axis has been defined it is possible to request it by its
+name e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
+<span class="go">&lt;X axis, size: 20, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;nm&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>It is also possible to set the axes properties using a GUI by calling the
+<a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.gui" title="hyperspy.axes.AxesManager.gui"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gui()</span></code></a> method of the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<span id="axes-manager-gui-image"></span><img alt="../_images/axes_manager_gui_ipywidgets.png" src="../_images/axes_manager_gui_ipywidgets.png" />
+<figcaption>
+<p><span class="caption-text">AxesManager ipywidgets GUI.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>or, for a specific axis, the respective method of e.g.
+<a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<span id="data-axis-gui-image"></span><img alt="../_images/data_axis_gui_ipywidgets.png" src="../_images/data_axis_gui_ipywidgets.png" />
+<figcaption>
+<p><span class="caption-text">UniformDataAxis ipywidgets GUI.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>To simply change the “current position” (i.e. the indices of the navigation
+axes) you could use the navigation sliders:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">gui_navigation_sliders</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<span id="navigation-sliders-image"></span><img alt="../_images/axes_manager_navigation_sliders_ipywidgets.png" src="../_images/axes_manager_navigation_sliders_ipywidgets.png" />
+<figcaption>
+<p><span class="caption-text">Navigation sliders ipywidgets GUI.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Alternatively, the “current position” can be changed programmatically by
+directly accessing the <code class="docutils literal notranslate"><span class="pre">indices</span></code> attribute of a signal’s
+<a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> or the <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute of an individual
+axis. This is particularly useful when trying to set
+a specific location at which to initialize a model’s parameters to
+sensible values before performing a fit over an entire spectrum image. The
+<code class="docutils literal notranslate"><span class="pre">indices</span></code> must be provided as a tuple, with the same length as the number of
+navigation dimensions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="summary-of-axis-properties">
+<h3>Summary of axis properties<a class="headerlink" href="#summary-of-axis-properties" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (str) and <code class="docutils literal notranslate"><span class="pre">units</span></code> (str) are basic parameters describing an axis
+used in plotting. The latter enables the <a class="reference internal" href="#quantity-and-converting-units"><span class="std std-ref">conversion of units</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">navigate</span></code> (bool) determines, whether it is a navigation axis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code> (int) gives the number of elements in an axis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code> (int) determines the “current position for a navigation axis and
+<code class="docutils literal notranslate"><span class="pre">value</span></code> (float) returns the value at this position.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">low_index</span></code> (int) and <code class="docutils literal notranslate"><span class="pre">high_index</span></code> (int) are the first and last index.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">low_value</span></code> (int) and <code class="docutils literal notranslate"><span class="pre">high_value</span></code> (int) are the smallest and largest
+value.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">axis</span></code> array stores the values of the axis points. However,
+depending on the type of axis, this array may be updated from the <strong>defining
+attributes</strong> as discussed in the following section.</p></li>
+</ul>
+</section>
+</section>
+<section id="types-of-data-axes">
+<span id="axes-types"></span><h2>Types of data axes<a class="headerlink" href="#types-of-data-axes" title="Permalink to this headline"></a></h2>
+<p>HyperSpy supports different <em>data axis types</em>, which differ in how the axis is
+defined:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a> defined by an array <code class="docutils literal notranslate"><span class="pre">axis</span></code>,</p></li>
+<li><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.FunctionalDataAxis" title="hyperspy.axes.FunctionalDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionalDataAxis</span></code></a> defined by a function <code class="docutils literal notranslate"><span class="pre">expression</span></code> or</p></li>
+<li><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a> defined by the initial value <code class="docutils literal notranslate"><span class="pre">offset</span></code>
+and spacing <code class="docutils literal notranslate"><span class="pre">scale</span></code>.</p></li>
+</ul>
+<p>The main disambiguation is whether the
+axis is <strong>uniform</strong>, where the data points are equidistantly spaced, or
+<strong>non-uniform</strong>, where the spacing may vary. The latter can become important
+when, e.g., a spectrum recorded over a <em>wavelength</em> axis is converted to a
+<em>wavenumber</em> or <em>energy</em> scale, where the conversion is based on a <code class="docutils literal notranslate"><span class="pre">1/x</span></code>
+dependence so that the axis spacing of the new axis varies along the length
+of the axis. Whether an axis is uniform or not can be queried through the
+property <code class="docutils literal notranslate"><span class="pre">is_uniform</span></code> (bool) of the axis.</p>
+<p>Every axis of a signal object may be of a different type. For example, it is
+common that the <em>navigation</em> axes would be <em>uniform</em>, while the <em>signal</em> axes
+are <em>non-uniform</em>.</p>
+<p>When an axis is created, the type is automatically determined by the attributes
+passed to the generator. The three different axis types are summarized in the
+following table.</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">BaseDataAxis subclasses.</span><a class="headerlink" href="#id5" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 23%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>BaseDataAxis subclass</p></th>
+<th class="head"><p>defining attributes</p></th>
+<th class="head"><p>is_uniform</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a></p></td>
+<td><p>axis</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.FunctionalDataAxis" title="hyperspy.axes.FunctionalDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionalDataAxis</span></code></a></p></td>
+<td><p>expression</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a></p></td>
+<td><p>offset, scale</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all features are implemented for non-uniform axes.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Non-uniform axes are in beta state and its API may change in a minor release.
+Not all hyperspy features are compatible with non-uniform axes and support
+will be added in future releases.</p>
+</div>
+<section id="uniform-data-axis">
+<h3>Uniform data axis<a class="headerlink" href="#uniform-data-axis" title="Permalink to this headline"></a></h3>
+<p>The most common case is the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a>. Here, the axis
+is defined by the <code class="docutils literal notranslate"><span class="pre">offset</span></code>, <code class="docutils literal notranslate"><span class="pre">scale</span></code> and <code class="docutils literal notranslate"><span class="pre">size</span></code> parameters, which determine
+the <cite>initial value</cite>, <cite>spacing</cite> and <cite>length</cite>, respectively. The actual <code class="docutils literal notranslate"><span class="pre">axis</span></code>
+array is automatically calculated from these three values. The <code class="docutils literal notranslate"><span class="pre">UniformDataAxis</span></code>
+is a special case of the <code class="docutils literal notranslate"><span class="pre">FunctionalDataAxis</span></code> defined by the function
+<code class="docutils literal notranslate"><span class="pre">scale</span> <span class="pre">*</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">offset</span></code>.</p>
+<p>Sample dictionary for a <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;offset&#39;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_axis_dictionary</span><span class="p">()</span>
+<span class="go">{&#39;_type&#39;: &#39;UniformDataAxis&#39;,</span>
+<span class="go"> &#39;name&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;units&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;navigate&#39;: False,</span>
+<span class="go"> &#39;size&#39;: 500,</span>
+<span class="go"> &#39;scale&#39;: 1.0,</span>
+<span class="go"> &#39;offset&#39;: 300.0}</span>
+</pre></div>
+</div>
+<p>Corresponding output of <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt; Axes manager, axes: (|500) &gt;</span>
+<span class="go">            Name |   size |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------- | ------- | ------</span>
+<span class="go">                 |    500 |     300 |       1 |</span>
+</pre></div>
+</div>
+</section>
+<section id="functional-data-axis">
+<h3>Functional data axis<a class="headerlink" href="#functional-data-axis" title="Permalink to this headline"></a></h3>
+<p>Alternatively, a <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.FunctionalDataAxis" title="hyperspy.axes.FunctionalDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionalDataAxis</span></code></a> is defined based on an
+<code class="docutils literal notranslate"><span class="pre">expression</span></code> that is evaluated to yield the axis points. The <cite>expression</cite>
+is a function defined as a <code class="docutils literal notranslate"><span class="pre">string</span></code> using the
+<a class="reference external" href="https://docs.sympy.org/latest/tutorial/intro.html">SymPy</a> text expression
+format. An example would be <code class="docutils literal notranslate"><span class="pre">expression</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">/</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">b</span></code>. Any variables in the
+expression, in this case <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> must be defined as additional
+attributes of the axis. The property <code class="docutils literal notranslate"><span class="pre">is_uniform</span></code> is automatically set to
+<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">x</span></code> itself is an instance of <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.BaseDataAxis" title="hyperspy.axes.BaseDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataAxis</span></code></a>. By default,
+it will be a <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a> with <code class="docutils literal notranslate"><span class="pre">offset</span> <span class="pre">=</span> <span class="pre">0</span></code> and
+<code class="docutils literal notranslate"><span class="pre">scale</span> <span class="pre">=</span> <span class="pre">1</span></code> of the given <code class="docutils literal notranslate"><span class="pre">size</span></code>. However, it can also be initialized with
+custom <code class="docutils literal notranslate"><span class="pre">offset</span></code> and <code class="docutils literal notranslate"><span class="pre">scale</span></code> values. Alternatively, it can be a non
+uniform <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>.</p>
+<p>Sample dictionary for a <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.FunctionalDataAxis" title="hyperspy.axes.FunctionalDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionalDataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="s1">&#39;a / (x + 1) + b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_axis_dictionary</span><span class="p">()</span>
+<span class="go">{&#39;_type&#39;: &#39;FunctionalDataAxis&#39;,</span>
+<span class="go"> &#39;name&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;units&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;navigate&#39;: False,</span>
+<span class="go"> &#39;expression&#39;: &#39;a / (x + 1) + b&#39;,</span>
+<span class="go"> &#39;size&#39;: 500,</span>
+<span class="go"> &#39;x&#39;: {&#39;_type&#39;: &#39;UniformDataAxis&#39;,</span>
+<span class="go">  &#39;name&#39;: &lt;undefined&gt;,</span>
+<span class="go">  &#39;units&#39;: &lt;undefined&gt;,</span>
+<span class="go">  &#39;navigate&#39;: &lt;undefined&gt;,</span>
+<span class="go">  &#39;size&#39;: 500,</span>
+<span class="go">  &#39;scale&#39;: 1.0,</span>
+<span class="go">  &#39;offset&#39;: 0.0},</span>
+<span class="go"> &#39;a&#39;: 100,</span>
+<span class="go"> &#39;b&#39;: 10}</span>
+</pre></div>
+</div>
+<p>Corresponding output of <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt; Axes manager, axes: (|1000) &gt;</span>
+<span class="go">            Name |   size |           offset |            scale |  units</span>
+<span class="go">================ | ====== | ================ | ================ | ======</span>
+<span class="go">---------------- | ------ | ---------------- | ---------------- | ------</span>
+<span class="go">                 |    500 | non-uniform axis | non-uniform axis |</span>
+</pre></div>
+</div>
+<p>Initializing <code class="docutils literal notranslate"><span class="pre">x</span></code> with <code class="docutils literal notranslate"><span class="pre">offset</span></code> and <code class="docutils literal notranslate"><span class="pre">scale</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.axes</span> <span class="kn">import</span> <span class="n">UniformDataAxis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="s1">&#39;a / x + b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">UniformDataAxis</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># the x array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">axis</span>
+<span class="go">array([10. , 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># the actual axis array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span>
+<span class="go">array([20.        , 19.9009901 , 19.80392157, 19.70873786, 19.61538462,</span>
+<span class="go">   19.52380952, 19.43396226, 19.34579439, 19.25925926, 19.17431193])</span>
+</pre></div>
+</div>
+<p>Initializing <code class="docutils literal notranslate"><span class="pre">x</span></code> as non-uniform <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.axes</span> <span class="kn">import</span> <span class="n">DataAxis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="s1">&#39;a / x + b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">DataAxis</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># the x array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">axis</span>
+<span class="go">array([ 1,  4,  9, 16, 25, 36, 49, 64, 81])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># the actual axis array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span>
+<span class="go">array([110.        ,  35.        ,  21.11111111,  16.25      ,</span>
+<span class="go">    14.        ,  12.77777778,  12.04081633,  11.5625    ,</span>
+<span class="go">    11.2345679 ])</span>
+</pre></div>
+</div>
+<p>Initializing <code class="docutils literal notranslate"><span class="pre">x</span></code> with <code class="docutils literal notranslate"><span class="pre">offset</span></code> and <code class="docutils literal notranslate"><span class="pre">scale</span></code>:</p>
+</section>
+<section id="non-uniform-data-axis">
+<h3>(non-uniform) Data axis<a class="headerlink" href="#non-uniform-data-axis" title="Permalink to this headline"></a></h3>
+<p>A <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a> is the most flexible type of axis. The axis
+points are directly given by an array named <code class="docutils literal notranslate"><span class="pre">axis</span></code>. As this can be any
+array, the property <code class="docutils literal notranslate"><span class="pre">is_uniform</span></code> is automatically set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>Sample dictionary for a <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;axis&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">dict0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_axis_dictionary</span><span class="p">()</span>
+<span class="go">{&#39;_type&#39;: &#39;DataAxis&#39;,</span>
+<span class="go"> &#39;name&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;units&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;navigate&#39;: False,</span>
+<span class="go"> &#39;axis&#39;: array([  0,   1,   4,   9,  16,  25,  36,  49,  64,  81, 100, 121])}</span>
+</pre></div>
+</div>
+<p>Corresponding output of <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt; Axes manager, axes: (|1000) &gt;</span>
+<span class="go">            Name |   size |           offset |            scale |  units</span>
+<span class="go">================ | ====== | ================ | ================ | ======</span>
+<span class="go">---------------- | ------ | ---------------- | ---------------- | ------</span>
+<span class="go">                 |     12 | non-uniform axis | non-uniform axis |</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="defining-a-new-axis">
+<h2>Defining a new axis<a class="headerlink" href="#defining-a-new-axis" title="Permalink to this headline"></a></h2>
+<p>An axis object can be created through the <code class="docutils literal notranslate"><span class="pre">axes.create_axis()</span></code> method, which
+automatically determines the type of axis by the given attributes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy</span> <span class="kn">import</span> <span class="n">axes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">create_axis</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span>
+<span class="go">&lt;Unnamed axis, size: 20&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, the creator of the different types of axes can be called
+directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy</span> <span class="kn">import</span> <span class="n">axes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">UniformDataAxis</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span>
+<span class="go">&lt;Unnamed axis, size: 20&gt;</span>
+</pre></div>
+</div>
+<p>The dictionary defining the axis is returned by the <code class="docutils literal notranslate"><span class="pre">get_axis_dictionary()</span></code>
+method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">get_axis_dictionary</span><span class="p">()</span>
+<span class="go">{&#39;_type&#39;: &#39;UniformDataAxis&#39;,</span>
+<span class="go"> &#39;name&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;units&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;navigate&#39;: &lt;undefined&gt;,</span>
+<span class="go"> &#39;size&#39;: 20,</span>
+<span class="go"> &#39;scale&#39;: 0.5,</span>
+<span class="go"> &#39;offset&#39;: 10.0}</span>
+</pre></div>
+</div>
+<p>This dictionary can be used, for example, in the <a class="reference internal" href="signal.html#signal-initialization"><span class="std std-ref">initilization of a new
+signal</span></a>.</p>
+<section id="adding-removing-axes-to-from-a-signal">
+<h3>Adding/Removing axes to/from a signal<a class="headerlink" href="#adding-removing-axes-to-from-a-signal" title="Permalink to this headline"></a></h3>
+<p>Usually, the axes are directly added to a signal during <a class="reference internal" href="signal.html#signal-initialization"><span class="std std-ref">signal
+initialization</span></a>. However, you may wish to add/remove
+axes from the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> of a signal.</p>
+<p>Note that there is currently no consistency check whether a signal object has
+the right number of axes of the right dimensions. Most functions will however
+fail if you pass a signal object where the axes do not match the data
+dimensions and shape.</p>
+<p>You can <em>add a set of axes</em> to the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> by passing either a list of
+axes dictionaries to <code class="docutils literal notranslate"><span class="pre">axes_manager.create_axes()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;offset&#39;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;axis&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes</span><span class="p">([</span><span class="n">dict0</span><span class="p">,</span><span class="n">dict1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>or a list of axes objects:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.axes</span> <span class="kn">import</span> <span class="n">UniformDataAxis</span><span class="p">,</span> <span class="n">DataAxis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis0</span> <span class="o">=</span> <span class="n">UniformDataAxis</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis1</span> <span class="o">=</span> <span class="n">DataAxis</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes</span><span class="p">([</span><span class="n">axis0</span><span class="p">,</span><span class="n">axis1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><em>Remove an axis</em> from the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> using <code class="docutils literal notranslate"><span class="pre">remove()</span></code>, e.g. for the last axis:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-quantity-and-converting-units">
+<span id="quantity-and-converting-units"></span><h2>Using quantity and converting units<a class="headerlink" href="#using-quantity-and-converting-units" title="Permalink to this headline"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">scale</span></code> and the <code class="docutils literal notranslate"><span class="pre">offset</span></code> of each <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a> axis
+can be set and retrieved as quantity.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale_as_quantity</span>
+<span class="go">1.0 dimensionless</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale_as_quantity</span> <span class="o">=</span> <span class="s1">&#39;2.5 µm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt;Axes manager, axes: (|10)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">     &lt;undefined&gt; |     10 |        |       0 |     2.5 |     µm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">offset_as_quantity</span> <span class="o">=</span> <span class="s1">&#39;2.5 nm&#39;</span>
+<span class="go">&lt;Axes manager, axes: (|10)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">     &lt;undefined&gt; |     10 |        |     2.5 | 2.5e+03 |     nm</span>
+</pre></div>
+</div>
+<p>Internally, HyperSpy uses the <a class="reference external" href="http://pint.readthedocs.io">pint</a> library to
+manage the scale and offset quantities. The <code class="docutils literal notranslate"><span class="pre">scale_as_quantity</span></code> and
+<code class="docutils literal notranslate"><span class="pre">offset_as_quantity</span></code> attributes return pint object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">offset_as_quantity</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="c1"># q is a pint quantity object</span>
+<span class="go">pint.quantity.build_quantity_class.&lt;locals&gt;.Quantity</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span>
+<span class="go">2.5 nanometer</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">convert_units</span></code> method of the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> converts
+units, which by default (no parameters provided) converts all axis units to an
+optimal unit to avoid using too large or small numbers.</p>
+<p>Each axis can also be converted individually using the <code class="docutils literal notranslate"><span class="pre">convert_to_units</span></code>
+method of the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">hyperspy</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">DataAxis</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">scale_as_quantity</span>
+<span class="go">0.1 millimeter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="s1">&#39;µm&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">scale_as_quantity</span>
+<span class="go">100.0 micrometer</span>
+</pre></div>
+</div>
+</section>
+<section id="axes-storage-and-ordering">
+<span id="axes-storage-ordering"></span><h2>Axes storage and ordering<a class="headerlink" href="#axes-storage-and-ordering" title="Permalink to this headline"></a></h2>
+<p>Note that HyperSpy rearranges the axes when compared to the array order. The
+following few paragraphs explain how and why.</p>
+<p>Depending on how the array is arranged, some axes are faster to iterate than
+others. Consider an example of a book as the dataset in question. It is
+trivially simple to look at letters in a line, and then lines down the page,
+and finally pages in the whole book.  However, if your words are written
+vertically, it can be inconvenient to read top-down (the lines are still
+horizontal, it’s just the meaning that’s vertical!). It is very time-consuming
+if every letter is on a different page, and for every word you have to turn 5-6
+pages. Exactly the same idea applies here - in order to iterate through the
+data (most often for plotting, but for any other operation as well), you
+want to keep it ordered for “fast access”.</p>
+<p>In Python (more explicitly <cite>numpy</cite>), the “fast axes order” is <cite>C order</cite> (also
+called row-major order). This means that the <strong>last</strong> axis of a numpy array is
+fastest to iterate over (i.e. the lines in the book). An alternative ordering
+convention is <cite>F order</cite> (column-major), where it is the other way round: the
+first axis of an array is the fastest to iterate over. In both cases, the
+further an axis is from the <cite>fast axis</cite> the slower it is to iterate over this
+axis. In the book analogy, you could think about reading the first lines of
+all pages, then the second and so on.</p>
+<p>When data is acquired sequentially, it is usually stored in acquisition order.
+When a dataset is loaded, HyperSpy generally stores it in memory in the same
+order, which is good for the computer. However, HyperSpy will reorder and
+classify the axes to make it easier for humans. Let’s imagine a single numpy
+array that contains pictures of a scene acquired with different exposure times
+on different days. In numpy, the array dimensions are  <code class="docutils literal notranslate"><span class="pre">(D,</span> <span class="pre">E,</span> <span class="pre">Y,</span> <span class="pre">X)</span></code>. This
+order makes it fast to iterate over the images in the order in which they were
+acquired. From a human point of view, this dataset is just a collection of
+images, so HyperSpy first classifies the image axes (<code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span></code>) as
+<cite>signal axes</cite> and the remaining axes the <cite>navigation axes</cite>. Then it reverses
+the order of each set of axes because many humans are used to get the <code class="docutils literal notranslate"><span class="pre">X</span></code>
+axis first and, more generally, the axes in acquisition order from left to
+right. So, the same axes in HyperSpy are displayed like this: <code class="docutils literal notranslate"><span class="pre">(E,</span> <span class="pre">D</span> <span class="pre">|</span> <span class="pre">X,</span>
+<span class="pre">Y)</span></code>.</p>
+<p>Extending this to arbitrary dimensions, by default, we reverse the numpy axes,
+chop them into two chunks (signal and navigation), and then swap those chunks,
+at least when printing. As an example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>a1, a2, a3, a4, a5, a6<span class="o">)</span> <span class="c1"># original (numpy)</span>
+<span class="o">(</span>a6, a5, a4, a3, a2, a1<span class="o">)</span> <span class="c1"># reverse</span>
+<span class="o">(</span>a6, a5<span class="o">)</span> <span class="o">(</span>a4, a3, a2, a1<span class="o">)</span> <span class="c1"># chop</span>
+<span class="o">(</span>a4, a3, a2, a1<span class="o">)</span> <span class="o">(</span>a6, a5<span class="o">)</span> <span class="c1"># swap (HyperSpy)</span>
+</pre></div>
+</div>
+<p>In the background, HyperSpy also takes care of storing the data in memory in
+a “machine-friendly” way, so that iterating over the navigation axes is always
+fast.</p>
+</section>
+<section id="iterating-over-the-axesmanager">
+<span id="iterating-axesmanager"></span><h2>Iterating over the AxesManager<a class="headerlink" href="#iterating-over-the-axesmanager" title="Permalink to this headline"></a></h2>
+<p>One can iterate over the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> to produce indices to
+the navigation axes. Each iteration will yield a new tuple of indices, sorted
+according to the iteration path specified in <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.iterpath" title="hyperspy.axes.AxesManager.iterpath"><code class="xref py py-attr docutils literal notranslate"><span class="pre">iterpath</span></code></a>.
+Setting the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.indices" title="hyperspy.axes.AxesManager.indices"><code class="xref py py-attr docutils literal notranslate"><span class="pre">indices</span></code></a> property to a new index will
+update the accompanying signal so that signal methods that operate at a specific
+navigation index will now use that index, like <code class="docutils literal notranslate"><span class="pre">s.plot()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">iterpath</span> <span class="c1"># check current iteration path</span>
+<span class="go">&#39;flyback&#39; # default until Hyperspy 2.0, then &#39;serpentine&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="n">i</span> <span class="c1"># s.plot() will change with this</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="go">(0, 0)</span>
+<span class="go">(1, 0)</span>
+<span class="go">(2, 0)</span>
+<span class="go">(0, 1)</span>
+<span class="go">(1, 1)</span>
+<span class="go">(2, 1)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.iterpath" title="hyperspy.axes.AxesManager.iterpath"><code class="xref py py-attr docutils literal notranslate"><span class="pre">iterpath</span></code></a> attribute specifies the strategy that
+the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a> should use to iterate over the navigation axes.
+Two built-in strategies exist:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'flyback'</span></code>: starts at (0, 0), continues down the row until the final
+column, “flies back” to the first column, and continues from (1, 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code>: starts at (0, 0), but when it reaches the final column
+(of index N), it continues from (1, N) along the next row, in the same way
+that a snake might slither, left and right.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">iterpath</span> <span class="o">=</span> <span class="s1">&#39;serpentine&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.iterpath" title="hyperspy.axes.AxesManager.iterpath"><code class="xref py py-attr docutils literal notranslate"><span class="pre">iterpath</span></code></a> can also be set using the
+<a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.switch_iterpath" title="hyperspy.axes.AxesManager.switch_iterpath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">switch_iterpath()</span></code></a> context manager:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">switch_iterpath</span><span class="p">(</span><span class="s1">&#39;serpentine&#39;</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager.iterpath" title="hyperspy.axes.AxesManager.iterpath"><code class="xref py py-attr docutils literal notranslate"><span class="pre">iterpath</span></code></a> can also be set to be a specific list of indices, like [(0,0), (0,1)],
+but can also be any generator of indices. Storing a high-dimensional set of
+indices as a list or array can take a significant amount of memory. By using a
+generator instead, one almost entirely removes such a memory footprint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">iterpath</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="go">(0, 1)</span>
+<span class="go">(1, 1)</span>
+<span class="go">(0, 1)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">reverse_flyback_generator</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="k">yield</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">iterpath</span> <span class="o">=</span> <span class="n">reverse_flyback_generator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="go">(2, 1)</span>
+<span class="go">(2, 0)</span>
+<span class="go">(1, 1)</span>
+<span class="go">(1, 0)</span>
+<span class="go">(0, 1)</span>
+<span class="go">(0, 0)</span>
+</pre></div>
+</div>
+<p>Since generators do not have a defined length, and does not need to include all
+navigation indices, a progressbar will be unable to determine how long it needs
+to be. To resolve this, a helper class can be imported that takes both a generator
+and a manually specified length as inputs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.axes</span> <span class="kn">import</span> <span class="n">GeneratorLen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="n">GeneratorLen</span><span class="p">(</span><span class="n">reverse_flyback_generator</span><span class="p">(),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">iterpath</span> <span class="o">=</span> <span class="n">gen</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="signal.html" class="btn btn-neutral float-left" title="The Signal class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interactive_operations_ROIs.html" class="btn btn-neutral float-right" title="Interactive Operations and Region of Interest (ROI)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+hyperspy.learn.svd\_pca module
+==============================
+
+.. automodule:: hyperspy.learn.svd_pca
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signal1D Tools &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>Signal1D Tools &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Signal1D Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#cropping">Cropping</a></li>
@@ -244,7 +245,21 @@ passed) can perform data smoothing with different algorithms:</p>
 <h2>Spike removal<a class="headerlink" href="#spike-removal" title="Permalink to this headline"></a></h2>
 <p><a class="reference internal" href="../api/hyperspy._signals.signal1d.html#hyperspy._signals.signal1d.Signal1D.spikes_removal_tool" title="hyperspy._signals.signal1d.Signal1D.spikes_removal_tool"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spikes_removal_tool()</span></code></a> provides an user
 interface to remove spikes from spectra. The <code class="docutils literal notranslate"><span class="pre">derivative</span> <span class="pre">histogram</span></code> allows to
-identify the appropriate threshold.</p>
+identify the appropriate threshold. It is possible to use this tool
+on a specific interval of the data by <a class="reference internal" href="signal.html#signal-indexing"><span class="std std-ref">slicing the data</span></a>. For example, to use this tool in the signal between
+indices 8 and 17:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">17</span><span class="p">]</span><span class="o">.</span><span class="n">spikes_removal_tool</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The options <code class="docutils literal notranslate"><span class="pre">navigation_mask</span></code> or <code class="docutils literal notranslate"><span class="pre">signal_mask</span></code> provide more flexibility in the
+selection of the data, but these require a mask (booleen array) as parameter, which needs
+to be created manually:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mi">150</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">spikes_removal_tool</span><span class="p">(</span><span class="n">signal_mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+</pre></div>
+</div>
 <figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/spikes_removal_tool.png"><img alt="../_images/spikes_removal_tool.png" src="../_images/spikes_removal_tool.png" style="width: 500px;" /></a>
 <figcaption>
@@ -282,7 +297,7 @@ method.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

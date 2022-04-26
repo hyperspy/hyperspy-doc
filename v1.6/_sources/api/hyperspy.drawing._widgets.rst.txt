@@ -1,0 +1,27 @@
+hyperspy.drawing.\_widgets package
+==================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.drawing._widgets.circle
+   hyperspy.drawing._widgets.horizontal_line
+   hyperspy.drawing._widgets.label
+   hyperspy.drawing._widgets.line2d
+   hyperspy.drawing._widgets.range
+   hyperspy.drawing._widgets.rectangles
+   hyperspy.drawing._widgets.scalebar
+   hyperspy.drawing._widgets.vertical_line
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.drawing._widgets
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

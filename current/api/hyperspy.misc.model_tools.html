@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.misc.model_tools module &mdash; HyperSpy 1.6.5 documentation</title>
+  <title>hyperspy.misc.model_tools module &mdash; HyperSpy 1.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.6.5
+                1.7.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
@@ -155,15 +156,40 @@
   <section id="module-hyperspy.misc.model_tools">
 <span id="hyperspy-misc-model-tools-module"></span><h1>hyperspy.misc.model_tools module<a class="headerlink" href="#module-hyperspy.misc.model_tools" title="Permalink to this headline"></a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.misc.model_tools._calculate_covariance">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">_calculate_covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coefficients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">residual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lazy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools._calculate_covariance" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate covariance matrix after having performed Linear Regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_signal</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>N</em><em>,</em><em>) or </em><em>(</em><em>M</em><em>, </em><em>N</em><em>)</em>) – The signal array to be fit to.</p></li>
+<li><p><strong>coefficients</strong> (<em>array-like</em><em>, </em><em>shape C</em><em> or </em><em>(</em><em>M</em><em>, </em><em>C</em><em>)</em>) – The fitted coefficients.</p></li>
+<li><p><strong>component_data</strong> (<em>array-like</em><em>, </em><em>shape N</em><em> or </em><em>(</em><em>C</em><em>, </em><em>N</em><em>)</em>) – The component data.</p></li>
+<li><p><strong>residual</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>0</em><em>,</em><em>) or </em><em>(</em><em>M</em><em>,</em><em>)</em>) – The residual sum of squares, optional. Calculated if None.</p></li>
+<li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether the signal is lazy.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Explanation of the array shapes in HyperSpy terms:
+N : flattened signal shape
+M : flattened navigation shape
+C : number of components</p>
+<p>See <a class="reference external" href="https://stats.stackexchange.com/questions/62470">https://stats.stackexchange.com/questions/62470</a> for more info on the
+algorithm</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.misc.model_tools._is_iter">
 <span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">_is_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools._is_iter" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if value is a list or tuple</p>
+<dd><p>Checks if value is a list or tuple.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hyperspy.misc.model_tools._iter_join">
 <span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">_iter_join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools._iter_join" title="Permalink to this definition"></a></dt>
-<dd><p>Joins values of iterable parameters for the fancy view, unless it equals None, then blank</p>
+<dd><p>Joins values of iterable parameters for the fancy view, unless it equals
+None, then blank</p>
 </dd></dl>
 
 <dl class="py function">
@@ -174,17 +200,18 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.misc.model_tools.current_component_values">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">current_component_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools.current_component_values" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">current_component_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools.current_component_values" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Convenience class that makes use of __repr__ methods for nice printing in the notebook
-of the properties of parameters of a component</p>
+<p>Convenience class that makes use of __repr__ methods for nice printing in
+the notebook of the properties of parameters of a component.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>component</strong> (<em>hyperspy component instance</em>) – </p></li>
 <li><p><strong>only_free</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True: Only include the free parameters in the view</p></li>
-<li><p><strong>only_active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True: Helper for current_model_values. Only include active components in the view.
-Always shows values if used on an individual component.</p></li>
+<li><p><strong>only_active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default False</em>) – If True: Helper for current_model_values. Only include active
+components in the view. Always shows values if used on an individual
+component.</p></li>
 </ul>
 </dd>
 </dl>
@@ -192,10 +219,10 @@ Always shows values if used on an individual component.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.misc.model_tools.current_model_values">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">current_model_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools.current_model_values" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.misc.model_tools.</span></span><span class="sig-name descname"><span class="pre">current_model_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.misc.model_tools.current_model_values" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Convenience class that makes use of __repr__ methods for nice printing in the notebook
-of the properties of parameters in components in a model</p>
+<p>Convenience class that makes use of __repr__ methods for nice printing in
+the notebook of the properties of parameters in components in a model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -220,7 +247,7 @@ of the properties of parameters in components in a model</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+    <p>&#169; Copyright 2011-2022, The HyperSpy development team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

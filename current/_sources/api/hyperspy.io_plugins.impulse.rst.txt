@@ -1,0 +1,9 @@
+hyperspy.io\_plugins.impulse module
+===================================
+
+.. automodule:: hyperspy.io_plugins.impulse
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

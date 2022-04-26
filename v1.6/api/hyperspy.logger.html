@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.logger module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.model module" href="hyperspy.model.html" />
+    <link rel="prev" title="hyperspy.io module" href="hyperspy.io.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.Release.html">hyperspy.Release module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._lazy_signals.html">hyperspy._lazy_signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api.html">hyperspy.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api_nogui.html">hyperspy.api_nogui module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.axes.html">hyperspy.axes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.component.html">hyperspy.component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components1d.html">hyperspy.components1d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components2d.html">hyperspy.components2d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.conftest.html">hyperspy.conftest module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.decorators.html">hyperspy.decorators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.events.html">hyperspy.events module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.extensions.html">hyperspy.extensions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.interactive.html">hyperspy.interactive module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.model.html">hyperspy.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.roi.html">hyperspy.roi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire.html">hyperspy.samfire module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal.html">hyperspy.signal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal_tools.html">hyperspy.signal_tools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signals.html">hyperspy.signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.ui_registry.html">hyperspy.ui_registry module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+      <li>hyperspy.logger module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.logger.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.logger">
+<span id="hyperspy-logger-module"></span><h1>hyperspy.logger module<a class="headerlink" href="#module-hyperspy.logger" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.logger.set_log_level">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.logger.</span></span><span class="sig-name descname"><span class="pre">set_log_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.logger.set_log_level" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to set the log level of all hyperspy modules.</p>
+<p>Note: The log level of all other modules are left untouched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>The log level to set. Any values that <cite>logging.Logger.setLevel()</cite>
+accepts are valid. The default options are:</p>
+<ul class="simple">
+<li><p>’CRITICAL’</p></li>
+<li><p>’ERROR’</p></li>
+<li><p>’WARNING’</p></li>
+<li><p>’INFO’</p></li>
+<li><p>’DEBUG’</p></li>
+<li><p>’NOTSET’</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>For normal logging of hyperspy functions, you can set the log level like
+this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">set_log_level</span><span class="p">(</span><span class="s1">&#39;INFO&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;my_file.dm3&#39;</span><span class="p">)</span>
+<span class="go">INFO:hyperspy.io_plugins.digital_micrograph:DM version: 3</span>
+<span class="go">INFO:hyperspy.io_plugins.digital_micrograph:size 4796607 B</span>
+<span class="go">INFO:hyperspy.io_plugins.digital_micrograph:Is file Little endian? True</span>
+<span class="go">INFO:hyperspy.io_plugins.digital_micrograph:Total tags in root group: 15</span>
+<span class="go">&lt;Signal2D, title: My file, dimensions: (|1024, 1024)&gt;</span>
+</pre></div>
+</div>
+<p>If you need the log output during the initial import of hyperspy, you
+should set the log level like this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.logger</span> <span class="kn">import</span> <span class="n">set_log_level</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_log_level</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="go">DEBUG:hyperspy.gui:Loading hyperspy.gui</span>
+<span class="go">DEBUG:hyperspy.gui:Current MPL backend: TkAgg</span>
+<span class="go">DEBUG:hyperspy.gui:Current ETS toolkit: qt4</span>
+<span class="go">DEBUG:hyperspy.gui:Current ETS toolkit set to: null</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.io.html" class="btn btn-neutral float-left" title="hyperspy.io module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.model.html" class="btn btn-neutral float-right" title="hyperspy.model module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

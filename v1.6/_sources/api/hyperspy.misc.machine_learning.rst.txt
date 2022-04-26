@@ -1,0 +1,21 @@
+hyperspy.misc.machine\_learning package
+=======================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy.misc.machine_learning.import_sklearn
+   hyperspy.misc.machine_learning.tools
+
+Module contents
+---------------
+
+.. automodule:: hyperspy.misc.machine_learning
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

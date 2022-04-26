@@ -1,0 +1,33 @@
+hyperspy.\_signals package
+==========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   hyperspy._signals.common_signal1d
+   hyperspy._signals.common_signal2d
+   hyperspy._signals.complex_signal
+   hyperspy._signals.complex_signal1d
+   hyperspy._signals.complex_signal2d
+   hyperspy._signals.dielectric_function
+   hyperspy._signals.eds
+   hyperspy._signals.eds_sem
+   hyperspy._signals.eds_tem
+   hyperspy._signals.eels
+   hyperspy._signals.hologram_image
+   hyperspy._signals.lazy
+   hyperspy._signals.signal1d
+   hyperspy._signals.signal2d
+
+Module contents
+---------------
+
+.. automodule:: hyperspy._signals
+   :members:
+   :private-members:
+   :no-undoc-members:
+   :show-inheritance:
+   :ignore-module-all:

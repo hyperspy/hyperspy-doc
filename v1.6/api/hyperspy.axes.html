@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hyperspy.axes module &mdash; HyperSpy 1.6.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyperspy.component module" href="hyperspy.component.html" />
+    <link rel="prev" title="hyperspy.api_nogui module" href="hyperspy.api_nogui.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HyperSpy
+            <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide/useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hyperspy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyperspy.html">hyperspy package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="hyperspy.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.Release.html">hyperspy.Release module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy._lazy_signals.html">hyperspy._lazy_signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api.html">hyperspy.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.api_nogui.html">hyperspy.api_nogui module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyperspy.axes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.component.html">hyperspy.component module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components1d.html">hyperspy.components1d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.components2d.html">hyperspy.components2d module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.conftest.html">hyperspy.conftest module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.decorators.html">hyperspy.decorators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.defaults_parser.html">hyperspy.defaults_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.events.html">hyperspy.events module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.exceptions.html">hyperspy.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.extensions.html">hyperspy.extensions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.interactive.html">hyperspy.interactive module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.io.html">hyperspy.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.logger.html">hyperspy.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.model.html">hyperspy.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.roi.html">hyperspy.roi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.samfire.html">hyperspy.samfire module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal.html">hyperspy.signal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signal_tools.html">hyperspy.signal_tools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.signals.html">hyperspy.signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyperspy.ui_registry.html">hyperspy.ui_registry module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyperspy.html#module-hyperspy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">hyperspy</a> &raquo;</li>
+          <li><a href="hyperspy.html">hyperspy package</a> &raquo;</li>
+      <li>hyperspy.axes module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/hyperspy.axes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hyperspy.axes">
+<span id="hyperspy-axes-module"></span><h1>hyperspy.axes module<a class="headerlink" href="#module-hyperspy.axes" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.axes.</span></span><span class="sig-name descname"><span class="pre">AxesManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Contains and manages the data axes.</p>
+<p>It supports indexing, slicing, subscripting and iteration. As an iterator,
+iterate over the navigation coordinates returning the current indices.
+It can only be indexed and sliced to access the DataAxis objects that it
+contains. Standard indexing and slicing follows the “natural order” as in
+Signal, i.e. [nX, nY, …,sX, sY,…] where <cite>n</cite> indicates a navigation axis
+and <cite>s</cite> a signal axis. In addition AxesManager support indexing using
+complex numbers a + bj, where b can be one of 0, 1, 2 and 3 and a a valid
+index. If b is 3 AxesManager is indexed using the order of the axes in the
+array. If b is 1(2), indexes only the navigation(signal) axes in the
+natural order. In addition AxesManager supports subscription using
+axis name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.coordinates">
+<span class="sig-name descname"><span class="pre">coordinates</span></span><a class="headerlink" href="#hyperspy.axes.AxesManager.coordinates" title="Permalink to this definition"></a></dt>
+<dd><p>Get and set the current coordinates if the navigation dimension
+is not 0. If the navigation dimension is 0 it raises
+AttributeError when attempting to set its value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.indices">
+<span class="sig-name descname"><span class="pre">indices</span></span><a class="headerlink" href="#hyperspy.axes.AxesManager.indices" title="Permalink to this definition"></a></dt>
+<dd><p>Get and set the current indices if the navigation dimension
+is not 0. If the navigation dimension is 0 it raises
+AttributeError when attempting to set its value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">signal_axes,</span> <span class="pre">navigation_axes</span></span></dt>
+<dd><p>Contain the corresponding DataAxis objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Create a spectrum with random data</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span>
+<span class="go">&lt;Axes manager, axes: (4, 3, 2|5)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">     &lt;undefined&gt; |      4 |      0 |       0 |       1 | &lt;undefined&gt;</span>
+<span class="go">     &lt;undefined&gt; |      3 |      0 |       0 |       1 | &lt;undefined&gt;</span>
+<span class="go">     &lt;undefined&gt; |      2 |      0 |       0 |       1 | &lt;undefined&gt;</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">     &lt;undefined&gt; |      5 |        |       0 |       1 | &lt;undefined&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 0th axis, size: 4, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">3</span><span class="n">j</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 2nd axis, size: 2, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="n">j</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 0th axis, size: 4, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="n">j</span><span class="p">]</span>
+<span class="go">&lt;Unnamed 3rd axis, size: 5&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+<span class="go">&lt;y axis, size: 3, index: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(0, 0, 0) (0, 0, 0)</span>
+<span class="go">(1, 0, 0) (1, 0, 0)</span>
+<span class="go">(2, 0, 0) (2, 0, 0)</span>
+<span class="go">(3, 0, 0) (3, 0, 0)</span>
+<span class="go">(0, 1, 0) (0, 1, 0)</span>
+<span class="go">(1, 1, 0) (1, 1, 0)</span>
+<span class="go">(2, 1, 0) (2, 1, 0)</span>
+<span class="go">(3, 1, 0) (3, 1, 0)</span>
+<span class="go">(0, 2, 0) (0, 2, 0)</span>
+<span class="go">(1, 2, 0) (1, 2, 0)</span>
+<span class="go">(2, 2, 0) (2, 2, 0)</span>
+<span class="go">(3, 2, 0) (3, 2, 0)</span>
+<span class="go">(0, 0, 1) (0, 0, 1)</span>
+<span class="go">(1, 0, 1) (1, 0, 1)</span>
+<span class="go">(2, 0, 1) (2, 0, 1)</span>
+<span class="go">(3, 0, 1) (3, 0, 1)</span>
+<span class="go">(0, 1, 1) (0, 1, 1)</span>
+<span class="go">(1, 1, 1) (1, 1, 1)</span>
+<span class="go">(2, 1, 1) (2, 1, 1)</span>
+<span class="go">(3, 1, 1) (3, 1, 1)</span>
+<span class="go">(0, 2, 1) (0, 2, 1)</span>
+<span class="go">(1, 2, 1) (1, 2, 1)</span>
+<span class="go">(2, 2, 1) (2, 2, 1)</span>
+<span class="go">(3, 2, 1) (3, 2, 1)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager._get_data_slice">
+<span class="sig-name descname"><span class="pre">_get_data_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager._get_data_slice" title="Permalink to this definition"></a></dt>
+<dd><p>Return a tuple of slice objects to slice the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fill</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>iterable of</em><em> (</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.10)"><em>slice</em></a><em>)</em>) – If not None, fill the tuple of index int with the given
+slice.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager._remove_one_axis">
+<span class="sig-name descname"><span class="pre">_remove_one_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager._remove_one_axis" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the given Axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If the Axis is not present.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager._set_axis_attribute_values">
+<span class="sig-name descname"><span class="pre">_set_axis_attribute_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager._set_axis_attribute_values" title="Permalink to this definition"></a></dt>
+<dd><p>Set the given attribute of all the axes to the given
+value(s)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr</strong> (<em>string</em>) – The DataAxis attribute to set.</p></li>
+<li><p><strong>values</strong> (<em>any</em>) – If iterable, it must have the same number of items
+as axes are in this AxesManager instance. If not iterable,
+the attribute of all the axes are set to the given value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager._sort_axes">
+<span class="sig-name descname"><span class="pre">_sort_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager._sort_axes" title="Permalink to this definition"></a></dt>
+<dd><p>Sort _axes to align them.</p>
+<p>When the data are aligned with the axes the axes order in <cite>self._axes</cite>
+is [nav_n, nav_n-1, …, nav_0, sig_m, sig_m-1 …, sig_0]. This method
+sort the axes in this way. Warning: this doesn’t sort the <cite>data</cite> axes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.axes_are_aligned_with_data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">axes_are_aligned_with_data</span></span><a class="headerlink" href="#hyperspy.axes.AxesManager.axes_are_aligned_with_data" title="Permalink to this definition"></a></dt>
+<dd><p>Verify if the data axes are aligned with the signal axes.</p>
+<p>When the data are aligned with the axes the axes order in <cite>self._axes</cite>
+is [nav_n, nav_n-1, …, nav_0, sig_m, sig_m-1 …, sig_0].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>aligned</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.convert_units">
+<span class="sig-name descname"><span class="pre">convert_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">same_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.convert_units" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the scale and the units of the selected axes. If the unit
+of measure is not supported by the pint library, the scale and units
+are not changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> ({int | string | iterable of <cite>DataAxis</cite> | None}) – Default = None
+Convert to a convenient scale and units on the specified axis.
+If int, the axis can be specified using the index of the
+axis in <cite>axes_manager</cite>.
+If string, argument can be <cite>navigation</cite> or <cite>signal</cite> to select the
+navigation or signal axes. The axis name can also be provided.
+If <cite>None</cite>, convert all axes.</p></li>
+<li><p><strong>units</strong> (<em>{list of string of the same length than axes</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> | </em><em>None}</em>) – Default = None
+If list, the selected axes will be converted to the provided units.
+If str, the navigation or signal axes will be converted to the
+provided units.
+If <cite>None</cite>, the scale and the units are converted to the appropriate
+scale and units to avoid displaying scalebar with &gt;3 digits or too
+small number. This can be tweaked by the <cite>factor</cite> argument.</p></li>
+<li><p><strong>same_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If <cite>True</cite>, force to keep the same units if the units of
+the axes differs. It only applies for the same kind of axis,
+<cite>navigation</cite> or <cite>signal</cite>. By default the converted units of the
+first axis is used for all axes. If <cite>False</cite>, convert all axes
+individually.</p></li>
+<li><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> (</em><em>default: 0.25</em><em>)</em>) – ‘factor’ is an adjustable value used to determine the prefix of
+the units. The product <cite>factor * scale * size</cite> is passed to the
+pint <cite>to_compact</cite> method to determine the prefix.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.create_axes">
+<span class="sig-name descname"><span class="pre">create_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.create_axes" title="Permalink to this definition"></a></dt>
+<dd><p>Given a list of dictionaries defining the axes properties
+create the DataAxis instances and add them to the AxesManager.</p>
+<p>The index of the axis in the array and in the <cite>_axes</cite> lists
+can be defined by the index_in_array keyword if given
+for all axes. Otherwise it is defined by their index in the
+list.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_append_axis</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.gui">
+<span class="sig-name descname"><span class="pre">gui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolkit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.gui" title="Permalink to this definition"></a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
+widgets container in a dictionary, usually for customisation or
+testing.</p></li>
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+If string, only the widgets of the selected toolkit are displayed
+if available. If an interable of toolkit strings, the widgets of
+all listed toolkits are displayed or returned.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.gui_navigation_sliders">
+<span class="sig-name descname"><span class="pre">gui_navigation_sliders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolkit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.gui_navigation_sliders" title="Permalink to this definition"></a></dt>
+<dd><p>Navigation sliders to control the index of the navigation axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>%s</strong> – </p></li>
+<li><p><strong>%s</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.key_navigator">
+<span class="sig-name descname"><span class="pre">key_navigator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.key_navigator" title="Permalink to this definition"></a></dt>
+<dd><p>Set hotkeys for controlling the indices of the navigator plot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.remove" title="Permalink to this definition"></a></dt>
+<dd><p>Remove one or more axes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.set_signal_dimension">
+<span class="sig-name descname"><span class="pre">set_signal_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.set_signal_dimension" title="Permalink to this definition"></a></dt>
+<dd><p>Set the dimension of the signal.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#hyperspy.axes.AxesManager.value" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If value if greater than the number of axes or is negative.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.AxesManager.update_axes_attributes_from">
+<span class="sig-name descname"><span class="pre">update_axes_attributes_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['scale',</span> <span class="pre">'offset',</span> <span class="pre">'units']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.AxesManager.update_axes_attributes_from" title="Permalink to this definition"></a></dt>
+<dd><p>Update the axes attributes to match those given.</p>
+<p>The axes are matched by their index in the array. The purpose of this
+method is to update multiple axes triggering <cite>any_axis_changed</cite> only
+once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> (iterable of <cite>DataAxis</cite> instances.) – The axes to copy the attributes from.</p></li>
+<li><p><strong>attributes</strong> (<em>iterable of strings.</em>) – The attributes to copy.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.axes.</span></span><span class="sig-name descname"><span class="pre">DataAxis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">size</span></em>, <em class="sig-param"><span class="pre">index_in_array=None</span></em>, <em class="sig-param"><span class="pre">name=&lt;undefined&gt;</span></em>, <em class="sig-param"><span class="pre">scale=1.0</span></em>, <em class="sig-param"><span class="pre">offset=0.0</span></em>, <em class="sig-param"><span class="pre">units=&lt;undefined&gt;</span></em>, <em class="sig-param"><span class="pre">navigate=&lt;undefined&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.axes.UnitConversion</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis._get_array_slices">
+<span class="sig-name descname"><span class="pre">_get_array_slices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slice_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis._get_array_slices" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a slice to slice the corresponding data axis without
+changing the offset and scale of the DataAxis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slice</strong> (<em>{float</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>slice}</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>my_slice</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.10)">slice</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis._slice_me">
+<span class="sig-name descname"><span class="pre">_slice_me</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slice_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis._slice_me" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a slice to slice the corresponding data axis and
+change the offset and scale of the DataAxis accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slice</strong> (<em>{float</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>slice}</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>my_slice</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.10)">slice</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis.gui">
+<span class="sig-name descname"><span class="pre">gui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolkit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis.gui" title="Permalink to this definition"></a></dt>
+<dd><p>Display or return interactive GUI element if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, display the user interface widgets. If False, return the
+widgets container in a dictionary, usually for customisation or
+testing.</p></li>
+<li><p><strong>toolkit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable of strings</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None (default), all available widgets are displayed or returned.
+If string, only the widgets of the selected toolkit are displayed
+if available. If an interable of toolkit strings, the widgets of
+all listed toolkits are displayed or returned.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis.update_from">
+<span class="sig-name descname"><span class="pre">update_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['scale',</span> <span class="pre">'offset',</span> <span class="pre">'units']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis.update_from" title="Permalink to this definition"></a></dt>
+<dd><p>Copy values of specified axes fields from the passed AxesManager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<a class="reference internal" href="#hyperspy.axes.DataAxis" title="hyperspy.axes.DataAxis"><em>DataAxis</em></a>) – The DataAxis instance to use as a source for values.</p></li>
+<li><p><strong>attributes</strong> (<em>iterable container of strings.</em>) – The name of the attribute to update. If the attribute does not
+exist in either of the AxesManagers, an AttributeError will be
+raised.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A boolean indicating whether any changes were made.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis.value2index">
+<span class="sig-name descname"><span class="pre">value2index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">value</span></em>, <em class="sig-param"><span class="pre">rounding=&lt;built-in</span> <span class="pre">function</span> <span class="pre">round&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis.value2index" title="Permalink to this definition"></a></dt>
+<dd><p>Return the closest index to the given value if between the limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>number</em><em> or </em><em>numpy array</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>index</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer or numpy array</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If any value is out of the axis limits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hyperspy.axes.DataAxis.value_range_to_indices">
+<span class="sig-name descname"><span class="pre">value_range_to_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.DataAxis.value_range_to_indices" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the given range to index range.</p>
+<p>When a value is out of the axis limits, the endpoint is used instead.
+<cite>v1</cite> must be preceding <cite>v2</cite> in the axis values</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>if the axis scale is positive, it means v1 &lt; v2</p></li>
+<li><p>if the axis scale is negative, it means v1 &gt; v2</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The end points of the interval in the axis units.</p></li>
+<li><p><strong>v2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The end points of the interval in the axis units.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>i2, i2</strong> – The indices corresponding to the interval [v1, v2]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.axes.generate_axis">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.axes.</span></span><span class="sig-name descname"><span class="pre">generate_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.generate_axis" title="Permalink to this definition"></a></dt>
+<dd><p>Creates an axis given the offset, scale and number of channels</p>
+<p>Alternatively, the offset_index of the offset channel can be specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>size</strong> (<em>number of channels</em>) – </p></li>
+<li><p><strong>offset_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – offset_index number of the offset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hyperspy.axes.ndindex_nat">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hyperspy.axes.</span></span><span class="sig-name descname"><span class="pre">ndindex_nat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.ndindex_nat" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndindex.html#numpy.ndindex" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndindex</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hyperspy.axes.serpentine_iter">
+<span class="sig-prename descclassname"><span class="pre">hyperspy.axes.</span></span><span class="sig-name descname"><span class="pre">serpentine_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.serpentine_iter" title="Permalink to this definition"></a></dt>
+<dd><p>Similar to np.ndindex, but yields indices
+in serpentine pattern, like snake game</p>
+<p>Code by Stackoverflow user Paul Panzer,
+from <a class="reference external" href="https://stackoverflow.com/questions/57366966/">https://stackoverflow.com/questions/57366966/</a></p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hyperspy.api_nogui.html" class="btn btn-neutral float-left" title="hyperspy.api_nogui module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hyperspy.component.html" class="btn btn-neutral float-right" title="hyperspy.component module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2021, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
