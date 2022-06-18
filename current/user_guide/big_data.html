@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with big data &mdash; HyperSpy 1.7.0 documentation</title>
+  <title>Working with big data &mdash; HyperSpy 1.7.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/toggleprompt.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +50,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.0
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -156,7 +157,7 @@
            <div itemprop="articleBody">
              
   <section id="working-with-big-data">
-<span id="big-data-label"></span><h1>Working with big data<a class="headerlink" href="#working-with-big-data" title="Permalink to this headline"></a></h1>
+<span id="big-data-label"></span><h1>Working with big data<a class="headerlink" href="#working-with-big-data" title="Permalink to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>All the features described in this chapter are in beta state.</p>
@@ -176,9 +177,9 @@ the syntax remains the same. This chapter describes how to work with data
 larger than memory using the <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazySignal</span></code></a> class and
 its derivatives.</p>
 <section id="creating-lazy-signals">
-<h2>Creating Lazy Signals<a class="headerlink" href="#creating-lazy-signals" title="Permalink to this headline"></a></h2>
+<h2>Creating Lazy Signals<a class="headerlink" href="#creating-lazy-signals" title="Permalink to this heading"></a></h2>
 <section id="lazy-signals-from-external-data">
-<h3>Lazy Signals from external data<a class="headerlink" href="#lazy-signals-from-external-data" title="Permalink to this headline"></a></h3>
+<h3>Lazy Signals from external data<a class="headerlink" href="#lazy-signals-from-external-data" title="Permalink to this heading"></a></h3>
 <p>If the data is large and not loaded by HyperSpy (for example a <code class="docutils literal notranslate"><span class="pre">hdf5.Dataset</span></code>
 or similar), first wrap it in <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> as shown <a class="reference external" href="https://dask.readthedocs.io/en/latest/array-creation.html">here</a> and then pass it
 as normal and call <code class="docutils literal notranslate"><span class="pre">as_lazy()</span></code>:</p>
@@ -193,7 +194,7 @@ as normal and call <code class="docutils literal notranslate"><span class="pre">
 </div>
 </section>
 <section id="loading-lazily">
-<h3>Loading lazily<a class="headerlink" href="#loading-lazily" title="Permalink to this headline"></a></h3>
+<h3>Loading lazily<a class="headerlink" href="#loading-lazily" title="Permalink to this heading"></a></h3>
 <p>To load the data lazily, pass the keyword <code class="docutils literal notranslate"><span class="pre">lazy=True</span></code>.  As an example,
 loading a 34.9 GB <code class="docutils literal notranslate"><span class="pre">.blo</span></code> file on a regular laptop might look like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;shish26.02-6.blo&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -227,7 +228,7 @@ by passing the keyword argument <code class="docutils literal notranslate"><span
 </div>
 </section>
 <section id="lazy-stacking">
-<h3>Lazy stacking<a class="headerlink" href="#lazy-stacking" title="Permalink to this headline"></a></h3>
+<h3>Lazy stacking<a class="headerlink" href="#lazy-stacking" title="Permalink to this heading"></a></h3>
 <p>Occasionally the full dataset consists of many smaller files. To combine them
 into a one large <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code>, we can <a class="reference internal" href="signal.html#signal-stack-split"><span class="std std-ref">stack</span></a> them
 lazily (both when loading or afterwards):</p>
@@ -242,7 +243,7 @@ lazily (both when loading or afterwards):</p>
 </div>
 </section>
 <section id="casting-signals-as-lazy">
-<h3>Casting signals as lazy<a class="headerlink" href="#casting-signals-as-lazy" title="Permalink to this headline"></a></h3>
+<h3>Casting signals as lazy<a class="headerlink" href="#casting-signals-as-lazy" title="Permalink to this heading"></a></h3>
 <p>To convert a regular HyperSpy signal to a lazy one such that any future
 operations are only performed lazily, use the
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.as_lazy" title="hyperspy.signal.BaseSignal.as_lazy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_lazy()</span></code></a> method:</p>
@@ -257,7 +258,7 @@ operations are only performed lazily, use the
 </section>
 </section>
 <section id="machine-learning">
-<span id="big-data-decomposition"></span><h2>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline"></a></h2>
+<span id="big-data-decomposition"></span><h2>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="mva.html#mva-decomposition"><span class="std std-ref">Decomposition</span></a> algorithms for machine learning often perform
 large matrix manipulations, requiring significantly more memory than the data size.
 To perform decomposition operation lazily, HyperSpy provides access to several “online”
@@ -282,7 +283,7 @@ offers the following online algorithms:</p>
 <td><p><a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.linalg.svd.html#dask.array.linalg.svd" title="(in Dask)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.svd()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>“PCA”</p></td>
-<td><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA" title="(in scikit-learn v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.decomposition.IncrementalPCA</span></code></a></p></td>
+<td><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.decomposition.IncrementalPCA</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>“ORPCA”</p></td>
 <td><p><a class="reference internal" href="../api/hyperspy.learn.rpca.html#hyperspy.learn.rpca.ORPCA" title="hyperspy.learn.rpca.ORPCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">ORPCA</span></code></a></p></td>
@@ -299,7 +300,7 @@ with non-lazy signals.</p>
 </div>
 </section>
 <section id="navigator-plot">
-<h2>Navigator plot<a class="headerlink" href="#navigator-plot" title="Permalink to this headline"></a></h2>
+<h2>Navigator plot<a class="headerlink" href="#navigator-plot" title="Permalink to this heading"></a></h2>
 <p>The default signal navigator is the sum of the signal across all signal
 dimensions and all but 1 or 2 navigation dimensions. If the dataset is large,
 this can take a significant amount of time to perform with every plot.
@@ -398,7 +399,7 @@ instead:</p>
 </div>
 </section>
 <section id="gpu-support">
-<span id="big-data-gpu"></span><h2>GPU support<a class="headerlink" href="#gpu-support" title="Permalink to this headline"></a></h2>
+<span id="big-data-gpu"></span><h2>GPU support<a class="headerlink" href="#gpu-support" title="Permalink to this heading"></a></h2>
 <p>Lazy data processing on GPUs requires explicitly transferring the data to the
 GPU.</p>
 <p>On linux, it is recommended to use the
@@ -436,7 +437,7 @@ for an example of lazy processing on GPUs using dask and cupy</p>
 </div>
 </section>
 <section id="model-fitting">
-<span id="fitbigdata-label"></span><h2>Model fitting<a class="headerlink" href="#model-fitting" title="Permalink to this headline"></a></h2>
+<span id="fitbigdata-label"></span><h2>Model fitting<a class="headerlink" href="#model-fitting" title="Permalink to this heading"></a></h2>
 <p>Most curve-fitting functionality will automatically work on models created from
 lazily loaded signals. HyperSpy extracts the relevant chunk from the signal and fits to that.</p>
 <p>The linear <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer supports fitting the entire dataset in a vectorised manner
@@ -444,11 +445,11 @@ using <a class="reference external" href="https://docs.dask.org/en/latest/genera
 with a nonlinear fitter, but comes with the restrictions explained in the <a class="reference internal" href="model.html#linear-fitting-label"><span class="std std-ref">linear fitting</span></a> section.</p>
 </section>
 <section id="practical-tips">
-<h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this headline"></a></h2>
+<h2>Practical tips<a class="headerlink" href="#practical-tips" title="Permalink to this heading"></a></h2>
 <p>Despite the limitations detailed below, most HyperSpy operations can be
 performed lazily. Important points are:</p>
 <section id="chunking">
-<h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this headline"></a></h3>
+<span id="big-data-chunking"></span><h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this heading"></a></h3>
 <p>Data saved in the HDF5 format is typically divided into smaller chunks which can be loaded separately into memory,
 allowing lazy loading. Chunk size can dramatically affect the speed of various HyperSpy algorithms, so chunk size is
 worth careful consideration when saving a signal. HyperSpy’s default chunking sizes are probably not optimal
@@ -511,7 +512,7 @@ notebook a helpful html representation is available.</p>
 axis (bolded axes).</p>
 </section>
 <section id="computing-lazy-signals">
-<h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Permalink to this headline"></a></h3>
+<h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Permalink to this heading"></a></h3>
 <p>Upon saving lazy signals, the result of computations is stored on disk.</p>
 <p>In order to store the lazy signal in memory (i.e. make it a normal HyperSpy
 signal) it has a <a class="reference internal" href="../api/hyperspy._signals.lazy.html#hyperspy._signals.lazy.LazySignal.compute" title="hyperspy._signals.lazy.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a> method:</p>
@@ -525,7 +526,7 @@ signal) it has a <a class="reference internal" href="../api/hyperspy._signals.la
 </div>
 </section>
 <section id="lazy-operations-that-affect-the-axes">
-<h3>Lazy operations that affect the axes<a class="headerlink" href="#lazy-operations-that-affect-the-axes" title="Permalink to this headline"></a></h3>
+<h3>Lazy operations that affect the axes<a class="headerlink" href="#lazy-operations-that-affect-the-axes" title="Permalink to this heading"></a></h3>
 <p>When using lazy signals the computation of the data is delayed until
 requested. However, the changes to the axes properties are performed
 when running a given function that modfies them i.e. they are not
@@ -539,11 +540,11 @@ parameters. This is the reason why e.g. the result of
 </section>
 </section>
 <section id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline"></a></h2>
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading"></a></h2>
 <p>Most operations can be performed lazily. However, lazy operations come with
 a few limitations and constraints that we detail below.</p>
 <section id="immutable-signals">
-<h3>Immutable signals<a class="headerlink" href="#immutable-signals" title="Permalink to this headline"></a></h3>
+<h3>Immutable signals<a class="headerlink" href="#immutable-signals" title="Permalink to this heading"></a></h3>
 <p>An important limitation when using <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code> is the inability to modify
 existing data (immutability). This is a logical consequence of the DAG (tree
 structure, explained in <a class="reference internal" href="#lazy-details"><span class="std std-ref">Behind the scenes –technical details</span></a>), where a complete history of the
@@ -575,7 +576,7 @@ operations. So, the operation above could be rewritten as follows:</p>
 </div>
 </section>
 <section id="other-minor-differences">
-<h3>Other minor differences<a class="headerlink" href="#other-minor-differences" title="Permalink to this headline"></a></h3>
+<h3>Other minor differences<a class="headerlink" href="#other-minor-differences" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Histograms</strong> for a <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code> do not support <code class="docutils literal notranslate"><span class="pre">knuth</span></code> and <code class="docutils literal notranslate"><span class="pre">blocks</span></code>
 binning algorithms.</p></li>
@@ -586,14 +587,14 @@ added to mimic the workflow as closely as possible.</p></li>
 </ul>
 </section>
 <section id="saving-big-data">
-<span id="big-data-saving"></span><h3>Saving Big Data<a class="headerlink" href="#saving-big-data" title="Permalink to this headline"></a></h3>
+<span id="big-data-saving"></span><h3>Saving Big Data<a class="headerlink" href="#saving-big-data" title="Permalink to this heading"></a></h3>
 <p>The most efficient format supported by HyperSpy to write data is the <a class="reference internal" href="io.html#zspy-format"><span class="std std-ref">zspy format</span></a>,
 mainly because it supports writing currently from concurrently from multiple threads or processes.
 This also allows for smooth interaction with dask-distributed for efficient scaling.</p>
 </section>
 </section>
 <section id="behind-the-scenes-technical-details">
-<span id="lazy-details"></span><h2>Behind the scenes –technical details<a class="headerlink" href="#behind-the-scenes-technical-details" title="Permalink to this headline"></a></h2>
+<span id="lazy-details"></span><h2>Behind the scenes –technical details<a class="headerlink" href="#behind-the-scenes-technical-details" title="Permalink to this heading"></a></h2>
 <p>Standard HyperSpy signals load the data into memory for fast access and
 processing. While this behaviour gives good performance in terms of speed, it
 obviously requires at least as much computer memory as the dataset, and often

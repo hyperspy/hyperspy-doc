@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.roi module &mdash; HyperSpy 1.7.0 documentation</title>
+  <title>hyperspy.roi module &mdash; HyperSpy 1.7.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/toggleprompt.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +50,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.0
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -166,7 +167,7 @@
            <div itemprop="articleBody">
              
   <section id="module-hyperspy.roi">
-<span id="hyperspy-roi-module"></span><h1>hyperspy.roi module<a class="headerlink" href="#module-hyperspy.roi" title="Permalink to this headline"></a></h1>
+<span id="hyperspy-roi-module"></span><h1>hyperspy.roi module<a class="headerlink" href="#module-hyperspy.roi" title="Permalink to this heading"></a></h1>
 <p>Region of interests (ROIs).</p>
 <p>ROIs operate on <cite>BaseSignal</cite> instances and include widgets for interactive
 operation.</p>
@@ -195,7 +196,7 @@ operation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BaseInteractiveROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseInteractiveROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseInteractiveROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseROI" title="hyperspy.roi.BaseROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseROI" title="hyperspy.roi.BaseROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseROI</span></code></a></p>
 <p>Base class for interactive ROIs, i.e. ROIs with widget interaction.
 The base class defines a lot of the common code for interacting with
 widgets, but inheritors need to implement the following functions:</p>
@@ -296,6 +297,9 @@ True.</p></li>
 <li><p><strong>kwargs</strong> – All keyword arguments are passed to the widget constructor.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>The widget of the ROI.</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -303,7 +307,7 @@ True.</p></li>
 <dt class="sig sig-object py" id="hyperspy.roi.BaseInteractiveROI.interactive">
 <span class="sig-name descname"><span class="pre">interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">navigation_signal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'same'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'green'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.BaseInteractiveROI.interactive" title="Permalink to this definition"></a></dt>
 <dd><p>Creates an interactively sliced Signal (sliced by this ROI) via
-hyperspy.interactive.</p>
+<a class="reference internal" href="hyperspy.interactive.html#hyperspy.interactive.interactive" title="hyperspy.interactive.interactive"><code class="xref py py-func docutils literal notranslate"><span class="pre">interactive()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -324,6 +328,13 @@ True.</p></li>
 <li><p><strong>**kwargs</strong> – All kwargs are passed to the roi __call__ method which is called
 interactively on any roi parameter change.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Signal updated with the current ROI selection
+when the ROI is changed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> or one of its subclass</p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,7 +379,7 @@ triggers the changed event.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BasePointROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BasePointROI</span></span><a class="headerlink" href="#hyperspy.roi.BasePointROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInteractiveROI</span></code></a></p>
 <p>Base ROI class for point ROIs, i.e. ROIs with a unit size in each of its
 dimensions.</p>
 <p>Sets up events.changed event, and inits HasTraits.</p>
@@ -377,7 +388,7 @@ dimensions.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.BaseROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">BaseROI</span></span><a class="headerlink" href="#hyperspy.roi.BaseROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">HasTraits</span></code></p>
 <p>Base class for all ROIs.</p>
 <p>Provides some basic functionalities that are likely to be shared between all
 ROIs, and serve as a common type that can be checked for.</p>
@@ -457,7 +468,7 @@ The base implementation simply triggers the changed event.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.CircleROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">CircleROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_inner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.CircleROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInteractiveROI</span></code></a></p>
 <p>Selects a circular or annular region in a 2D space. The coordinates of
 the center of the circle are stored in the ‘cx’ and ‘cy’ attributes. The
 radious in the <cite>r</cite> attribute. If an internal radius is defined using the
@@ -527,7 +538,7 @@ and that the values makes sense relative to each other.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Line2DROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Line2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Line2DROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInteractiveROI</span></code></a></p>
 <p>Selects a line of a given width in 2D space. The coordinates of the end points of the line are stored in the <cite>x1</cite>, <cite>y1</cite>, <cite>x2</cite>, <cite>y2</cite> parameters.
 The length is available in the <cite>length</cite> parameter and the method <cite>angle</cite> computes the angle of the line with the axes.</p>
 <p><cite>Line2DROI</cite> can be used in place of a tuple containing the coordinates of the two end-points of the line and the linewdith <cite>(x1, y1, x2, y2, linewidth)</cite>.</p>
@@ -689,7 +700,7 @@ standard numpy indexing. Requires uniform navigation axes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Point1DROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point1DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point1DROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BasePointROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePointROI</span></code></a></p>
 <p>Selects a single point in a 1D space. The coordinate of the point in the
 1D space is stored in the ‘value’ trait.</p>
 <p><cite>Point1DROI</cite> can be used in place of a tuple containing the value of <cite>value</cite>.</p>
@@ -765,7 +776,7 @@ all listed toolkits are displayed or returned.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.Point2DROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">Point2DROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.Point2DROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BasePointROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BasePointROI" title="hyperspy.roi.BasePointROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePointROI</span></code></a></p>
 <p>Selects a single point in a 2D space. The coordinates of the point in
 the 2D space are stored in the traits ‘x’ and ‘y’.</p>
 <p><cite>Point2DROI</cite> can be used in place of a tuple containing the coordinates
@@ -842,7 +853,7 @@ all listed toolkits are displayed or returned.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.RectangularROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">RectangularROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.RectangularROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInteractiveROI</span></code></a></p>
 <p>Selects a range in a 2D space. The coordinates of the range in
 the 2D space are stored in the traits ‘left’, ‘right’, ‘top’ and ‘bottom’.
 Convenience properties ‘x’, ‘y’, ‘width’ and ‘height’ are also available,
@@ -954,7 +965,7 @@ height</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hyperspy.roi.SpanROI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hyperspy.roi.</span></span><span class="sig-name descname"><span class="pre">SpanROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.roi.SpanROI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.roi.BaseInteractiveROI</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseInteractiveROI</span></code></a></p>
 <p>Selects a range in a 1D space. The coordinates of the range in
 the 1D space are stored in the traits ‘left’ and ‘right’.</p>
 <p><cite>SpanROI</cite> can be used in place of a tuple containing the left and right values.</p>

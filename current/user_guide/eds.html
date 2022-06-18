@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Energy-Dispersive X-ray Spectrometry (EDS) &mdash; HyperSpy 1.7.0 documentation</title>
+  <title>Energy-Dispersive X-ray Spectrometry (EDS) &mdash; HyperSpy 1.7.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/toggleprompt.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +50,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.0
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -164,11 +165,11 @@
            <div itemprop="articleBody">
              
   <section id="energy-dispersive-x-ray-spectrometry-eds">
-<span id="eds-label"></span><h1>Energy-Dispersive X-ray Spectrometry (EDS)<a class="headerlink" href="#energy-dispersive-x-ray-spectrometry-eds" title="Permalink to this headline"></a></h1>
+<span id="eds-label"></span><h1>Energy-Dispersive X-ray Spectrometry (EDS)<a class="headerlink" href="#energy-dispersive-x-ray-spectrometry-eds" title="Permalink to this heading"></a></h1>
 <p>The methods described in this chapter are specific to the following signals:</p>
 <ul class="simple">
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EDSTEM</span></code></p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EDSSEMSpectrum</span></code></p></li>
+<li><p><a class="reference internal" href="../api/hyperspy._signals.eds_sem.html#hyperspy._signals.eds_sem.EDSSEMSpectrum" title="hyperspy._signals.eds_sem.EDSSEMSpectrum"><code class="xref py py-class docutils literal notranslate"><span class="pre">EDSSEMSpectrum</span></code></a></p></li>
 </ul>
 <p>This chapter describes step-by-step the analysis of an EDS
 spectrum (SEM or TEM).</p>
@@ -177,7 +178,7 @@ spectrum (SEM or TEM).</p>
 <p>See also the <a class="reference external" href="https://nbviewer.org/github/hyperspy/hyperspy-demos/tree/main/electron_microscopy/EDS/">EDS tutorials</a>.</p>
 </div>
 <section id="spectrum-loading-and-parameters">
-<h2>Spectrum loading and parameters<a class="headerlink" href="#spectrum-loading-and-parameters" title="Permalink to this headline"></a></h2>
+<h2>Spectrum loading and parameters<a class="headerlink" href="#spectrum-loading-and-parameters" title="Permalink to this heading"></a></h2>
 <p>The sample and  data used in this section are described in
 <a class="reference internal" href="bibliography.html#burdet2013"><span class="std std-ref">[Burdet2013]</span></a>,
 and can be downloaded using:</p>
@@ -192,7 +193,7 @@ and can be downloaded using:</p>
 </pre></div>
 </div>
 <section id="loading-data">
-<h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline"></a></h3>
+<h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this heading"></a></h3>
 <p>All data are loaded with the <a class="reference internal" href="../api/hyperspy.io.html#hyperspy.io.load" title="hyperspy.io.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> function, as described in
 detail in <a class="reference internal" href="io.html#loading-files"><span class="std std-ref">Loading files</span></a>. HyperSpy is able to import
 different formats, among them “.msa” and “.rpl” (the raw format of Oxford
@@ -221,7 +222,7 @@ dimensional signal with the energy axis in first position):</p>
 </div>
 </section>
 <section id="microscope-and-detector-parameters">
-<span id="eds-calibration-label"></span><h3>Microscope and detector parameters<a class="headerlink" href="#microscope-and-detector-parameters" title="Permalink to this headline"></a></h3>
+<span id="eds-calibration-label"></span><h3>Microscope and detector parameters<a class="headerlink" href="#microscope-and-detector-parameters" title="Permalink to this heading"></a></h3>
 <p>First, the signal type (“EDS_TEM” or “EDS_SEM”) needs to be set with the
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.set_signal_type" title="hyperspy.signal.BaseSignal.set_signal_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_signal_type()</span></code></a> method. By assigning the
 class of the object, specific EDS methods are made available.</p>
@@ -262,7 +263,7 @@ as follows:</p>
 </pre></div>
 </div>
 <p>or by using the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_microscope_parameters()</span></code> method:</p>
+<a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.set_microscope_parameters" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.set_microscope_parameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_microscope_parameters()</span></code></a> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_SEM&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_microscope_parameters</span><span class="p">(</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
 </pre></div>
@@ -296,7 +297,7 @@ will be set by default. These default values can be changed in the
 </figure>
 </section>
 <section id="energy-axis">
-<h3>Energy axis<a class="headerlink" href="#energy-axis" title="Permalink to this headline"></a></h3>
+<h3>Energy axis<a class="headerlink" href="#energy-axis" title="Permalink to this heading"></a></h3>
 <p>The size, scale and units of the energy axis are automatically imported from
 the imported file, where they exist. These properties can also be set
 or adjusted manually with the <a class="reference internal" href="../api/hyperspy.axes.html#hyperspy.axes.AxesManager" title="hyperspy.axes.AxesManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxesManager</span></code></a>
@@ -321,9 +322,9 @@ or adjusted manually with the <a class="reference internal" href="../api/hypersp
 </figure>
 </section>
 <section id="copying-spectrum-calibration">
-<h3>Copying spectrum calibration<a class="headerlink" href="#copying-spectrum-calibration" title="Permalink to this headline"></a></h3>
+<h3>Copying spectrum calibration<a class="headerlink" href="#copying-spectrum-calibration" title="Permalink to this heading"></a></h3>
 <p>All of the above parameters can be copied from one spectrum to another
-with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_calibration_from()</span></code>
+with the <a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.get_calibration_from" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.get_calibration_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_calibration_from()</span></code></a>
 method.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># s1pixel contains all the parameters</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s1pixel</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;Ni_superalloy_1pix.msa&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EDS_TEM&quot;</span><span class="p">)</span>
@@ -339,7 +340,7 @@ method.</p>
 </section>
 </section>
 <section id="describing-the-sample">
-<span id="eds-sample-label"></span><h2>Describing the sample<a class="headerlink" href="#describing-the-sample" title="Permalink to this headline"></a></h2>
+<span id="eds-sample-label"></span><h2>Describing the sample<a class="headerlink" href="#describing-the-sample" title="Permalink to this heading"></a></h2>
 <p>The description of the sample is also stored in the
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal.metadata" title="hyperspy.signal.BaseSignal.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> attribute. It can be displayed using:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
@@ -358,10 +359,10 @@ method.</p>
 <li><p>“add” methods add to the previously defined values</p></li>
 </ul>
 <section id="elements">
-<h3>Elements<a class="headerlink" href="#elements" title="Permalink to this headline"></a></h3>
+<h3>Elements<a class="headerlink" href="#elements" title="Permalink to this heading"></a></h3>
 <p>The elements present in the sample can be defined using the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_elements()</span></code>  and
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">add_elements()</span></code> methods.  Only element
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.set_elements" title="hyperspy._signals.eds.EDSSpectrum.set_elements"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_elements()</span></code></a>  and
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.add_elements" title="hyperspy._signals.eds.EDSSpectrum.add_elements"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_elements()</span></code></a> methods.  Only element
 abbreviations are accepted:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">set_elements</span><span class="p">([</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt&#39;</span><span class="p">])</span>
@@ -372,10 +373,10 @@ abbreviations are accepted:</p>
 </div>
 </section>
 <section id="x-ray-lines">
-<h3>X-ray lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this headline"></a></h3>
+<h3>X-ray lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this heading"></a></h3>
 <p>Similarly, the X-ray lines can be defined using the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_lines()</span></code> and
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">add_lines()</span></code> methods. The corresponding
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.set_lines" title="hyperspy._signals.eds.EDSSpectrum.set_lines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_lines()</span></code></a> and
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.add_lines" title="hyperspy._signals.eds.EDSSpectrum.add_lines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_lines()</span></code></a> methods. The corresponding
 elements will be added automatically.
 Several lines per element can be defined at once.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span>
@@ -417,7 +418,7 @@ energy:</p>
 </div>
 </section>
 <section id="elemental-database">
-<h3>Elemental database<a class="headerlink" href="#elemental-database" title="Permalink to this headline"></a></h3>
+<h3>Elemental database<a class="headerlink" href="#elemental-database" title="Permalink to this heading"></a></h3>
 <p>HyperSpy includes an elemental database, which contains the energy of the
 X-ray lines.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">Fe</span><span class="o">.</span><span class="n">General_properties</span>
@@ -449,7 +450,7 @@ X-ray lines.</p>
 </div>
 </section>
 <section id="finding-elements-from-energy">
-<h3>Finding elements from energy<a class="headerlink" href="#finding-elements-from-energy" title="Permalink to this headline"></a></h3>
+<h3>Finding elements from energy<a class="headerlink" href="#finding-elements-from-energy" title="Permalink to this heading"></a></h3>
 <p>To find the nearest X-ray line for a given energy, use the utility function
 <a class="reference internal" href="../api/hyperspy.misc.eds.utils.html#hyperspy.misc.eds.utils.get_xray_lines_near_energy" title="hyperspy.misc.eds.utils.get_xray_lines_near_energy"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_xray_lines_near_energy()</span></code></a> to search the elemental
 database:</p>
@@ -464,9 +465,9 @@ be limited by additional, optional arguments.</p>
 </section>
 </section>
 <section id="plotting">
-<span id="eds-plot-label"></span><h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline"></a></h2>
+<span id="eds-plot-label"></span><h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this heading"></a></h2>
 <p>You can visualize an EDS spectrum using the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code> method (see
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method (see
 <a class="reference internal" href="visualisation.html#visualization-label"><span class="std std-ref">visualisation</span></a>). For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -481,11 +482,11 @@ be limited by additional, optional arguments.</p>
 <p>An example of multi-dimensional EDS data (e.g. 3D SEM-EDS) is given in
 <a class="reference internal" href="visualisation.html#visualization-3d-eds-label"><span class="std std-ref">visualisation multi-dimension</span></a>.</p>
 <section id="plotting-x-ray-lines">
-<span id="eds-plot-markers-label"></span><h3>Plotting X-ray lines<a class="headerlink" href="#plotting-x-ray-lines" title="Permalink to this headline"></a></h3>
+<span id="eds-plot-markers-label"></span><h3>Plotting X-ray lines<a class="headerlink" href="#plotting-x-ray-lines" title="Permalink to this heading"></a></h3>
 <p>X-ray lines can be added as plot labels with
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code>. The lines are either retrieved
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a>. The lines are either retrieved
 from <cite>metadata.Sample.Xray_lines</cite>, or selected with the same method as
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">add_lines()</span></code> using the elements in
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.add_lines" title="hyperspy._signals.eds.EDSSpectrum.add_lines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_lines()</span></code></a> using the elements in
 <cite>metadata.Sample.elements</cite>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_elements</span><span class="p">([</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span><span class="s1">&#39;Cu&#39;</span><span class="p">,</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="s1">&#39;Zr&#39;</span><span class="p">])</span>
@@ -513,7 +514,7 @@ from <cite>metadata.Sample.Xray_lines</cite>, or selected with the same method a
 </section>
 </section>
 <section id="getting-the-intensity-of-an-x-ray-line">
-<span id="get-lines-intensity"></span><h2>Getting the intensity of an X-ray line<a class="headerlink" href="#getting-the-intensity-of-an-x-ray-line" title="Permalink to this headline"></a></h2>
+<span id="get-lines-intensity"></span><h2>Getting the intensity of an X-ray line<a class="headerlink" href="#getting-the-intensity-of-an-x-ray-line" title="Permalink to this heading"></a></h2>
 <p>The sample and data used in this section are described in
 <a class="reference internal" href="bibliography.html#rossouw2015"><span class="std std-ref">[Rossouw2015]</span></a>, and can be downloaded using:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#Download the data (1MB)</span>
@@ -553,7 +554,7 @@ for more information in setting plotting parameters.</p>
 <a class="reference internal image-reference" href="../_images/EDS_get_lines_intensity_all.png"><img alt="../_images/EDS_get_lines_intensity_all.png" src="../_images/EDS_get_lines_intensity_all.png" style="width: 500px;" /></a>
 </figure>
 <p>Finally, the windows of integration can be visualised using
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code> method:</p>
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mf">5.</span><span class="p">:</span><span class="mf">13.</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">integration_windows</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
@@ -566,14 +567,14 @@ for more information in setting plotting parameters.</p>
 </figcaption>
 </figure>
 <section id="background-subtraction">
-<span id="eds-background-subtraction-label"></span><h3>Background subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline"></a></h3>
+<span id="eds-background-subtraction-label"></span><h3>Background subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this heading"></a></h3>
 <p>The background can be subtracted from the X-ray intensities with
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code>.
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.get_lines_intensity" title="hyperspy._signals.eds.EDSSpectrum.get_lines_intensity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code></a>.
 The background value is obtained by averaging the intensity in two
 windows on each side of the X-ray line.
 The position of the windows can be estimated using
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_background_windows()</span></code>, and
-can be plotted using <code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code>:</p>
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.estimate_background_windows" title="hyperspy._signals.eds.EDSSpectrum.estimate_background_windows"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_background_windows()</span></code></a>, and
+can be plotted using <a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.plot" title="hyperspy._signals.eds.EDSSpectrum.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="mf">5.</span><span class="p">:</span><span class="mf">13.</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_lines</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bw</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">estimate_background_windows</span><span class="p">(</span><span class="n">line_width</span><span class="o">=</span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
@@ -590,7 +591,7 @@ can be plotted using <code class="xref py py-meth docutils literal notranslate">
 </section>
 </section>
 <section id="eds-curve-fitting">
-<span id="eds-fitting-label"></span><h2>EDS curve fitting<a class="headerlink" href="#eds-curve-fitting" title="Permalink to this headline"></a></h2>
+<span id="eds-fitting-label"></span><h2>EDS curve fitting<a class="headerlink" href="#eds-curve-fitting" title="Permalink to this heading"></a></h2>
 <p>The intensity of X-ray lines can be extracted using curve-fitting in HyperSpy.
 This example uses an EDS-SEM spectrum of a test material (EDS-TM001) provided
 by <a class="reference external" href="http://www.webshop.bam.de">BAM</a>.</p>
@@ -602,7 +603,7 @@ set the beam energy:</p>
 </pre></div>
 </div>
 <p>Next, the model is created with
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">create_model()</span></code>. One Gaussian is
+<a class="reference internal" href="../api/hyperspy._signals.eds_sem.html#hyperspy._signals.eds_sem.EDSSEMSpectrum.create_model" title="hyperspy._signals.eds_sem.EDSSEMSpectrum.create_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_model()</span></code></a>. One Gaussian is
 automatically created per X-ray line, along with a polynomial for the
 background.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
@@ -709,7 +710,7 @@ functionalities of X-ray lines when fitting:</p>
 </ul>
 </section>
 <section id="eds-quantification">
-<span id="eds-quantification-label"></span><h2>EDS Quantification<a class="headerlink" href="#eds-quantification" title="Permalink to this headline"></a></h2>
+<span id="eds-quantification-label"></span><h2>EDS Quantification<a class="headerlink" href="#eds-quantification" title="Permalink to this heading"></a></h2>
 <p>HyperSpy includes three methods for EDS quantification with or without
 absorption correction:</p>
 <ul class="simple">
@@ -718,15 +719,15 @@ absorption correction:</p>
 <li><p>Ionization cross sections</p></li>
 </ul>
 <p>Quantification must be applied to the background-subtracted intensities, which
-can be found using <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code>.
+can be found using <a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.get_lines_intensity" title="hyperspy._signals.eds.EDSSpectrum.get_lines_intensity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code></a>.
 The quantification of these intensities can then be calculated using
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">quantification()</span></code>.</p>
+<a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification"><code class="xref py py-meth docutils literal notranslate"><span class="pre">quantification()</span></code></a>.</p>
 <p>The quantification method needs be specified as either ‘CL’, ‘zeta’, or
 ‘cross_section’. If no method is specified, the function will raise an
 exception.</p>
 <p>A list of factors or cross sections should be supplied in the same order as
 the listed intensities (please note that HyperSpy intensities in
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code> are in alphabetical
+<a class="reference internal" href="../api/hyperspy._signals.eds.html#hyperspy._signals.eds.EDSSpectrum.get_lines_intensity" title="hyperspy._signals.eds.EDSSpectrum.get_lines_intensity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lines_intensity()</span></code></a> are in alphabetical
 order).</p>
 <p>A set of k-factors can be usually found in the EDS manufacturer software
 although determination from standard samples for the particular instrument used
@@ -755,7 +756,7 @@ out as follows:</p>
 </div>
 <p>The obtained composition is in atomic percent, by default. However, it can be
 transformed into weight percent either with the option
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">quantification()</span></code>:</p>
+<a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.quantification"><code class="xref py py-meth docutils literal notranslate"><span class="pre">quantification()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># With s, intensities and kfactors from before</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">quantification</span><span class="p">(</span><span class="n">intensities</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;CL&#39;</span><span class="p">,</span> <span class="n">factors</span><span class="o">=</span><span class="n">kfactors</span><span class="p">,</span>
 <span class="gp">... </span>                 <span class="n">composition_units</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
@@ -813,7 +814,7 @@ rather than spectrum images, the pixel area should be added to the
 metadata as above.</p>
 </div>
 <section id="absorption-correction">
-<span id="eds-absorption-label"></span><h3>Absorption Correction<a class="headerlink" href="#absorption-correction" title="Permalink to this headline"></a></h3>
+<span id="eds-absorption-label"></span><h3>Absorption Correction<a class="headerlink" href="#absorption-correction" title="Permalink to this heading"></a></h3>
 <p>Absorption correction can be included into any of the three quantification
 methods by adding the parameter <code class="docutils literal notranslate"><span class="pre">absorption_correction=True</span></code> to the function.
 By default, the function iterates the quantification function until a
@@ -847,9 +848,9 @@ detector separately.</p>
 </section>
 </section>
 <section id="utils">
-<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this headline"></a></h2>
+<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this heading"></a></h2>
 <section id="mass-absorption-coefficient-database">
-<span id="eds-absorption-db-label"></span><h3>Mass absorption coefficient database<a class="headerlink" href="#mass-absorption-coefficient-database" title="Permalink to this headline"></a></h3>
+<span id="eds-absorption-db-label"></span><h3>Mass absorption coefficient database<a class="headerlink" href="#mass-absorption-coefficient-database" title="Permalink to this heading"></a></h3>
 <p>A mass absorption coefficient database <a class="reference internal" href="bibliography.html#chantler2005"><span class="std std-ref">[Chantler2005]</span></a>
 is available:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">mass_absorption_coefficient</span><span class="p">(</span>
@@ -864,7 +865,7 @@ is available:</p>
 </div>
 </section>
 <section id="electron-and-x-ray-range">
-<h3>Electron and X-ray range<a class="headerlink" href="#electron-and-x-ray-range" title="Permalink to this headline"></a></h3>
+<h3>Electron and X-ray range<a class="headerlink" href="#electron-and-x-ray-range" title="Permalink to this heading"></a></h3>
 <p>The electron and X-ray range in a bulk material can be estimated with
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">hs.eds.electron_range()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">hs.eds.xray_range()</span></code></p>
 <p>To calculate the X-ray range of Cu Ka in pure Copper at 30 kV in micron:</p>

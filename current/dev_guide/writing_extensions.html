@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Writing packages that extend HyperSpy &mdash; HyperSpy 1.7.0 documentation</title>
+  <title>Writing packages that extend HyperSpy &mdash; HyperSpy 1.7.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/toggleprompt.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +50,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.0
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -149,7 +150,7 @@
            <div itemprop="articleBody">
              
   <section id="writing-packages-that-extend-hyperspy">
-<span id="writing-extensions-label"></span><h1>Writing packages that extend HyperSpy<a class="headerlink" href="#writing-packages-that-extend-hyperspy" title="Permalink to this headline"></a></h1>
+<span id="writing-extensions-label"></span><h1>Writing packages that extend HyperSpy<a class="headerlink" href="#writing-packages-that-extend-hyperspy" title="Permalink to this heading"></a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.5: </span>External packages can extend HyperSpy by registering signals,
 components and widgets.</p>
@@ -171,8 +172,8 @@ data.</p>
 <p>Models can also be provided by external packages, but don’t need to
 be registered. Instead, they are returned by the <code class="docutils literal notranslate"><span class="pre">create_model</span></code> method of
 the relevant <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a> subclass, see for example,
-the <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_model()</span></code> of the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">EDSTEMSpectrum</span></code>.</p>
+the <a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum.create_model" title="hyperspy._signals.eds_tem.EDSTEMSpectrum.create_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_model()</span></code></a> of the
+<a class="reference internal" href="../api/hyperspy._signals.eds_tem.html#hyperspy._signals.eds_tem.EDSTEMSpectrum" title="hyperspy._signals.eds_tem.EDSTEMSpectrum"><code class="xref py py-class docutils literal notranslate"><span class="pre">EDSTEMSpectrum</span></code></a>.</p>
 <p>It is good practice to add all packages that extend HyperSpy
 <a class="reference external" href="https://github.com/hyperspy/hyperspy-extensions-list">to the list of known extensions</a> regardless of their
 maturity level. In this way, we can avoid duplication of efforts and issues
@@ -189,7 +190,7 @@ efforts and being good community players by contributing code to the best
 matching project are essential for the sustainability of our open software
 ecosystem.</p>
 <section id="registering-extensions">
-<h2>Registering extensions<a class="headerlink" href="#registering-extensions" title="Permalink to this headline"></a></h2>
+<h2>Registering extensions<a class="headerlink" href="#registering-extensions" title="Permalink to this heading"></a></h2>
 <p>In order to register HyperSpy extensions, you need to:</p>
 <ol class="arabic">
 <li><p>Add the following line to your package’s <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>:</p>
@@ -209,9 +210,9 @@ module’s root directory.</p></li>
 <a class="reference external" href="https://github.com/hyperspy/hyperspy_sample_extension">the HyperSpy Sample Extension package</a>.</p>
 </section>
 <section id="creating-new-hyperspy-basesignal-subclasses">
-<h2>Creating new HyperSpy BaseSignal subclasses<a class="headerlink" href="#creating-new-hyperspy-basesignal-subclasses" title="Permalink to this headline"></a></h2>
+<h2>Creating new HyperSpy BaseSignal subclasses<a class="headerlink" href="#creating-new-hyperspy-basesignal-subclasses" title="Permalink to this heading"></a></h2>
 <section id="when-and-where-to-create-a-new-basesignal-subclass">
-<h3>When and where to create a new <code class="docutils literal notranslate"><span class="pre">BaseSignal</span></code> subclass<a class="headerlink" href="#when-and-where-to-create-a-new-basesignal-subclass" title="Permalink to this headline"></a></h3>
+<h3>When and where to create a new <code class="docutils literal notranslate"><span class="pre">BaseSignal</span></code> subclass<a class="headerlink" href="#when-and-where-to-create-a-new-basesignal-subclass" title="Permalink to this heading"></a></h3>
 <p>HyperSpy provides most of its functionality through the different
 <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a>
 subclasses. A HyperSpy “signal” is a class that contains data for analysis
@@ -248,7 +249,7 @@ for your function, you should consider creating your own.</p>
 }</p></object></div>
 </section>
 <section id="registering-a-new-basesignal-subclass">
-<h3>Registering a new BaseSignal subclass<a class="headerlink" href="#registering-a-new-basesignal-subclass" title="Permalink to this headline"></a></h3>
+<h3>Registering a new BaseSignal subclass<a class="headerlink" href="#registering-a-new-basesignal-subclass" title="Permalink to this heading"></a></h3>
 <p>To register a new <a class="reference internal" href="../api/hyperspy.signal.html#hyperspy.signal.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.signal.BaseSignal</span></code></a> subclass you must add it to the
 <code class="docutils literal notranslate"><span class="pre">hyperspy_extension.yaml</span></code> file, as in the following example:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">signals</span><span class="p">:</span><span class="w"></span>
@@ -290,9 +291,9 @@ acronyms for <code class="docutils literal notranslate"><span class="pre">signal
 </section>
 </section>
 <section id="creating-new-hyperspy-model-components">
-<h2>Creating new HyperSpy model components<a class="headerlink" href="#creating-new-hyperspy-model-components" title="Permalink to this headline"></a></h2>
+<h2>Creating new HyperSpy model components<a class="headerlink" href="#creating-new-hyperspy-model-components" title="Permalink to this heading"></a></h2>
 <section id="when-and-where-to-create-a-new-component">
-<h3>When and where to create a new component<a class="headerlink" href="#when-and-where-to-create-a-new-component" title="Permalink to this headline"></a></h3>
+<h3>When and where to create a new component<a class="headerlink" href="#when-and-where-to-create-a-new-component" title="Permalink to this heading"></a></h3>
 <p>HyperSpy provides the <a class="reference internal" href="../api/hyperspy._components.expression.html#hyperspy._components.expression.Expression" title="hyperspy._components.expression.Expression"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._components.expression.Expression</span></code></a>
 component that enables easy creation of 1D and 2D components from
 mathematical expressions. Therefore, strictly speaking, we only need to
@@ -335,7 +336,7 @@ for your function, should you consider creating your own.</p>
 }</p></object></div>
 </section>
 <section id="registering-new-components">
-<h3>Registering new components<a class="headerlink" href="#registering-new-components" title="Permalink to this headline"></a></h3>
+<h3>Registering new components<a class="headerlink" href="#registering-new-components" title="Permalink to this heading"></a></h3>
 <p>All new components must be a subclass of
 <a class="reference internal" href="../api/hyperspy._components.expression.html#hyperspy._components.expression.Expression" title="hyperspy._components.expression.Expression"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy._components.expression.Expression</span></code></a>. To register a new
 1D component add  it to the <code class="docutils literal notranslate"><span class="pre">hyperspy_extension.yaml</span></code> file as in the following
@@ -374,7 +375,7 @@ relocated.</p>
 </section>
 </section>
 <section id="creating-and-registering-new-widgets-and-toolkeys">
-<h2>Creating and registering new widgets and toolkeys<a class="headerlink" href="#creating-and-registering-new-widgets-and-toolkeys" title="Permalink to this headline"></a></h2>
+<h2>Creating and registering new widgets and toolkeys<a class="headerlink" href="#creating-and-registering-new-widgets-and-toolkeys" title="Permalink to this heading"></a></h2>
 <p>To generate GUIs of specific methods and functions, HyperSpy uses widgets and
 toolkeys:</p>
 <ul class="simple">
@@ -387,7 +388,7 @@ or to a module function.</p></li>
 <a class="reference external" href="https://github.com/hyperspy/hyperspy_gui_ipywidgets">hyperspy-gui-ipywidgets</a>
 provide widgets for toolkeys declared in HyperSpy.</p>
 <section id="registering-toolkeys">
-<h3>Registering toolkeys<a class="headerlink" href="#registering-toolkeys" title="Permalink to this headline"></a></h3>
+<h3>Registering toolkeys<a class="headerlink" href="#registering-toolkeys" title="Permalink to this heading"></a></h3>
 <p>To register a new toolkey:</p>
 <ol class="arabic simple">
 <li><p>Declare a new toolkey, <em>e. g.</em> by adding the <code class="xref py py-func docutils literal notranslate"><span class="pre">add_gui_method()</span></code>
@@ -406,7 +407,7 @@ the <code class="docutils literal notranslate"><span class="pre">hyperspy_extens
 </div>
 </section>
 <section id="registering-widgets">
-<h3>Registering widgets<a class="headerlink" href="#registering-widgets" title="Permalink to this headline"></a></h3>
+<h3>Registering widgets<a class="headerlink" href="#registering-widgets" title="Permalink to this heading"></a></h3>
 <p>In the example below, we register a new <code class="docutils literal notranslate"><span class="pre">ipywidget</span></code> widget for the
 <code class="docutils literal notranslate"><span class="pre">my_package.MyComponent</span></code> toolkey of the previous example. The <code class="docutils literal notranslate"><span class="pre">function</span></code>
 simply returns the widget to display. The key <em>module</em> defines where the functions
@@ -425,7 +426,7 @@ resides.</p>
 </section>
 </section>
 <section id="integration-test-suite">
-<span id="integration-test-suite-label"></span><h2>Integration test suite<a class="headerlink" href="#integration-test-suite" title="Permalink to this headline"></a></h2>
+<span id="integration-test-suite-label"></span><h2>Integration test suite<a class="headerlink" href="#integration-test-suite" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference external" href="https://github.com/hyperspy/hyperspy-extensions-list/actions">integration test suite</a>
 runs the test suite of HyperSpy and of all registered HyperSpy extensions on a daily basis against both the
 release and development versions. The build matrix is as follows:</p>
