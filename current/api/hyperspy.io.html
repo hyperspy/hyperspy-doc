@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.io module &mdash; HyperSpy 1.7.1 documentation</title>
+  <title>hyperspy.io module &mdash; HyperSpy 1.7.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -50,7 +50,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.1
+                1.7.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -233,7 +233,7 @@ and the developer guide for details on how to add new signal_types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – Signal dtype</p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a>) – Signal dtype</p></li>
 <li><p><strong>signal_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Signal dimension</p></li>
 <li><p><strong>signal_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Signal type. Default ‘’. Will log a warning if it is unknown to HyperSpy.</p></li>
 <li><p><strong>lazy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, returns the matching LazySignal subclass. Default is False.</p></li>
@@ -373,7 +373,7 @@ for each EDS detectors.</p></li>
 <li><p><strong>rebin_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: rebin the energy axis by the integer provided
 during loading in order to save memory space. Needs to be a multiple of
 the length of the energy dimension (default 1).</p></li>
-<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><em>numpy.dtype</em></a><em>, </em><em>None</em><em>, </em><em>optional</em>) – Only for Velox emd files: set the dtype of the spectrum image data in
+<li><p><strong>SI_dtype</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><em>numpy.dtype</em></a><em>, </em><em>None</em><em>, </em><em>optional</em>) – Only for Velox emd files: set the dtype of the spectrum image data in
 order to save memory space. If None, the default dtype from the Velox emd
 file is used.</p></li>
 <li><p><strong>load_SI_image_stack</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Only for Velox emd files: if True, load the stack of STEM images
@@ -426,6 +426,17 @@ stacking:</p>
 </div>
 <p>Specify the file reader to use</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;a_nexus_file.h5&#39;</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="s1">&#39;nxs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Loading a file containing several datasets:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spameggsandham.nxs&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">[&lt;Signal1D, title: spam, dimensions: (32,32|1024)&gt;,</span>
+<span class="go"> &lt;Signal1D, title: eggs, dimensions: (32,32|1024)&gt;,</span>
+<span class="go"> &lt;Signal1D, title: ham, dimensions: (32,32|1024)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use list indexation to access single signal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Signal1D, title: spam, dimensions: (32,32|1024)&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
