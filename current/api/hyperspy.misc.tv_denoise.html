@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hyperspy.misc.tv_denoise module &mdash; HyperSpy 1.7.2 documentation</title>
+  <title>hyperspy.misc.tv_denoise module &mdash; HyperSpy 1.7.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,6 +18,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/toggleprompt.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -50,7 +51,7 @@
             <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.2
+                1.7.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -164,17 +165,17 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im</strong> (<em>ndarray</em>) – input data to be denoised</p></li>
-<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
 the expense of fidelity to <code class="docutils literal notranslate"><span class="pre">input</span></code>)</p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
+<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
 the stop criterion. The algorithm stops when:</p>
 <blockquote>
 <div><p>(E_(n-1) - E_n) &lt; eps * E_0</p>
 </div></blockquote>
 </p></li>
-<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
+<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
 keep_type is False by default, and the dtype of the output is float</p></li>
-<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
+<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -198,10 +199,10 @@ Springer, 2004, 20, 89-97.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">ascent</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">ascent</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">ascent</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_ascent</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">ascent</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">60.0</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">skimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">camera</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_camera</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">60.0</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -214,17 +215,17 @@ Springer, 2004, 20, 89-97.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im</strong> (<em>ndarray</em>) – input data to be denoised</p></li>
-<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
 the expense of fidelity to <code class="docutils literal notranslate"><span class="pre">input</span></code>)</p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
+<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
 the stop criterion. The algorithm stops when:</p>
 <blockquote>
 <div><p>(E_(n-1) - E_n) &lt; eps * E_0</p>
 </div></blockquote>
 </p></li>
-<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
+<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
 keep_type is False by default, and the dtype of the output is float</p></li>
-<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
+<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -248,10 +249,10 @@ Springer, 2004, 20, 89-97.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ascent</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">ascent</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">ascent</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_ascent</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">ascent</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">60.0</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">skimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">camera</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">ascent</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_camera</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">60.0</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -264,17 +265,17 @@ Springer, 2004, 20, 89-97.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>im</strong> (<em>ndarray</em>) – 3-D input data to be denoised</p></li>
-<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
 the expense of fidelity to <code class="docutils literal notranslate"><span class="pre">input</span></code>)</p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
+<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that determines
 the stop criterion. The algorithm stops when:</p>
 <blockquote>
 <div><p>(E_(n-1) - E_n) &lt; eps * E_0</p>
 </div></blockquote>
 </p></li>
-<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
+<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
 keep_type is False by default, and the dtype of the output is float</p></li>
-<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
+<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -304,20 +305,20 @@ keep_type is False by default, and the dtype of the output is float</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>im</strong> (<em>ndarray</em><em> (</em><em>2d</em><em> or </em><em>3d</em><em>) </em><em>of ints</em><em>, </em><em>uints</em><em> or </em><em>floats</em>) – input data to be denoised. <cite>im</cite> can be of any numeric type,
+<li><p><strong>im</strong> (<em>ndarray</em><em> (</em><em>2d</em><em> or </em><em>3d</em><em>) of </em><em>ints</em><em>, </em><em>uints</em><em> or </em><em>floats</em>) – input data to be denoised. <cite>im</cite> can be of any numeric type,
 but it is cast into an ndarray of floats for the computation
 of the denoised image.</p></li>
-<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – denoising weight. The greater <code class="docutils literal notranslate"><span class="pre">weight</span></code>, the more denoising (at
 the expense of fidelity to <code class="docutils literal notranslate"><span class="pre">input</span></code>)</p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that
+<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – <p>relative difference of the value of the cost function that
 determines the stop criterion. The algorithm stops when:</p>
 <blockquote>
 <div><p>(E_(n-1) - E_n) &lt; eps * E_0</p>
 </div></blockquote>
 </p></li>
-<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
+<li><p><strong>keep_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em><em> (</em><em>False</em><em>)</em>) – whether the output has the same dtype as the input array.
 keep_type is False by default, and the dtype of the output is float</p></li>
-<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
+<li><p><strong>n_iter_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – maximal number of iterations used for the optimization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -347,10 +348,10 @@ Springer, 2004, 20, 89-97.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># 2D example using ascent</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">ascent</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ascent</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">ascent</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">ascent</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_ascent</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">ascent</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">skimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">camera</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">camera</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">camera</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">denoised_camera</span> <span class="o">=</span> <span class="n">tv_denoise</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># 3D example on synthetic data</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">40</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span><span class="mi">22</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mi">17</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="o">**</span><span class="mi">2</span>
