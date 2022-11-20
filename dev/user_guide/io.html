@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Loading and saving data &#8212; HyperSpy 2.0.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom-styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/io';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.0.dev0';
+        </script>
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Signal class" href="signal/index.html" />
+    <link rel="prev" title="Basic Usage" href="basic_usage.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/hyperspy_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/hyperspy_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a>
+    
+    <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        2.0.dev0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><img src="../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><img src="../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Loading and saving data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals and Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="signal/index.html">The Signal class</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="signal/signal_basics.html">Basics of signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/ragged.html">Ragged signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/binned_signals.html">Binned and unbinned signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/indexing.html">Indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/generic_tools.html">Generic tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/basic_statistical_analysis.html">Basic statistical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/setting_noise_properties.html">Setting the noise properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/speeding_up_operation.html">Speeding up operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/complex_datatype.html">Complex datatype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/gpu.html">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Data visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="mva/index.html">Machine learning</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="mva/decomposition.html">Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva/bss.html">Blind Source Separation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva/clustering.html">Cluster analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva/visualize_results.html">Visualizing results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mva/export_results.html">Export results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data.html">Working with big data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Domain-Specific Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="electron_holography.html">Electron Holography</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="region_of_interest.html">Region Of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive_operations.html">Interactive Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="loading-and-saving-data">
+<span id="io"></span><h1>Loading and saving data<a class="headerlink" href="#loading-and-saving-data" title="Permalink to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The IO plugins formerly developed within HyperSpy have now been moved to
+the separate <a class="reference external" href="https://github.com/hyperspy/rosettasciio">RosettaSciIO repository</a>
+in order to facilitate a wider use also by other packages. Plugins supporting
+additional formats or corrections/enhancements to existing plugins should now
+be contributed to the <a class="reference external" href="https://github.com/hyperspy/rosettasciio">RosettaSciIO repository</a>
+and file format specific issues should be reported to the <a class="reference external" href="https://github.com/hyperspy/rosettasciio/issues">RosettaSciIO issue
+tracker</a>.</p>
+</div>
+<section id="loading">
+<span id="loading-files"></span><h2>Loading<a class="headerlink" href="#loading" title="Permalink to this heading">#</a></h2>
+<section id="basic-usage">
+<h3>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading">#</a></h3>
+<p>HyperSpy can read and write to multiple formats (see <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a>).
+To load data use the <a class="reference internal" href="../reference/api.html#hyperspy.api.load" title="hyperspy.api.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> command. For example, to load the
+image <code class="docutils literal notranslate"><span class="pre">spam.jpg</span></code>, you can type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spam.jpg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If loading was successful, the variable <code class="docutils literal notranslate"><span class="pre">s</span></code> contains a HyperSpy signal or any
+type of signal defined in one of the <a class="reference internal" href="../intro.html#hyperspy-extensions-label"><span class="std std-ref">HyperSpy extensions</span></a>, see
+<a class="reference internal" href="#load-specify-signal-type-label"><span class="std std-ref">Specifying signal type</span></a> for more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the file contains several datasets, the <code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code> function
+will return a list of HyperSpy signals, instead of a single HyperSpy signal.
+Each signal can then be accessed using list indexation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spameggsandham.hspy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">[&lt;Signal1D, title: spam, dimensions: (32,32|1024)&gt;,</span>
+<span class="go"> &lt;Signal1D, title: eggs, dimensions: (32,32|1024)&gt;,</span>
+<span class="go"> &lt;Signal1D, title: ham, dimensions: (32,32|1024)&gt;]</span>
+</pre></div>
+</div>
+<p>Using indexation to access the first signal (index 0):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Signal1D, title: spam, dimensions: (32,32|1024)&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The load function returns an object that contains data read from the file.
+We assign this object to the variable <code class="docutils literal notranslate"><span class="pre">s</span></code> but you can choose any (valid)
+variable name you like. for the filename, don't forget to include the
+quotation marks and the file extension.</p>
+</div>
+<p>If no argument is passed to the load function, a window will be raised that
+allows to select a single file through your OS file manager, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This raises the load user interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is also possible to load multiple files at once or even stack multiple
+files. For more details read <a class="reference internal" href="#load-multiple-label"><span class="std std-ref">Loading multiple files</span></a>.</p>
+</section>
+<section id="specifying-reader">
+<h3>Specifying reader<a class="headerlink" href="#specifying-reader" title="Permalink to this heading">#</a></h3>
+<p>HyperSpy will attempt to infer the appropriate file reader to use based on
+the file extension (for example. <code class="docutils literal notranslate"><span class="pre">.hspy</span></code>, <code class="docutils literal notranslate"><span class="pre">.emd</span></code> and so on). You can
+override this using the <code class="docutils literal notranslate"><span class="pre">reader</span></code> keyword:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a .hspy file with an unknown extension</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.some_extension&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="s2">&quot;hspy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="specifying-signal-type">
+<span id="load-specify-signal-type-label"></span><h3>Specifying signal type<a class="headerlink" href="#specifying-signal-type" title="Permalink to this heading">#</a></h3>
+<p>HyperSpy will attempt to infer the most suitable signal type for the data being loaded.
+Domain specific signal types are provided by other libraries and to list the signal types
+available on your local installation use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">print_known_signal_types</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When loading data, the signal type can be specified by providing the <code class="docutils literal notranslate"><span class="pre">signal_type</span></code> keyword,
+which has to correspond to one of the available subclasses of signal:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s2">&quot;EELS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the loaded file contains several datasets, the <code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code>
+function will return a list of the corresponding signals:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spameggsandham.hspy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">[&lt;Signal1D, title: spam, dimensions: (32,32|1024)&gt;,</span>
+<span class="go">&lt;Signal1D, title: eggs, dimensions: (32,32|1024)&gt;,</span>
+<span class="go">&lt;Signal1D, title: ham, dimensions: (32,32|1024)&gt;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note for python programmers: the data is stored in a numpy array
+in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code> attribute, but you will not
+normally need to access it there.</p>
+</div>
+</section>
+<section id="metadata">
+<h3>Metadata<a class="headerlink" href="#metadata" title="Permalink to this heading">#</a></h3>
+<p>Most scientific file formats store some extra information about the data and the
+conditions under which it was acquired (metadata). HyperSpy reads most of them and
+stores them in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code> attribute.
+Also, depending on the file format, a part of this information will be mapped by
+HyperSpy to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> attribute, where it can
+for example be used by routines operating on the signal. See the <a class="reference internal" href="../reference/metadata.html#metadata-structure"><span class="std std-ref">metadata structure</span></a> for details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Extensive metadata can slow down loading and processing, and
+loading the <code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code> can be disabled
+using the <code class="docutils literal notranslate"><span class="pre">load_original_metadata</span></code> argument of the <a class="reference internal" href="../reference/api.html#hyperspy.api.load" title="hyperspy.api.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a>
+function. If this argument is set to <cite>False</cite>, the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> will still be populated.</p>
+</div>
+<p>To print the content of the attributes simply use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code> and
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> can be exported to text files
+using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code> method, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">original_metadata</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="lazy-loading-of-large-datasets">
+<span id="load-to-memory-label"></span><h3>Lazy loading of large datasets<a class="headerlink" href="#lazy-loading-of-large-datasets" title="Permalink to this heading">#</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2: </span><code class="docutils literal notranslate"><span class="pre">lazy</span></code> keyword argument.</p>
+</div>
+<p>Almost all file readers support <cite>lazy</cite> loading, which means accessing the data
+without loading it to memory (see <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a> for a
+list). This feature can be useful when analysing large files. To use this feature,
+set <code class="docutils literal notranslate"><span class="pre">lazy</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More details on lazy evaluation support can be found in <a class="reference internal" href="big_data.html#big-data-label"><span class="std std-ref">Working with big data</span></a>.</p>
+<p>The units of the navigation and signal axes can be converted automatically
+during loading using the <code class="docutils literal notranslate"><span class="pre">convert_units</span></code> parameter. If <cite>True</cite>, the
+<code class="docutils literal notranslate"><span class="pre">convert_to_units</span></code> method of the <code class="docutils literal notranslate"><span class="pre">axes_manager</span></code> will be used for the conversion
+and if set to <cite>False</cite>, the units will not be converted (default).</p>
+</section>
+<section id="loading-multiple-files">
+<span id="load-multiple-label"></span><h3>Loading multiple files<a class="headerlink" href="#loading-multiple-files" title="Permalink to this heading">#</a></h3>
+<p>Rather than loading files individually, several files can be loaded with a
+single command. This can be done by passing a list of filenames to the load
+functions, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">([</span><span class="s2">&quot;file1.hspy&quot;</span><span class="p">,</span> <span class="s2">&quot;file2.hspy&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>or by using <a class="reference external" href="https://docs.python.org/library/glob.html">shell-style wildcards</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;file*.hspy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, regular expression type character classes can be used such as
+<code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> for lowercase letters or <code class="docutils literal notranslate"><span class="pre">[0-9]</span></code> for one digit integers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;file[0-9].hspy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Wildcards are implemented using <code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code>, which treats <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">[</span></code>
+and <code class="docutils literal notranslate"><span class="pre">]</span></code> as special characters for pattern matching. If your filename or
+path contains square brackets, you may want to set
+<code class="docutils literal notranslate"><span class="pre">escape_square_brackets=True</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Say there are two files like this:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># /home/data/afile[1x1].hspy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># /home/data/afile[1x2].hspy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/home/data/afile[*].hspy&quot;</span><span class="p">,</span> <span class="n">escape_square_brackets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>HyperSpy also supports <code class="docutils literal notranslate"><span class="pre">`pathlib.Path</span></code> &lt;<a class="reference external" href="https://docs.python.org/3/library/pathlib.html">https://docs.python.org/3/library/pathlib.html</a>&gt;`_
+objects, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use pathlib.Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/path/to/a/file.hspy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use pathlib.Path.glob</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/path/to/some/files/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hspy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default HyperSpy will return a list of all the files loaded. Alternatively,
+by setting <code class="docutils literal notranslate"><span class="pre">stack=True</span></code>, HyperSpy can be instructed to stack the data - given
+that the files contain data with exactly the same
+dimensions. If this is not the case, an error is raised. If each file contains
+multiple (N) signals, N stacks will be created. Here, the number of signals
+per file must also match, or an error will be raised.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ls</span>
+<span class="go">CL1.raw  CL1.rpl  CL2.raw  CL2.rpl  CL3.raw  CL3.rpl  CL4.raw  CL4.rpl</span>
+<span class="go">LL3.raw  LL3.rpl  shift_map-SI3.npy  hdf5/</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;*.rpl&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">[&lt;EELSSpectrum, title: CL1, dimensions: (64, 64, 1024)&gt;,</span>
+<span class="go">&lt;EELSSpectrum, title: CL2, dimensions: (64, 64, 1024)&gt;,</span>
+<span class="go">&lt;EELSSpectrum, title: CL3, dimensions: (64, 64, 1024)&gt;,</span>
+<span class="go">&lt;EELSSpectrum, title: CL4, dimensions: (64, 64, 1024)&gt;,</span>
+<span class="go">&lt;EELSSpectrum, title: LL3, dimensions: (64, 64, 1024)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;*.rpl&#39;</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;EELSSpectrum, title: mva, dimensions: (5, 64, 64, 1024)&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-example-data-and-data-from-online-databases">
+<span id="example-data-label"></span><h3>Loading example data and data from online databases<a class="headerlink" href="#loading-example-data-and-data-from-online-databases" title="Permalink to this heading">#</a></h3>
+<p>HyperSpy is distributed with some example data that can be found in
+<cite>hs.datasets.example_signals</cite>. The following example plots one of the example
+signals:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_TEM_Spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4: </span><a class="reference internal" href="../reference/api.datasets/artificial_data.html#module-hyperspy.api.datasets.artificial_data" title="hyperspy.api.datasets.artificial_data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">artificial_data</span></code></a></p>
+</div>
+<p>There are also artificial datasets, which are made to resemble real
+experimental data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">artificial_data</span><span class="o">.</span><span class="n">get_core_loss_eels_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p id="eelsdb-label">The <code class="xref py py-func docutils literal notranslate"><span class="pre">eelsdb()</span></code> function in <cite>hs.datasets</cite> can
+directly load spectra from <a class="reference external" href="https://eelsdb.eu">The EELS Database</a>. For
+example, the following loads all the boron trioxide spectra currently
+available in the database:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">eelsdb</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;B2O3&quot;</span><span class="p">)</span>
+<span class="go">[&lt;EELSSpectrum, title: Boron oxide, dimensions: (|520)&gt;,</span>
+<span class="go"> &lt;EELSSpectrum, title: Boron oxide, dimensions: (|520)&gt;]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="saving">
+<span id="saving-files"></span><h2>Saving<a class="headerlink" href="#saving" title="Permalink to this heading">#</a></h2>
+<p>To save data to a file use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code> method. The
+first argument is the filename and the format is defined by the filename
+extension. If the filename does not contain the extension, the default format
+(<a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/hspy.html#hspy-format" title="(in RosettaSciIO)"><span class="xref std std-ref">HSpy-HDF5</span></a>) is used. For example, if the <code class="xref py py-const docutils literal notranslate"><span class="pre">s</span></code> variable
+contains the <a class="reference internal" href="../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.signal.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> that you want to write to a file,
+the following will write the data to a file called <code class="file docutils literal notranslate"><span class="pre">spectrum.hspy</span></code> in the
+default <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/hspy.html#hspy-format" title="(in RosettaSciIO)"><span class="xref std std-ref">HSpy-HDF5</span></a> format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;spectrum&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to save to the <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/ripple.html#ripple-format" title="(in RosettaSciIO)"><span class="xref std std-ref">ripple format</span></a> instead, write:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;spectrum.rpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Some formats take extra arguments. See the corresponding pages at
+<a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a> for more information.</p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="basic_usage.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Basic Usage</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="signal/index.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">The Signal class</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading">
+   Loading
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-usage">
+     Basic usage
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#specifying-reader">
+     Specifying reader
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#specifying-signal-type">
+     Specifying signal type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metadata">
+     Metadata
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lazy-loading-of-large-datasets">
+     Lazy loading of large datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-multiple-files">
+     Loading multiple files
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-example-data-and-data-from-online-databases">
+     Loading example data and data from online databases
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#saving">
+   Saving
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/user_guide/io.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2011-2022, The HyperSpy development team.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
