@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Storing models &#8212; HyperSpy 2.0.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom-styles.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/toggleprompt.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/model/storing_models';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.0.dev0';
+        </script>
+    <link rel="shortcut icon" href="../../_static/hyperspy.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fitting big data" href="fitting_big_data.html" />
+    <link rel="prev" title="Fitting the model to the data" href="fitting_model.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see <a href='https://hyperspy.org/hyperspy-doc/dev/changes.html'>upcoming changes!</a></div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/hyperspy_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a></div>
+    
+      <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      2.0.dev0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Loading and saving data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals and Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../signal/index.html">The Signal class</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../signal/signal_basics.html">Basics of signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/ragged.html">Ragged signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/binned_signals.html">Binned and unbinned signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/indexing.html">Indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/generic_tools.html">Generic tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/basic_statistical_analysis.html">Basic statistical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/setting_noise_properties.html">Setting the noise properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/speeding_up_operation.html">Speeding up operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/complex_datatype.html">Complex datatype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/gpu.html">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualisation.html">Data visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../mva/index.html">Machine learning</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mva/decomposition.html">Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/bss.html">Blind Source Separation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/clustering.html">Cluster analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/visualize_results.html">Visualizing results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/export_results.html">Export results</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Model fitting</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="creating_model.html">Creating a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_components.html">Model components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_components.html">Adding components to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexing_model.html">Indexing the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_parameters.html">Getting and setting parameter values and attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fitting_model.html">Fitting the model to the data</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Storing models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fitting_big_data.html">Fitting big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SAMFire.html">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data.html">Working with big data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Domain-Specific Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electron_holography.html">Electron Holography</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../region_of_interest.html">Region Of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive_operations.html">Interactive Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Model fitting</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Storing models</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="storing-models">
+<span id="storing-models-label"></span><h1>Storing models<a class="headerlink" href="#storing-models" title="Permalink to this heading">#</a></h1>
+<p>Multiple models can be stored in the same signal. In particular, when
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.store" title="hyperspy.model.BaseModel.store"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store()</span></code></a> is called, a full “frozen” copy of the model
+is stored in stored in the signal’s <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelManager</span></code>,
+which can be accessed in the <code class="docutils literal notranslate"><span class="pre">models</span></code> attribute (i.e. <code class="docutils literal notranslate"><span class="pre">s.models</span></code>)
+The stored models can be recreated at any time by calling
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">restore()</span></code> with the stored
+model name as an argument. To remove a model from storage, simply call
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">remove()</span></code>.</p>
+<p>The stored models can be either given a name, or assigned one automatically.
+The automatic naming follows alphabetical scheme, with the sequence being (a,
+b, …, z, aa, ab, …, az, ba, …).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to slice a model, you have to perform the operation on the
+model itself, not its stored version</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Modifying a signal in-place (e.g. <code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">crop()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">align1D()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">align2D()</span></code> and similar)
+will invalidate all stored models. This is done intentionally.</p>
+</div>
+<p>Current stored models can be listed by calling <code class="docutils literal notranslate"><span class="pre">s.models</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Lorentzian</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">models</span>
+<span class="go">└── myname</span>
+<span class="go">    ├── components</span>
+<span class="go">    │   └── Lorentzian</span>
+<span class="go">    ├── date = 2015-09-07 12:01:50</span>
+<span class="go">    └── dimensions = (|100)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Exponential</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">store</span><span class="p">()</span> <span class="c1"># assign model name automatically</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">models</span>
+<span class="go">├── a</span>
+<span class="go">│   ├── components</span>
+<span class="go">│   │   ├── Exponential</span>
+<span class="go">│   │   └── Lorentzian</span>
+<span class="go">│   ├── date = 2015-09-07 12:01:57</span>
+<span class="go">│   └── dimensions = (|100)</span>
+<span class="go">└── myname</span>
+<span class="go">    ├── components</span>
+<span class="go">    │   └── Lorentzian</span>
+<span class="go">    ├── date = 2015-09-07 12:01:50</span>
+<span class="go">    └── dimensions = (|100)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">components</span>
+<span class="go">   # |      Attribute Name |       Component Name |       Component Type</span>
+<span class="go">---- | ------------------- | -------------------- | --------------------</span>
+<span class="go">   0 |          Lorentzian |           Lorentzian |           Lorentzian</span>
+</pre></div>
+</div>
+<section id="saving-and-loading-the-result-of-the-fit">
+<h2>Saving and loading the result of the fit<a class="headerlink" href="#saving-and-loading-the-result-of-the-fit" title="Permalink to this heading">#</a></h2>
+<p>To save a model, a convenience function <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.save" title="hyperspy.model.BaseModel.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> is
+provided, which stores the current model into its signal and saves the
+signal. As described in <a class="reference internal" href="#storing-models-label"><span class="std std-ref">Storing models</span></a>, more than just one
+model can be saved with one signal.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># analysis and fitting goes here</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my_filename&#39;</span><span class="p">,</span> <span class="s1">&#39;model_name&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my_filename.hspy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="s1">&#39;model_name&#39;</span><span class="p">)</span> <span class="c1"># or l.models.model_name.restore()</span>
+</pre></div>
+</div>
+<p>For older versions of HyperSpy (before 0.9), the instructions were as follows:</p>
+<blockquote>
+<div><p>Note that this method is known to be brittle i.e. there is no
+guarantee that a version of HyperSpy different from the one used to save
+the model will be able to load it successfully.  Also, it is
+advisable not to use this method in combination with functions that
+alter the value of the parameters interactively (e.g.
+<cite>enable_adjust_position</cite>) as the modifications made by this functions
+are normally not stored in the IPython notebook or Python script.</p>
+<p>To save a model:</p>
+<ol class="arabic simple">
+<li><p>Save the parameter arrays to a file using
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.save_parameters2file" title="hyperspy.model.BaseModel.save_parameters2file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_parameters2file()</span></code></a>.</p></li>
+<li><p>Save all the commands that used to create the model to a file. This
+can be done in the form of an IPython notebook or a Python script.</p></li>
+<li><p>(Optional) Comment out or delete the fitting commands (e.g.
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a>).</p></li>
+</ol>
+<p>To recreate the model:</p>
+<ol class="arabic simple">
+<li><p>Execute the IPython notebook or Python script.</p></li>
+<li><p>Use <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.load_parameters_from_file" title="hyperspy.model.BaseModel.load_parameters_from_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_parameters_from_file()</span></code></a> to load
+back the parameter values and arrays.</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="exporting-the-result-of-the-fit">
+<h2>Exporting the result of the fit<a class="headerlink" href="#exporting-the-result-of-the-fit" title="Permalink to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.export_results" title="hyperspy.model.BaseModel.export_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export_results()</span></code></a>,
+<a class="reference internal" href="../../reference/base_classes/model/component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/component.html#hyperspy.component.Component.export" title="hyperspy.component.Component.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a> and
+<a class="reference internal" href="../../reference/base_classes/model/parameter.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/parameter.html#hyperspy.component.Parameter.export" title="hyperspy.component.Parameter.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a>
+methods can be used to export the result of the optimization in all supported
+formats.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fitting_model.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fitting the model to the data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="fitting_big_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fitting big data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-and-loading-the-result-of-the-fit">Saving and loading the result of the fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-the-result-of-the-fit">Exporting the result of the fit</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/user_guide/model/storing_models.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2011-2023, The HyperSpy development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

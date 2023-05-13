@@ -1,0 +1,1468 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Fitting the model to the data &#8212; HyperSpy 2.0.dev0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom-styles.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/toggleprompt.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/model/fitting_model';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.0.dev0';
+        </script>
+    <link rel="shortcut icon" href="../../_static/hyperspy.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Storing models" href="storing_models.html" />
+    <link rel="prev" title="Getting and setting parameter values and attributes" href="model_parameters.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see <a href='https://hyperspy.org/hyperspy-doc/dev/changes.html'>upcoming changes!</a></div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/hyperspy_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a></div>
+    
+      <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      2.0.dev0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Example
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter"></i></span>
+            <label class="sr-only">Gitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Loading and saving data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals and Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../signal/index.html">The Signal class</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../signal/signal_basics.html">Basics of signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/ragged.html">Ragged signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/binned_signals.html">Binned and unbinned signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/indexing.html">Indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/generic_tools.html">Generic tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/basic_statistical_analysis.html">Basic statistical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/setting_noise_properties.html">Setting the noise properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/speeding_up_operation.html">Speeding up operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/complex_datatype.html">Complex datatype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/gpu.html">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualisation.html">Data visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../mva/index.html">Machine learning</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mva/decomposition.html">Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/bss.html">Blind Source Separation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/clustering.html">Cluster analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/visualize_results.html">Visualizing results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/export_results.html">Export results</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Model fitting</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="creating_model.html">Creating a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_components.html">Model components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_components.html">Adding components to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexing_model.html">Indexing the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_parameters.html">Getting and setting parameter values and attributes</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Fitting the model to the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storing_models.html">Storing models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fitting_big_data.html">Fitting big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SAMFire.html">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data.html">Working with big data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Domain-Specific Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electron_holography.html">Electron Holography</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../region_of_interest.html">Region Of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive_operations.html">Interactive Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Model fitting</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Fitting the model to the data</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="fitting-the-model-to-the-data">
+<span id="model-fitting"></span><h1>Fitting the model to the data<a class="headerlink" href="#fitting-the-model-to-the-data" title="Permalink to this heading">#</a></h1>
+<p>To fit the model to the data at the current coordinates (e.g. to fit one
+spectrum at a particular point in a spectrum-image), use
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>. HyperSpy implements a number of
+different optimization approaches, each of which can have particular
+benefits and/or drawbacks depending on your specific application.
+A good approach to choosing an optimization approach is to ask yourself
+the question “Do you want to…”:</p>
+<ul class="simple">
+<li><p>Apply bounds to your model parameter values?</p></li>
+<li><p>Use gradient-based fitting algorithms to accelerate your fit?</p></li>
+<li><p>Estimate the standard deviations of the parameter values found by the fit?</p></li>
+<li><p>Fit your data in the least-squares sense, or use another loss function?</p></li>
+<li><p>Find the global optima for your parameters, or is a local optima acceptable?</p></li>
+</ul>
+<section id="optimization-algorithms">
+<h2>Optimization algorithms<a class="headerlink" href="#optimization-algorithms" title="Permalink to this heading">#</a></h2>
+<p>The following table summarizes the features of some of the optimizers
+currently available in HyperSpy, including whether they support parameter
+bounds, gradients and parameter error estimation. The “Type” column indicates
+whether the optimizers find a local or global optima.</p>
+<span id="optimizers-table"></span><table class="table" id="id10">
+<caption><span class="caption-text">Features of supported curve-fitting optimizers.</span><a class="headerlink" href="#id10" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Optimizer</p></th>
+<th class="head"><p>Bounds</p></th>
+<th class="head"><p>Gradients</p></th>
+<th class="head"><p>Errors</p></th>
+<th class="head"><p>Loss function</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Linear</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code> (default)</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>local</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;trf&quot;</span></code></p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>local</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;dogbox&quot;</span></code></p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>local</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;odr&quot;</span></code></p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>local</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;lstsq&quot;</span></code></p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>global</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;ridge_regression&quot;</span></code></p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id7" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
+<td><p>Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></p></td>
+<td><p>global</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>No</p></td>
+<td><p>All</p></td>
+<td><p>local</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;Differential</span> <span class="pre">Evolution&quot;</span></code></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>All</p></td>
+<td><p>global</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;Dual</span> <span class="pre">Annealing&quot;</span></code> <a class="footnote-reference brackets" href="#id9" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>All</p></td>
+<td><p>global</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;SHGO&quot;</span></code> <a class="footnote-reference brackets" href="#id9" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>All</p></td>
+<td><p>global</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="note">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<p>Requires the <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> <code class="docutils literal notranslate"><span class="pre">calculate_errors</span> <span class="pre">=</span> <span class="pre">True</span></code> argument
+in most cases. See the documentation below on <a class="reference internal" href="#linear-fitting-label"><span class="std std-ref">linear least square fitting</span></a>
+for more info.</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="note">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
+<p><strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
+supported by HyperSpy; however, only some of them support bounds and/or gradients. For more information,
+please see the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy documentation</a>.</p>
+</aside>
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<p>Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p>
+</aside>
+</aside>
+<p>The default optimizer in HyperSpy is <code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code>, which stands for the <a class="reference external" href="https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm">Levenberg-Marquardt
+algorithm</a>. In
+earlier versions of HyperSpy (&lt; 1.6) this was known as <code class="docutils literal notranslate"><span class="pre">&quot;leastsq&quot;</span></code>.</p>
+</section>
+<section id="loss-functions">
+<h2>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this heading">#</a></h2>
+<p>HyperSpy supports a number of loss functions. The default is <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code>,
+i.e. the least-squares loss. For the vast majority of cases, this loss
+function is appropriate, and has the additional benefit of supporting
+parameter error estimation and <a class="reference internal" href="#model-goodness-of-fit"><span class="std std-ref">goodness-of-fit</span></a>
+testing. However, if your data contains very low counts per pixel, or
+is corrupted by outliers, the <code class="docutils literal notranslate"><span class="pre">&quot;ML-poisson&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;huber&quot;</span></code> loss
+functions may be worth investigating.</p>
+<section id="least-squares-with-error-estimation">
+<h3>Least squares with error estimation<a class="headerlink" href="#least-squares-with-error-estimation" title="Permalink to this heading">#</a></h3>
+<p>The following example shows how to perfom least squares optimization with
+error estimation. First we create data consisting of a line
+<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b</span></code> with <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">100</span></code>, and we then add Gaussian
+noise to it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To fit it, we create a model consisting of a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Polynomial</span></code> component of order 1 and fit it
+to the data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once the fit is complete, the optimized value of the parameters and their
+estimated standard deviation are stored in the following line attributes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0.9924615648843765</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span>
+<span class="go">103.67507406125888</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">std</span>
+<span class="go">0.11771053738516088</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">std</span>
+<span class="go">13.541061301257537</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When the noise is heteroscedastic, only if the
+<code class="docutils literal notranslate"><span class="pre">metadata.Signal.Noise_properties.variance</span></code> attribute of the
+<a class="reference internal" href="../../reference/api.signals/Signal1D.html#hyperspy.api.signals.Signal1D" title="hyperspy._signals.signal1d.Signal1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal1D</span></code></a> instance is defined can
+the parameter standard deviations be estimated accurately.</p>
+<p>If the variance is not defined, the standard deviations are still
+computed, by setting variance equal to 1. However, this calculation
+will not be correct unless an accurate value of the variance is
+provided. See <a class="reference internal" href="../signal/setting_noise_properties.html#signal-noise-properties"><span class="std std-ref">Setting the noise properties</span></a> for more information.</p>
+</div>
+</section>
+<section id="weighted-least-squares-with-error-estimation">
+<span id="weighted-least-squares-label"></span><h3>Weighted least squares with error estimation<a class="headerlink" href="#weighted-least-squares-with-error-estimation" title="Permalink to this heading">#</a></h3>
+<p>In the following example, we add Poisson noise to the data instead of
+Gaussian noise, and proceed to fit as in the previous example.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_poissonian_noise</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span>  <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0052331707848698, -1.0723588390873573)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
+<span class="go">(0.0081710549764721901, 1.4117294994070277)</span>
+</pre></div>
+</div>
+<p>Because the noise is heteroscedastic, the least squares optimizer estimation is
+biased. A more accurate result can be obtained with weighted least squares,
+where the weights are proportional to the inverse of the noise variance.
+Although this is still biased for Poisson noise, it is a good approximation
+in most cases where there are a sufficient number of counts per pixel.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp_val</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">(</span><span class="n">expected_value</span><span class="o">=</span><span class="n">exp_val</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0004224896604759, -0.46982916592391377)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
+<span class="go">(0.0055752036447948173, 0.46950832982673557)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When the attribute <code class="docutils literal notranslate"><span class="pre">metadata.Signal.Noise_properties.variance</span></code>
+is defined, the behaviour is to perform a weighted least-squares
+fit using the inverse of the noise variance as the weights.
+In this scenario, to then disable weighting, you will need to <strong>unset</strong>
+the attribute. You can achieve this with
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_noise_variance()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">set_noise_variance</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># This will now be an unweighted fit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0052331707848698, -1.0723588390873573)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="poisson-maximum-likelihood-estimation">
+<h3>Poisson maximum likelihood estimation<a class="headerlink" href="#poisson-maximum-likelihood-estimation" title="Permalink to this heading">#</a></h3>
+<p>To avoid biased estimation in the case of data corrupted by Poisson noise
+with very few counts, we can use Poisson maximum likelihood estimation (MLE) instead.
+This is an unbiased estimator for Poisson noise. To perform MLE, we must
+use a general, non-linear optimizer from the <a class="reference internal" href="#optimizers-table"><span class="std std-ref">table above</span></a>,
+such as Nelder-Mead or L-BFGS-B:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s2">&quot;ML-poisson&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
+<span class="go">(1.0030718094185611, -0.63590210946134107)</span>
+</pre></div>
+</div>
+<p>Estimation of the parameter errors is not currently supported for Poisson
+maximum likelihood estimation.</p>
+</section>
+<section id="huber-loss-function">
+<h3>Huber loss function<a class="headerlink" href="#huber-loss-function" title="Permalink to this heading">#</a></h3>
+<p>HyperSpy also implements the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Huber_loss">Huber loss</a> function,
+which is typically less sensitive to outliers in the data compared
+to the least-squares loss. Again, we need to use one of the general
+non-linear optimization algorithms:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s2">&quot;huber&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Estimation of the parameter errors is not currently supported
+for the Huber loss function.</p>
+</section>
+<section id="custom-loss-functions">
+<h3>Custom loss functions<a class="headerlink" href="#custom-loss-functions" title="Permalink to this heading">#</a></h3>
+<p>As well as the built-in loss functions described above,
+a custom loss function can be passed to the model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_custom_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="sd">&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="sd">   Parameters</span>
+<span class="gp">... </span><span class="sd">   ----------</span>
+<span class="gp">... </span><span class="sd">   model : Model instance</span>
+<span class="gp">... </span><span class="sd">       the model that is fitted.</span>
+<span class="gp">... </span><span class="sd">   values : np.ndarray</span>
+<span class="gp">... </span><span class="sd">       A one-dimensional array with free parameter values suggested by the</span>
+<span class="gp">... </span><span class="sd">       optimizer (that are not yet stored in the model).</span>
+<span class="gp">... </span><span class="sd">   data : np.ndarray</span>
+<span class="gp">... </span><span class="sd">       A one-dimensional array with current data that is being fitted.</span>
+<span class="gp">... </span><span class="sd">   weights : {np.ndarray, None}</span>
+<span class="gp">... </span><span class="sd">       An optional one-dimensional array with parameter weights.</span>
+<span class="gp">...</span><span class="sd"></span>
+<span class="gp">... </span><span class="sd">   Returns</span>
+<span class="gp">... </span><span class="sd">   -------</span>
+<span class="gp">... </span><span class="sd">   score : float</span>
+<span class="gp">... </span><span class="sd">       A signle float value, representing a score of the fit, with</span>
+<span class="gp">... </span><span class="sd">       lower values corresponding to better fits.</span>
+<span class="gp">... </span><span class="sd">   &quot;&quot;&quot;</span>
+<span class="gp">... </span>   <span class="c1"># Almost any operation can be performed, for example:</span>
+<span class="gp">... </span>   <span class="c1"># First we store the suggested values in the model</span>
+<span class="gp">... </span>   <span class="n">model</span><span class="o">.</span><span class="n">fetch_values_from_array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>   <span class="c1"># Evaluate the current model</span>
+<span class="gp">... </span>   <span class="n">cur_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">onlyactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>   <span class="c1"># Calculate the weighted difference with data</span>
+<span class="gp">... </span>   <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>   <span class="n">difference</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">cur_value</span><span class="p">)</span> <span class="o">*</span> <span class="n">weights</span>
+<span class="gp">...</span>
+<span class="gp">... </span>   <span class="c1"># Return squared and summed weighted difference</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="p">(</span><span class="n">difference</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We must use a general non-linear optimizer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;Nelder-Mead&#39;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="n">my_custom_function</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the optimizer requires an analytical gradient function, it can be similarly
+passed, using the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_custom_gradient_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="sd">&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="sd">   Parameters</span>
+<span class="gp">... </span><span class="sd">   ----------</span>
+<span class="gp">... </span><span class="sd">   model : Model instance</span>
+<span class="gp">... </span><span class="sd">       the model that is fitted.</span>
+<span class="gp">... </span><span class="sd">   values : np.ndarray</span>
+<span class="gp">... </span><span class="sd">       A one-dimensional array with free parameter values suggested by the</span>
+<span class="gp">... </span><span class="sd">       optimizer (that are not yet stored in the model).</span>
+<span class="gp">... </span><span class="sd">   data : np.ndarray</span>
+<span class="gp">... </span><span class="sd">       A one-dimensional array with current data that is being fitted.</span>
+<span class="gp">... </span><span class="sd">   weights : {np.ndarray, None}</span>
+<span class="gp">... </span><span class="sd">       An optional one-dimensional array with parameter weights.</span>
+<span class="gp">...</span><span class="sd"></span>
+<span class="gp">... </span><span class="sd">   Returns</span>
+<span class="gp">... </span><span class="sd">   -------</span>
+<span class="gp">... </span><span class="sd">   gradients : np.ndarray</span>
+<span class="gp">... </span><span class="sd">       a one-dimensional array of gradients, the size of `values`,</span>
+<span class="gp">... </span><span class="sd">       containing each parameter gradient with the given values</span>
+<span class="gp">... </span><span class="sd">   &quot;&quot;&quot;</span>
+<span class="gp">... </span>   <span class="c1"># As an example, estimate maximum likelihood gradient:</span>
+<span class="gp">... </span>   <span class="n">model</span><span class="o">.</span><span class="n">fetch_values_from_array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="n">cur_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">onlyactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>   <span class="c1"># We use in-built jacobian estimation</span>
+<span class="gp">... </span>   <span class="n">jac</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_jacobian</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">jac</span> <span class="o">*</span> <span class="p">(</span><span class="n">data</span> <span class="o">/</span> <span class="n">cur_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We must use a general non-linear optimizer again</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;L-BFGS-B&#39;</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">loss_function</span><span class="o">=</span><span class="n">my_custom_function</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">grad</span><span class="o">=</span><span class="n">my_custom_gradient_function</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-gradient-information">
+<h2>Using gradient information<a class="headerlink" href="#using-gradient-information" title="Permalink to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6: </span><code class="docutils literal notranslate"><span class="pre">grad=&quot;analytical&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">grad=&quot;fd&quot;</span></code> keyword arguments</p>
+</div>
+<p>Optimization algorithms that take into account the gradient of
+the loss function will often out-perform so-called “derivative-free”
+optimization algorithms in terms of how rapidly they converge to a
+solution. HyperSpy can use analytical gradients for model-fitting,
+as well as numerical estimates of the gradient based on finite differences.</p>
+<p>If all the components in the model support analytical gradients,
+you can pass <code class="docutils literal notranslate"><span class="pre">grad=&quot;analytical&quot;</span></code> in order to use this information
+when fitting. The results are typically more accurate than an
+estimated gradient, and the optimization often runs faster since
+fewer function evaluations are required to calculate the gradient.</p>
+<p>Following the above examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use a 2-point finite-difference scheme to estimate the gradient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grad</span><span class="o">=</span><span class="s2">&quot;fd&quot;</span><span class="p">,</span> <span class="n">fd_scheme</span><span class="o">=</span><span class="s2">&quot;2-point&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use the analytical gradient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grad</span><span class="o">=</span><span class="s2">&quot;analytical&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Huber loss and Poisson MLE functions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># also support analytical gradients</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grad</span><span class="o">=</span><span class="s2">&quot;analytical&quot;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s2">&quot;huber&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grad</span><span class="o">=</span><span class="s2">&quot;analytical&quot;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s2">&quot;ML-poisson&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Analytical gradients are not yet implemented for the
+<a class="reference internal" href="../../reference/base_classes/model/model2d.html#hyperspy.models.model2d.Model2D" title="hyperspy.models.model2d.Model2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model2D</span></code></a> class.</p>
+</div>
+</section>
+<section id="bounded-optimization">
+<h2>Bounded optimization<a class="headerlink" href="#bounded-optimization" title="Permalink to this heading">#</a></h2>
+<p>Non-linear optimization can sometimes fail to converge to a good optimum,
+especially if poor starting values are provided. Problems of ill-conditioning
+and non-convergence can be improved by using bounded optimization.</p>
+<p>All components’ parameters have the attributes <code class="docutils literal notranslate"><span class="pre">parameter.bmin</span></code> and
+<code class="docutils literal notranslate"><span class="pre">parameter.bmax</span></code> (“bounded min” and “bounded max”). When fitting using the
+<code class="docutils literal notranslate"><span class="pre">bounded=True</span></code> argument by <code class="docutils literal notranslate"><span class="pre">m.fit(bounded=True)</span></code> or <code class="docutils literal notranslate"><span class="pre">m.multifit(bounded=True)</span></code>,
+these attributes set the minimum and maximum values allowed for <code class="docutils literal notranslate"><span class="pre">parameter.value</span></code>.</p>
+<p>Currently, not all optimizers support bounds - see the
+<a class="reference internal" href="#optimizers-table"><span class="std std-ref">table above</span></a>. In the following example, a Gaussian
+histogram is fitted using a <a class="reference internal" href="../../reference/api.model/components1D.html#hyperspy.api.model.components1D.Gaussian" title="hyperspy._components.gaussian.Gaussian"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gaussian</span></code></a>
+component using the Levenberg-Marquardt (“lm”) optimizer and bounds
+on the <code class="docutils literal notranslate"><span class="pre">centre</span></code> parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">))</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_binned</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmin</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmax</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="n">bounded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">Model1D:  histogram</span>
+<span class="go">Gaussian: Gaussian</span>
+<span class="go">Active: True</span>
+<span class="go">Parameter Name |  Free |      Value |        Std |        Min |        Max</span>
+<span class="go">============== | ===== | ========== | ========== | ========== | ==========</span>
+<span class="go">             A |  True | 99997.3481 | 232.333693 |        0.0 |       None</span>
+<span class="go">         sigma |  True | 0.00999184 | 2.68064163 |       None |       None</span>
+<span class="go">        centre |  True | 9.99980788 | 2.68064070 |        7.0 |       14.0</span>
+</pre></div>
+</div>
+</section>
+<section id="linear-least-squares">
+<span id="linear-fitting-label"></span><h2>Linear least squares<a class="headerlink" href="#linear-least-squares" title="Permalink to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.7.</span></p>
+</div>
+<p>Linear fitting can be used to address some of the drawbacks of non-linear optimization:</p>
+<ul class="simple">
+<li><p>it doesn’t suffer from the <em>starting parameters</em> issue, which can sometimes be problematic
+with nonlinear fitting. Since linear fitting uses linear algebra to find the
+solution (find the parameter values of the model), the solution is a unique solution,
+while nonlinear optimization uses an iterative approach and therefore relies
+on the initial values of the parameters.</p></li>
+<li><p>it is fast, because i) in favorable situations, the signal can be fitted in a vectorized
+fashion, i.e. the signal is fitted in a single run instead of iterating over
+the navigation dimension; ii) it is not iterative, <cite>i.e.</cite> it does the
+calculation only one time instead of 10-100 iterations, depending on how
+quickly the non-linear optimizer will converge.</p></li>
+</ul>
+<p>However, linear fitting can <em>only</em> fit linear models and will not be able to fit
+parameters which vary <em>non-linearly</em>.</p>
+<p>A component is considered linear when its free parameters scale the component only
+in the y-axis. For the exemplary function <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x**b</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span></code> is a linear parameter, whilst <code class="docutils literal notranslate"><span class="pre">b</span></code>
+is not. If <code class="docutils literal notranslate"><span class="pre">b.free</span> <span class="pre">=</span> <span class="pre">False</span></code>, then the component is linear.
+Components can also be made up of several linear parts. For instance,
+the 2D-polynomial <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x**2+b*y**2+c*x+d*y+e</span></code> is entirely linear.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After creating a model with values for the nonlinear parameters, a quick way to set
+all nonlinear parameters to be <code class="docutils literal notranslate"><span class="pre">free</span> <span class="pre">=</span> <span class="pre">False</span></code> is to use <code class="docutils literal notranslate"><span class="pre">m.set_parameters_not_free(only_nonlinear=True)</span></code></p>
+</div>
+<p>To check if a parameter is linear, use the model or component method
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.print_current_values" title="hyperspy.model.BaseModel.print_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_current_values()</span></code></a>. For a component to be
+considered linear, it can hold only one free parameter, and that parameter
+must be linear.</p>
+<p>If all components in a model are linear, then a linear optimizer can be used to
+solve the problem as a linear regression problem! This can be done using two approaches:</p>
+<ul class="simple">
+<li><p>the standard pixel-by-pixel approach as used by the <em>nonlinear</em> optimizers</p></li>
+<li><p>fit the entire dataset in one <em>vectorised</em> operation, which will be much faster (up to 1000 times).
+However, there is a caveat: all fixed parameters must have the same value across the dataset in
+order to avoid creating a very large array whose size will scale with the number of different
+values of the non-free parameters.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A good example of a linear model in the electron-microscopy field is an Energy-Dispersive
+X-ray Spectroscopy (EDS) dataset, which typically consists of a polynomial background and
+Gaussian peaks with well-defined energy (<code class="docutils literal notranslate"><span class="pre">Gaussian.centre</span></code>) and peak widths
+(<code class="docutils literal notranslate"><span class="pre">Gaussian.sigma</span></code>). This dataset can be fit extremely fast with a linear optimizer.</p>
+</div>
+<p>There are two implementations of linear least squares fitting in hyperspy:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer, which uses <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v1.24)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>, or
+<a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.linalg.lstsq.html#dask.array.linalg.lstsq" title="(in Dask)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.lstsq()</span></code></a> for lazy signals.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'ridge_regression'</span></code> optimizer, which supports regularization
+(see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a> for arguments to pass to
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>), but does not support lazy signals.</p></li>
+</ul>
+<p>As for non-linear least squares fitting, <a class="reference internal" href="#weighted-least-squares-label"><span class="std std-ref">weighted least squares</span></a>
+is supported.</p>
+<p>In the following example, we first generate a 300x300 navigation signal of varying total intensity,
+and then populate it with an EDS spectrum at each point. The signal can be fitted with a polynomial
+background and a Gaussian for each peak. Hyperspy automatically adds these to the model, and fixes
+the <code class="docutils literal notranslate"><span class="pre">centre</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma</span></code> parameters to known values. Fitting this model with a non-linear optimizer
+can about half an hour on a decent workstation. With a linear optimizer, it takes seconds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nav</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">example_signals</span><span class="o">.</span><span class="n">EDS_SEM_Spectrum</span><span class="p">()</span> <span class="o">*</span> <span class="n">nav</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;lstsq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Standard errors for the parameters are by default not calculated when the dataset
+is fitted in vectorized fashion, because it has large memory requirement.
+If errors are required, either pass <code class="docutils literal notranslate"><span class="pre">calculate_errors=True</span></code> as an argument
+to <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a>, or rerun
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> with a nonlinear optimizer,
+which should run fast since the parameters are already optimized.</p>
+<p>None of the linear optimizers currently support bounds.</p>
+</section>
+<section id="optimization-results">
+<h2>Optimization results<a class="headerlink" href="#optimization-results" title="Permalink to this heading">#</a></h2>
+<p>After fitting the model, details about the optimization
+procedure, including whether it finished successfully,
+are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
+according to the keyword argument <code class="docutils literal notranslate"><span class="pre">return_info=True</span></code>.
+These details are often useful for diagnosing problems such
+as a poorly-fitted model or a convergence failure.
+You can also access the object as the <code class="docutils literal notranslate"><span class="pre">fit_output</span></code> attribute:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="go">&lt;scipy.optimize.OptimizeResult object&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">fit_output</span><span class="p">)</span>
+<span class="go">&lt;scipy.optimize.OptimizeResult object&gt;</span>
+</pre></div>
+</div>
+<p>You can also print this information using the
+<code class="docutils literal notranslate"><span class="pre">print_info</span></code> keyword argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the info to stdout</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="n">print_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">Fit</span> <span class="n">info</span><span class="p">:</span>
+  <span class="n">optimizer</span><span class="o">=</span><span class="n">L</span><span class="o">-</span><span class="n">BFGS</span><span class="o">-</span><span class="n">B</span>
+  <span class="n">loss_function</span><span class="o">=</span><span class="n">ls</span>
+  <span class="n">bounded</span><span class="o">=</span><span class="kc">False</span>
+  <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;fd&quot;</span>
+<span class="n">Fit</span> <span class="n">result</span><span class="p">:</span>
+  <span class="n">hess_inv</span><span class="p">:</span> <span class="o">&lt;</span><span class="mi">3</span><span class="n">x3</span> <span class="n">LbfgsInvHessProduct</span> <span class="k">with</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float64</span><span class="o">&gt;</span>
+   <span class="n">message</span><span class="p">:</span> <span class="sa">b</span><span class="s1">&#39;CONVERGENCE: REL_REDUCTION_OF_F_&lt;=_FACTR*EPSMCH&#39;</span>
+      <span class="n">nfev</span><span class="p">:</span> <span class="mi">168</span>
+       <span class="n">nit</span><span class="p">:</span> <span class="mi">32</span>
+      <span class="n">njev</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="n">status</span><span class="p">:</span> <span class="mi">0</span>
+   <span class="n">success</span><span class="p">:</span> <span class="kc">True</span>
+         <span class="n">x</span><span class="p">:</span> <span class="n">array</span><span class="p">([</span> <span class="mf">9.97614503e+03</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.10610734e-01</span><span class="p">,</span>  <span class="mf">1.98380701e+00</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="goodness-of-fit">
+<span id="model-goodness-of-fit"></span><h2>Goodness of fit<a class="headerlink" href="#goodness-of-fit" title="Permalink to this heading">#</a></h2>
+<p>The chi-squared, reduced chi-squared and the degrees of freedom are
+computed automatically when fitting a (weighted) least-squares model
+(i.e. only when <code class="docutils literal notranslate"><span class="pre">loss_function=&quot;ls&quot;</span></code>). They are stored as signals, in the
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.chisq" title="hyperspy.model.BaseModel.chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">chisq</span></code></a>, <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.red_chisq" title="hyperspy.model.BaseModel.red_chisq"><code class="xref py py-attr docutils literal notranslate"><span class="pre">red_chisq</span></code></a> and
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.dof" title="hyperspy.model.BaseModel.dof"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dof</span></code></a> attributes of the model respectively.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unless <code class="docutils literal notranslate"><span class="pre">metadata.Signal.Noise_properties.variance</span></code> contains
+an accurate estimation of the variance of the data, the chi-squared and
+reduced chi-squared will not be computed correctly. This is true for both
+homocedastic and heteroscedastic noise.</p>
+</div>
+</section>
+<section id="visualizing-the-model">
+<span id="model-visualization"></span><h2>Visualizing the model<a class="headerlink" href="#visualizing-the-model" title="Permalink to this heading">#</a></h2>
+<p>To visualise the result use the <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.plot" title="hyperspy.model.BaseModel.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c1"># Visualise the results</span>
+</pre></div>
+</div>
+<p>By default only the full model line is displayed in the plot. In addition, it
+is possible to display the individual components by calling
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">enable_plot_components()</span></code> or directly using
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.plot" title="hyperspy.model.BaseModel.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_components</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Visualise the results</span>
+</pre></div>
+</div>
+<p>To disable this feature call
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">disable_plot_components()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4: </span><code class="docutils literal notranslate"><span class="pre">Signal1D.plot</span></code> keyword arguments</p>
+</div>
+<p>All extra keyword argments are passes to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code> method of the
+corresponing signal object. For example, the following plots the model signal
+figure but not its navigator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">navigator</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default the model plot is automatically updated when any parameter value
+changes. It is possible to suspend this feature with
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.suspend_update" title="hyperspy.model.BaseModel.suspend_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">suspend_update()</span></code></a>.</p>
+</section>
+<section id="setting-the-initial-parameters">
+<span id="model-starting"></span><h2>Setting the initial parameters<a class="headerlink" href="#setting-the-initial-parameters" title="Permalink to this heading">#</a></h2>
+<p>Non-linear optimization often requires setting sensible starting parameters.
+This can be done by plotting the model and adjusting the parameters by hand.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.3: </span>All <code class="xref py py-meth docutils literal notranslate"><span class="pre">notebook_interaction()</span></code> methods renamed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">gui()</span></code>. The
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">notebook_interaction()</span></code> methods will be removed in 2.0</p>
+</div>
+<p id="notebook-interaction-label">If running in a Jupyter Notebook, interactive widgets can be used to
+conveniently adjust the parameter values by running
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.gui" title="hyperspy.model.BaseModel.gui"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gui()</span></code></a> for <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a>,
+<a class="reference internal" href="../../reference/base_classes/model/component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> and
+<a class="reference internal" href="../../reference/base_classes/model/parameter.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>.</p>
+<figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="../../_images/notebook_widgets.png"><img alt="../../_images/notebook_widgets.png" src="../../_images/notebook_widgets.png" style="width: 985px;" /></a>
+<figcaption>
+<p><span class="caption-text">Interactive widgets for the full model in a Jupyter notebook. Drag the
+sliders to adjust current parameter values. Typing different minimum and
+maximum values changes the boundaries of the slider.</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Also, <a class="reference internal" href="../../reference/base_classes/model/model1d.html#hyperspy.models.model1d.Model1D.enable_adjust_position" title="hyperspy.models.model1d.Model1D.enable_adjust_position"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enable_adjust_position()</span></code></a> provides an
+interactive way of setting the position of the components with a
+well-defined position.
+<a class="reference internal" href="../../reference/base_classes/model/model1d.html#hyperspy.models.model1d.Model1D.disable_adjust_position" title="hyperspy.models.model1d.Model1D.disable_adjust_position"><code class="xref py py-meth docutils literal notranslate"><span class="pre">disable_adjust_position()</span></code></a> disables the tool.</p>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="../../_images/model_adjust_position.png"><img alt="../../_images/model_adjust_position.png" src="../../_images/model_adjust_position.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Interactive component position adjustment tool. Drag the vertical lines
+to set the initial value of the position parameter.</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="exclude-data-from-the-fitting-process">
+<h2>Exclude data from the fitting process<a class="headerlink" href="#exclude-data-from-the-fitting-process" title="Permalink to this heading">#</a></h2>
+<p>The following <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> methods can be used to exclude
+undesired spectral channels from the fitting process:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/base_classes/model/model1d.html#hyperspy.models.model1d.Model1D.set_signal_range" title="hyperspy.models.model1d.Model1D.set_signal_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_signal_range()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/base_classes/model/model1d.html#hyperspy.models.model1d.Model1D.remove_signal_range" title="hyperspy.models.model1d.Model1D.remove_signal_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_signal_range()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/base_classes/model/model1d.html#hyperspy.models.model1d.Model1D.reset_signal_range" title="hyperspy.models.model1d.Model1D.reset_signal_range"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset_signal_range()</span></code></a></p></li>
+</ul>
+<p>In 2D models, those methods are not implemented and the
+<code class="docutils literal notranslate"><span class="pre">m.channel_switches</span></code> attribute of a model can be set using boolean arrays of the
+same shape as the data’s signal, where <code class="docutils literal notranslate"><span class="pre">True</span></code> means that the datapoint
+will be used in the fitting routine.</p>
+<p>The example below shows how a boolean array can be easily created from the
+signal and how the <code class="docutils literal notranslate"><span class="pre">isig</span></code> syntax can be used to define the signal range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a sample 2D gaussian dataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components2D</span><span class="o">.</span><span class="n">Gaussian2D</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">A</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">centre_x</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">centre_y</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">sigma_x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_y</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span> <span class="c1"># Model initialisation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gt</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components2D</span><span class="o">.</span><span class="n">Gaussian2D</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gt</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a boolean signal of the same shape as the signal space of im</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># and with all values set to `False`.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_mask</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">im</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Specify the signal range using the isig syntax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_mask</span><span class="o">.</span><span class="n">isig</span><span class="p">[</span><span class="o">-</span><span class="mf">7.</span><span class="p">:</span><span class="o">-</span><span class="mf">3.</span><span class="p">,</span><span class="o">-</span><span class="mf">9.</span><span class="p">:</span><span class="o">-</span><span class="mf">1.</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">channel_switches</span> <span class="o">=</span> <span class="n">signal_mask</span><span class="o">.</span><span class="n">data</span> <span class="c1"># Set channel switches</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="fitting-multidimensional-datasets">
+<span id="model-multidimensional-label"></span><h2>Fitting multidimensional datasets<a class="headerlink" href="#fitting-multidimensional-datasets" title="Permalink to this heading">#</a></h2>
+<p>To fit the model to all the elements of a multidimensional dataset, use
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">multifit</span><span class="p">()</span> <span class="c1"># warning: this can be a lengthy process on large datasets</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> fits the model at the first position,
+stores the result of the fit internally and move to the next position until
+reaching the end of the dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes this method can fail, especially in the case of a TEM spectrum
+image of a particle surrounded by vacuum (since in that case the
+top-left pixel will typically be an empty signal).</p>
+<p>To get sensible starting parameters, you can do a single
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a> after changing the active position
+within the spectrum image (either using the plotting GUI or by directly
+modifying <code class="docutils literal notranslate"><span class="pre">s.axes_manager.indices</span></code> as in <a class="reference internal" href="../axes.html#setting-axis-properties"><span class="std std-ref">Setting axis properties</span></a>).</p>
+<p>After doing this, you can initialize the model at every pixel to the
+values from the single pixel fit using <code class="docutils literal notranslate"><span class="pre">m.assign_current_values_to_all()</span></code>,
+and then use <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a> to perform the fit over
+the entire spectrum image.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6: </span>New optional fitting iteration path <cite>“serpentine”</cite></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0: </span>New default iteration path for fitting is “serpentine”`</p>
+</div>
+<p>In HyperSpy, curve fitting on a multidimensional dataset happens in the following
+manner: Pixels are fit along the row from the first index in the first row, and
+once the last pixel in the row is reached, one proceeds in reverse order from the
+last index in the second row. This procedure leads to a serpentine pattern, as
+seen on the image below. The serpentine pattern supports n-dimensional
+navigation space, so the first index in the second frame of a three-dimensional
+navigation space will be at the last position of the previous frame.</p>
+<p>An alternative scan pattern would be the <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code> scheme, where the map is
+iterated through row by row, always starting from the first index. This pattern
+can be explicitly set using the <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.multifit" title="hyperspy.model.BaseModel.multifit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multifit()</span></code></a>
+<code class="docutils literal notranslate"><span class="pre">iterpath='flyback'</span></code> argument. However, the <code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code> strategy is
+usually more robust, as it always moves on to a neighbouring pixel and the fitting
+procedure uses the fit result of the previous pixel as the starting point for the
+next. A common problem in the <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code> pattern  is that the fitting fails
+going from the end of one row to the beginning of the next, as the spectrum can
+change abruptly.</p>
+<figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="../../_images/FlybackVsSerpentine.png"><img alt="../../_images/FlybackVsSerpentine.png" src="../../_images/FlybackVsSerpentine.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Comparing the scan patterns generated by the  <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code> and <code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code>
+iterpath options for a 2D navigation space. The pixel intensity and number
+refers to the order that the signal is fitted in.</span><a class="headerlink" href="#id13" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In addition to <code class="docutils literal notranslate"><span class="pre">'serpentine'</span></code> and <code class="docutils literal notranslate"><span class="pre">'flyback'</span></code>, <code class="docutils literal notranslate"><span class="pre">iterpath</span></code> can take as
+argument any list or array of indices, or a generator of such, as explained in
+the <a class="reference internal" href="../axes.html#iterating-axesmanager"><span class="std std-ref">Iterating AxesManager</span></a> section.</p>
+<p>Sometimes one may like to store and fetch the value of the parameters at a
+given position manually. This is possible using
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.store_current_values" title="hyperspy.model.BaseModel.store_current_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">store_current_values()</span></code></a> and
+<a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.fetch_stored_values" title="hyperspy.model.BaseModel.fetch_stored_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fetch_stored_values()</span></code></a>.</p>
+</section>
+<section id="visualising-the-result-of-the-fit">
+<h2>Visualising the result of the fit<a class="headerlink" href="#visualising-the-result-of-the-fit" title="Permalink to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel" title="hyperspy.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.plot_results" title="hyperspy.model.BaseModel.plot_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_results()</span></code></a>,
+<a class="reference internal" href="../../reference/base_classes/model/component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/component.html#hyperspy.component.Component.plot" title="hyperspy.component.Component.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> and
+<a class="reference internal" href="../../reference/base_classes/model/parameter.html#hyperspy.component.Parameter" title="hyperspy.component.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> <a class="reference internal" href="../../reference/base_classes/model/parameter.html#hyperspy.component.Parameter.plot" title="hyperspy.component.Parameter.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> methods
+can be used to visualise the result of the fit <strong>when fitting multidimensional
+datasets</strong>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="model_parameters.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting and setting parameter values and attributes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="storing_models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Storing models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-algorithms">Optimization algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-functions">Loss functions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#least-squares-with-error-estimation">Least squares with error estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-least-squares-with-error-estimation">Weighted least squares with error estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-maximum-likelihood-estimation">Poisson maximum likelihood estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#huber-loss-function">Huber loss function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-loss-functions">Custom loss functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gradient-information">Using gradient information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bounded-optimization">Bounded optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-least-squares">Linear least squares</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-results">Optimization results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goodness-of-fit">Goodness of fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-model">Visualizing the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-the-initial-parameters">Setting the initial parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exclude-data-from-the-fitting-process">Exclude data from the fitting process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-multidimensional-datasets">Fitting multidimensional datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-result-of-the-fit">Visualising the result of the fit</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/user_guide/model/fitting_model.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2011-2023, The HyperSpy development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
