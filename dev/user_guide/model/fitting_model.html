@@ -684,7 +684,7 @@ whether the optimizers find a local or global optima.</p>
 <td><p>global</p></td>
 <td><p>Yes</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a></p></td>
 <td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 <td><p>Yes <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 <td><p>No</p></td>
@@ -730,7 +730,7 @@ for more info.</p>
 <aside class="footnote brackets" id="id8" role="note">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
-<p><strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
+<p><strong>All</strong> of the fitting algorithms available in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> are currently
 supported by HyperSpy; however, only some of them support bounds and/or gradients. For more information,
 please see the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy documentation</a>.</p>
 </aside>
@@ -759,12 +759,12 @@ functions may be worth investigating.</p>
 error estimation. First we create data consisting of a line
 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b</span></code> with <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">100</span></code>, and we then add Gaussian
 noise to it:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To fit it, we create a model consisting of a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Polynomial</span></code> component of order 1 and fit it
+<a class="reference internal" href="../../reference/api.model/components1D.html#hyperspy.api.model.components1D.Polynomial" title="hyperspy._components.polynomial.Polynomial"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polynomial</span></code></a> component of order 1 and fit it
 to the data.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -774,13 +774,13 @@ to the data.</p>
 </div>
 <p>Once the fit is complete, the optimized value of the parameters and their
 estimated standard deviation are stored in the following line attributes:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">value</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">value</span>
 <span class="go">0.9924615648843765</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">value</span>
 <span class="go">103.67507406125888</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">std</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">std</span>
 <span class="go">0.11771053738516088</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">std</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">std</span>
 <span class="go">13.541061301257537</span>
 </pre></div>
 </div>
@@ -806,10 +806,14 @@ Gaussian noise, and proceed to fit as in the previous example.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span>  <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
-<span class="go">(1.0052331707848698, -1.0723588390873573)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
-<span class="go">(0.0081710549764721901, 1.4117294994070277)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">value</span>
+<span class="go">-0.7262000522775925</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1.0086925334859176</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">std</span>
+<span class="go">1.4141418570079</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">std</span>
+<span class="go">0.008185019194679451</span>
 </pre></div>
 </div>
 <p>Because the noise is heteroscedastic, the least squares optimizer estimation is
@@ -817,13 +821,18 @@ biased. A more accurate result can be obtained with weighted least squares,
 where the weights are proportional to the inverse of the noise variance.
 Although this is still biased for Poisson noise, it is a good approximation
 in most cases where there are a sufficient number of counts per pixel.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp_val</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp_val</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_poissonian_noise_variance</span><span class="p">(</span><span class="n">expected_value</span><span class="o">=</span><span class="n">exp_val</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">estimate_parameters</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
-<span class="go">(1.0004224896604759, -0.46982916592391377)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">std</span>
-<span class="go">(0.0055752036447948173, 0.46950832982673557)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">value</span>
+<span class="go">-0.6666008600519397</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1.017145603577098</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">std</span>
+<span class="go">0.8681360488613021</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">std</span>
+<span class="go">0.010308732161043038</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -836,8 +845,10 @@ the attribute. You can achieve this with
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_noise_variance()</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">set_noise_variance</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># This will now be an unweighted fit</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
-<span class="go">(1.0052331707848698, -1.0723588390873573)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">value</span>
+<span class="go">-1.9711403542163477</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1.0258716193502546</span>
 </pre></div>
 </div>
 </div>
@@ -850,8 +861,10 @@ This is an unbiased estimator for Poisson noise. To perform MLE, we must
 use a general, non-linear optimizer from the <a class="reference internal" href="#optimizers-table"><span class="std std-ref">table above</span></a>,
 such as Nelder-Mead or L-BFGS-B:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s2">&quot;ML-poisson&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">value</span>
-<span class="go">(1.0030718094185611, -0.63590210946134107)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a0</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0.00025567973144090695</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">a1</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1.0036866523183754</span>
 </pre></div>
 </div>
 <p>Estimation of the parameter errors is not currently supported for Poisson
@@ -1014,7 +1027,7 @@ on the <code class="docutils literal notranslate"><span class="pre">centre</span
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmin</span> <span class="o">=</span> <span class="mi">7</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g1</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">bmax</span> <span class="o">=</span> <span class="mi">14</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="n">bounded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">(</span><span class="n">fancy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">print_current_values</span><span class="p">()</span>
 <span class="go">Model1D:  histogram</span>
 <span class="go">Gaussian: Gaussian</span>
 <span class="go">Active: True</span>
@@ -1078,10 +1091,10 @@ Gaussian peaks with well-defined energy (<code class="docutils literal notransla
 </div>
 <p>There are two implementations of linear least squares fitting in hyperspy:</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer, which uses <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v1.24)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>, or
+<li><p>the <code class="docutils literal notranslate"><span class="pre">'lstsq'</span></code> optimizer, which uses <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v1.25)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>, or
 <a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.linalg.lstsq.html#dask.array.linalg.lstsq" title="(in Dask)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.linalg.lstsq()</span></code></a> for lazy signals.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">'ridge_regression'</span></code> optimizer, which supports regularization
-(see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a> for arguments to pass to
+(see <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a> for arguments to pass to
 <a class="reference internal" href="../../reference/base_classes/model/basemodel.html#hyperspy.model.BaseModel.fit" title="hyperspy.model.BaseModel.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>), but does not support lazy signals.</p></li>
 </ul>
 <p>As for non-linear least squares fitting, <a class="reference internal" href="#weighted-least-squares-label"><span class="std std-ref">weighted least squares</span></a>
@@ -1110,7 +1123,7 @@ which should run fast since the parameters are already optimized.</p>
 <h2>Optimization results<a class="headerlink" href="#optimization-results" title="Permalink to this heading">#</a></h2>
 <p>After fitting the model, details about the optimization
 procedure, including whether it finished successfully,
-are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
+are returned as <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="(in SciPy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> object,
 according to the keyword argument <code class="docutils literal notranslate"><span class="pre">return_info=True</span></code>.
 These details are often useful for diagnosing problems such
 as a poorly-fitted model or a convergence failure.
