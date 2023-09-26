@@ -1,0 +1,351 @@
+
+
+.. _sphx_glr_auto_examples_Markers:
+
+.. _gallery.markers:
+
+Markers
+=======
+
+Gallery of examples on using HyperSpy markers.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="As for ragged signals, the number of markers at each position can vary and this is done by pass...">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_ragged_points_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_ragged_points.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ragged Points</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Arrow markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_arrows_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_arrows.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Arrow markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Vertical Line Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_vertical_lines_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_vertical_lines.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Vertical Line Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to draw circle with the color of the circle scaling with the radius of t...">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_circles_color_radius_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_circles_color_radius.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Circle Markers with Radius Dependent Coloring</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Text Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_texts_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_texts.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Text Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Line  Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_lines_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_lines.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Line  Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Varying number of arrows per navigation position">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_arrows_ragged_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_arrows_ragged.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Varying number of arrows per navigation position</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Circle Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_circles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_circles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Circle Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Filled Circle Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_filled_circles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_filled_circles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Filled Circle Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how markers are rotated.">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_rotation_makers_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_rotation_makers.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rotation of markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to add or remove marker from an existing collection. This is done by set...">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_add_remove_marker_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_add_remove_marker.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Add/Remove items from existing Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Polygon  Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_polygons_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_polygons.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Polygon  Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Ellipse markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_ellipses_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_ellipses.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ellipse markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Square Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_squares_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_squares.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Square Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Star Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_stars_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_stars.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Star Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rectangle Markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_rectangles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_rectangles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rectangle Markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Arrow markers">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_arrows_navigation_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_arrows_navigation.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Arrow markers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to use both the offset_transform and ```transforms`` parameters for mark...">
+
+.. only:: html
+
+  .. image:: /auto_examples/Markers/images/thumb/sphx_glr_transforms_and_units_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_Markers_transforms_and_units.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Transforms and Units</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/Markers/ragged_points
+   /auto_examples/Markers/arrows
+   /auto_examples/Markers/vertical_lines
+   /auto_examples/Markers/circles_color_radius
+   /auto_examples/Markers/texts
+   /auto_examples/Markers/lines
+   /auto_examples/Markers/arrows_ragged
+   /auto_examples/Markers/circles
+   /auto_examples/Markers/filled_circles
+   /auto_examples/Markers/rotation_makers
+   /auto_examples/Markers/add_remove_marker
+   /auto_examples/Markers/polygons
+   /auto_examples/Markers/ellipses
+   /auto_examples/Markers/squares
+   /auto_examples/Markers/stars
+   /auto_examples/Markers/rectangles
+   /auto_examples/Markers/arrows_navigation
+   /auto_examples/Markers/transforms_and_units
+
