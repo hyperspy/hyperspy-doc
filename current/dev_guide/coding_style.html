@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coding style &mdash; HyperSpy 1.7.5 documentation</title>
+  <title>Coding style &mdash; HyperSpy 1.7.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -13,10 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/toggleprompt.js"></script>
@@ -55,7 +54,7 @@
               <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.5
+                1.7.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -141,25 +140,25 @@
 for code consistency that you can read all about in the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">Python Style Guide</a>. You can use the
 <a class="reference external" href="https://github.com/psf/black">black</a> code formatter to automatically
 fix the style of your code. You can install and run <code class="docutils literal notranslate"><span class="pre">black</span></code> by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install black
-black /path/to/your/file.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>black
+black<span class="w"> </span>/path/to/your/file.py
 </pre></div>
 </div>
 <p>In Linux and MacOS you can run <code class="docutils literal notranslate"><span class="pre">black</span></code> automatically after each commit by
 adding a <code class="docutils literal notranslate"><span class="pre">post-commit</span></code> file to <code class="docutils literal notranslate"><span class="pre">.git/hook/</span></code> with the following content:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 <span class="c1"># From https://gist.github.com/temoto/6183235</span>
-<span class="nv">FILES</span><span class="o">=</span><span class="k">$(</span>git diff HEAD^ HEAD --name-only --diff-filter<span class="o">=</span>ACM <span class="p">|</span> grep -e <span class="s1">&#39;\.py$&#39;</span><span class="k">)</span>
-<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$FILES</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="k">for</span> f <span class="k">in</span> <span class="nv">$FILES</span>
-    <span class="k">do</span>
-        <span class="c1"># black correction</span>
-        black -v <span class="nv">$f</span>
-        git add <span class="nv">$f</span>
-    <span class="k">done</span>
+<span class="nv">FILES</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>diff<span class="w"> </span>HEAD^<span class="w"> </span>HEAD<span class="w"> </span>--name-only<span class="w"> </span>--diff-filter<span class="o">=</span>ACM<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;\.py$&#39;</span><span class="k">)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FILES</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$FILES</span>
+<span class="w">    </span><span class="k">do</span>
+<span class="w">        </span><span class="c1"># black correction</span>
+<span class="w">        </span>black<span class="w"> </span>-v<span class="w"> </span><span class="nv">$f</span>
+<span class="w">        </span>git<span class="w"> </span>add<span class="w"> </span><span class="nv">$f</span>
+<span class="w">    </span><span class="k">done</span>
 <span class="c1">#git commit -m &quot;Automatic style corrections courtesy of black&quot;</span>
-<span class="nv">GIT_COMMITTER_NAME</span><span class="o">=</span><span class="s2">&quot;black&quot;</span> <span class="nv">GIT_COMMITTER_EMAIL</span><span class="o">=</span><span class="s2">&quot;black@email.com&quot;</span> git
-commit --author<span class="o">=</span><span class="s2">&quot;black &lt;black@email.com&gt;&quot;</span> -m <span class="s2">&quot;Automatic style</span>
+<span class="nv">GIT_COMMITTER_NAME</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="w"> </span><span class="nv">GIT_COMMITTER_EMAIL</span><span class="o">=</span><span class="s2">&quot;black@email.com&quot;</span><span class="w"> </span>git
+commit<span class="w"> </span>--author<span class="o">=</span><span class="s2">&quot;black &lt;black@email.com&gt;&quot;</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Automatic style</span>
 <span class="s2">corrections courtesy of black&quot;</span>
 </pre></div>
 </div>
