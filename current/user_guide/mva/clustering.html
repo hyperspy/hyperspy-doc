@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
+    <title>Cluster analysis &#8212; HyperSpy 2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom-styles.css?v=eff58afb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/mva/clustering';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Visualizing results" href="visualize_results.html" />
+    <link rel="prev" title="Blind Source Separation" href="bss.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html'>release notes!</a></div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../_static/hyperspy_logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a></div>
+    
+      <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Loading and saving data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals and Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../signal/index.html">The Signal class</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../signal/signal_basics.html">Basics of signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/ragged.html">Ragged signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/binned_signals.html">Binned and unbinned signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/indexing.html">Indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/generic_tools.html">Generic tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/basic_statistical_analysis.html">Basic statistical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/setting_noise_properties.html">Setting the noise properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/speeding_up_operation.html">Speeding up operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/complex_datatype.html">Complex datatype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signal/gpu.html">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualisation.html">Data visualization</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Machine learning</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="decomposition.html">Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bss.html">Blind Source Separation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cluster analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualize_results.html">Visualizing results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export_results.html">Export results</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../model/index.html">Model fitting</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../model/creating_model.html">Creating a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/model_components.html">Model components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/adding_components.html">Adding components to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/indexing_model.html">Indexing the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/model_parameters.html">Getting and setting parameter values and attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/fitting_model.html">Fitting the model to the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/storing_models.html">Storing models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/fitting_big_data.html">Fitting big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/SAMFire.html">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data.html">Working with big data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../region_of_interest.html">Region Of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive_operations.html">Interactive Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Machine learning</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Cluster analysis</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="cluster-analysis">
+<span id="cluster-analysis-label"></span><h1>Cluster analysis<a class="headerlink" href="#cluster-analysis" title="Link to this heading">#</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.</span></p>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster analysis</a> or clustering
+is the task of grouping a set of measurements such that measurements in the same
+group (called a cluster) are more similar (in some sense) to each other than to
+those in other groups (clusters).
+A HyperSpy signal can represent a number of large arrays of different measurements
+which can represent spectra, images or sets of paramaters.
+Identifying and extracting trends from large datasets is often difficult and
+decomposition methods, blind source separation and cluster analysis play an important role in this process.</p>
+<p>Cluster analysis, in essence, compares the “distances” (or similar metric)
+between different sets of measurements and groups those that are closest together.
+The features it groups can be raw data points, for example, comparing for
+every navigation dimension all points of a spectrum. However, if the
+dataset is large, the process of clustering can be computationally intensive so
+clustering is more commonly used on an extracted set of features or parameters.
+For example, extraction of two peak positions of interest via a fitting process
+rather than clustering all spectra points.</p>
+<p>In favourable cases, matrix decomposition and related methods can decompose the
+data into a (ideally small) set of significant loadings and factors.
+The factors capture a core representation of the features in the data and the loadings
+provide the mixing ratios of these factors that best describe the original data.
+Overall, this usually represents a much smaller data volume compared to the original data
+and can helps to identify correlations.</p>
+<p>A detailed description of the application of cluster analysis in x-ray
+spectro-microscopy and further details on the theory and implementation can
+be found in <a class="reference internal" href="../bibliography.html#lerotic2004"><span class="std std-ref">[Lerotic2004]</span></a>.</p>
+</section>
+<section id="nomenclature">
+<h2>Nomenclature<a class="headerlink" href="#nomenclature" title="Link to this heading">#</a></h2>
+<p>Taking the example of a 1D Signal of dimensions <code class="docutils literal notranslate"><span class="pre">(20,</span> <span class="pre">10|4)</span></code> containing the
+dataset, we say there are 200 <em>samples</em>. The four measured parameters are the
+<em>features</em>. If we choose to search for 3 clusters within this dataset, we
+derive three main values:</p>
+<ol class="arabic simple">
+<li><p>The <cite>labels</cite>, of dimensions <code class="docutils literal notranslate"><span class="pre">(3|</span> <span class="pre">20,</span> <span class="pre">10)</span></code>. Each navigation position is
+assigned to a cluster. The <cite>labels</cite> of each cluster are boolean arrays
+that mark the data that has been assigned to the cluster with <cite>True</cite>.</p></li>
+<li><p>The <cite>cluster_distances</cite>, of dimensions <code class="docutils literal notranslate"><span class="pre">(3|</span> <span class="pre">20,</span> <span class="pre">10)</span></code>, which are the
+distances of all the data points to the centroid of each cluster.</p></li>
+<li><p>The “<em>cluster signals</em>”, which are signals that are representative of
+their clusters. In HyperSpy two are computer:
+<cite>cluster_sum_signals</cite> and <cite>cluster_centroid_signals</cite>,
+of dimensions <code class="docutils literal notranslate"><span class="pre">(3|</span> <span class="pre">4)</span></code>, which are the sum of all the cluster signals
+that belong to each cluster or the signal closest to each cluster
+centroid respectively.</p></li>
+</ol>
+</section>
+<section id="clustering-functions-hyperspy">
+<h2>Clustering functions HyperSpy<a class="headerlink" href="#clustering-functions-hyperspy" title="Link to this heading">#</a></h2>
+<p>All HyperSpy signals have the following methods for clustering analysis:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.cluster_analysis" title="hyperspy.api.signals.BaseSignal.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.plot_cluster_results" title="hyperspy.api.signals.BaseSignal.plot_cluster_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_results()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.plot_cluster_labels" title="hyperspy.api.signals.BaseSignal.plot_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_labels()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.plot_cluster_signals" title="hyperspy.api.signals.BaseSignal.plot_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_signals()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.plot_cluster_distances" title="hyperspy.api.signals.BaseSignal.plot_cluster_distances"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_distances()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.get_cluster_signals" title="hyperspy.api.signals.BaseSignal.get_cluster_signals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_signals()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.get_cluster_labels" title="hyperspy.api.signals.BaseSignal.get_cluster_labels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.get_cluster_distances" title="hyperspy.api.signals.BaseSignal.get_cluster_distances"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cluster_distances()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.estimate_number_of_clusters" title="hyperspy.api.signals.BaseSignal.estimate_number_of_clusters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_number_of_clusters()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.plot_cluster_metric" title="hyperspy.api.signals.BaseSignal.plot_cluster_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot_cluster_metric()</span></code></a></p></li>
+</ul>
+<p>The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.cluster_analysis" title="hyperspy.api.signals.BaseSignal.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a> method can perform cluster
+analysis using any <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#clustering" title="(in scikit-learn v1.3)"><span class="xref std std-ref">scikit-learn clustering</span></a>
+algorithms or any other object with a compatible API. This involves importing
+the relevant algorithm class from scikit-learn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="p">)</span> 
+</pre></div>
+</div>
+<p>For convenience, the default algorithm is the <code class="docutils literal notranslate"><span class="pre">kmeans</span></code> algorithm and is imported
+internally. All extra keyword arguments are passed to the algorithm when
+present. Therefore the following code is equivalent to the previous one:</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">8</span>
+<span class="gp">... </span>   <span class="p">)</span> 
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.cluster_analysis" title="hyperspy.api.signals.BaseSignal.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a> computes the cluster labels. The
+clusters areas with identical label are averaged to create a set of cluster
+centres. This averaging can be performed on the <code class="docutils literal notranslate"><span class="pre">signal</span></code> itself, the
+<a class="reference internal" href="bss.html#mva-blind-source-separation"><span class="std std-ref">BSS</span></a> or <a class="reference internal" href="decomposition.html#mva-decomposition"><span class="std std-ref">decomposition</span></a> results
+or a user supplied signal.</p>
+</section>
+<section id="pre-processing">
+<h2>Pre-processing<a class="headerlink" href="#pre-processing" title="Link to this heading">#</a></h2>
+<p>Cluster analysis measures the distances between features and groups them. It
+is often necessary to pre-process the features in order to obtain meaningful
+results.</p>
+<p>For example, pre-processing can be useful to reveal clusters when
+performing cluster analysis of decomposition results. Decomposition methods
+decompose data into a set of factors and a set of loadings defining the
+mixing needed to represent the data. If signal 1 is reduced to three
+components with mixing 0.1 0.5 2.0, and signal 2 is reduced to a mixing of 0.2
+1.0 4.0, it should be clear that these represent the same signal but with a
+scaling difference. Normalization of the data can again be used to remove
+scaling effects.</p>
+<p>Therefore, the pre-processing step
+will highly influence the results and should be evaluated for the problem
+under investigation.</p>
+<p>All pre-processing methods from (or compatible with) the
+<a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#preprocessing" title="(in scikit-learn v1.3)"><span class="xref std std-ref">scikit-learn pre-processing</span></a> module can be passed
+to the <code class="docutils literal notranslate"><span class="pre">scaling</span></code> keyword of the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.cluster_analysis" title="hyperspy.api.signals.BaseSignal.cluster_analysis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cluster_analysis()</span></code></a>
+method. For convenience, the following methods from scikit-learn are
+available as standard: <code class="docutils literal notranslate"><span class="pre">standard</span></code> , <code class="docutils literal notranslate"><span class="pre">minmax</span></code> and <code class="docutils literal notranslate"><span class="pre">norm</span></code> as
+standard. Briefly, <code class="docutils literal notranslate"><span class="pre">norm</span></code> treats the features as a vector and normalizes the
+vector length. <code class="docutils literal notranslate"><span class="pre">standard</span></code> re-scales each feature by removing the mean and
+scaling to unit variance. <code class="docutils literal notranslate"><span class="pre">minmax</span></code> normalizes each feature between the
+minimum and maximum range of that feature.</p>
+<section id="cluster-signals">
+<h3>Cluster signals<a class="headerlink" href="#cluster-signals" title="Link to this heading">#</a></h3>
+<p>In HyperSpy <em>cluster signals</em> are signals that somehow represent their clusters.
+The concept is ill-defined, since cluster algorithms only assign data points to
+clusters. HyperSpy computes 2 cluster signals,</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_sum_signals</span></code>, which are the sum of all the cluster signals
+that belong to each cluster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_centroid_signals</span></code>, which is the signal closest to each cluster
+centroid.</p></li>
+</ol>
+<p>When plotting the “<em>cluster signals</em>” we can select any of those
+above using the <code class="docutils literal notranslate"><span class="pre">signal</span></code> keyword argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="s2">&quot;centroid&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>In addition, it is possible to plot the mean signal over the different
+clusters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</section>
+<section id="clustering-with-user-defined-algorithms">
+<h3>Clustering with user defined algorithms<a class="headerlink" href="#clustering-with-user-defined-algorithms" title="Link to this heading">#</a></h3>
+<p>User developed preprocessing or cluster algorithms can be
+used in place of the sklearn methods.
+A preprocessing object needs a <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> which
+appropriately scales the data.
+The example below defines a preprocessing class which normalizes
+the data then applies a square root to enhances weaker features.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">PowerScaling</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">power</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="n">power</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">scaled_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">/</span><span class="n">norm</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaled_data</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span><span class="o">+</span><span class="mf">1.0e-8</span>
+<span class="gp">... </span>        <span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaled_data</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">scaled_data</span>
+</pre></div>
+</div>
+<p>The PowerScaling class can then be passed to the cluster_analysis method for use.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span> <span class="o">=</span> <span class="n">PowerScaling</span><span class="p">()</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span> <span class="n">number_of_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="n">ps</span>
+<span class="gp">... </span>   <span class="p">)</span> 
+</pre></div>
+</div>
+<p>For user defined clustering algorithms the class must implementation
+<code class="docutils literal notranslate"><span class="pre">fit</span></code> and have a <code class="docutils literal notranslate"><span class="pre">label_</span></code> attribute that contains the clustering labels.
+An example template would be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyClustering</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">fit_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span> <span class="o">=</span> <span class="n">do_something</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<section id="clustering-using-decomposition-results">
+<h3>Clustering using decomposition results<a class="headerlink" href="#clustering-using-decomposition-results" title="Link to this heading">#</a></h3>
+<p>Let’s use the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html#sklearn.datasets.make_blobs" title="(in scikit-learn v1.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.datasets.make_blobs()</span></code></a>
+function supplied by <cite>scikit-learn</cite> to make dummy data to see how clustering
+might work in practice.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">n_features</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">inav</span><span class="p">[:</span><span class="mi">9</span><span class="p">],</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_data.png" src="../../_images/clustering_data.png" />
+<p>To see how cluster analysis works it’s best to first examine the signal.
+Moving around the image you should be able to see 3 distinct regions in which
+the 1D signal modulates slightly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let’s perform SVD to reduce the dimensionality of the dataset by exploiting
+redundancies:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">decomposition</span><span class="p">()</span>
+<span class="go">Decomposition info:</span>
+<span class="go">  normalize_poissonian_noise=False</span>
+<span class="go">  algorithm=SVD</span>
+<span class="go">  output_dimension=None</span>
+<span class="go">  centre=None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_explained_variance_ratio</span><span class="p">()</span>
+<span class="go">&lt;Axes: title={&#39;center&#39;: &#39;\nPCA Scree Plot&#39;}, xlabel=&#39;Principal component index&#39;, ylabel=&#39;Proportion of variance&#39;&gt;</span>
+</pre></div>
+</div>
+<img alt="../../_images/clustering_scree_plot.png" src="../../_images/clustering_scree_plot.png" />
+<p>From the scree plot we deduce that, as expected, that the dataset can be reduce
+to 3 components. Let’s plot their loadings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_decomposition_loadings</span><span class="p">(</span><span class="n">comp_ids</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_decomposition_loadings.png" src="../../_images/clustering_decomposition_loadings.png" />
+<p>In the SVD loading we can identify 3 regions, but they are mixed in the components.
+Let’s perform cluster analysis of decomposition results, to find similar regions
+and the representative features in those regions. Notice that this dataset does
+not require any pre-processing for cluster analysis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span> <span class="n">number_of_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">(</span><span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_labels.png" src="../../_images/clustering_labels.png" />
+<p>To see what the labels the cluster algorithm has assigned you can inspect
+the <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+<span class="go">array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span>
+<span class="go">   1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span>
+<span class="go">   0, 0, 0, 0, 0, 0, 0, 0, 0, 0])</span>
+</pre></div>
+</div>
+<p>In this case we know there are 3 cluster, but for real examples the number of
+clusters is not known <em>a priori</em>. A number of metrics, such as elbow,
+Silhouette and Gap can be used to estimate the optimal number of clusters.
+The elbow method measures the sum-of-squares of the distances within a
+cluster and, as for the PCA decomposition, an “elbow” or point where the gains
+diminish with increasing number of clusters indicates the ideal number of
+clusters. Silhouette analysis measures how well separated clusters are and
+can be used to determine the most likely number of clusters. As the scoring
+is a measure of separation of clusters a number of solutions may occur and
+maxima in the scores are used to indicate possible solutions. Gap analysis
+is similar but compares the “gap” between the clustered data results and
+those from a randomly data set of the same size. The largest gap indicates
+the best clustering. The metric results can be plotted to check how
+well-defined the clustering is.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_number_of_clusters</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="s2">&quot;decomposition&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;gap&quot;</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_metric</span><span class="p">()</span>
+<span class="go">&lt;Axes: xlabel=&#39;number of clusters&#39;, ylabel=&#39;gap_metric&#39;&gt;</span>
+</pre></div>
+</div>
+<img alt="../../_images/clustering_Gap.png" src="../../_images/clustering_Gap.png" />
+<p>The optimal number of clusters can be set or accessed from the learning
+results</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">learning_results</span><span class="o">.</span><span class="n">number_of_clusters</span> 
+<span class="go">3</span>
+</pre></div>
+</div>
+</section>
+<section id="clustering-using-another-signal-as-source">
+<h3>Clustering using another signal as source<a class="headerlink" href="#clustering-using-another-signal-as-source" title="Link to this heading">#</a></h3>
+<p>In this example we will perform clustering analysis on the position of two
+peaks. The signals containing the position of the peaks can be computed for
+example using <a class="reference internal" href="../model/index.html#model-label"><span class="std std-ref">curve fitting</span></a>. Given an existing fitted
+model, the parameters can be extracted as signals and stacked. Clustering can
+then be applied as described previously to identify trends in the fitted
+results.</p>
+<p>Let’s start by creating a suitable synthetic dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyperspy.api</span> <span class="k">as</span> <span class="nn">hs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_dummy</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_dummy</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">2e-3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_dummy</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;eV&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_dummy</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">signal_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;energy&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">s_dummy</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">GaussianHF</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components1D</span><span class="o">.</span><span class="n">GaussianHF</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:</span><span class="mi">32</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mf">.3</span> <span class="o">+</span> <span class="mf">.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][</span><span class="mi">32</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mf">.7</span> <span class="o">+</span> <span class="mf">.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF_0</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:,</span> <span class="mi">32</span><span class="p">:]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:,</span> <span class="mi">32</span><span class="p">:]</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF_0</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:,</span> <span class="p">:</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GaussianHF</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:,</span> <span class="p">:</span><span class="mi">32</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">component</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;is_set&quot;</span><span class="p">][:]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">... </span>    <span class="n">component</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">][:]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.01</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">m</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">axes_decor</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="n">suptitle</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_gaussian_centres.png" src="../../_images/clustering_gaussian_centres.png" />
+<p>Let’s now perform cluster analysis on the stack and calculate the centres using
+the spectrum image. Notice that we don’t need to fit the model to the data
+because this is a synthetic dataset. When analysing experimental data you will
+need to fit the model first. Also notice that here we need to pre-process the
+dataset by normalization in order to reveal the clusters due to the
+proportionality relationship between the position of the peaks.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">component</span><span class="o">.</span><span class="n">centre</span><span class="o">.</span><span class="n">as_signal</span><span class="p">()</span> <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">m</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">estimate_number_of_clusters</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="n">stack</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">cluster_analysis</span><span class="p">(</span><span class="n">cluster_source</span><span class="o">=</span><span class="n">stack</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">source_for_centers</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_labels</span><span class="p">()</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_gaussian_centres_labels.png" src="../../_images/clustering_gaussian_centres_labels.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_signals</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_gaussian_centres_mean.png" src="../../_images/clustering_gaussian_centres_mean.png" />
+<p>Notice that in this case averaging or summing the signals of
+each cluster is not appropriate, since the clustering criterium
+is the ratio between the peaks positions. A better alternative
+is to plot the signals closest to the centroids:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot_cluster_signals</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="s2">&quot;centroid&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<img alt="../../_images/clustering_gaussian_centres_centroid.png" src="../../_images/clustering_gaussian_centres_centroid.png" />
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="bss.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Blind Source Separation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="visualize_results.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Visualizing results</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nomenclature">Nomenclature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-functions-hyperspy">Clustering functions HyperSpy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-signals">Cluster signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-with-user-defined-algorithms">Clustering with user defined algorithms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-using-decomposition-results">Clustering using decomposition results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-using-another-signal-as-source">Clustering using another signal as source</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/user_guide/mva/clustering.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2011-2023, The HyperSpy development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

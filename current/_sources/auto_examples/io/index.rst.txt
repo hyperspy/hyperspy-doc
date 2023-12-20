@@ -1,0 +1,43 @@
+
+
+.. _sphx_glr_auto_examples_io:
+
+Loading, saving and exporting
+=============================
+
+Below is a gallery of examples on loading, saving and exporting data.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Creates a single spectrum image, saves it and plots it:">
+
+.. only:: html
+
+  .. image:: /auto_examples/io/images/thumb/sphx_glr_export_single_spectrum_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_io_export_single_spectrum.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Export single spectrum</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/io/export_single_spectrum
+

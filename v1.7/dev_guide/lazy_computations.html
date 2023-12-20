@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tips for writing methods that work on lazy signals &mdash; HyperSpy 1.7.6 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/hyperspy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/toggleprompt.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Speeding up code" href="speeding_up_code.html" />
+    <link rel="prev" title="Coding style" href="coding_style.html" />
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            HyperSpy
+              <img src="../_static/hyperspy_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.7.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal.html">The Signal class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/interactive_operations_ROIs.html">Interactive Operations and Region of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualisation.html">Data visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/mva.html">Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/model.html">Model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eels.html">Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/eds.html">Energy-Dispersive X-ray Spectrometry (EDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dielectric_function.html">Dielectric function tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/electron_holography.html">Electron Holography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/io.html">Loading and saving data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/big_data.html">Working with big data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/metadata_structure.html">Metadata structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/bibliography.html">Bibliography</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git.html">Using Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Running and writing tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing_docs.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coding_style.html">Coding style</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tips for writing methods that work on lazy signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="speeding_up_code.html">Speeding up code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing_extensions.html">Writing packages that extend HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_information.html">Useful information</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">hyperspy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Credits and citation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing HyperSpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HyperSpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tips for writing methods that work on lazy signals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/dev_guide/lazy_computations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tips-for-writing-methods-that-work-on-lazy-signals">
+<h1>Tips for writing methods that work on lazy signals<a class="headerlink" href="#tips-for-writing-methods-that-work-on-lazy-signals" title="Permalink to this heading"></a></h1>
+<p>With the addition of the <code class="docutils literal notranslate"><span class="pre">LazySignal</span></code> class and its derivatives, adding
+methods that operate on the data becomes slightly more complicated. However, we
+have attempted to streamline it as much as possible. <code class="docutils literal notranslate"><span class="pre">LazySignals</span></code> use
+<code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> for the <code class="docutils literal notranslate"><span class="pre">data</span></code> field instead of the usual
+<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>. The full documentation is available
+<a class="reference external" href="https://dask.readthedocs.io/en/latest/array.html">here</a>. While interfaces of
+the two arrays are indeed almost identical, the most important differences are
+(<code class="docutils literal notranslate"><span class="pre">da</span></code> being <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code> in the examples):</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Dask arrays are immutable</strong>: <code class="docutils literal notranslate"><span class="pre">da[3]</span> <span class="pre">=</span> <span class="pre">2</span></code> does not work. <code class="docutils literal notranslate"><span class="pre">da</span> <span class="pre">+=</span> <span class="pre">2</span></code>
+does, but it’s actually a new object – you might as well use <code class="docutils literal notranslate"><span class="pre">da</span> <span class="pre">=</span> <span class="pre">da</span> <span class="pre">+</span> <span class="pre">2</span></code>
+for a better distinction.</p></li>
+<li><p><strong>Unknown shapes are problematic</strong>: <code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">da[da&gt;0.3]</span></code> works, but the
+shape of the result depends on the values and cannot be inferred without
+execution. Hence, few operations can be run on <code class="docutils literal notranslate"><span class="pre">res</span></code> lazily, and it should
+be avoided if possible.</p></li>
+<li><p><strong>Computations in Dask are Lazy</strong>:  Dask only preforms a computation when it has to. For example
+the sum function isn’t run until compute is called.  This also means that some function can be
+applied to only some portion of the data.</p>
+<blockquote>
+<div></div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The easiest way to add new methods that work both with arbitrary navigation
+dimensions and <code class="docutils literal notranslate"><span class="pre">LazySignals</span></code> is by using the <code class="docutils literal notranslate"><span class="pre">map</span></code> method to map your function <code class="docutils literal notranslate"><span class="pre">func</span></code> across
+all “navigation pixels” (e.g. spectra in a spectrum-image). <code class="docutils literal notranslate"><span class="pre">map</span></code> methods
+will run the function on all pixels efficiently and put the results back in the
+correct order. <code class="docutils literal notranslate"><span class="pre">func</span></code> is not constrained by <code class="docutils literal notranslate"><span class="pre">dask</span></code> and can use whatever
+code (assignment, etc.) you wish.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">map</span></code> function is flexible and should be able to handle most operations that
+operate on some signal. If you add a <code class="docutils literal notranslate"><span class="pre">BaseSignal</span></code> with the same navigation size
+as the signal, it will be iterated alongside the mapped signal, otherwise a keyword
+argument is assumed to be constant and is applied to every signal.</p>
+<p>If the new method cannot be coerced into a shape suitable for <code class="docutils literal notranslate"><span class="pre">map</span></code>, separate
+cases for lazy signals will have to be written. If a function operates on
+arbitrary-sized arrays and the shape of the output can be known before calling,
+<code class="docutils literal notranslate"><span class="pre">da.map_blocks</span></code> and <code class="docutils literal notranslate"><span class="pre">da.map_overlap</span></code> are efficient and flexible.</p>
+<p>Finally, in addition to <code class="docutils literal notranslate"><span class="pre">_iterate_signal</span></code> that is available to all HyperSpy
+signals, lazy counterparts also have the <code class="docutils literal notranslate"><span class="pre">_block_iterator</span></code> method that
+supports signal and navigation masking and yields (returns on subsequent calls)
+the underlying dask blocks as numpy arrays. It is important to note that
+stacking all (flat) blocks and reshaping the result into the initial data shape
+will not result in identical arrays. For illustration it is best to see the
+<a class="reference external" href="https://dask.readthedocs.io/en/latest/array.html">dask documentation</a>.</p>
+<p>For a summary of the implementation, see the
+<a class="reference external" href="https://github.com/hyperspy/hyperspy/pull/1219">first post of the github issue #1219</a>.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="coding_style.html" class="btn btn-neutral float-left" title="Coding style" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="speeding_up_code.html" class="btn btn-neutral float-right" title="Speeding up code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, The HyperSpy development team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
