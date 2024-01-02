@@ -1,0 +1,61 @@
+
+
+.. _sphx_glr_auto_examples_region_of_interest:
+
+Region of Interest
+==================
+
+Below is a gallery of examples on using regions of interest with HyperSpy signals.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Use a SpanROI interactively on a Signal1D.">
+
+.. only:: html
+
+  .. image:: /auto_examples/region_of_interest/images/thumb/sphx_glr_SpanROI_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_region_of_interest_SpanROI.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">SpanROI on signal axis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to integrate a signal using an interactive ROI.">
+
+.. only:: html
+
+  .. image:: /auto_examples/region_of_interest/images/thumb/sphx_glr_SpanROI_interactive_sum_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_region_of_interest_SpanROI_interactive_sum.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Interactive integration of one dimensional signal</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/region_of_interest/SpanROI
+   /auto_examples/region_of_interest/SpanROI_interactive_sum
+

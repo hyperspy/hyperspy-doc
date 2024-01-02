@@ -1,0 +1,44 @@
+
+
+.. _sphx_glr_auto_examples_simple_simulations:
+
+Simple simulations
+==================
+
+Below is a gallery of examples on simulating signals which can be used to test
+HyperSpy functionalities
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Creates a 2D hyperspectrum consisting of two Gaussians and plots it.">
+
+.. only:: html
+
+  .. image:: /auto_examples/simple_simulations/images/thumb/sphx_glr_two_gaussians_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_simple_simulations_two_gaussians.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Simple simulation (2 Gaussians)</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/simple_simulations/two_gaussians
+

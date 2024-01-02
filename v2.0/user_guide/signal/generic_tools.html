@@ -1,0 +1,1520 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
+    <title>Generic tools &#8212; HyperSpy 2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom-styles.css?v=eff58afb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/signal/generic_tools';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Basic statistical analysis" href="basic_statistical_analysis.html" />
+    <link rel="prev" title="Indexing" href="indexing.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html'>release notes!</a></div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../_static/hyperspy_logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a></div>
+    
+      <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../reference/index.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../help.html">
+                        Get Help
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changes.html">
+                        Release Notes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+                    Tutorial
+                  </a>
+                </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-gitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing HyperSpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Loading and saving data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals and Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">The Signal class</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="signal_basics.html">Basics of signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ragged.html">Ragged signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="binned_signals.html">Binned and unbinned signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexing.html">Indexing</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Generic tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_statistical_analysis.html">Basic statistical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_noise_properties.html">Setting the noise properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="speeding_up_operation.html">Speeding up operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="complex_datatype.html">Complex datatype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu.html">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../axes.html">Axes handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal1d.html">Signal1D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../signal2d.html">Signal2D Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualisation.html">Data visualization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../mva/index.html">Machine learning</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mva/decomposition.html">Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/bss.html">Blind Source Separation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/clustering.html">Cluster analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/visualize_results.html">Visualizing results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mva/export_results.html">Export results</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../model/index.html">Model fitting</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../model/creating_model.html">Creating a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/model_components.html">Model components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/adding_components.html">Adding components to the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/indexing_model.html">Indexing the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/model_parameters.html">Getting and setting parameter values and attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/fitting_model.html">Fitting the model to the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/storing_models.html">Storing models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/fitting_big_data.html">Fitting big data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model/SAMFire.html">Smart Adaptive Multi-dimensional Fitting (SAMFire)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data.html">Working with big data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../region_of_interest.html">Region Of Interest (ROI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive_operations.html">Interactive Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">The Signal class</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Generic tools</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="generic-tools">
+<h1>Generic tools<a class="headerlink" href="#generic-tools" title="Link to this heading">#</a></h1>
+<p>Below we briefly introduce some of the most commonly used tools (methods). For
+more details about a particular method click on its name. For a detailed list
+of all the methods available see the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> documentation.</p>
+<p>The methods of this section are available to all the signals. In other chapters
+methods that are only available in specialized subclasses are listed.</p>
+<section id="mathematical-operations">
+<span id="math-operations"></span><h2>Mathematical operations<a class="headerlink" href="#mathematical-operations" title="Link to this heading">#</a></h2>
+<p>A number of mathematical operations are available
+in <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>. Most of them are just wrapped numpy
+functions.</p>
+<p>The methods that perform mathematical operation over one or more axis at a
+time are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.sum" title="hyperspy.api.signals.BaseSignal.sum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.max" title="hyperspy.api.signals.BaseSignal.max"><code class="xref py py-meth docutils literal notranslate"><span class="pre">max()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.min" title="hyperspy.api.signals.BaseSignal.min"><code class="xref py py-meth docutils literal notranslate"><span class="pre">min()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.mean" title="hyperspy.api.signals.BaseSignal.mean"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mean()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.std" title="hyperspy.api.signals.BaseSignal.std"><code class="xref py py-meth docutils literal notranslate"><span class="pre">std()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.var" title="hyperspy.api.signals.BaseSignal.var"><code class="xref py py-meth docutils literal notranslate"><span class="pre">var()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nansum" title="hyperspy.api.signals.BaseSignal.nansum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nansum()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nanmax" title="hyperspy.api.signals.BaseSignal.nanmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nanmax()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nanmin" title="hyperspy.api.signals.BaseSignal.nanmin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nanmin()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nanmean" title="hyperspy.api.signals.BaseSignal.nanmean"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nanmean()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nanstd" title="hyperspy.api.signals.BaseSignal.nanstd"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nanstd()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.nanvar" title="hyperspy.api.signals.BaseSignal.nanvar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nanvar()</span></code></a></p></li>
+</ul>
+<p>Note that by default all this methods perform the operation over <em>all</em>
+navigation axes.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (|6, 4, 2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># by default perform operation over all navigation axes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (|6, 4, 2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># can also pass axes individually</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (|4, 2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or a tuple of axes to operate on, with duplicates, by index or directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ans</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ans</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (|1)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ans</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;Scalar axis, size: 1&gt;</span>
+</pre></div>
+</div>
+<p>The following methods operate only on one axis at a time:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.diff" title="hyperspy.api.signals.BaseSignal.diff"><code class="xref py py-meth docutils literal notranslate"><span class="pre">diff()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.derivative" title="hyperspy.api.signals.BaseSignal.derivative"><code class="xref py py-meth docutils literal notranslate"><span class="pre">derivative()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.integrate_simpson" title="hyperspy.api.signals.BaseSignal.integrate_simpson"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate_simpson()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.integrate1D" title="hyperspy.api.signals.BaseSignal.integrate1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.indexmin" title="hyperspy.api.signals.BaseSignal.indexmin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmin()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.indexmax" title="hyperspy.api.signals.BaseSignal.indexmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">indexmax()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.valuemin" title="hyperspy.api.signals.BaseSignal.valuemin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemin()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.valuemax" title="hyperspy.api.signals.BaseSignal.valuemax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">valuemax()</span></code></a></p></li>
+</ul>
+<p id="ufunc-label">All numpy ufunc can operate on <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a>
+instances, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: A, dimensions: (|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: exp(A), dimensions: (|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([1. , 2.71828183])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: power(A, 2), dimensions: (|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: add(A, A), dimensions: (|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="go">&lt;Signal1D, title: add(Untitled Signal 1, Untitled Signal 2), dimensions: (|2)&gt;</span>
+</pre></div>
+</div>
+<p>Notice that the title is automatically updated. When the signal has no title
+a new title is automatically generated:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="go">&lt;Signal1D, title: add(Untitled Signal 1, Untitled Signal 2), dimensions: (|2)&gt;</span>
+</pre></div>
+</div>
+<p>Functions (other than unfucs) that operate on numpy arrays can also operate
+on <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> instances, however they return a numpy
+array instead of a <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> instance e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">array([0., 0.])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For numerical <strong>differentiation</strong> and <strong>integration</strong>, use the proper
+methods <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.derivative" title="hyperspy.api.signals.BaseSignal.derivative"><code class="xref py py-meth docutils literal notranslate"><span class="pre">derivative()</span></code></a> and
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.integrate1D" title="hyperspy.api.signals.BaseSignal.integrate1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate1D()</span></code></a>. In certain cases, particularly
+when operating on a non-uniform axis, the approximations using the
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.diff" title="hyperspy.api.signals.BaseSignal.diff"><code class="xref py py-meth docutils literal notranslate"><span class="pre">diff()</span></code></a> and <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.sum" title="hyperspy.api.signals.BaseSignal.sum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sum()</span></code></a>
+methods will lead to erroneous results.</p>
+</div>
+</section>
+<section id="signal-operations">
+<span id="id1"></span><h2>Signal operations<a class="headerlink" href="#signal-operations" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> supports all the Python binary arithmetic
+operations (+, -, *, //, %, divmod(), pow(), **, &lt;&lt;, &gt;&gt;, &amp;, ^, |),
+augmented binary assignments (+=, -=, *=, /=, //=, %=, **=, &lt;&lt;=, &gt;&gt;=, &amp;=,
+^=, |=), unary operations (-, +, abs() and ~) and rich comparisons operations
+(&lt;, &lt;=, ==, x!=y, &lt;&gt;, &gt;, &gt;=).</p>
+<p>These operations are performed element-wise. When the dimensions of the signals
+are not equal <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html">numpy broadcasting rules apply</a> independently
+for the navigation and signal axes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Hyperspy does not check if the calibration of the signals matches.</p>
+</div>
+<p>In the following example <cite>s2</cite> has only one navigation axis while <cite>s</cite> has two.
+However, because the size of their first navigation axis is the same, their
+dimensions are compatible and <cite>s2</cite> is
+broadcasted to match <cite>s</cite>’s dimensions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">+</span> <span class="n">s2</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+</pre></div>
+</div>
+<p>In the following example the dimensions are not compatible and an exception
+is raised.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (3|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">+</span> <span class="n">s2</span> 
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;ipython-input-55-044bb11a0bd9&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="n">s</span> <span class="o">+</span> <span class="n">s2</span>
+  File <span class="nb">&quot;&lt;string&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">__add__</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy/hyperspy/signal.py&quot;</span>, line <span class="m">2686</span>, in <span class="n">_binary_operator_ruler</span>
+<span class="w">    </span><span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">exception_message</span><span class="p">)</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid dimensions for this operation</span>
+</pre></div>
+</div>
+<p>Broadcasting operates exactly in the same way for the signal axes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (2, 3|4)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">+</span> <span class="n">s2</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+</pre></div>
+</div>
+<p>In-place operators also support broadcasting, but only when broadcasting would
+not change the left most signal dimensions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">+=</span> <span class="n">s2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (2, 3|4, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">+=</span> <span class="n">s</span> 
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;ipython-input-64-fdb9d3a69771&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="n">s2</span> <span class="o">+=</span> <span class="n">s</span>
+  File <span class="nb">&quot;&lt;string&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">__iadd__</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy/hyperspy/signal.py&quot;</span>, line <span class="m">2737</span>, in <span class="n">_binary_operator_ruler</span>
+<span class="w">    </span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sdata</span><span class="p">,</span> <span class="n">op_name</span><span class="p">)(</span><span class="n">odata</span><span class="p">)</span>
+<span class="gr">ValueError</span>: <span class="n">non-broadcastable output operand with shape (3,2,1,4) doesn\&#39;t match the broadcast shape (3,2,5,4)</span>
+</pre></div>
+</div>
+</section>
+<section id="iterating-over-the-navigation-axes">
+<span id="signal-iterator"></span><h2>Iterating over the navigation axes<a class="headerlink" href="#iterating-over-the-navigation-axes" title="Link to this heading">#</a></h2>
+<p>BaseSignal instances are iterables over the navigation axes. For example, the
+following code creates a stack of 10 images and saves them in separate “png”
+files by iterating over the signal instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">single_image</span> <span class="ow">in</span> <span class="n">image_stack</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">single_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;image </span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">indices</span><span class="p">))</span> 
+<span class="go">The &quot;image (0, 0).png&quot; file was created.</span>
+<span class="go">The &quot;image (1, 0).png&quot; file was created.</span>
+<span class="go">The &quot;image (2, 0).png&quot; file was created.</span>
+<span class="go">The &quot;image (3, 0).png&quot; file was created.</span>
+<span class="go">The &quot;image (4, 0).png&quot; file was created.</span>
+<span class="go">The &quot;image (0, 1).png&quot; file was created.</span>
+<span class="go">The &quot;image (1, 1).png&quot; file was created.</span>
+<span class="go">The &quot;image (2, 1).png&quot; file was created.</span>
+<span class="go">The &quot;image (3, 1).png&quot; file was created.</span>
+<span class="go">The &quot;image (4, 1).png&quot; file was created.</span>
+</pre></div>
+</div>
+<p>The data of the signal instance that is returned at each iteration is a view of
+the original data, a property that we can use to perform operations on the
+data.  For example, the following code rotates the image at each coordinate  by
+a given angle and uses the <a class="reference internal" href="../../reference/api.html#hyperspy.api.stack" title="hyperspy.api.stack"><code class="xref py py-func docutils literal notranslate"><span class="pre">stack()</span></code></a> function in combination
+with <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions">list comprehensions</a>
+to make a horizontal “collage” of the image stack:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ascent</span><span class="p">()]</span><span class="o">*</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">image_stack</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">180</span><span class="p">)):</span>
+<span class="gp">... </span>   <span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">reshape</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># clip data to integer range:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image_stack</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collage</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">image</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">image_stack</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collage</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scalebar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../../_images/rotate_ascent.png"><img alt="../../_images/rotate_ascent.png" src="../../_images/rotate_ascent.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Rotation of images by iteration.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="iterating-external-functions-with-the-map-method">
+<span id="map-label"></span><h2>Iterating external functions with the map method<a class="headerlink" href="#iterating-external-functions-with-the-map-method" title="Link to this heading">#</a></h2>
+<p>Performing an operation on the data at each coordinate, as in the previous example,
+using an external function can be more easily accomplished using the
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ascent</span><span class="p">()]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># clip data to integer range</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">image_stack</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collage</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">image</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">image_stack</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collage</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../../_images/rotate_ascent_apply_simple.png"><img alt="../../_images/rotate_ascent_apply_simple.png" src="../../_images/rotate_ascent_apply_simple.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Rotation of images by the same amount using <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a>.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> method can also take variable
+arguments as in the following example.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ascent</span><span class="p">()]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">135</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angles</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../../_images/rotate_ascent_apply_ndkwargs.png"><img alt="../../_images/rotate_ascent_apply_ndkwargs.png" src="../../_images/rotate_ascent_apply_ndkwargs.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Rotation of images using <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> with different
+arguments for each image in the stack.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.0: </span><code class="docutils literal notranslate"><span class="pre">inplace</span></code> keyword and non-preserved output shapes</p>
+</div>
+<p>If all function calls do not return identically-shaped results, only navigation
+information is preserved, and the final result is an array where
+each element corresponds to the result of the function (or arbitrary object
+type). These are <a class="reference internal" href="ragged.html#signal-ragged"><span class="std std-ref">ragged arrays</span></a> and has the dtype <cite>object</cite>.
+As such, most HyperSpy functions cannot operate on such signals, and the
+data should be accessed directly.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">inplace</span></code> keyword (by default <code class="docutils literal notranslate"><span class="pre">True</span></code>) of the
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> method allows either overwriting the current
+data (default, <code class="docutils literal notranslate"><span class="pre">True</span></code>) or storing it to a new signal (<code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_stack</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scipy</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ascent</span><span class="p">()]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">135</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">image_stack</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">rotate</span><span class="p">,</span>
+<span class="gp">... </span>                           <span class="n">angle</span><span class="o">=</span><span class="n">angles</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+<span class="gp">... </span>                           <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>                           <span class="n">ragged</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                           <span class="n">reshape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (4|ragged)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype(&#39;O&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(512, 512)</span>
+<span class="go">(724, 724)</span>
+<span class="go">(512, 512)</span>
+<span class="go">(724, 724)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4: </span>Iterating over signal using a parameter with no navigation dimension.</p>
+</div>
+<p>In this case, the parameter is cyclically iterated over the navigation
+dimension of the input signal. In the example below, signal s is
+multiplied by a cosine parameter d, which is repeated over the
+navigation dimension of s.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">512</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">512</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">A</span> <span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded" id="lazy-output-map-label">
+<p><span class="versionmodified added">New in version 1.7: </span>Get result as lazy signal</p>
+</div>
+<p>Especially when working with very large datasets, it can be useful to
+not do the computation immediately. For example if it would make you run
+out of memory. In that case, the <cite>lazy_output</cite> parameter can be used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_out</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">gaussian_filter</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lazy_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_out</span>
+<span class="go">&lt;LazySignal2D, title: , dimensions: (4, 4|128, 128)&gt;</span>
+</pre></div>
+</div>
+<p><cite>s_out</cite> can then be saved to a hard drive, to avoid it being loaded into memory.
+Alternatively, it can be computed and loaded into memory using <cite>s_out.compute()</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s_out</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;gaussian_filter_file.hspy&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>Another advantage of using <cite>lazy_output=True</cite> is the ability to “chain” operations,
+by running <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> on the output from a previous
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.map" title="hyperspy.api.signals.BaseSignal.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> operation.
+For example, first running a Gaussian filter, followed by peak finding. This can
+improve the computation time, and reduce the memory need.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s_out</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lazy_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">blob_dog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_out1</span> <span class="o">=</span> <span class="n">s_out</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">blob_dog</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ragged</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lazy_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s_out1</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (4, 4|ragged)&gt;</span>
+</pre></div>
+</div>
+<p>This is especially relevant for very large datasets, where memory use can be a
+limiting factor.</p>
+</section>
+<section id="cropping">
+<h2>Cropping<a class="headerlink" href="#cropping" title="Link to this heading">#</a></h2>
+<p>Cropping can be performed in a very compact and powerful way using
+<a class="reference internal" href="indexing.html#signal-indexing"><span class="std std-ref">Indexing</span></a> . In addition it can be performed using the following
+method or GUIs if cropping <a class="reference internal" href="../signal1d.html#signal1d-crop"><span class="std std-ref">signal1D</span></a> or <a class="reference internal" href="../signal2d.html#signal2d-crop"><span class="std std-ref">signal2D</span></a>. There is also a general <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.crop" title="hyperspy.api.signals.BaseSignal.crop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">crop()</span></code></a>
+method that operates <em>in place</em>.</p>
+</section>
+<section id="rebinning">
+<span id="rebin-label"></span><h2>Rebinning<a class="headerlink" href="#rebinning" title="Link to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3: </span><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.rebin" title="hyperspy.api.signals.BaseSignal.rebin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rebin()</span></code></a> generalized to remove the constrain
+of the <code class="docutils literal notranslate"><span class="pre">new_shape</span></code> needing to be a divisor of <code class="docutils literal notranslate"><span class="pre">data.shape</span></code>.</p>
+</div>
+<p>The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.rebin" title="hyperspy.api.signals.BaseSignal.rebin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rebin()</span></code></a> methods supports rebinning the data to
+arbitrary new shapes as long as the number of dimensions stays the same.
+However, internally, it uses two different algorithms to perform the task. Only
+when the new shape dimensions are divisors of the old shape’s, the operation
+supports <a class="reference internal" href="../big_data.html#big-data-label"><span class="std std-ref">lazy-evaluation</span></a> and is usually faster.
+Otherwise, the operation requires linear interpolation.</p>
+<p>For example, the following two equivalent rebinning operations can be  performed
+lazily:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">two_gaussians</span><span class="p">()</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;LazySignal1D, title: Two Gaussians, dimensions: (32, 32|1024)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="go">&lt;LazySignal1D, title: Two Gaussians, dimensions: (32, 32|512)&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">two_gaussians</span><span class="p">()</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">new_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">512</span><span class="p">]))</span>
+<span class="go">&lt;LazySignal1D, title: Two Gaussians, dimensions: (32, 32|512)&gt;</span>
+</pre></div>
+</div>
+<p>On the other hand, the following rebinning operation requires interpolation and
+cannot be performed lazily:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (4, 4|10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Sum = &#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="go">Sum =  164.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">new_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="c1"># Equivalent to the above</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (8, 8|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">test2</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (8, 8|2)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum =&#39;</span><span class="p">,</span> <span class="n">test</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="go">Sum = 164.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum =&#39;</span><span class="p">,</span> <span class="n">test2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="go">Sum = 164.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span> 
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;ipython-input-26-49bca19ebf34&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="n">spectrum</span><span class="o">.</span><span class="n">as_lazy</span><span class="p">()</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy3/hyperspy/_signals/eds.py&quot;</span>, line <span class="m">184</span>, in <span class="n">rebin</span>
+<span class="w">    </span><span class="n">m</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">new_shape</span><span class="o">=</span><span class="n">new_shape</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+  File <span class="nb">&quot;/home/fjd29/Python/hyperspy3/hyperspy/_signals/lazy.py&quot;</span>, line <span class="m">246</span>, in <span class="n">rebin</span>
+<span class="w">    </span><span class="s2">&quot;Lazy rebin requires scale to be integer and divisor of the &quot;</span>
+<span class="gr">NotImplementedError</span>: <span class="n">Lazy rebin requires scale to be integer and divisor of the original signal shape</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code>  argument can be used to specify the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the returned
+signal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (5, 2|10)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="go">uint8</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">dtype=np.unit16</span></code> to specify a dtype:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="go">uint16</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">dtype=&quot;same&quot;</span></code> to keep the same dtype:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s3</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s3</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="go">uint8</span>
+</pre></div>
+</div>
+<p>By default <code class="docutils literal notranslate"><span class="pre">dtype=None</span></code>, the dtype is determined by the behaviour of
+numpy.sum, in this case, unsigned integer of the same precision as the
+platform interger:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s4</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="go">uint32</span>
+</pre></div>
+</div>
+</section>
+<section id="interpolate-to-a-different-axis">
+<h2>Interpolate to a different axis<a class="headerlink" href="#interpolate-to-a-different-axis" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.interpolate_on_axis" title="hyperspy.api.signals.BaseSignal.interpolate_on_axis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interpolate_on_axis()</span></code></a> method makes it possible to
+exchange any existing axis of a signal with a new axis,
+regardless of the signals dimension or the axes types.
+This is achieved by interpolating the data using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.make_interp_spline.html#scipy.interpolate.make_interp_spline" title="(in SciPy v1.11.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.interpolate.make_interp_spline()</span></code></a>
+from the old axis to the new axis. Replacing multiple axes can be done iteratively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hyperspy.axes</span> <span class="kn">import</span> <span class="n">UniformDataAxis</span><span class="p">,</span> <span class="n">DataAxis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;navigate&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;navigate&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)),</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (10|50)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_new</span> <span class="o">=</span> <span class="n">UniformDataAxis</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;X_NEW&quot;</span><span class="p">,</span> <span class="n">navigate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e_new</span> <span class="o">=</span> <span class="n">DataAxis</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;E_NEW&quot;</span><span class="p">,</span> <span class="n">navigate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">interpolate_on_axis</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (7|50)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span><span class="o">.</span><span class="n">interpolate_on_axis</span><span class="p">(</span><span class="n">e_new</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (7|8)&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="squeezing">
+<span id="squeeze-label"></span><h2>Squeezing<a class="headerlink" href="#squeezing" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.squeeze" title="hyperspy.api.signals.BaseSignal.squeeze"><code class="xref py py-meth docutils literal notranslate"><span class="pre">squeeze()</span></code></a> method removes any zero-dimensional
+axes, i.e. axes of <code class="docutils literal notranslate"><span class="pre">size=1</span></code>, and the attributed data dimensions from a signal.
+The method returns a reduced copy of the signal and does not operate in place.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (6, 1, 1, 2|8, 8)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (6, 2|8, 8)&gt;</span>
+</pre></div>
+</div>
+<p>Squeezing can be particularly useful after a rebinning operation that leaves
+one dimension with <code class="docutils literal notranslate"><span class="pre">shape=1</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">new_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (5, 1, 5|5, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="n">new_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (5, 5|5, 5)&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="folding-and-unfolding">
+<h2>Folding and unfolding<a class="headerlink" href="#folding-and-unfolding" title="Link to this heading">#</a></h2>
+<p>When dealing with multidimensional datasets it is sometimes useful to transform
+the data into a two dimensional dataset. This can be accomplished using the
+following two methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.fold" title="hyperspy.api.signals.BaseSignal.fold"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fold()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.unfold" title="hyperspy.api.signals.BaseSignal.unfold"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unfold()</span></code></a></p></li>
+</ul>
+<p>It is also possible to unfold only the navigation or only the signal space:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.unfold_navigation_space" title="hyperspy.api.signals.BaseSignal.unfold_navigation_space"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unfold_navigation_space()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.unfold_signal_space" title="hyperspy.api.signals.BaseSignal.unfold_signal_space"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unfold_signal_space()</span></code></a></p></li>
+</ul>
+</section>
+<section id="splitting-and-stacking">
+<span id="signal-stack-split"></span><h2>Splitting and stacking<a class="headerlink" href="#splitting-and-stacking" title="Link to this heading">#</a></h2>
+<p>Several objects can be stacked together over an existing axis or over a
+new axis using the <a class="reference internal" href="../../reference/api.html#hyperspy.api.stack" title="hyperspy.api.stack"><code class="xref py py-func docutils literal notranslate"><span class="pre">stack()</span></code></a> function, if they share axis
+with same dimension.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ascent</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">hs</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">image</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="../../_images/stack_ascent_3_3.png"><img alt="../../_images/stack_ascent_3_3.png" src="../../_images/stack_ascent_3_3.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Stacking example.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When stacking signals with large amount of
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.original_metadata" title="hyperspy.api.signals.BaseSignal.original_metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code></a>, these metadata will be
+stacked and this can lead to very large amount of metadata which can in
+turn slow down processing. The <code class="docutils literal notranslate"><span class="pre">stack_original_metadata</span></code> argument can be
+used to disable stacking <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.original_metadata" title="hyperspy.api.signals.BaseSignal.original_metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">original_metadata</span></code></a>.</p>
+</div>
+<p>An object can be split into several objects
+with the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.split" title="hyperspy.api.signals.BaseSignal.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> method. This function can be used
+to reverse the <a class="reference internal" href="../../reference/api.html#hyperspy.api.stack" title="hyperspy.api.stack"><code class="xref py py-func docutils literal notranslate"><span class="pre">stack()</span></code></a> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="../../_images/split_ascent_3_3.png"><img alt="../../_images/split_ascent_3_3.png" src="../../_images/split_ascent_3_3.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">Splitting example.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="fast-fourier-transform-fft">
+<span id="signal-fft"></span><h2>Fast Fourier Transform (FFT)<a class="headerlink" href="#fast-fourier-transform-fft" title="Link to this heading">#</a></h2>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a>
+of a signal can be computed using the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.fft" title="hyperspy.api.signals.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method. By default,
+the FFT is calculated with the origin at (0, 0), which will be displayed at the
+bottom left and not in the centre of the FFT. Conveniently, the <code class="docutils literal notranslate"><span class="pre">shift</span></code> argument of the
+the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.fft" title="hyperspy.api.signals.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method can be used to center the output of the FFT.
+In the following example, the FFT of a hologram is computed using <code class="docutils literal notranslate"><span class="pre">shift=True</span></code> and its
+output signal is displayed, which shows that the FFT results in a complex signal with a
+real and an imaginary parts:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">wave_image</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_shifted</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_shifted</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/FFT_vacuum_reference_hologram.png"><img alt="../../_images/FFT_vacuum_reference_hologram.png" src="../../_images/FFT_vacuum_reference_hologram.png" style="width: 800px;" /></a>
+</figure>
+<p>The strong features in the real and imaginary parts correspond to the lattice fringes of the
+hologram.</p>
+<p>For visual inspection of the FFT it is convenient to display its power spectrum
+(i.e. the square of the absolute value of the FFT) rather than FFT itself as it is done
+in the example above by using the <code class="docutils literal notranslate"><span class="pre">power_spectum</span></code> argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">wave_image</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">power_spectum</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> since it is the first argument of the
+<a class="reference internal" href="../../reference/api.signals/ComplexSignal.html#hyperspy.api.signals.ComplexSignal.plot" title="hyperspy.api.signals.ComplexSignal.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> method for complex signal.
+When <code class="docutils literal notranslate"><span class="pre">power_spectrum=True</span></code>, the plot will be displayed on a log scale by default.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/FFT_vacuum_reference_hologram_power_spectrum.png"><img alt="../../_images/FFT_vacuum_reference_hologram_power_spectrum.png" src="../../_images/FFT_vacuum_reference_hologram_power_spectrum.png" style="width: 400px;" /></a>
+</figure>
+<p>The visualisation can be further improved by setting the minimum value to display to the 30-th
+percentile; this can be done by using <code class="docutils literal notranslate"><span class="pre">vmin=&quot;30th&quot;</span></code> in the plot function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">wave_image</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s2">&quot;30th&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png"><img alt="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png" src="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th.png" style="width: 400px;" /></a>
+</figure>
+<p>The streaks visible in the FFT come from the edge of the image and can be removed by
+applying an <a class="reference external" href="https://en.wikipedia.org/wiki/Apodization">apodization</a> function to the original
+signal before the computation of the FFT. This can be done using the <code class="docutils literal notranslate"><span class="pre">apodization</span></code> argument of
+the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.fft" title="hyperspy.api.signals.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method and it is usually used for visualising FFT patterns
+rather than for quantitative analyses. By default, the so-called <code class="docutils literal notranslate"><span class="pre">hann</span></code> windows is
+used but different type of windows such as the <code class="docutils literal notranslate"><span class="pre">hamming</span></code> and <code class="docutils literal notranslate"><span class="pre">tukey</span></code> windows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">wave_image</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_apodized</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">apodization</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fft_apodized</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="s2">&quot;30th&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png"><img alt="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png" src="../../_images/FFT_vacuum_reference_hologram_power_spectrum_vmin30th-apodization.png" style="width: 400px;" /></a>
+</figure>
+</section>
+<section id="inverse-fast-fourier-transform-ifft">
+<h2>Inverse Fast Fourier Transform (iFFT)<a class="headerlink" href="#inverse-fast-fourier-transform-ifft" title="Link to this heading">#</a></h2>
+<p>Inverse fast Fourier transform can be calculated from a complex signal by using the
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.ifft" title="hyperspy.api.signals.BaseSignal.ifft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ifft()</span></code></a> method. Similarly to the <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.fft" title="hyperspy.api.signals.BaseSignal.fft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fft()</span></code></a> method,
+the <code class="docutils literal notranslate"><span class="pre">shift</span></code> argument can be provided to shift the origin of the iFFT when necessary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im_ifft</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">shift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="changing-the-data-type">
+<span id="signal-change-dtype"></span><h2>Changing the data type<a class="headerlink" href="#changing-the-data-type" title="Link to this heading">#</a></h2>
+<p>Even if the original data is recorded with a limited dynamic range, it is often
+desirable to perform the analysis operations with a higher precision.
+Conversely, if space is limited, storing in a shorter data type can decrease
+the file size. The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.change_dtype" title="hyperspy.api.signals.BaseSignal.change_dtype"><code class="xref py py-meth docutils literal notranslate"><span class="pre">change_dtype()</span></code></a> changes the data
+type in place, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;EELS Signal1D Signal2D (high-loss).dm3&#39;</span><span class="p">)</span> 
+<span class="go">    Title: EELS Signal1D Signal2D (high-loss).dm3</span>
+<span class="go">    Signal type: EELS</span>
+<span class="go">    Data dimensions: (21, 42, 2048)</span>
+<span class="go">    Data representation: spectrum</span>
+<span class="go">    Data type: float32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> 
+<span class="go">    Title: EELS Signal1D Signal2D (high-loss).dm3</span>
+<span class="go">    Signal type: EELS</span>
+<span class="go">    Data dimensions: (21, 42, 2048)</span>
+<span class="go">    Data representation: spectrum</span>
+<span class="go">    Data type: float64</span>
+</pre></div>
+</div>
+<p>In addition to all standard numpy dtypes, HyperSpy supports four extra dtypes
+for RGB images <strong>for visualization purposes only</strong>: <code class="docutils literal notranslate"><span class="pre">rgb8</span></code>, <code class="docutils literal notranslate"><span class="pre">rgba8</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rgb16</span></code> and <code class="docutils literal notranslate"><span class="pre">rgba16</span></code>. This includes of course multi-dimensional RGB images.</p>
+<p>The requirements for changing from and to any <code class="docutils literal notranslate"><span class="pre">rgbx</span></code> dtype are more strict
+than for most other dtype conversions. To change to a <code class="docutils literal notranslate"><span class="pre">rgbx</span></code> dtype the
+<code class="docutils literal notranslate"><span class="pre">signal_dimension</span></code> must be 1 and its size 3 (4) 3(4) for <code class="docutils literal notranslate"><span class="pre">rgb</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">rgba</span></code>) dtypes and the dtype must be <code class="docutils literal notranslate"><span class="pre">uint8</span></code> (<code class="docutils literal notranslate"><span class="pre">uint16</span></code>) for
+<code class="docutils literal notranslate"><span class="pre">rgbx8</span></code> (<code class="docutils literal notranslate"><span class="pre">rgbx16</span></code>). After conversion the <code class="docutils literal notranslate"><span class="pre">signal_dimension</span></code> becomes 2.</p>
+<p>Most operations on signals with RGB dtypes will fail. For processing simply
+change their dtype to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> (<code class="docutils literal notranslate"><span class="pre">uint16</span></code>).The dtype of images of
+dtype <code class="docutils literal notranslate"><span class="pre">rgbx8</span></code> (<code class="docutils literal notranslate"><span class="pre">rgbx16</span></code>) can only be changed to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> (<code class="docutils literal notranslate"><span class="pre">uint16</span></code>) and
+the <code class="docutils literal notranslate"><span class="pre">signal_dimension</span></code> becomes 1.</p>
+<p>In the following example we create a 1D signal with signal size 3 and with
+dtype <code class="docutils literal notranslate"><span class="pre">uint16</span></code> and change its dtype to <code class="docutils literal notranslate"><span class="pre">rgb16</span></code> for plotting.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ly</span><span class="p">,</span> <span class="n">lx</span> <span class="o">=</span> <span class="n">rgb_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">offset_factor</span> <span class="o">=</span> <span class="mf">0.16</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size_factor</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">lx</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">ly</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">lx</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> \
+<span class="gp">... </span>                  <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> \
+<span class="gp">... </span>                  <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">lx</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> \
+<span class="gp">... </span>                  <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> \
+<span class="gp">... </span>                  <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">lx</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> \
+<span class="gp">... </span>                  <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">ly</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ly</span><span class="o">*</span><span class="n">offset_factor</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> \
+<span class="gp">... </span>                  <span class="o">&lt;</span> <span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">/</span> <span class="n">size_factor</span> <span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgb_test</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">16</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">rgb_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (1024, 1024|3)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">change_dtype</span><span class="p">(</span><span class="s2">&quot;rgb16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (|1024, 1024)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/rgb_example.png"><img alt="../../_images/rgb_example.png" src="../../_images/rgb_example.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">RGB data type example.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="transposing-changing-signal-spaces">
+<span id="signal-transpose"></span><h2>Transposing (changing signal spaces)<a class="headerlink" href="#transposing-changing-signal-spaces" title="Link to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<p><a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.transpose" title="hyperspy.api.signals.BaseSignal.transpose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transpose()</span></code></a> method changes how the dataset
+dimensions are interpreted (as signal or navigation axes). By default is
+swaps the signal and navigation axes. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal1D, title: , dimensions: (5, 4|6)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (6|5, 4)&gt;</span>
+</pre></div>
+</div>
+<p>For <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.T" title="hyperspy.api.signals.BaseSignal.T"><code class="xref py py-meth docutils literal notranslate"><span class="pre">T()</span></code></a> is a shortcut for the default behaviour:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (6|5, 4)&gt;</span>
+</pre></div>
+</div>
+<p>The method accepts both explicit axes to keep in either space, or just a number
+of axes required in one space (just one number can be specified, as the other
+is defined as “all other axes”). When axes order is not explicitly defined,
+they are “rolled” from one space to the other as if the <code class="docutils literal notranslate"><span class="pre">&lt;navigation</span> <span class="pre">axes</span> <span class="pre">|</span>
+<span class="pre">signal</span> <span class="pre">axes</span> <span class="pre">&gt;</span></code> wrap a circle. The example below should help clarifying this.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># just create a signal with many distinct dimensions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (|9, 8, 7, 6, 5, 4, 3, 2, 1)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">signal_axes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># roll to leave 5 axes in signal space</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (4, 3, 2, 1|9, 8, 7, 6, 5)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">navigation_axes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># roll leave 3 axes in navigation space</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (3, 2, 1|9, 8, 7, 6, 5, 4)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 3 explicitly defined axes in signal space</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">signal_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (8, 6, 5, 4, 2, 1|9, 7, 3)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># A mix of two lists, but specifying all axes explicitly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The order of axes is preserved in both lists</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">navigation_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">signal_axes</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="go">&lt;BaseSignal, title: , dimensions: (8, 7, 6, 5, 4, 1|9, 3, 2)&gt;</span>
+</pre></div>
+</div>
+<p>A convenience functions <a class="reference internal" href="../../reference/api.html#hyperspy.api.transpose" title="hyperspy.api.transpose"><code class="xref py py-func docutils literal notranslate"><span class="pre">transpose()</span></code></a> is available to operate on
+many signals at once, for example enabling plotting any-dimension signals
+trivially:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="c1"># 2D signal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s3</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1"># 3D signal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s4</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">BaseSignal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># 4D signal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">hs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">s4</span><span class="p">,</span> <span class="n">signal_axes</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> 
+</pre></div>
+</div>
+<p id="signal-transpose-optimize">The <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.transpose" title="hyperspy.api.signals.BaseSignal.transpose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transpose()</span></code></a> method accepts keyword argument
+<code class="docutils literal notranslate"><span class="pre">optimize</span></code>, which is <code class="docutils literal notranslate"><span class="pre">False</span></code> by default, meaning modifying the output
+signal data <strong>always modifies the original data</strong> i.e. the data is just a view
+of the original data. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the method ensures the data in memory is
+stored in the most efficient manner for iterating by making a copy of the data
+if required, hence modifying the output signal data <strong>not always modifies the
+original data</strong>.</p>
+<p>The convenience methods <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.as_signal1D" title="hyperspy.api.signals.BaseSignal.as_signal1D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_signal1D()</span></code></a> and
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.as_signal2D" title="hyperspy.api.signals.BaseSignal.as_signal2D"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_signal2D()</span></code></a> internally use
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.transpose" title="hyperspy.api.signals.BaseSignal.transpose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transpose()</span></code></a>, but always optimize the data
+for iteration over the navigation axes if required. Hence, these methods do not
+always return a view of the original data. If a copy of the data is required
+use
+<a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.deepcopy" title="hyperspy.api.signals.BaseSignal.deepcopy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">deepcopy()</span></code></a> on the output of any of these
+methods e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">()</span>
+<span class="go">&lt;Signal2D, title: , dimensions: (6|5, 4)&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="applying-apodization-window">
+<h2>Applying apodization window<a class="headerlink" href="#applying-apodization-window" title="Link to this heading">#</a></h2>
+<p>Apodization window (also known as apodization function) can be applied to a signal
+using <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.apply_apodization" title="hyperspy.api.signals.BaseSignal.apply_apodization"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply_apodization()</span></code></a> method. By default standard
+Hann window is used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">apply_apodization</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">General</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Hann window&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/hann_window.png"><img alt="../../_images/hann_window.png" src="../../_images/hann_window.png" style="width: 400px;" /></a>
+</figure>
+<p>Higher order Hann window can be used in order to keep larger fraction of intensity of original signal.
+This can be done providing an integer number for the order of the window through
+keyword argument <code class="docutils literal notranslate"><span class="pre">hann_order</span></code>. (The last one works only together with default value of <code class="docutils literal notranslate"><span class="pre">window</span></code> argument
+or with <code class="docutils literal notranslate"><span class="pre">window='hann'</span></code>.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">wave_image</span><span class="p">()</span><span class="o">.</span><span class="n">isig</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:</span><span class="mi">200</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ima</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">apply_apodization</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">,</span> <span class="n">hann_order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_images</span><span class="p">([</span><span class="n">im</span><span class="p">,</span> <span class="n">ima</span><span class="p">],</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">[&lt;Axes: &gt;, &lt;Axes: &gt;]</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/hann_3d_order_ref_holo.png"><img alt="../../_images/hann_3d_order_ref_holo.png" src="../../_images/hann_3d_order_ref_holo.png" style="width: 800px;" /></a>
+</figure>
+<p>In addition to Hann window also Hamming or Tukey windows can be applied using <code class="docutils literal notranslate"><span class="pre">window</span></code> attribute
+selecting <code class="docutils literal notranslate"><span class="pre">'hamming'</span></code> or <code class="docutils literal notranslate"><span class="pre">'tukey'</span></code> respectively.</p>
+<p>The shape of Tukey window can be adjusted using parameter alpha
+provided through <code class="docutils literal notranslate"><span class="pre">tukey_alpha</span></code> keyword argument (only used when <code class="docutils literal notranslate"><span class="pre">window='tukey'</span></code>).
+The parameter represents the fraction of the window inside the cosine tapered region,
+i.e. smaller is alpha larger is the middle flat region where the original signal
+is preserved. If alpha is one, the Tukey window is equivalent to a Hann window.
+(Default value is 0.5)</p>
+<p>Apodization can be applied in place by setting keyword argument <code class="docutils literal notranslate"><span class="pre">inplace</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+In this case method will not return anything.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="indexing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Indexing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="basic_statistical_analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Basic statistical analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-operations">Mathematical operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#signal-operations">Signal operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-the-navigation-axes">Iterating over the navigation axes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-external-functions-with-the-map-method">Iterating external functions with the map method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping">Cropping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rebinning">Rebinning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-to-a-different-axis">Interpolate to a different axis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#squeezing">Squeezing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#folding-and-unfolding">Folding and unfolding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-and-stacking">Splitting and stacking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-fourier-transform-fft">Fast Fourier Transform (FFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-fast-fourier-transform-ifft">Inverse Fast Fourier Transform (iFFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-data-type">Changing the data type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transposing-changing-signal-spaces">Transposing (changing signal spaces)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-apodization-window">Applying apodization window</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/user_guide/signal/generic_tools.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2011-2023, The HyperSpy development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
