@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Running and writing tests &#8212; HyperSpy 2.0.2.dev70+g18caceb7a documentation</title>
+    <title>Running and writing tests &#8212; HyperSpy 2.0.2.dev100+g5861cd9ae documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom-styles.css?v=eff58afb" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
@@ -43,8 +43,8 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/documentation_options.js?v=5c92b55f"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=9df5e39c"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=ccdb6887"></script>
@@ -142,7 +142,7 @@
 
 
   <div class="bd-header-announcement container-fluid bd-header-announcement">
-    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html'>release notes!</a></div>
+    <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
   </div>
 
   
@@ -509,7 +509,6 @@ document.write(`
 
 <li class="toctree-l1"><a class="reference internal" href="lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plotting.html">Interactive Plotting</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="speeding_up_code.html">Speeding up code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="writing_extensions.html">Writing packages that extend HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="useful_information.html">Useful information</a></li>
@@ -587,7 +586,7 @@ outputs when coding. Writing tests can seem laborious but you’ll probably
 soon find that they are very important, as they force you to sanity-check
 all the work that you do.</p>
 <p><strong>Useful testing hints:</strong></p>
-<ul class="simple">
+<ul>
 <li><p>When comparing integers, it’s fine to use <code class="docutils literal notranslate"><span class="pre">==</span></code></p></li>
 <li><p>When comparing floats, be sure to use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.testing.assert_allclose.html#numpy.testing.assert_allclose" title="(in NumPy v1.26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.testing.assert_allclose()</span></code></a>
 or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.testing.assert_almost_equal.html#numpy.testing.assert_almost_equal" title="(in NumPy v1.26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.testing.assert_almost_equal()</span></code></a></p></li>
@@ -601,8 +600,7 @@ code, which is often error-prone. See <a class="reference external" href="http:/
 <li><p>It is good to check that the tests do not use too much memory after
 creating new tests. If you need to explicitly delete your objects and free
 memory, you can do the following to release the memory associated with the
-<code class="docutils literal notranslate"><span class="pre">s</span></code> object:</p></li>
-</ul>
+<code class="docutils literal notranslate"><span class="pre">s</span></code> object:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gc</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Do some work with the object</span>
@@ -613,6 +611,8 @@ memory, you can do the following to release the memory associated with the
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> 
 </pre></div>
 </div>
+</li>
+</ul>
 </section>
 <section id="running-tests">
 <h2>Running tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h2>
@@ -770,8 +770,7 @@ tests. The reference images are located in the folder defined by the argument
 <p>If you don’t use <code class="docutils literal notranslate"><span class="pre">--mpl</span></code>, the test functions will be executed, but the
 images will not be compared to the reference images.</p>
 <p>If you need to add or change some plots, follow the workflow below:</p>
-<blockquote>
-<div><ol class="arabic simple">
+<ol class="arabic simple">
 <li><p>Write the tests using appropriate decorators such as
 <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.mpl_image_compare</span></code>.</p></li>
 <li><p>If you need to generate a new reference image in the folder
@@ -780,17 +779,22 @@ images will not be compared to the reference images.</p>
 <li><p>Run again the tests and this time they should pass.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> to put the new file in the git repository.</p></li>
 </ol>
-</div></blockquote>
 <p>When the plotting tests fail, it is possible to download the figure
 comparison images generated by <code class="docutils literal notranslate"><span class="pre">pytest-mpl</span></code> in the artifacts tabs of the
 corresponding build on Azure Pipeliness:</p>
 <figure class="align-default">
 <img alt="../_images/azure_pipeline_artifacts.png" src="../_images/azure_pipeline_artifacts.png" />
 </figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To generate the baseline images, the version of matplotlib defined in
+<a class="reference external" href="https://github.com/hyperspy/hyperspy/blob/RELEASE_next_minor/conda_environment_dev.yml">conda_environment_dev.yml</a>
+is required.</p>
+</div>
 <p>The plotting tests are tested on Azure Pipelines against a specific version of
-matplotlib defined in <code class="docutils literal notranslate"><span class="pre">conda_environment_dev.yml</span></code>. This is because small
-changes in the way matplotlib generates the figure between versions can sometimes
-make the tests fail.</p>
+matplotlib defined in <a class="reference external" href="https://github.com/hyperspy/hyperspy/blob/RELEASE_next_minor/conda_environment_dev.yml">conda_environment_dev.yml</a>.
+This is because small changes in the way matplotlib generates the figure between
+versions can sometimes make the tests fail.</p>
 <p>For plotting tests, the matplotlib backend is set to <code class="docutils literal notranslate"><span class="pre">agg</span></code> by setting
 the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">agg</span></code>. At the first import of
 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code>, matplotlib will look at the <code class="docutils literal notranslate"><span class="pre">MPLBACKEND</span></code> environment
@@ -910,7 +914,7 @@ for easier viewing. It can be installed by conda:</p>
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Interactive Plotting &#8212; HyperSpy 2.0.2.dev70+g18caceb7a documentation</title>
+    <title>Interactive Plotting &#8212; HyperSpy 2.0.2.dev100+g5861cd9ae documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom-styles.css?v=eff58afb" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
@@ -43,8 +43,8 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/documentation_options.js?v=5c92b55f"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=9df5e39c"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=ccdb6887"></script>
@@ -142,7 +142,7 @@
 
 
   <div class="bd-header-announcement container-fluid bd-header-announcement">
-    <div class="bd-header-announcement__content">HyperSpy API is changing in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html'>release notes!</a></div>
+    <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
   </div>
 
   
@@ -509,7 +509,6 @@ document.write(`
 
 <li class="toctree-l1"><a class="reference internal" href="lazy_computations.html">Tips for writing methods that work on lazy signals</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Interactive Plotting</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="speeding_up_code.html">Speeding up code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="writing_extensions.html">Writing packages that extend HyperSpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="useful_information.html">Useful information</a></li>
@@ -573,38 +572,14 @@ document.write(`
                   
   <section id="interactive-plotting">
 <span id="plotting-label"></span><h1>Interactive Plotting<a class="headerlink" href="#interactive-plotting" title="Link to this heading">#</a></h1>
-<p>Interactive plotting in hyperspy is handled through <cite>matplotlib</cite> and is primarily driven though
+<p>Interactive plotting in hyperspy is handled through <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and is primarily driven though
 event handling.</p>
-<p>Specifically for some signal s when the <cite>index</cite> value for some <a class="reference internal" href="../reference/base_classes/axes.html#hyperspy.axes.BaseDataAxis" title="hyperspy.axes.BaseDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataAxis</span></code></a> is changed then
-the signal plot is updated to reflect the data at that index.  Each signal has a <cite>__call__</cite> function which
-will return the data at the current navigation index.</p>
-<p>For lazy signals the __call__ function works slightly differently as the current chunk is cached.  As a result
-the <cite>__call__</cite> function first checks if the current chunk is cached and then either computes the chunk where the
+<p>Specifically, for some signal <code class="docutils literal notranslate"><span class="pre">s</span></code>, when the <code class="docutils literal notranslate"><span class="pre">index</span></code> value for some <a class="reference internal" href="../reference/base_classes/axes.html#hyperspy.axes.BaseDataAxis" title="hyperspy.axes.BaseDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataAxis</span></code></a>
+is changed, then the signal plot is updated to reflect the data at that index.  Each signal has a
+<code class="docutils literal notranslate"><span class="pre">_get_current_data</span></code> function, which will return the data at the current navigation index.</p>
+<p>For lazy signals, the <code class="docutils literal notranslate"><span class="pre">_get_current_data</span></code> function works slightly differently as the current chunk is cached.  As a result,
+the <code class="docutils literal notranslate"><span class="pre">_get_current_data</span></code> function first checks if the current chunk is cached and then either computes the chunk where the
 navigation index resides or just pulls the value from the cached chunk.</p>
-</section>
-<section id="interactive-markers">
-<h1>Interactive Markers<a class="headerlink" href="#interactive-markers" title="Link to this heading">#</a></h1>
-<p>:class`~.drawing.markers.Markers` operates in a similar way to signals when the data is
-retrieved. The current <code class="docutils literal notranslate"><span class="pre">index</span></code> for the signal is used to retrieve the current array of markers at that <code class="docutils literal notranslate"><span class="pre">index</span></code>.
-Additionally, lazy markers are treated similarly where the current chunk for a marker is cached.</p>
-<p>Adding new types of markers to hyperspy is relatively simple. Currently hyperspy supports any
-<a class="reference external" href="https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.Collection" title="(in Matplotlib v3.8.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.collections.Collection</span></code></a> object. For most common cases this should be sufficient
-as matplotlib has a large number of built in collections beyond what is available in hyperspy.</p>
-<p>In the event that you want a specific shape that isn’t supported you can define a custom
-<a class="reference external" href="https://matplotlib.org/stable/api/path_api.html#matplotlib.path.Path" title="(in Matplotlib v3.8.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.path.Path</span></code></a> object and then use the <a class="reference external" href="https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.PathCollection" title="(in Matplotlib v3.8.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.collections.PathCollection</span></code></a>
-to add the markers to the plot. Currently there is no support for saving Path based markers but that can
-be added if there are specific use cases.</p>
-<p>Many times when annotating 1-D Plots you want to add markers which are relative to the data.  For example
-you may want to add a line which goes from [0,y] where y is the value at x.  To do this you can set the
-<code class="docutils literal notranslate"><span class="pre">offset_transform</span></code> to “relative” or the <code class="docutils literal notranslate"><span class="pre">transfrom</span></code> to relative.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib.collections</span> <span class="kn">import</span> <span class="n">LineCollection</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">Lines</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="p">[[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mf">1.0</span><span class="p">]]],</span> <span class="n">transform</span> <span class="o">=</span> <span class="s2">&quot;relative&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This marker will create a line at a value=2 which extends from 0 –&gt; 1 and updates as the index changes.</p>
 </section>
 
 
@@ -644,20 +619,6 @@ you may want to add a line which goes from [0,y] where y is the value at x.  To 
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Interactive Plotting</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-markers">Interactive Markers</a></li>
-</ul>
-
-  </nav></div>
 
   <div class="sidebar-secondary-item">
 
@@ -702,7 +663,7 @@ you may want to add a line which goes from [0,y] where y is the value at x.  To 
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     <br/>
   </p>
 </div>
