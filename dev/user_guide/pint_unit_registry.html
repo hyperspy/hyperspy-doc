@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Unit Handling with Pint Quantity &#8212; HyperSpy 2.1.2.dev40+ga5de11d7d documentation</title>
+    <title>Unit Handling with Pint Quantity &#8212; HyperSpy 2.1.2.dev44+g75b5a840c documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=02cd38e2"></script>
+    <script src="../_static/documentation_options.js?v=4378e9ce"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -618,13 +618,13 @@ document.write(`
   <section id="unit-handling-with-pint-quantity">
 <span id="pint-unit-registry"></span><h1>Unit Handling with Pint Quantity<a class="headerlink" href="#unit-handling-with-pint-quantity" title="Link to this heading">#</a></h1>
 <p>HyperSpy uses the <a class="reference external" href="https://pint.readthedocs.io">pint</a> library to handle unit conversion.
-To be interoperatable with other modules, HyperSpy uses the default pint <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.1.dev52+g4c2cacc)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a>
-provided by the <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.get_application_registry" title="(in pint v0.1.dev52+g4c2cacc)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pint.get_application_registry()</span></code></a> function as described in the sections
+To be interoperatable with other modules, HyperSpy uses the default pint <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.24.3.dev1+g79e636c)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a>
+provided by the <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.get_application_registry" title="(in pint v0.24.3.dev1+g79e636c)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pint.get_application_registry()</span></code></a> function as described in the sections
 <a class="reference external" href="https://pint.readthedocs.io/en/stable/getting/pint-in-your-projects.html">having a shared registry</a>
 and <a class="reference external" href="https://pint.readthedocs.io/en/stable/advanced/serialization.html">serialization</a>
 of the pint user guide.</p>
 <p>For example, in the case of the  <code class="docutils literal notranslate"><span class="pre">scale_as_quantify</span></code>  pint quantity object from <a class="reference internal" href="../reference/base_classes/axes.html#hyperspy.axes.UniformDataAxis" title="hyperspy.axes.UniformDataAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformDataAxis</span></code></a>,
-the default pint <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.1.dev52+g4c2cacc)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a> is used:</p>
+the default pint <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.24.3.dev1+g79e636c)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a> is used:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale_as_quantity</span>
 <span class="go">&lt;Quantity(1.0, &#39;dimensionless&#39;)&gt;</span>
@@ -633,7 +633,7 @@ the default pint <a class="reference external" href="https://pint.readthedocs.io
 <span class="go">&lt;Quantity(2.5, &#39;micrometer&#39;)&gt;</span>
 </pre></div>
 </div>
-<p>Then, using <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.get_application_registry" title="(in pint v0.1.dev52+g4c2cacc)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pint.get_application_registry()</span></code></a> get the handle of the same instance of <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.1.dev52+g4c2cacc)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a>
+<p>Then, using <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.get_application_registry" title="(in pint v0.24.3.dev1+g79e636c)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pint.get_application_registry()</span></code></a> get the handle of the same instance of <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.UnitRegistry" title="(in pint v0.24.3.dev1+g79e636c)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.UnitRegistry</span></code></a>
 used by HyperSpy and use it to operate on this pint quantity:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pint</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ureg</span> <span class="o">=</span> <span class="n">pint</span><span class="o">.</span><span class="n">get_application_registry</span><span class="p">()</span>
@@ -726,7 +726,7 @@ used by HyperSpy and use it to operate on this pint quantity:</p>
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
     <br/>
   </p>
 </div>
