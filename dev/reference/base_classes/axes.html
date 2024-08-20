@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Axes &#8212; HyperSpy 2.1.2.dev75+gfc39dc13e documentation</title>
+    <title>Axes &#8212; HyperSpy 2.1.2.dev83+g32ae1005b documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=c1f77f49"></script>
+    <script src="../../_static/documentation_options.js?v=618d670d"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -664,6 +664,15 @@ index. If b is 3, AxesManager is indexed using the order of the axes in the
 array. If b is 1(2), indexes only the navigation(signal) axes in the
 natural order. In addition AxesManager supports subscription using
 axis name.</p>
+<dl class="field-list">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>signal_axes, navigation_axes</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>Contain the corresponding DataAxis objects</p>
+</dd>
+<dt><strong>coordinates, indices, iterpath</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Create a spectrum with random data</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span>
@@ -715,15 +724,6 @@ axis name.</p>
 <span class="go">(0, 0, 1) (0, 0, 1)</span>
 </pre></div>
 </div>
-<dl class="field-list">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
-<dt><strong>signal_axes, navigation_axes</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>Contain the corresponding DataAxis objects</p>
-</dd>
-<dt><strong>coordinates, indices, iterpath</strong></dt><dd></dd>
-</dl>
-</dd>
-</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="hyperspy.axes.AxesManager.axes_are_aligned_with_data">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">axes_are_aligned_with_data</span></span><a class="headerlink" href="#hyperspy.axes.AxesManager.axes_are_aligned_with_data" title="Link to this definition">#</a></dt>
@@ -1031,8 +1031,71 @@ once.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="hyperspy.axes.BaseDataAxis.convert_to_uniform_axis">
-<span class="sig-name descname"><span class="pre">convert_to_uniform_axis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.BaseDataAxis.convert_to_uniform_axis" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert_to_uniform_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keep_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hyperspy.axes.BaseDataAxis.convert_to_uniform_axis" title="Link to this definition">#</a></dt>
 <dd><p>Convert to an uniform axis.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>keep_bounds</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the first and last value of the axis will not be changed.
+The new scale is calculated by substracting the last value by the first
+value and dividing by the number of intervals.
+If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the scale and offset are calculated using
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.polynomial.polynomial.Polynomial.fit.html#numpy.polynomial.polynomial.Polynomial.fit" title="(in NumPy v2.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.polynomial.polynomial.Polynomial.fit()</span></code></a>, which minimises
+the scale difference over the whole axis range but the bounds of
+the axis can change (in some cases quite significantly, in particular when the
+interval width is changing continuously). Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt><strong>log_scale_error</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the maximum scale error will be logged as INFO.
+Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.interpolate_on_axis" title="hyperspy.api.signals.BaseSignal.interpolate_on_axis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hyperspy.api.signals.BaseSignal.interpolate_on_axis</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>The function only converts the axis type and doesn’t interpolate
+the data itself - see <a class="reference internal" href="../api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal.interpolate_on_axis" title="hyperspy.api.signals.BaseSignal.interpolate_on_axis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interpolate_on_axis()</span></code></a>
+to interpolate data on a uniform axis.</p>
+<p class="rubric">Examples</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">keep_bounds=True</span></code> (default):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">luminescence_signal</span><span class="p">(</span><span class="n">uniform</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">)</span>
+<span class="go">&lt;Axes manager, axes: (|1024)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">          Energy |   1024 |      0 | non-uniform axis |     eV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_uniform_axis</span><span class="p">(</span><span class="n">keep_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">)</span>
+<span class="go">&lt;Axes manager, axes: (|1024)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">          Energy |   1024 |      0 |     1.6 |  0.0039 |     eV</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">keep_bounds=False</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">luminescence_signal</span><span class="p">(</span><span class="n">uniform</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">)</span>
+<span class="go">&lt;Axes manager, axes: (|1024)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">          Energy |   1024 |      0 | non-uniform axis |     eV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">convert_to_uniform_axis</span><span class="p">(</span><span class="n">keep_bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">axes_manager</span><span class="p">)</span>
+<span class="go">&lt;Axes manager, axes: (|1024)&gt;</span>
+<span class="go">            Name |   size |  index |  offset |   scale |  units</span>
+<span class="go">================ | ====== | ====== | ======= | ======= | ======</span>
+<span class="go">---------------- | ------ | ------ | ------- | ------- | ------</span>
+<span class="go">          Energy |   1024 |      0 |     1.1 |  0.0033 |     eV</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1087,7 +1150,7 @@ raised.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd></dd>
+<dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd></dd>
 <dt><strong>rounding</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">callable()</span></code></a></span></dt><dd><p>Handling of values between two axis points:</p>
 <ul class="simple">
 <li><p>If <code class="docutils literal notranslate"><span class="pre">rounding=round</span></code>, use round-half-away-from-zero strategy to find closest value.</p></li>
@@ -1099,7 +1162,7 @@ raised.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a></dt><dd></dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
@@ -1153,7 +1216,7 @@ an array named <code class="docutils literal notranslate"><span class="pre">axis
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>axis</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>The array defining the axis points.</p>
+<dt><strong>axis</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>The array defining the axis points.</p>
 </dd>
 </dl>
 </dd>
@@ -1422,7 +1485,7 @@ raised. If <cite>None</cite>, <cite>scale</cite>, <cite>offset</cite> and <cite>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>If string, should either be a calibrated unit like “20nm”
+<dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>If string, should either be a calibrated unit like “20nm”
 or a relative slicing like “rel0.2”.</p>
 </dd>
 <dt><strong>rounding</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">callable()</span></code></a></span></dt><dd><p>Handling of values intermediate between two axis points:
@@ -1434,7 +1497,7 @@ If <code class="docutils literal notranslate"><span class="pre">rounding=math.ce
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd></dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
