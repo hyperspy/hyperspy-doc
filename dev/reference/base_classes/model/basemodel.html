@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>BaseModel &#8212; HyperSpy 2.1.2.dev95+g8dba2ee79 documentation</title>
+    <title>BaseModel &#8212; HyperSpy 2.1.2.dev101+g8e8a54e77 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=502552b3"></script>
+    <script src="../../../_static/documentation_options.js?v=1aa695a9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -1029,6 +1029,8 @@ position in the model and component.</p>
 <dd class="field-odd"><dl>
 <dt><strong>optimizer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, default <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The optimization algorithm used to perform the fitting.</p>
 <ul class="simple">
+<li><p>Non-linear optimizers:</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;lm&quot;</span></code> performs least-squares optimization using the
 Levenberg-Marquardt algorithm, and supports bounds
 on parameters.</p></li>
@@ -1056,6 +1058,23 @@ details on available options. Requires <code class="docutils literal notranslate
 optimization method. It does support bounds on parameters. See
 <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.shgo.html#scipy.optimize.shgo" title="(in SciPy v1.14.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.shgo()</span></code></a> for more details on available
 options. Requires <code class="docutils literal notranslate"><span class="pre">scipy</span> <span class="pre">&gt;=</span> <span class="pre">1.2.0</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Linear optimizers:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;lstsq&quot;</span></code> - least square using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="(in NumPy v2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.lstsq()</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ols&quot;</span></code> - Ordinary least square using
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;nnls&quot;</span></code> - Linear regression with positive constraints on the
+regression coefficients using
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression" title="(in scikit-learn v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ridge&quot;</span></code> - least square supporting regularisation using
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a>. The parameter
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> (default set to 0.01) controlling regularization
+strength can be passed as keyword argument, see
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge" title="(in scikit-learn v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code></a> for more information.</p></li>
+</ul>
+</li>
 </ul>
 </dd>
 <dt><strong>loss_function</strong><span class="classifier">{<code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ML-poisson&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;huber&quot;</span></code>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">callable()</span></code></a>}, default <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code></span></dt><dd><p>The loss function to use for minimization. Only <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> is available
