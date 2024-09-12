@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Basics of signals &#8212; HyperSpy 2.1.2.dev101+g8e8a54e77 documentation</title>
+    <title>Basics of signals &#8212; HyperSpy 2.1.2.dev109+g4ea5f181a documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=1aa695a9"></script>
+    <script src="../../_static/documentation_options.js?v=13d94aed"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -819,8 +819,8 @@ subclasses.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.0: </span>The subclasses <code class="docutils literal notranslate"><span class="pre">EELS</span></code>, <code class="docutils literal notranslate"><span class="pre">EDS_SEM</span></code>, <code class="docutils literal notranslate"><span class="pre">EDS_TEM</span></code> and
 <code class="docutils literal notranslate"><span class="pre">DielectricFunction</span></code> have been moved to the extension package
-<code class="docutils literal notranslate"><span class="pre">EleXSpy</span></code> and the subclass <code class="docutils literal notranslate"><span class="pre">hologram</span></code> has been
-moved to the extension package <code class="docutils literal notranslate"><span class="pre">HoloSpy</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">exspy</span></code> and the subclass <code class="docutils literal notranslate"><span class="pre">hologram</span></code> has been
+moved to the extension package <code class="docutils literal notranslate"><span class="pre">holospy</span></code>.</p>
 </div>
 </section>
 <section id="hyperspy-extensions">
@@ -839,7 +839,8 @@ is curated in a dedicated repository.</p>
 be any string, normally the acronym associated with a particular signal. To print
 all <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclasses available in your system call
 the function <a class="reference internal" href="../../reference/api.html#hyperspy.api.print_known_signal_types" title="hyperspy.api.print_known_signal_types"><code class="xref py py-func docutils literal notranslate"><span class="pre">print_known_signal_types()</span></code></a> as in the following
-example:</p>
+example (assuming the extensions <a class="reference external" href="https://exspy.readthedocs.io/en/latest/user_guide/index.html#user-guide" title="(in eXSpy)"><span class="xref std std-ref">eXSpy</span></a> and
+<a class="reference external" href="https://holospy.readthedocs.io/en/latest/user_guide/index.html#user-guide" title="(in HoloSpy)"><span class="xref std std-ref">holoSpy</span></a> are installed):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">print_known_signal_types</span><span class="p">()</span> 
 <span class="go">+--------------------+---------------------+--------------------+----------+</span>
 <span class="go">|    signal_type     |       aliases       |     class name     | package  |</span>
@@ -859,12 +860,12 @@ extension providing the corresponding signal subclass is installed,
 otherwise a warning will be raised to explain that
 no registered signal class can be assigned to the given <code class="docutils literal notranslate"><span class="pre">signal_type</span></code>.</p>
 <p>Since the <a class="reference internal" href="../../reference/api.html#hyperspy.api.load" title="hyperspy.api.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> can return domain specific signal objects (e.g.
-<code class="docutils literal notranslate"><span class="pre">EDSSEMSpectrum</span></code> from <code class="docutils literal notranslate"><span class="pre">EleXSpy</span></code>) provided by extensions, the corresponding
+<code class="docutils literal notranslate"><span class="pre">EDSSEMSpectrum</span></code> from <code class="docutils literal notranslate"><span class="pre">eXSpy</span></code>) provided by extensions, the corresponding
 functionalities (so-called <cite>method</cite> of <cite>object</cite> in object-oriented programming,
 e.g. <code class="docutils literal notranslate"><span class="pre">EDSSEMSpectrum.get_lines_intensity()</span></code>) implemented in signal classes of
 the extension can be accessed directly. To use additional functionalities
 implemented in extensions, but not as method of the signal class, the extensions
-need to be imported explicitly (e.g. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">elexspy</span></code>). Check the user guides
+need to be imported explicitly (e.g. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">exspy</span></code>). Check the user guides
 of the respective <a class="reference external" href="https://github.com/hyperspy/hyperspy-extensions-list">HyperSpy extensions</a> for details on the
 provided methods and functions.</p>
 <p>For details on how to write and register extensions see
@@ -877,7 +878,8 @@ provided methods and functions.</p>
 in place, which may result in a <a class="reference internal" href="../../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclass
 transformation.</p>
 <p>The following example shows how to change the signal dimensionality and how
-to transform between different subclasses:</p>
+to transform between different subclasses (converting to <code class="docutils literal notranslate"><span class="pre">EELS</span></code> requires the
+extension <a class="reference external" href="https://exspy.readthedocs.io/en/latest/user_guide/index.html#user-guide" title="(in eXSpy)"><span class="xref std std-ref">eXSpy</span></a> to be installed):</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
