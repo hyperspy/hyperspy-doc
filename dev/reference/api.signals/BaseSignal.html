@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>BaseSignal &#8212; HyperSpy 2.1.2.dev115+gfcba3b475 documentation</title>
+    <title>BaseSignal &#8212; HyperSpy 2.1.2.dev127+g5a310b575 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=7c02e7a1"></script>
+    <script src="../../_static/documentation_options.js?v=a439dccb"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -2321,43 +2321,40 @@ in the range, the number of bins will be computed to fill the
 entire range, including the empty portions. For visualisation,
 using the <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> option is suggested. Weighted data is not
 supported for automated bin size selection.</p>
-<dl class="simple">
-<dt>‘auto’</dt><dd><p>Maximum of the ‘sturges’ and ‘fd’ estimators. Provides good
-all around performance.</p>
+<p>Possible strings are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'auto'</span></code> : Maximum of the ‘sturges’ and ‘fd’ estimators.
+Provides good all around performance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'fd'</span></code> : Freedman Diaconis Estimator, robust
+(resilient to outliers) estimator that takes into
+account data variability and data size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'doane'</span></code> : An improved version of Sturges’ estimator
+that works better with non-normal datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'scott'</span></code> : Less robust estimator that that takes into
+account data variability and data size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'stone'</span></code> : Estimator based on leave-one-out cross-validation
+estimate of the integrated squared error. Can be regarded
+as a generalization of Scott’s rule.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'rice'</span></code> : Estimator does not take variability into account,
+only data size. Commonly overestimates number of bins required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'sturges'</span></code> : R’s default method, only accounts for data size.
+Only optimal for gaussian data and underestimates number
+of bins for large non-gaussian datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'sqrt'</span></code> : Square root (of data size) estimator, used by Excel
+and other programs for its speed and simplicity.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'knuth'</span></code> : Knuth’s rule is a fixed-width, Bayesian approach to
+determining the optimal bin width of a histogram.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'blocks'</span></code> : Determination of optimal adaptive-width histogram
+bins using the Bayesian Blocks algorithm.</p></li>
+</ul>
 </dd>
-<dt>‘fd’ (Freedman Diaconis Estimator)</dt><dd><p>Robust (resilient to outliers) estimator that takes into
-account data variability and data size.</p>
-</dd>
-<dt>‘doane’</dt><dd><p>An improved version of Sturges’ estimator that works better
-with non-normal datasets.</p>
-</dd>
-<dt>‘scott’</dt><dd><p>Less robust estimator that that takes into account data
-variability and data size.</p>
-</dd>
-<dt>‘stone’</dt><dd><p>Estimator based on leave-one-out cross-validation estimate of
-the integrated squared error. Can be regarded as a generalization
-of Scott’s rule.</p>
-</dd>
-<dt>‘rice’</dt><dd><p>Estimator does not take variability into account, only data
-size. Commonly overestimates number of bins required.</p>
-</dd>
-<dt>‘sturges’</dt><dd><p>R’s default method, only accounts for data size. Only
-optimal for gaussian data and underestimates number of bins
-for large non-gaussian datasets.</p>
-</dd>
-<dt>‘sqrt’</dt><dd><p>Square root (of data size) estimator, used by Excel and
-other programs for its speed and simplicity.</p>
-</dd>
-<dt>‘knuth’</dt><dd><p>Knuth’s rule is a fixed-width, Bayesian approach to determining
-the optimal bin width of a histogram.</p>
-</dd>
-<dt>‘blocks’</dt><dd><p>Determination of optimal adaptive-width histogram bins using
-the Bayesian Blocks algorithm.</p>
-</dd>
-</dl>
-</dd>
-<dt><strong>range_bins</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, optional</span></dt><dd><p>the minimum and maximum range for the histogram. If
-<cite>range_bins</cite> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, (<code class="docutils literal notranslate"><span class="pre">x.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">x.max()</span></code>) will be used.</p>
+<dt><strong>range_bins</strong><span class="classifier">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>), optional</span></dt><dd><p>The lower and upper limit of the range of bins. If not provided,
+range is simply <code class="docutils literal notranslate"><span class="pre">(a.min(),</span> <span class="pre">a.max())</span></code>. Values outside the range are
+ignored. The first element of the range must be less than or
+equal to the second. <cite>range</cite> affects the automatic bin
+computation as well. While bin width is computed to be optimal
+based on the actual data within <cite>range</cite>, the bin count will fill
+the entire range including portions containing no data.</p>
 </dd>
 <dt><strong>max_num_bins</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, default 250</span></dt><dd><p>When estimating the bins using one of the str methods, the
 number of bins is capped by this number to avoid a MemoryError
@@ -2392,6 +2389,9 @@ operation.</p>
 <dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.histogram</span></code></a>, <a class="reference external" href="https://docs.dask.org/en/latest/generated/dask.array.histogram.html#dask.array.histogram" title="(in Dask)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dask.array.histogram</span></code></a></dt><dd></dd>
 </dl>
 </div>
+<p class="rubric">Notes</p>
+<p>See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html#numpy.histogram" title="(in NumPy v2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram()</span></code></a> for more details on the
+meaning of the returned values.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal1D</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Plot the data histogram</span>

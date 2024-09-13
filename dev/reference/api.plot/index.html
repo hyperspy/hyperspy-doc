@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>hyperspy.api.plot &#8212; HyperSpy 2.1.2.dev115+gfcba3b475 documentation</title>
+    <title>hyperspy.api.plot &#8212; HyperSpy 2.1.2.dev127+g5a310b575 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=7c02e7a1"></script>
+    <script src="../../_static/documentation_options.js?v=a439dccb"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -696,18 +696,53 @@ the <a class="reference internal" href="#hyperspy.api.plot.plot_spectra" title="
 <dt><strong>signal_list</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/glossary.html#term-iterable" title="(in Python v3.12)"><span>iterable</span></a></span></dt><dd><p>Ordered list of spectra to plot. If <code class="docutils literal notranslate"><span class="pre">style</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;cascade&quot;</span></code> or
 <code class="docutils literal notranslate"><span class="pre">&quot;mosaic&quot;</span></code>, the spectra can have different size and axes.</p>
 </dd>
-<dt><strong>bins</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, optional</span></dt><dd><p>If bins is a string, then it must be one of:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">'knuth'</span></code> : use Knuth’s rule to determine bins,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">'scott'</span></code> : use Scott’s rule to determine bins,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">'fd'</span></code> : use the Freedman-diaconis rule to determine bins,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">'blocks'</span></code> : use bayesian blocks for dynamic bin widths.</p></li>
+<dt><strong>bins</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.12)"><span>sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, default “fd”</span></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">bins</span></code> is an int, it defines the number of equal-width
+bins in the given range. If <code class="docutils literal notranslate"><span class="pre">bins</span></code> is a
+sequence, it defines the bin edges, including the rightmost
+edge, allowing for non-uniform bin widths.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">bins</span></code> is a string from the list below, will use
+the method chosen to calculate the optimal bin width and
+consequently the number of bins (see Notes for more detail on
+the estimators) from the data that falls within the requested
+range. While the bin width will be optimal for the actual data
+in the range, the number of bins will be computed to fill the
+entire range, including the empty portions. For visualisation,
+using the <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> option is suggested. Weighted data is not
+supported for automated bin size selection.</p>
+<p>Possible strings are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'auto'</span></code> : Maximum of the ‘sturges’ and ‘fd’ estimators.
+Provides good all around performance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'fd'</span></code> : Freedman Diaconis Estimator, robust
+(resilient to outliers) estimator that takes into
+account data variability and data size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'doane'</span></code> : An improved version of Sturges’ estimator
+that works better with non-normal datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'scott'</span></code> : Less robust estimator that that takes into
+account data variability and data size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'stone'</span></code> : Estimator based on leave-one-out cross-validation
+estimate of the integrated squared error. Can be regarded
+as a generalization of Scott’s rule.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'rice'</span></code> : Estimator does not take variability into account,
+only data size. Commonly overestimates number of bins required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'sturges'</span></code> : R’s default method, only accounts for data size.
+Only optimal for gaussian data and underestimates number
+of bins for large non-gaussian datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'sqrt'</span></code> : Square root (of data size) estimator, used by Excel
+and other programs for its speed and simplicity.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'knuth'</span></code> : Knuth’s rule is a fixed-width, Bayesian approach to
+determining the optimal bin width of a histogram.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'blocks'</span></code> : Determination of optimal adaptive-width histogram
+bins using the Bayesian Blocks algorithm.</p></li>
 </ul>
-</div></blockquote>
 </dd>
-<dt><strong>range_bins</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional</span></dt><dd><p>The minimum and maximum range for the histogram. If not specified,
-it will be (<code class="docutils literal notranslate"><span class="pre">x.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">x.max()</span></code>).</p>
+<dt><strong>range_bins</strong><span class="classifier">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>), optional</span></dt><dd><p>The lower and upper limit of the range of bins. If not provided,
+range is simply <code class="docutils literal notranslate"><span class="pre">(a.min(),</span> <span class="pre">a.max())</span></code>. Values outside the range are
+ignored. The first element of the range must be less than or
+equal to the second. <cite>range</cite> affects the automatic bin
+computation as well. While bin width is computed to be optimal
+based on the actual data within <cite>range</cite>, the bin count will fill
+the entire range including portions containing no data.</p>
 </dd>
 <dt><strong>color</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of) matplotlib color, optional</span></dt><dd><p>Sets the color of the lines of the plots. For a list, if its length is
 less than the number of spectra to plot, the colors will be cycled.
