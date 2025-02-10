@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Signal1D Tools &#8212; HyperSpy 2.2.1.dev56+g1b8170d5b documentation</title>
+    <title>Signal1D Tools &#8212; HyperSpy 2.2.1.dev77+g6ab2b973c documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=74842361"></script>
+    <script src="../_static/documentation_options.js?v=042a3b95"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -634,9 +634,11 @@ to the 5.0-15.0 region:</p>
 improvements.</p>
 </div>
 <p>The <a class="reference internal" href="../reference/api.signals/Signal1D.html#hyperspy.api.signals.Signal1D.remove_background" title="hyperspy.api.signals.Signal1D.remove_background"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_background()</span></code></a> method provides
-background removal capabilities through both a CLI and a GUI. The GUI displays
-an interactive preview of the remainder after background subtraction. Currently,
-the following background types are supported: Doniach, Exponential, Gaussian,
+background removal capabilities through both a CLI and a GUI. Selected components
+from <a class="reference internal" href="../reference/api.model/components1D.html#module-hyperspy.api.model.components1D" title="hyperspy.api.model.components1D"><code class="xref py py-mod docutils literal notranslate"><span class="pre">components1D</span></code></a> are fitted in a given range to estimate the
+background and substract it from the signals.
+The GUI displays an interactive preview of the remainder after background subtraction.
+Currently, the following background types are supported: Doniach, Exponential, Gaussian,
 Lorentzian, Polynomial, Power law (default), Offset, Skew normal, Split Voigt
 and Voigt. By default, the background parameters are estimated using analytical
 approximations (keyword argument <code class="docutils literal notranslate"><span class="pre">fast=True</span></code>). The fast option is not accurate
@@ -658,6 +660,32 @@ figure) click inside the axes of the figure and drag to the right
 without releasing the button.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+</section>
+<section id="baseline-removal">
+<span id="signal1d-remove-baseline"></span><h2>Baseline removal<a class="headerlink" href="#baseline-removal" title="Link to this heading">#</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 2.3.</span></p>
+</div>
+<p>The <a class="reference internal" href="../reference/api.signals/Signal1D.html#hyperspy.api.signals.Signal1D.remove_baseline" title="hyperspy.api.signals.Signal1D.remove_baseline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_baseline()</span></code></a> method provides baseline
+removal capabilities through both a CLI and a GUI. The baseline is estimated using
+methods implemented in <a class="reference external" href="https://pybaselines.readthedocs.io">pybaselines</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">two_gaussians</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">remove_baseline</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<img alt="../_images/signal_1d_remove_baseline.png" src="../_images/signal_1d_remove_baseline.png" />
+<figcaption>
+<p><span class="caption-text">Interactive baseline removal. The estimated baseline is shown as a blue dash
+in the signal plot. The GUI allows selecting the method and the main parameters.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="example-using-remove-baseline">
+<h3>Example using <a class="reference internal" href="../reference/api.signals/Signal1D.html#hyperspy.api.signals.Signal1D.remove_baseline" title="hyperspy.api.signals.Signal1D.remove_baseline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_baseline()</span></code></a><a class="headerlink" href="#example-using-remove-baseline" title="Link to this heading">#</a></h3>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to remove a baseline from a 1D signal using the pybaselines library."><img alt="" src="../_images/sphx_glr_baseline_removal_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/processing/baseline_removal.html#sphx-glr-auto-examples-processing-baseline-removal-py"><span class="std std-ref">Baseline Removal</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Baseline Removal</div>
+</div></div></section>
 </section>
 <section id="calibration">
 <h2>Calibration<a class="headerlink" href="#calibration" title="Link to this heading">#</a></h2>
@@ -703,7 +731,7 @@ method.</p>
 </section>
 <section id="estimate-peak-width">
 <h2>Estimate peak width<a class="headerlink" href="#estimate-peak-width" title="Link to this heading">#</a></h2>
-<p>For asymmetric peaks, <cite>fitted functions &lt;model.fitting&gt;</cite> may not provide
+<p>For asymmetric peaks, <a class="reference internal" href="model/fitting_model.html#model-fitting"><span class="std std-ref">fitted functions</span></a> may not provide
 an accurate description of the peak, in particular the peak width. The function
 <a class="reference internal" href="../reference/api.signals/Signal1D.html#hyperspy.api.signals.Signal1D.estimate_peak_width" title="hyperspy.api.signals.Signal1D.estimate_peak_width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_peak_width()</span></code></a>
 determines the width of a peak at a certain fraction of its maximum value.</p>
@@ -770,6 +798,10 @@ determines the width of a peak at a certain fraction of its maximum value.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping">Cropping</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-removal">Background removal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-removal">Baseline removal</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-using-remove-baseline">Example using <code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_baseline()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration">Calibration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment">Alignment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration">Integration</a></li>
