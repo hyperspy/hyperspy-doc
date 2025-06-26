@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Writing packages that extend HyperSpy &#8212; HyperSpy 2.3.1.dev11+g345ce6f30 documentation</title>
+    <title>Writing packages that extend HyperSpy &#8212; HyperSpy 2.3.1.dev36+gc59c9f5a5 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=ab86b074"></script>
+    <script src="../_static/documentation_options.js?v=d1ad3d8a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,6 +59,14 @@
                 gtag('js', new Date());
                 gtag('config', 'G-B0XD0GTW1M');
             </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dev_guide/writing_extensions';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
@@ -126,9 +134,6 @@
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-<aside class="bd-header-announcement" aria-label="Announcement">
-  <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
-</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -550,14 +555,6 @@
 <p><span class="versionmodified added">Added in version 1.5: </span>External packages can extend HyperSpy by registering signals,
 components and widgets.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The mechanism to register extensions is in beta state. This means that it can
-change between minor and patch versions. Therefore, if you maintain a package
-that registers HyperSpy extensions, please verify that it works properly with
-any future HyperSpy release. We expect it to reach maturity with the release
-of HyperSpy 2.0.</p>
-</div>
 <p>External packages can extend HyperSpy by registering signals, components and
 widgets. Objects registered by external packages are “first-class citizens” i.e.
 they can be used, saved and loaded like any of those objects shipped with
@@ -615,31 +612,45 @@ specialized subclasses.</p>
 <p>The flowchart below can help you decide where to add
 a new data analysis function. Notice that only if no suitable package exists
 for your function, you should consider creating your own.</p>
-<div class="graphviz"><object data="../_images/graphviz-818233be8a9431104be91f61f142effd86fe274b.svg" type="image/svg+xml" class="graphviz">
-<p class="warning">digraph G {
-     A [label=&quot;New function needed!&quot;]
-     B [label=&quot;Is it useful for data of any type and dimensions?&quot;,shape=&quot;diamond&quot;]
-     C [label=&quot;Contribute it to BaseSignal&quot;]
-     D [label=&quot;Does a SignalxD for the required dimension exist in HyperSpy?&quot;,shape=&quot;diamond&quot;]
-     E [label=&quot;Contribute new SignalxD to HyperSpy&quot;]
-     F [label=&quot;Is the function useful for a specific type of data only?&quot;,shape=&quot;diamond&quot;]
-     G [label=&quot;Contribute it to SignalxD&quot;]
-     H [label=&quot;Does a signal for that sort of data exist?&quot;,shape=&quot;diamond&quot;]
-     I [label=&quot;Contribute to package providing the relevant signal&quot;]
-     J [label=&quot;Create you own package and signal subclass to host the funtion&quot;]
-     A-&gt;B
-     B-&gt;C [label=&quot;Yes&quot;]
-     B-&gt;D [label=&quot;No&quot;]
-     D-&gt;F [label=&quot;Yes&quot;]
-     D-&gt;E [label=&quot;No&quot;]
-     E-&gt;F
-     F-&gt;H [label=&quot;Yes&quot;]
-     F-&gt;G [label=&quot;No&quot;]
-     H-&gt;I [label=&quot;Yes&quot;]
-     H-&gt;J [label=&quot;No&quot;]
+<pre  class="mermaid">
+        ---
+config:
+  theme: base
 
-}</p></object></div>
-</section>
+---
+%%{
+init: {
+    'theme': 'base',
+    'themeVariables': {
+    'primaryColor': '#AFEEEE',
+    'lineColor': '#6495ED'
+    }
+}
+}%%
+
+graph TD
+
+  A(New function needed!)
+  B{Is it useful for data of&lt;br/&gt;any type and dimensions?}
+  C(Contribute it to BaseSignal)
+  D{Does a SignalxD for the&lt;br/&gt;required dimension exist&lt;br/&gt;in HyperSpy?}
+  E[Contribute new SignalxD&lt;br/&gt;to HyperSpy]
+  F{Is the function useful for a&lt;br/&gt;specific type of data only?}
+  G(Contribute it to SignalxD)
+  H{Does a signal for that sort&lt;br/&gt;of data exists?}
+  I(Contribute to package&lt;br/&gt;providing the relevant&lt;br/&gt;signal)
+  J(Create your own package&lt;br/&gt;and signal subclass to&lt;br/&gt;host the function)
+  A==&gt;B
+  B== Yes ==&gt;C
+  B== No  ==&gt;D
+  D== Yes ==&gt;F
+  D== No  ==&gt;E
+  E==&gt;F
+  F== Yes ==&gt;H
+  F== No  ==&gt;G
+  H== Yes ==&gt;I
+  H== No ==&gt;J
+    </pre></section>
 <section id="registering-a-new-basesignal-subclass">
 <h3>Registering a new BaseSignal subclass<a class="headerlink" href="#registering-a-new-basesignal-subclass" title="Link to this heading">#</a></h3>
 <p>To register a new <a class="reference internal" href="../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclass you must add it to the
@@ -703,35 +714,48 @@ packages extending HyperSpy.</p>
 <p>The flowchart below can help you decide when and where to add
 a new hyperspy model <a class="reference internal" href="../reference/base_classes/model/component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.component.Component</span></code></a>
 for your function, should you consider creating your own.</p>
-<div class="graphviz"><object data="../_images/graphviz-a54da9f7ea446415f2beb081262d130b2fa3ec43.svg" type="image/svg+xml" class="graphviz">
-<p class="warning">digraph G {
+<pre  class="mermaid">
+        ---
+config:
+  theme: base
 
+---
+%%{
+init: {
+    'theme': 'base',
+    'themeVariables': {
+    'primaryColor': '#AFEEEE',
+    'lineColor': '#6495ED'
+    }
+}
+}%%
 
-    A [label=&quot;New component needed!&quot;]
-    B [label=&quot;Can it be declared using Expression?&quot;,shape=&quot;diamond&quot;]
-    C [label=&quot;Can it be useful to other users?&quot;,shape=&quot;diamond&quot;]
-    D [label=&quot;Just use Expression&quot;]
-    E [label=&quot;Create new component using Expression&quot;]
-    F [label=&quot;Create new component from scratch&quot;]
-    G [label=&quot;Is it useful for general users?&quot;,shape=&quot;diamond&quot;]
-    H [label=&quot;Contribute it to HyperSpy&quot;]
-    I [label=&quot;Does a suitable package exist?&quot;,shape=&quot;diamond&quot;]
-    J [label=&quot;Contribute it to the relevant package&quot;]
-    K [label=&quot;Create your own package to host it&quot;]
+graph TD
 
-    A-&gt;B
-    B-&gt;C [label=&quot;Yes&quot;]
-    B-&gt;F [label=&quot;No&quot;]
-    C-&gt;E [label=&quot;Yes&quot;]
-    C-&gt;D [label=&quot;No&quot;]
-    E-&gt;G
-    F-&gt;G
-    G-&gt;H [label=&quot;Yes&quot;]
-    G-&gt;I [label=&quot;No&quot;]
-    I-&gt;J [label=&quot;Yes&quot;]
-    I-&gt;K [label=&quot;No&quot;]
-}</p></object></div>
-</section>
+  A(New component needed!)
+  B{Can it be declared&lt;br/&gt;using Expression?}
+  C{Can it be useful&lt;br/&gt;to other users?}
+  D(Just use Expression)
+  E[Create new component&lt;br/&gt;using Expression]
+  F[Create new component&lt;br/&gt;from scratch]
+  G{Is it useful for&lt;br/&gt;general users?}
+  H(Contribute it to HyperSpy)
+  I{Does a suitable&lt;br/&gt;package exist?}
+  J[Contribute it to&lt;br/&gt;the relevant package]
+  K[Create your own&lt;br/&gt;package to host it]
+
+  A==&gt;B
+  B== Yes ==&gt;C
+  B== No  ==&gt;F
+  C== No  ==&gt;D
+  C== Yes ==&gt;E
+  E==&gt;G
+  F==&gt;G
+  G== Yes ==&gt; H
+  G== No  ==&gt; I
+  I== Yes ==&gt; J
+  I== No  ==&gt; K
+    </pre></section>
 <section id="registering-new-components">
 <h3>Registering new components<a class="headerlink" href="#registering-new-components" title="Link to this heading">#</a></h3>
 <p>All new components must be a subclass of
