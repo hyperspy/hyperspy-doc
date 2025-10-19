@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
+    <title>ROI Insets &#8212; HyperSpy 2.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom-styles.css?v=eff58afb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-B0XD0GTW1M"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-B0XD0GTW1M');
+            </script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-B0XD0GTW1M');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/plotting/ROI_insets';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.3.x';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Processing" href="../processing/index.html" />
+    <link rel="prev" title="Creating Custom Layouts" href="custom_figure_layout.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2.3" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25260850-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-light" alt=""/>
+    <img src="../../_static/hyperspy_logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">HyperSpy</p>
+  
+</a></div>
+    
+      <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/index.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../help.html">
+    Get Help
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changes.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+    Contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+    Tutorial
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/index.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../help.html">
+    Get Help
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changes.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../dev_guide/index.html">
+    Contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/hyperspy/hyperspy-demos">
+    Tutorial
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hyperspy/hyperspy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitter.im/hyperspy/hyperspy" title="Gitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Gitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hyperspy.org" title="HyperSpy" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="../../_static/hyperspy.ico" class="icon-link-image" alt="HyperSpy"/></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Markers/index.html">Markers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/ragged_points.html">Ragged Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/arrows.html">Arrow markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/vertical_lines.html">Vertical Line Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/circles_color_radius.html">Circle Markers with Radius Dependent Coloring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/texts.html">Text Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/lines.html">Line  Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/arrows_ragged.html">Varying number of arrows per navigation position</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/circles.html">Circle Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/filled_circles.html">Filled Circle Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/rotation_makers.html">Rotation of markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/add_remove_marker.html">Add/Remove items from existing Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/polygons.html">Polygon  Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/ellipses.html">Ellipse markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/squares.html">Square Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/stars.html">Star Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/rectangles.html">Rectangle Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/arrows_navigation.html">Arrow markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/from_signal.html">Creating Markers from a signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/making_inset_images.html">Making Inset Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Markers/transforms_and_units.html">Transforms and Units</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../create_signal/index.html">Signal Creation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/from_tabular_data_file.html">Creates a signal1D from a text file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/line_spectrum.html">Creates a line spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/from_tabular_data.html">Creates a signal1D from tabular data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/1D_image_stack.html">Creates a 3D image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/spectrum_image.html">Creates a spectrum image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../create_signal/2D_image_stack.html">Creates a 4D image</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_visualization/index.html">Data Visualization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_visualization/compose_figure.html">Composing Figure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_visualization/specifying_ax.html">Specifying Matplotlib Axis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../extensions/index.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extensions/model_convolution_steps.html">Component convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions/model_convolution.html">Implementation of a model supporting convolution of components</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../io/index.html">Loading, saving and exporting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../io/export_single_spectrum.html">Export single spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../io/convert_color_image.html">Adjust contrast and save RGB images</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../model_fitting/index.html">Model fitting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../model_fitting/plot_residual.html">Plot Residual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_fitting/simple_arctan_fit.html">Simple arctan fit</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Making Custom Layouts for Plots</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="custom_figure_layout.html">Creating Custom Layouts</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">ROI Insets</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../processing/index.html">Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../processing/baseline_removal.html">Baseline Removal</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../region_of_interest/index.html">Region of Interest</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/SpanROI.html">SpanROI on signal axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/map_signal.html">Create Map from ROI in signal space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/PolygonROI.html">PolygonROI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/ROI_navigator.html">Navigator ROI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/map_signal_circleROI.html">Create Map from CircleROI in signal space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/fast_fourier_transform_live.html">Live FFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/combine_PolygonROI.html">Combine PolygonROI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/ExtractLineProfile.html">Extract line profile from image interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../region_of_interest/SpanROI_interactive_sum.html">Interactive integration of one dimensional signal</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simple_simulations/index.html">Simple simulations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simple_simulations/two_gaussians.html">Simple simulation (2 Gaussians)</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Gallery of Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Making Custom Layouts for Plots</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ROI Insets</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-plotting-roi-insets-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="roi-insets">
+<span id="sphx-glr-auto-examples-plotting-roi-insets-py"></span><h1>ROI Insets<a class="headerlink" href="#roi-insets" title="Link to this heading">#</a></h1>
+<p>ROI’s can be powerful tools to help visualize data.  In this case we will define ROI’s in hyperspy, sum
+the data within the ROI, and then plot the sum as a signal. Using the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="(in Matplotlib v3.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.figure.SubFigure</span></code></a> class
+we can create a custom layout to visualize and interact with the data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Plotting data with subfigures is slower than using separates figures.</p>
+</div>
+<p>We can connect these ROI’s using the <a class="reference internal" href="../../reference/api.html#hyperspy.api.interactive" title="hyperspy.api.interactive"><code class="xref py py-func docutils literal notranslate"><span class="pre">hyperspy.api.interactive()</span></code></a> function which allows us to move the ROI’s and see the sum of the underlying data.</p>
+<img src="../../_images/sphx_glr_ROI_insets_001.png" srcset="../../_images/sphx_glr_ROI_insets_001.png" alt="ROI insets" class = "sphx-glr-single-img"/><div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hyperspy.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<a href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="numpy.random.Generator" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rng</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.default_rng" title="numpy.random.default_rng" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span></a><span class="p">()</span>
+
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="matplotlib.pyplot.figure" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec" title="matplotlib.gridspec.GridSpec" class="sphx-glr-backref-module-matplotlib-gridspec sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gs</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.add_gridspec.html#matplotlib.figure.Figure.add_gridspec" title="matplotlib.figure.Figure.add_gridspec" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span></a><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub1</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.add_subfigure.html#matplotlib.figure.Figure.add_subfigure" title="matplotlib.figure.Figure.add_subfigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">add_subfigure</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec" title="matplotlib.gridspec.GridSpec" class="sphx-glr-backref-module-matplotlib-gridspec sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub2</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.add_subfigure.html#matplotlib.figure.Figure.add_subfigure" title="matplotlib.figure.Figure.add_subfigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">add_subfigure</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec" title="matplotlib.gridspec.GridSpec" class="sphx-glr-backref-module-matplotlib-gridspec sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub3</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.add_subfigure.html#matplotlib.figure.Figure.add_subfigure" title="matplotlib.figure.Figure.add_subfigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">add_subfigure</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec" title="matplotlib.gridspec.GridSpec" class="sphx-glr-backref-module-matplotlib-gridspec sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gs</span></a><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">])</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub4</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.add_subfigure.html#matplotlib.figure.Figure.add_subfigure" title="matplotlib.figure.Figure.add_subfigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">add_subfigure</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec" title="matplotlib.gridspec.GridSpec" class="sphx-glr-backref-module-matplotlib-gridspec sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gs</span></a><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
+
+
+<span class="n">s</span> <span class="o">=</span> <a href="../../reference/base_classes/signal/CommonSignal2D.html#hyperspy._signals.common_signal2d.CommonSignal2D" title="hyperspy._signals.common_signal2d.CommonSignal2D" class="sphx-glr-backref-module-hyperspy-_signals-common_signal2d sphx-glr-backref-type-py-class"><span class="n">hs</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">Signal2D</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.random.html#numpy.random.Generator.random" title="numpy.random.Generator.random" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-method"><span class="n">rng</span><span class="o">.</span><span class="n">random</span></a><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)))</span>
+<span class="n">r1</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-class"><span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">RectangularROI</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-class"><span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">RectangularROI</span></a><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">r3</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI" title="hyperspy.roi.BaseInteractiveROI" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-class"><span class="n">hs</span><span class="o">.</span><span class="n">roi</span><span class="o">.</span><span class="n">RectangularROI</span></a><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+
+<span class="n">navigator</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># create a navigator signal</span>
+<span class="n">navigator</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub1</span></a><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axes_off</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">plot_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="n">s2</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI.interactive" title="hyperspy.roi.BaseInteractiveROI.interactive" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-method"><span class="n">r1</span><span class="o">.</span><span class="n">interactive</span></a><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">navigation_signal</span><span class="o">=</span><span class="n">navigator</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">s3</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI.interactive" title="hyperspy.roi.BaseInteractiveROI.interactive" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-method"><span class="n">r2</span><span class="o">.</span><span class="n">interactive</span></a><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">navigation_signal</span><span class="o">=</span><span class="n">navigator</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+<span class="n">s4</span> <span class="o">=</span> <a href="../../reference/base_classes/roi.html#hyperspy.roi.BaseInteractiveROI.interactive" title="hyperspy.roi.BaseInteractiveROI.interactive" class="sphx-glr-backref-module-hyperspy-roi sphx-glr-backref-type-py-method"><span class="n">r3</span><span class="o">.</span><span class="n">interactive</span></a><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">navigation_signal</span><span class="o">=</span><span class="n">navigator</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<span class="n">s2_int</span> <span class="o">=</span> <span class="n">s2</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">s3_int</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">s4_int</span> <span class="o">=</span> <span class="n">s4</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">s2_int</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub2</span></a><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axes_off</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">plot_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">s3_int</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub3</span></a><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axes_off</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">plot_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">s4_int</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.SubFigure.html#matplotlib.figure.SubFigure" title="matplotlib.figure.SubFigure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub4</span></a><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axes_off</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">plot_indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Connect ROIS</span>
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">s_int</span><span class="p">,</span> <span class="n">roi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">s4</span><span class="p">],</span> <span class="p">[</span><span class="n">s2_int</span><span class="p">,</span> <span class="n">s3_int</span><span class="p">,</span> <span class="n">s4_int</span><span class="p">],[</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">,</span><span class="n">r3</span><span class="p">]):</span>
+    <a href="../../reference/api.html#hyperspy.api.interactive" title="hyperspy.api.interactive" class="sphx-glr-backref-module-hyperspy-api sphx-glr-backref-type-py-function"><span class="n">hs</span><span class="o">.</span><span class="n">interactive</span></a><span class="p">(</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
+        <span class="n">event</span><span class="o">=</span><a href="../../reference/base_classes/events.html#hyperspy.events.Event" title="hyperspy.events.Event" class="sphx-glr-backref-module-hyperspy-events sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">roi</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">changed</span></a><span class="p">,</span>
+        <span class="n">recompute_out_event</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">s_int</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="c1"># Add Borders to the match the color of the ROI</span>
+
+<span class="k">for</span> <span class="n">signal</span><span class="p">,</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span> <span class="n">label</span>  <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">s2_int</span><span class="p">,</span> <span class="n">s3_int</span><span class="p">,</span> <span class="n">s4_int</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;b.&quot;</span><span class="p">,</span> <span class="s2">&quot;c.&quot;</span><span class="p">,</span> <span class="s2">&quot;d.&quot;</span><span class="p">]):</span>
+    <span class="n">edge</span> <span class="o">=</span>  <a href="../../reference/api.plot/markers.html#hyperspy.api.plot.markers.Squares" title="hyperspy.api.plot.markers.Squares" class="sphx-glr-backref-module-hyperspy-api-plot-markers sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">Squares</span></a><span class="p">(</span>
+    <span class="n">offset_transform</span><span class="o">=</span><span class="s2">&quot;axes&quot;</span><span class="p">,</span>
+    <span class="n">offsets</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">units</span><span class="o">=</span><span class="s2">&quot;width&quot;</span><span class="p">,</span>
+    <span class="n">widths</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">signal</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+    <span class="n">label</span> <span class="o">=</span> <a href="../../reference/api.plot/markers.html#hyperspy.api.plot.markers.Texts" title="hyperspy.api.plot.markers.Texts" class="sphx-glr-backref-module-hyperspy-api-plot-markers sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">Texts</span></a><span class="p">(</span>
+    <span class="n">texts</span><span class="o">=</span><span class="p">(</span><span class="n">label</span><span class="p">,),</span> <span class="n">offsets</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">]],</span> <span class="n">offset_transform</span><span class="o">=</span><span class="s2">&quot;axes&quot;</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">&quot;w&quot;</span>
+    <span class="p">)</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+<span class="c1"># Label the big plot</span>
+
+<span class="n">label</span> <span class="o">=</span> <a href="../../reference/api.plot/markers.html#hyperspy.api.plot.markers.Texts" title="hyperspy.api.plot.markers.Texts" class="sphx-glr-backref-module-hyperspy-api-plot-markers sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">Texts</span></a><span class="p">(</span>
+    <span class="n">texts</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;a.&quot;</span><span class="p">,),</span> <span class="n">offsets</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]],</span> <span class="n">offset_transform</span><span class="o">=</span><span class="s2">&quot;axes&quot;</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">&quot;w&quot;</span>
+    <span class="p">)</span>
+<span class="n">navigator</span><span class="o">.</span><span class="n">add_marker</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.369 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plotting-roi-insets-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/9998c6cd3fc6bc37e182ec823693dcfc/ROI_insets.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">ROI_insets.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2d564c11ee264e43fb9a17efa057db3e/ROI_insets.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">ROI_insets.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/819cb88dd7984809b5ca5012f8c8e866/ROI_insets.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">ROI_insets.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="custom_figure_layout.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Creating Custom Layouts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../processing/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Processing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/auto_examples/plotting/ROI_insets.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2011-2025, The HyperSpy development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.1.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
