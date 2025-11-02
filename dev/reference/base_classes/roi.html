@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>ROI &#8212; HyperSpy 2.4.0.dev134+g2fecee68a documentation</title>
+    <title>ROI &#8212; HyperSpy 2.4.0.dev138+g7fd61a043 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=c9bde735"></script>
+    <script src="../../_static/documentation_options.js?v=a49516a6"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -802,7 +802,7 @@ ROIs, and serve as a common type that can be checked for.</p>
 (and corresponding widget/signal axes) on which the ROI has been added.
 This dictionary is populated in <a class="reference internal" href="#hyperspy.roi.BaseInteractiveROI.add_widget" title="hyperspy.roi.BaseInteractiveROI.add_widget"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseInteractiveROI.add_widget()</span></code></a></p>
 </dd>
-<dt><strong>parameters</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Mapping of parameters name and values for all parameters of the ROI.</p>
+<dt><a class="reference internal" href="#hyperspy.roi.BaseROI.parameters" title="hyperspy.roi.BaseROI.parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parameters</span></code></a><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Dictionary containing the parameters that define the current ROI.</p>
 </dd>
 </dl>
 </dd>
@@ -814,6 +814,25 @@ This dictionary is populated in <a class="reference internal" href="#hyperspy.ro
 <dd><p>Determine if the ROI is in a valid state.</p>
 <p>This is typically determined by all the coordinates being defined,
 and that the values makes sense relative to each other.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hyperspy.roi.BaseROI.parameters">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#hyperspy.roi.BaseROI.parameters" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary containing the parameters that define the current ROI.
+The content depends on the specific ROI subclass, e.g. for a
+<code class="docutils literal notranslate"><span class="pre">RectangularROI</span></code> it may include <code class="docutils literal notranslate"><span class="pre">left</span></code>, <code class="docutils literal notranslate"><span class="pre">right</span></code>, <code class="docutils literal notranslate"><span class="pre">top</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">bottom</span></code>.</p>
+<p class="rubric">Notes</p>
+<p>This property is intended for serialization and restoration of ROIs.
+Subclasses must implement this property.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">hyperspy.roi</span><span class="w"> </span><span class="kn">import</span> <span class="n">RectangularROI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roi</span> <span class="o">=</span> <span class="n">RectangularROI</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roi2</span> <span class="o">=</span> <span class="n">RectangularROI</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -884,6 +903,7 @@ The base implementation simply triggers the changed event.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperspy.roi.BaseROI"><code class="docutils literal notranslate"><span class="pre">BaseROI</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperspy.roi.BaseROI.is_valid"><code class="docutils literal notranslate"><span class="pre">is_valid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperspy.roi.BaseROI.parameters"><code class="docutils literal notranslate"><span class="pre">parameters</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperspy.roi.BaseROI.update"><code class="docutils literal notranslate"><span class="pre">update()</span></code></a></li>
 </ul>
 </li>
