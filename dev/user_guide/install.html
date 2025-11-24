@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Installing HyperSpy &#8212; HyperSpy 2.4.0.dev138+g7fd61a043 documentation</title>
+    <title>Installing HyperSpy &#8212; HyperSpy 2.4.0.dev149+g34e731963 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=a49516a6"></script>
+    <script src="../_static/documentation_options.js?v=e0af89ed"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -817,30 +817,27 @@ the stable release) is also available in the AUR as <a class="reference external
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When running hyperspy from a development version, it can happen that the
-dependency requirement changes in which you will need to keep this
-this requirement up to date (check dependency requirement in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>)
-or run again the installation in development mode using <code class="docutils literal notranslate"><span class="pre">pip</span></code> as explained
-below.</p>
+<p>When running hyperspy from a development version, it can happen that
+dependencies change when pulling new commits / syncing the project. You
+will then need to manually update dependencies in the environment
+(check <a class="reference external" href="https://github.com/hyperspy/hyperspy/blob/RELEASE_next_minor/pyproject.toml">pyproject.toml</a>)
+or run again the development installation procedure, as explained below.</p>
 </div>
 </section>
 <section id="installation-in-a-anaconda-miniconda-distribution">
 <h3>Installation in a Anaconda/Miniconda distribution<a class="headerlink" href="#installation-in-a-anaconda-miniconda-distribution" title="Link to this heading">#</a></h3>
 <p>Optionally, create an environment to separate your hyperspy installation from
-other anaconda environments (<a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html">read more about environments here</a>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>hspy_dev<span class="w"> </span>python<span class="w"> </span><span class="c1"># create an empty environment with latest python</span>
+other anaconda environments (<a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html">read more about environments here</a>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>conda_environment.yml<span class="w"> </span>-n<span class="w"> </span>hspy_dev<span class="w"> </span><span class="c1"># create an environment with development dependencies</span>
 $<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>hspy_dev<span class="w"> </span><span class="c1"># activate environment</span>
 </pre></div>
 </div>
-<p>Install the runtime and development dependencies requirements using conda:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>hyperspy-base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>--only-deps<span class="w"> </span><span class="c1"># install hyperspy dependencies</span>
-$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>hyperspy-dev<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="c1"># install developer dependencies</span>
+<p>Install the development requirements using conda:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>update<span class="w"> </span>-f<span class="w"> </span>conda_environment_dev.yml<span class="w"> </span><span class="c1"># install hyperspy dependencies</span>
 </pre></div>
 </div>
-<p>The package <code class="docutils literal notranslate"><span class="pre">hyperspy-dev</span></code> will install the development dependencies required
-for testing and building the documentation.</p>
 <p>From the root folder of your hyperspy repository (folder containing the
-<code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file) run <a class="reference external" href="https://pip.pypa.io/">pip</a> in development mode:</p>
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file) run <a class="reference external" href="https://pip.pypa.io/">pip</a> in development mode:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>--no-deps<span class="w"> </span><span class="c1"># install the currently checked-out branch of hyperspy</span>
 </pre></div>
 </div>
@@ -848,7 +845,7 @@ for testing and building the documentation.</p>
 <section id="installation-in-other-non-system-python-distribution">
 <h3>Installation in other (non-system) Python distribution<a class="headerlink" href="#installation-in-other-non-system-python-distribution" title="Link to this heading">#</a></h3>
 <p>From the root folder of your hyperspy repository (folder containing the
-<code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file) run <a class="reference external" href="https://pip.pypa.io/">pip</a> in development mode:</p>
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file) run <a class="reference external" href="https://pip.pypa.io/">pip</a> in development mode:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
 </pre></div>
 </div>
