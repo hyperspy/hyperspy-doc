@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Working with big data &#8212; HyperSpy 2.4.0 documentation</title>
+    <title>Working with big data &#8212; HyperSpy 2.3.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4d935f96"></script>
+    <script src="../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -63,7 +63,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.4.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -74,7 +74,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.4" />
+  <meta name="docsearch:version" content="2.3" />
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -126,6 +126,9 @@
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -591,7 +594,7 @@
 <p>HyperSpy makes it possible to analyse data larger than the available memory by
 providing “lazy” versions of most of its signals and functions. In most cases
 the syntax remains the same. This chapter describes how to work with data
-larger than memory using the <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal" title="hyperspy.api.signals.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazySignal</span></code></a> class and
+larger than memory using the <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazySignal</span></code></a> class and
 its derivatives.</p>
 <section id="creating-lazy-signals">
 <h2>Creating Lazy Signals<a class="headerlink" href="#creating-lazy-signals" title="Link to this heading">#</a></h2>
@@ -639,12 +642,12 @@ around 35GB of memory. To store it in a floating-point format one would need
 almost 280GB of memory. However, with the lazy processing both of these steps
 are near-instantaneous and require very little computational resources.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">Added in version 1.4: </span><a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.close_file" title="hyperspy.api.signals.LazySignal.close_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close_file()</span></code></a></p>
+<p><span class="versionmodified added">Added in version 1.4: </span><a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.close_file" title="hyperspy._signals.lazy.LazySignal.close_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close_file()</span></code></a></p>
 </div>
 <p>Currently when loading an hdf5 file lazily the file remains open at
 least while the signal exists. In order to close it explicitly, use the
-<a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.close_file" title="hyperspy.api.signals.LazySignal.close_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close_file()</span></code></a> method. Alternatively,
-you could close it on calling <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.compute" title="hyperspy.api.signals.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a>
+<a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.close_file" title="hyperspy._signals.lazy.LazySignal.close_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close_file()</span></code></a> method. Alternatively,
+you could close it on calling <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.compute" title="hyperspy._signals.lazy.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a>
 by passing the keyword argument <code class="docutils literal notranslate"><span class="pre">close_file=True</span></code> e.g.:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;file.hspy&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ssum</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -706,7 +709,7 @@ To perform decomposition operation lazily, HyperSpy provides access to several �
 algorithms  as well as <a class="reference external" href="https://dask.pydata.org/">dask</a>’s lazy SVD algorithm.
 Online algorithms perform the decomposition by operating serially on chunks of
 data, enabling the lazy decomposition of large datasets. In line with the
-standard HyperSpy signals, lazy <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.decomposition" title="hyperspy.api.signals.LazySignal.decomposition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decomposition()</span></code></a>
+standard HyperSpy signals, lazy <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.decomposition" title="hyperspy._signals.lazy.LazySignal.decomposition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decomposition()</span></code></a>
 offers the following online algorithms:</p>
 <div class="pst-scrollable-table-container"><span id="lazy-decomposition-table"></span><table class="table" id="id2">
 <caption><span class="caption-text">Available lazy decomposition algorithms in HyperSpy</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
@@ -723,10 +726,10 @@ offers the following online algorithms:</p>
 <td><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html#sklearn.decomposition.IncrementalPCA" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.decomposition.IncrementalPCA</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>“ORPCA”</p></td>
-<td><p><a class="reference internal" href="../reference/base_classes/machine_learning.html#hyperspy.learn.orpca" title="hyperspy.learn.orpca"><code class="xref py py-func docutils literal notranslate"><span class="pre">orpca()</span></code></a></p></td>
+<td><p><a class="reference internal" href="../reference/base_classes/machine_learning.html#hyperspy.learn.rpca.ORPCA" title="hyperspy.learn.rpca.ORPCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">ORPCA</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>“ORNMF”</p></td>
-<td><p><a class="reference internal" href="../reference/base_classes/machine_learning.html#hyperspy.learn.ornmf" title="hyperspy.learn.ornmf"><code class="xref py py-func docutils literal notranslate"><span class="pre">ornmf()</span></code></a></p></td>
+<td><p><a class="reference internal" href="../reference/base_classes/machine_learning.html#hyperspy.learn.ornmf.ORNMF" title="hyperspy.learn.ornmf.ORNMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ORNMF</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -770,10 +773,10 @@ harddrive when changing navigation indices:</p>
 </pre></div>
 </div>
 <p>This approach depends heavily on the chunking of the data and may not be
-always suitable. The <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.compute_navigator" title="hyperspy.api.signals.LazySignal.compute_navigator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_navigator()</span></code></a>
+always suitable. The <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.compute_navigator" title="hyperspy._signals.lazy.LazySignal.compute_navigator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_navigator()</span></code></a>
 can be used to calculate the navigator efficient and store the navigator, so
 that it can be used when plotting and saved for the later loading of the dataset.
-The <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.compute_navigator" title="hyperspy.api.signals.LazySignal.compute_navigator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_navigator()</span></code></a> has optional
+The <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.compute_navigator" title="hyperspy._signals.lazy.LazySignal.compute_navigator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_navigator()</span></code></a> has optional
 argument to specify the index where the sum needs to be calculated and how to
 rechunk the dataset when calculating the navigator. This allows to
 efficiently calculate the navigator without changing the actual chunking of the
@@ -926,7 +929,7 @@ The following example shows how to chunk one of the two navigation dimensions in
 <span class="go">(10, 100, 300)</span>
 </pre></div>
 </div>
-<p>To get the chunk size of given axes, the <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.get_chunk_size" title="hyperspy.api.signals.LazySignal.get_chunk_size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_chunk_size()</span></code></a>
+<p>To get the chunk size of given axes, the <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.get_chunk_size" title="hyperspy._signals.lazy.LazySignal.get_chunk_size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_chunk_size()</span></code></a>
 method can be used:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">dask.array</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
@@ -967,7 +970,7 @@ axis (bolded axes).</p>
 <span id="compute-lazy-signals"></span><h3>Computing lazy signals<a class="headerlink" href="#computing-lazy-signals" title="Link to this heading">#</a></h3>
 <p>Upon saving lazy signals, the result of computations is stored on disk.</p>
 <p>In order to store the lazy signal in memory (i.e. make it a normal HyperSpy
-signal) it has a <a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal.compute" title="hyperspy.api.signals.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a> method:</p>
+signal) it has a <a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal.compute" title="hyperspy._signals.lazy.LazySignal.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">&lt;LazySignal2D, title: , dimensions: (10, 20, 20|10, 10)&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
@@ -1164,7 +1167,7 @@ added to mimic the workflow as closely as possible.</p></li>
 </section>
 <section id="saving-big-data">
 <span id="big-data-saving"></span><h3>Saving Big Data<a class="headerlink" href="#saving-big-data" title="Link to this heading">#</a></h3>
-<p>The most efficient format supported by RosettaSciIO to write data is the
+<p>The most efficient format supported by HyperSpy to write data is the
 <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/zspy.html#zspy-format" title="(in RosettaSciIO)"><span class="xref std std-ref">ZSpy format</span></a>,
 mainly because it supports writing concurrently from multiple threads or processes.
 This also allows for smooth interaction with dask-distributed for efficient scaling.</p>
@@ -1179,7 +1182,7 @@ twice that to store the results of subsequent computations. This can become a
 significant problem when processing very large datasets on consumer-oriented
 hardware.</p>
 <p>HyperSpy offers a solution for this problem by including
-<a class="reference internal" href="../reference/api.signals/LazySignal.html#hyperspy.api.signals.LazySignal" title="hyperspy.api.signals.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazySignal</span></code></a> and its derivatives. The main idea of
+<a class="reference internal" href="../reference/base_classes/signal/LazySignal.html#hyperspy._signals.lazy.LazySignal" title="hyperspy._signals.lazy.LazySignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazySignal</span></code></a> and its derivatives. The main idea of
 these classes is to perform any operation (as the name suggests)
 <a class="reference external" href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazily</a> (delaying the
 execution until the result is requested (e.g. saved, plotted)) and in a

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Loading and saving data &#8212; HyperSpy 2.4.0 documentation</title>
+    <title>Loading and saving data &#8212; HyperSpy 2.3.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4d935f96"></script>
+    <script src="../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -63,7 +63,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.4.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -74,7 +74,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.4" />
+  <meta name="docsearch:version" content="2.3" />
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -126,6 +126,9 @@
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -586,29 +589,20 @@
   <section id="loading-and-saving-data">
 <span id="io"></span><h1>Loading and saving data<a class="headerlink" href="#loading-and-saving-data" title="Link to this heading">#</a></h1>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span>File format support in HyperSpy is provided by the separate package
-<a class="reference external" href="https://hyperspy.org/rosettasciio/index.html" title="(in RosettaSciIO)"><span class="xref std std-doc">RosettaSciIO</span></a>. The IO plugins formerly
-developed within HyperSpy have been moved to RosettaSciIO in order to
-facilitate a wider use also by other packages.</p>
-<p><strong>For file format information and documentation</strong>, please refer to:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span class="xref std std-ref">Supported File Formats</span></a> - Complete list of supported formats</p></li>
-<li><p><a class="reference external" href="https://hyperspy.org/rosettasciio/index.html" title="(in RosettaSciIO)"><span class="xref std std-doc">RosettaSciIO Documentation</span></a> - Full documentation for file I/O functionality</p></li>
-<li><p><a class="reference external" href="https://github.com/hyperspy/rosettasciio">RosettaSciIO GitHub Repository</a> - Source code and development</p></li>
-</ul>
-<p><strong>Reporting Issues</strong>: File format specific issues should be reported to the
-<a class="reference external" href="https://github.com/hyperspy/rosettasciio/issues">RosettaSciIO issue tracker</a>.
-Plugins supporting additional formats or corrections/enhancements to existing
-plugins should be contributed to the RosettaSciIO repository.</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span>The IO plugins formerly developed within HyperSpy have been moved to
+the separate package <a class="reference external" href="https://hyperspy.org/rosettasciio/index.html" title="(in RosettaSciIO)"><span class="xref std std-doc">RosettaSciIO</span></a>
+in order to facilitate a wider use also by other packages. Plugins supporting
+additional formats or corrections/enhancements to existing plugins should now
+be contributed to the <a class="reference external" href="https://github.com/hyperspy/rosettasciio">RosettaSciIO repository</a>
+and file format specific issues should be reported to the <a class="reference external" href="https://github.com/hyperspy/rosettasciio/issues">RosettaSciIO issue
+tracker</a>.</p>
 </div>
 <section id="loading">
 <span id="loading-files"></span><h2>Loading<a class="headerlink" href="#loading" title="Link to this heading">#</a></h2>
 <section id="basic-usage">
 <h3>Basic usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
-<p>HyperSpy can read and write to multiple formats through the
-<a class="reference external" href="https://hyperspy.org/rosettasciio/index.html" title="(in RosettaSciIO)"><span class="xref std std-doc">RosettaSciIO</span></a> library (see <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a>).
-RosettaSciIO provides the file format support that powers HyperSpy’s loading and saving capabilities.</p>
-<p>To load data use the <a class="reference internal" href="../reference/api.html#hyperspy.api.load" title="hyperspy.api.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> command. For example, to load the
+<p>HyperSpy can read and write to multiple formats (see <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a>).
+To load data use the <a class="reference internal" href="../reference/api.html#hyperspy.api.load" title="hyperspy.api.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> command. For example, to load the
 image <code class="docutils literal notranslate"><span class="pre">spam.jpg</span></code>, you can type:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spam.jpg&quot;</span><span class="p">)</span>
 </pre></div>
@@ -650,17 +644,15 @@ allows to select a single file through your OS file manager, e.g.:</p>
 <p>It is also possible to load multiple files at once or even stack multiple
 files. For more details read <a class="reference internal" href="#load-multiple-label"><span class="std std-ref">Loading multiple files</span></a>.</p>
 </section>
-<section id="specifying-file-format">
-<h3>Specifying file format<a class="headerlink" href="#specifying-file-format" title="Link to this heading">#</a></h3>
-<p>HyperSpy (via RosettaSciIO) will attempt to infer the appropriate file reader to use based on
-the file extension (for example <code class="docutils literal notranslate"><span class="pre">.hspy</span></code>, <code class="docutils literal notranslate"><span class="pre">.emd</span></code> and so on). You can
-override this using the <code class="docutils literal notranslate"><span class="pre">file_format</span></code> keyword:</p>
+<section id="specifying-reader">
+<h3>Specifying reader<a class="headerlink" href="#specifying-reader" title="Link to this heading">#</a></h3>
+<p>HyperSpy will attempt to infer the appropriate file reader to use based on
+the file extension (for example. <code class="docutils literal notranslate"><span class="pre">.hspy</span></code>, <code class="docutils literal notranslate"><span class="pre">.emd</span></code> and so on). You can
+override this using the <code class="docutils literal notranslate"><span class="pre">reader</span></code> keyword:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a .hspy file with an unknown extension</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.some_extension&quot;</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;hspy&quot;</span><span class="p">)</span> <span class="c1"># doctest: +SKIP</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;filename.some_extension&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="s2">&quot;hspy&quot;</span><span class="p">)</span> <span class="c1"># doctest: +SKIP</span>
 </pre></div>
 </div>
-<p>For a complete list of supported file formats and their capabilities, see the
-<a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a> documentation in RosettaSciIO.</p>
 </section>
 <section id="specifying-signal-type">
 <span id="load-specify-signal-type-label"></span><h3>Specifying signal type<a class="headerlink" href="#specifying-signal-type" title="Link to this heading">#</a></h3>
@@ -842,108 +834,6 @@ default <a class="reference external" href="https://hyperspy.org/rosettasciio/su
 </div>
 <p>Some formats take extra arguments. See the corresponding pages at
 <a class="reference external" href="https://hyperspy.org/rosettasciio/supported_formats/index.html#supported-formats" title="(in RosettaSciIO)"><span>Supported formats</span></a> for more information.</p>
-<section id="batch-processing-and-re-saving">
-<span id="batch-resaving"></span><h3>Batch Processing and Re-saving<a class="headerlink" href="#batch-processing-and-re-saving" title="Link to this heading">#</a></h3>
-<p>HyperSpy provides convenient functionality for batch processing and re-saving
-files using the <code class="docutils literal notranslate"><span class="pre">tmp_parameters</span></code> that are automatically populated when
-loading files. This is particularly useful when you need to:</p>
-<ul class="simple">
-<li><p>Process multiple files and save them in a different location</p></li>
-<li><p>Convert files from one format to another</p></li>
-<li><p>Apply the same processing to many files while preserving their original names</p></li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">tmp_parameters</span></code> contain the original filename, folder, and extension
-information from loaded files, enabling you to save processed data without
-manually specifying filenames.</p>
-<section id="basic-re-saving-to-different-locations">
-<h4>Basic Re-saving to Different Locations<a class="headerlink" href="#basic-re-saving-to-different-locations" title="Link to this heading">#</a></h4>
-<p>When you load a file with HyperSpy, the <code class="docutils literal notranslate"><span class="pre">tmp_parameters</span></code> are automatically
-populated:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;original_data.hspy&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tmp_parameters</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>   <span class="c1"># &#39;original_data&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tmp_parameters</span><span class="o">.</span><span class="n">extension</span><span class="p">)</span>  <span class="c1"># &#39;.hspy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tmp_parameters</span><span class="o">.</span><span class="n">folder</span><span class="p">)</span>     <span class="c1"># &#39;/path/to/original/&#39;</span>
-</pre></div>
-</div>
-<p>You can then save the signal to a different directory by providing only the
-directory path:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/new/output/folder/&quot;</span><span class="p">)</span>  <span class="c1"># Saves to /new/output/folder/original_data.hspy</span>
-</pre></div>
-</div>
-</section>
-<section id="format-conversion">
-<h4>Format Conversion<a class="headerlink" href="#format-conversion" title="Link to this heading">#</a></h4>
-<p>To convert files to different formats, specify the <code class="docutils literal notranslate"><span class="pre">file_format</span></code> or
-<code class="docutils literal notranslate"><span class="pre">extension</span></code> parameter:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;data.hspy&quot;</span><span class="p">)</span>                       <span class="c1"># Load HyperSpy format</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;output/&quot;</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;msa&quot;</span><span class="p">)</span>          <span class="c1"># Convert to MSA format</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;output/&quot;</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;rpl&quot;</span><span class="p">)</span>          <span class="c1"># Convert to Ripple format</span>
-</pre></div>
-</div>
-</section>
-<section id="batch-processing-example">
-<h4>Batch Processing Example<a class="headerlink" href="#batch-processing-example" title="Link to this heading">#</a></h4>
-<p>Here’s a complete example of batch processing multiple files:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hyperspy.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-
-<span class="c1"># Define input and output directories</span>
-<span class="n">input_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;raw_data/&quot;</span><span class="p">)</span>
-<span class="n">output_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;processed_data/&quot;</span><span class="p">)</span>
-<span class="n">output_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Create output directory if it doesn&#39;t exist</span>
-
-<span class="c1"># Process all .hspy files in the input directory</span>
-<span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">input_folder</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hspy&quot;</span><span class="p">):</span>
-    <span class="c1"># Load the signal</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-
-    <span class="c1"># Apply your processing steps</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">remove_background</span><span class="p">()</span>
-
-    <span class="c1"># Save in new location - filename is preserved automatically</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_folder</span><span class="p">)</span>  <span class="c1"># Uses original filename from tmp_parameters</span>
-
-<span class="c1"># Convert all files to a different format</span>
-<span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">input_folder</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hspy&quot;</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="c1"># Save as MSA format in output directory</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;msa&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="batch-processing-with-different-output-names">
-<h4>Batch Processing with Different Output Names<a class="headerlink" href="#batch-processing-with-different-output-names" title="Link to this heading">#</a></h4>
-<p>If you need more control over output filenames while still leveraging the
-batch functionality:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hyperspy.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-
-<span class="n">input_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;input_data/&quot;</span><span class="p">)</span>
-<span class="n">output_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;processed_data/&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">input_folder</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hspy&quot;</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-
-    <span class="c1"># Process the signal</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">remove_background</span><span class="p">()</span>
-
-    <span class="c1"># Option 1: Use automatic filename with prefix/suffix</span>
-    <span class="n">base_name</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">tmp_parameters</span><span class="o">.</span><span class="n">filename</span>
-    <span class="n">custom_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;processed_</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">.hspy&quot;</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_folder</span> <span class="o">/</span> <span class="n">custom_filename</span><span class="p">)</span>
-
-    <span class="c1"># Option 2: Completely custom filename</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_folder</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">_cleaned.msa&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">tmp_parameters</span></code> are only available for signals that were loaded from
-files. If you create a signal programmatically, you’ll need to provide the
-full filename when saving.</p>
-</div>
-</section>
-</section>
 </section>
 </section>
 
@@ -996,7 +886,7 @@ full filename when saving.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading">Loading</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic usage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-file-format">Specifying file format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-reader">Specifying reader</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-signal-type">Specifying signal type</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lazy-loading-of-large-datasets">Lazy loading of large datasets</a></li>
@@ -1004,16 +894,7 @@ full filename when saving.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-example-data-and-data-from-online-databases">Loading example data and data from online databases</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saving">Saving</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-and-re-saving">Batch Processing and Re-saving</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-re-saving-to-different-locations">Basic Re-saving to Different Locations</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#format-conversion">Format Conversion</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-example">Batch Processing Example</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-with-different-output-names">Batch Processing with Different Output Names</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saving">Saving</a></li>
 </ul>
   </nav></div>
 

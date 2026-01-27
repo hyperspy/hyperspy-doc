@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../_static/hyperspy.ico" rel="icon" type="image/x-icon">
-    <title>Writing packages that extend HyperSpy &#8212; HyperSpy 2.4.0 documentation</title>
+    <title>Writing packages that extend HyperSpy &#8212; HyperSpy 2.3.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4d935f96"></script>
+    <script src="../_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,457 +59,22 @@
                 gtag('js', new Date());
                 gtag('config', 'G-B0XD0GTW1M');
             </script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
-
-
-
-
-
-const initStyles = () => {
-    const defaultStyle = document.createElement('style');
-    defaultStyle.textContent = `pre.mermaid {
-    /* Same as .mermaid-container > pre */
-    display: block;
-    width: 100%;
-}
-
-pre.mermaid > svg {
-    /* Same as .mermaid-container > pre > svg */
-    height: 500px;
-    width: 100%;
-    max-width: 100% !important;
-}`;
-    document.head.appendChild(defaultStyle);
-
-    const fullscreenStyle = document.createElement('style');
-    fullscreenStyle.textContent = `.mermaid-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.mermaid-container > pre {
-    display: block;
-    width: 100%;
-}
-
-.mermaid-container > pre > svg {
-    height: 500px;
-    width: 100%;
-    max-width: 100% !important;
-}
-
-.mermaid-fullscreen-btn {
-    width: 28px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    font-size: 14px;
-    line-height: 1;
-    padding: 0;
-    color: #333;
-}
-
-.mermaid-fullscreen-btn:hover {
-    opacity: 100% !important;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
-}
-
-.mermaid-fullscreen-btn.dark-theme {
-    background: rgba(50, 50, 50, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #e0e0e0;
-}
-
-.mermaid-fullscreen-btn.dark-theme:hover {
-    background: rgba(60, 60, 60, 1);
-    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
-}
-
-.mermaid-fullscreen-modal {
-    display: none;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 95vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.98);
-    z-index: 9999;
-    padding: 20px;
-    overflow: auto;
-}
-
-.mermaid-fullscreen-modal.dark-theme {
-    background: rgba(0, 0, 0, 0.98);
-}
-
-.mermaid-fullscreen-modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen {
-    position: relative;
-    width: 95vw;
-    height: 90vh;
-    max-width: 95vw;
-    max-height: 90vh;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen.dark-theme {
-    background: #1a1a1a;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-}
-
-.mermaid-container-fullscreen pre.mermaid {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen .mermaid svg {
-    height: 100% !important;
-    width: 100% !important;
-    cursor: grab;
-}
-
-.mermaid-fullscreen-close {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.2s;
-    font-size: 24px;
-    line-height: 1;
-    color: #333;
-}
-
-.mermaid-fullscreen-close:hover {
-    background: white;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    transform: scale(1.1);
-}
-
-.mermaid-fullscreen-close.dark-theme {
-    background: rgba(50, 50, 50, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #e0e0e0;
-}
-
-.mermaid-fullscreen-close.dark-theme:hover {
-    background: rgba(60, 60, 60, 1);
-    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
-}
-
-.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
-    display: none !important;
-}`;
-    document.head.appendChild(fullscreenStyle);
-}
-
-// Detect if page has dark background
-const isDarkTheme = () => {
-    // We use a set of heuristics:
-    // 1. Check for common dark mode classes or attributes
-    // 2. Check computed background color brightness
-    if (document.documentElement.classList.contains('dark') ||
-        document.documentElement.getAttribute('data-theme') === 'dark' ||
-        document.body.classList.contains('dark') ||
-        document.body.getAttribute('data-theme') === 'dark') {
-        // console.log("Dark theme detected via class/attribute");
-        return true;
-    }
-    if (document.documentElement.classList.contains('light') ||
-        document.documentElement.getAttribute('data-theme') === 'light' ||
-        document.body.classList.contains('light') ||
-        document.body.getAttribute('data-theme') === 'light') {
-        // console.log("Light theme detected via class/attribute");
-        return false;
-    }
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // console.log("Dark theme detected via prefers-color-scheme");
-        return true;
-    }
-    const bgColor = window.getComputedStyle(document.body).backgroundColor;
-    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
-    if (match) {
-        const r = parseInt(match[1]);
-        const g = parseInt(match[2]);
-        const b = parseInt(match[3]);
-        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-        // console.log("Background color brightness:", brightness);
-        return brightness < 128;
-    }
-    // console.log("No dark or light theme detected, defaulting to light theme");
-    return false;
-};
-
-let darkTheme = isDarkTheme();
-let modal = null;
-let modalContent = null;
-let previousScrollOffset = [window.scrollX, window.scrollY];
-
-const runMermaid = async (rerun) => {
-    console.log("Running mermaid diagrams, rerun =", rerun);
-    // clear all existing mermaid charts
-    let all_mermaids = document.querySelectorAll(".mermaid");
-
-    if (rerun) {
-        all_mermaids.forEach((el) => {
-            if(!el.hasAttribute("data-original-code")) {
-                // store original code
-                // console.log(`Storing original code for first run: `, el.innerHTML);
-                el.setAttribute('data-original-code', el.innerHTML);
-            }
-            if(el.getAttribute("data-processed") === "true") {
-                // remove and restore original
-                el.removeAttribute("data-processed");
-                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
-                el.innerHTML = el.getAttribute('data-original-code');
-            } else {
-                // store original code
-                // console.log(`Storing original code for re-run: `, el.innerHTML);
-                el.setAttribute('data-original-code', el.innerHTML);
-            }
-        });
-        await mermaid.run();
-    }
-
-    all_mermaids = document.querySelectorAll(".mermaid");
-    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
-
-    if ("False" === "True") {
-        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
-        if(mermaids_to_add_zoom > 0) {
-            var svgs = d3.selectAll("");
-            if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(() => runMermaid(false), 200);
-                return;
-            } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(() => runMermaid(false), 200);
-                return;
-            } else {
-                svgs.each(function() {
-                    var svg = d3.select(this);
-                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
-                    var inner = svg.select("g");
-                    var zoom = d3.zoom().on("zoom", function(event) {
-                        inner.attr("transform", event.transform);
-                    });
-                    svg.call(zoom);
-                });
-            }
-        }
-    } else if(all_mermaids.length !== mermaids_processed.length) {
-        // Wait for mermaid to process all diagrams
-        setTimeout(() => runMermaid(false), 200);
-        return;
-    }
-
-    // Stop here if not adding fullscreen capability
-    if ("True" !== "True") return;
-
-    if (modal !== null ) {
-        // Destroy existing modal
-        modal.remove();
-        modal = null;
-        modalContent = null;
-    }
-
-    modal = document.createElement('div');
-    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-modal', 'true');
-    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
-    modal.innerHTML = `
-        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
-        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
-    `;
-    document.body.appendChild(modal);
-
-    modalContent = modal.querySelector('.mermaid-container-fullscreen');
-    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    const closeModal = () => {
-        modal.classList.remove('active');
-        modalContent.innerHTML = '';
-        document.body.style.overflow = ''
-        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-
-    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
-        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
-            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
-            // Already processed, adjust button class if needed
-            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
-            if (existingBtn) {
-                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
-            }
-            return;
-        }
-
-        const container = document.createElement('div');
-        container.className = 'mermaid-container';
-        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
-        container.appendChild(mermaidDiv);
-
-        const fullscreenBtn = document.createElement('button');
-        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
-        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
-        fullscreenBtn.textContent = '⛶';
-        fullscreenBtn.style.opacity = '50%';
-
-        // Calculate dynamic position based on diagram's margin and padding
-        const diagramStyle = window.getComputedStyle(mermaidDiv);
-        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
-        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
-        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
-        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
-        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
-        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
-
-        fullscreenBtn.addEventListener('click', () => {
-            previousScrollOffset = [window.scroll, window.scrollY];
-            const clone = mermaidDiv.cloneNode(true);
-            modalContent.innerHTML = '';
-            modalContent.appendChild(clone);
-
-            const svg = clone.querySelector('svg');
-            if (svg) {
-                svg.removeAttribute('width');
-                svg.removeAttribute('height');
-                svg.style.width = '100%';
-                svg.style.height = 'auto';
-                svg.style.maxWidth = '100%';
-                svg.style.sdisplay = 'block';
-
-                if ("False" === "True") {
-                    setTimeout(() => {
-                        const g = svg.querySelector('g');
-                        if (g) {
-                            var svgD3 = d3.select(svg);
-                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
-                            var inner = svgD3.select("g");
-                            var zoom = d3.zoom().on("zoom", function(event) {
-                                inner.attr("transform", event.transform);
-                            });
-                            svgD3.call(zoom);
-                        }
-                    }, 100);
-                }
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        container.appendChild(fullscreenBtn);
-    });
-};
-
-const load = async () => {
-    initStyles();
-
-    await runMermaid(true);
-
-    const reRunIfThemeChanges = async () => {
-        const newDarkTheme = isDarkTheme();
-        if (newDarkTheme !== darkTheme) {
-            darkTheme = newDarkTheme;
-            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
-            await mermaid.initialize(
-                {...JSON.parse(
-                    `{"startOnLoad": false}`
-                ),
-                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
-                }
-            );
-            await runMermaid(true);
-        }
-    };
-
-    // Update theme classes when theme changes
-    const themeObserver = new MutationObserver(reRunIfThemeChanges);
-    themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    themeObserver.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-};
-
-
-
-
-
-console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
-mermaid.initialize(
-    {...JSON.parse(
-        `{"startOnLoad": false}`
-    ),
-    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
-    }
-);
-
-window.addEventListener("load", load);</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dev_guide/writing_extensions';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://hyperspy.org/hyperspy-doc/dev/_static/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.4.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2.3.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lazy import" href="lazy_import.html" />
+    <link rel="next" title="Useful information" href="useful_information.html" />
     <link rel="prev" title="Speeding up code" href="speeding_up_code.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.4" />
+  <meta name="docsearch:version" content="2.3" />
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -561,6 +126,9 @@ window.addEventListener("load", load);</script>
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">HyperSpy API has changed in version 2.0, see the <a href='https://hyperspy.org/hyperspy-doc/current/changes.html#changes-2-0'>release notes!</a></div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -914,7 +482,6 @@ window.addEventListener("load", load);</script>
 <li class="toctree-l1"><a class="reference internal" href="plotting.html">Interactive Plotting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speeding_up_code.html">Speeding up code</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Writing packages that extend HyperSpy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lazy_import.html">Lazy import</a></li>
 <li class="toctree-l1"><a class="reference internal" href="useful_information.html">Useful information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="maintenance.html">Maintenance</a></li>
 </ul>
@@ -983,6 +550,14 @@ window.addEventListener("load", load);</script>
 <p><span class="versionmodified added">Added in version 1.5: </span>External packages can extend HyperSpy by registering signals,
 components and widgets.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The mechanism to register extensions is in beta state. This means that it can
+change between minor and patch versions. Therefore, if you maintain a package
+that registers HyperSpy extensions, please verify that it works properly with
+any future HyperSpy release. We expect it to reach maturity with the release
+of HyperSpy 2.0.</p>
+</div>
 <p>External packages can extend HyperSpy by registering signals, components and
 widgets. Objects registered by external packages are “first-class citizens” i.e.
 they can be used, saved and loaded like any of those objects shipped with
@@ -1040,45 +615,31 @@ specialized subclasses.</p>
 <p>The flowchart below can help you decide where to add
 a new data analysis function. Notice that only if no suitable package exists
 for your function, you should consider creating your own.</p>
-<pre  class="mermaid">
-        ---
-config:
-  theme: base
+<div class="graphviz"><object data="../_images/graphviz-818233be8a9431104be91f61f142effd86fe274b.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph G {
+     A [label=&quot;New function needed!&quot;]
+     B [label=&quot;Is it useful for data of any type and dimensions?&quot;,shape=&quot;diamond&quot;]
+     C [label=&quot;Contribute it to BaseSignal&quot;]
+     D [label=&quot;Does a SignalxD for the required dimension exist in HyperSpy?&quot;,shape=&quot;diamond&quot;]
+     E [label=&quot;Contribute new SignalxD to HyperSpy&quot;]
+     F [label=&quot;Is the function useful for a specific type of data only?&quot;,shape=&quot;diamond&quot;]
+     G [label=&quot;Contribute it to SignalxD&quot;]
+     H [label=&quot;Does a signal for that sort of data exist?&quot;,shape=&quot;diamond&quot;]
+     I [label=&quot;Contribute to package providing the relevant signal&quot;]
+     J [label=&quot;Create you own package and signal subclass to host the funtion&quot;]
+     A-&gt;B
+     B-&gt;C [label=&quot;Yes&quot;]
+     B-&gt;D [label=&quot;No&quot;]
+     D-&gt;F [label=&quot;Yes&quot;]
+     D-&gt;E [label=&quot;No&quot;]
+     E-&gt;F
+     F-&gt;H [label=&quot;Yes&quot;]
+     F-&gt;G [label=&quot;No&quot;]
+     H-&gt;I [label=&quot;Yes&quot;]
+     H-&gt;J [label=&quot;No&quot;]
 
----
-%%{
-init: {
-    'theme': 'base',
-    'themeVariables': {
-    'primaryColor': '#AFEEEE',
-    'lineColor': '#6495ED'
-    }
-}
-}%%
-
-graph TD
-
-  A(New function needed!)
-  B{Is it useful for data of&lt;br/&gt;any type and dimensions?}
-  C(Contribute it to BaseSignal)
-  D{Does a SignalxD for the&lt;br/&gt;required dimension exist&lt;br/&gt;in HyperSpy?}
-  E[Contribute new SignalxD&lt;br/&gt;to HyperSpy]
-  F{Is the function useful for a&lt;br/&gt;specific type of data only?}
-  G(Contribute it to SignalxD)
-  H{Does a signal for that sort&lt;br/&gt;of data exists?}
-  I(Contribute to package&lt;br/&gt;providing the relevant&lt;br/&gt;signal)
-  J(Create your own package&lt;br/&gt;and signal subclass to&lt;br/&gt;host the function)
-  A==&gt;B
-  B== Yes ==&gt;C
-  B== No  ==&gt;D
-  D== Yes ==&gt;F
-  D== No  ==&gt;E
-  E==&gt;F
-  F== Yes ==&gt;H
-  F== No  ==&gt;G
-  H== Yes ==&gt;I
-  H== No ==&gt;J
-    </pre></section>
+}</p></object></div>
+</section>
 <section id="registering-a-new-basesignal-subclass">
 <h3>Registering a new BaseSignal subclass<a class="headerlink" href="#registering-a-new-basesignal-subclass" title="Link to this heading">#</a></h3>
 <p>To register a new <a class="reference internal" href="../reference/api.signals/BaseSignal.html#hyperspy.api.signals.BaseSignal" title="hyperspy.api.signals.BaseSignal"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSignal</span></code></a> subclass you must add it to the
@@ -1142,48 +703,35 @@ packages extending HyperSpy.</p>
 <p>The flowchart below can help you decide when and where to add
 a new hyperspy model <a class="reference internal" href="../reference/base_classes/model/component.html#hyperspy.component.Component" title="hyperspy.component.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyperspy.component.Component</span></code></a>
 for your function, should you consider creating your own.</p>
-<pre  class="mermaid">
-        ---
-config:
-  theme: base
+<div class="graphviz"><object data="../_images/graphviz-a54da9f7ea446415f2beb081262d130b2fa3ec43.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph G {
 
----
-%%{
-init: {
-    'theme': 'base',
-    'themeVariables': {
-    'primaryColor': '#AFEEEE',
-    'lineColor': '#6495ED'
-    }
-}
-}%%
 
-graph TD
+    A [label=&quot;New component needed!&quot;]
+    B [label=&quot;Can it be declared using Expression?&quot;,shape=&quot;diamond&quot;]
+    C [label=&quot;Can it be useful to other users?&quot;,shape=&quot;diamond&quot;]
+    D [label=&quot;Just use Expression&quot;]
+    E [label=&quot;Create new component using Expression&quot;]
+    F [label=&quot;Create new component from scratch&quot;]
+    G [label=&quot;Is it useful for general users?&quot;,shape=&quot;diamond&quot;]
+    H [label=&quot;Contribute it to HyperSpy&quot;]
+    I [label=&quot;Does a suitable package exist?&quot;,shape=&quot;diamond&quot;]
+    J [label=&quot;Contribute it to the relevant package&quot;]
+    K [label=&quot;Create your own package to host it&quot;]
 
-  A(New component needed!)
-  B{Can it be declared&lt;br/&gt;using Expression?}
-  C{Can it be useful&lt;br/&gt;to other users?}
-  D(Just use Expression)
-  E[Create new component&lt;br/&gt;using Expression]
-  F[Create new component&lt;br/&gt;from scratch]
-  G{Is it useful for&lt;br/&gt;general users?}
-  H(Contribute it to HyperSpy)
-  I{Does a suitable&lt;br/&gt;package exist?}
-  J[Contribute it to&lt;br/&gt;the relevant package]
-  K[Create your own&lt;br/&gt;package to host it]
-
-  A==&gt;B
-  B== Yes ==&gt;C
-  B== No  ==&gt;F
-  C== No  ==&gt;D
-  C== Yes ==&gt;E
-  E==&gt;G
-  F==&gt;G
-  G== Yes ==&gt; H
-  G== No  ==&gt; I
-  I== Yes ==&gt; J
-  I== No  ==&gt; K
-    </pre></section>
+    A-&gt;B
+    B-&gt;C [label=&quot;Yes&quot;]
+    B-&gt;F [label=&quot;No&quot;]
+    C-&gt;E [label=&quot;Yes&quot;]
+    C-&gt;D [label=&quot;No&quot;]
+    E-&gt;G
+    F-&gt;G
+    G-&gt;H [label=&quot;Yes&quot;]
+    G-&gt;I [label=&quot;No&quot;]
+    I-&gt;J [label=&quot;Yes&quot;]
+    I-&gt;K [label=&quot;No&quot;]
+}</p></object></div>
+</section>
 <section id="registering-new-components">
 <h3>Registering new components<a class="headerlink" href="#registering-new-components" title="Link to this heading">#</a></h3>
 <p>All new components must be a subclass of
@@ -1345,12 +893,10 @@ repository, which provides <code class="docutils literal notranslate"><span clas
 at the time of writing.
 The pre-release packages are obtained from <a class="reference external" href="https://pypi.org">PyPI</a> and these
 will be used for any dependency which provides a pre-release package on PyPI.</p>
-<p>A similar <a class="reference external" href="https://github.com/hyperspy/hyperspy/actions/workflows/integration_tests.yml">Integration test</a>
+<p>A similar <a class="reference external" href="https://github.com/hyperspy/hyperspy/actions/workflows/tests_extension.yml">Integration test</a>
 workflow can run from pull requests (PR) to the
 <a class="reference external" href="https://github.com/hyperspy/hyperspy">hyperspy</a> repository when the label
-<code class="docutils literal notranslate"><span class="pre">run-integration-tests</span></code> is added to a PR or when a PR review is edited.</p>
-<p>These workflows use the <a class="reference external" href="https://github.com/hyperspy/.github/blob/main/.github/workflows/integration_tests.yml">integration_tests.yml</a> reusable workflow
-from the <a class="github reference external" href="https://github.com/hyperspy/.github">hyperspy/.github</a> repository.</p>
+<code class="docutils literal notranslate"><span class="pre">run-extension-tests</span></code> is added to a PR or when a PR review is edited.</p>
 </section>
 </section>
 
@@ -1374,11 +920,11 @@ from the <a class="github reference external" href="https://github.com/hyperspy/
       </div>
     </a>
     <a class="right-next"
-       href="lazy_import.html"
+       href="useful_information.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lazy import</p>
+        <p class="prev-next-title">Useful information</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
